@@ -145,173 +145,122 @@ public final class Game {
 		Passage nullPassage = new Passage();
 
         // West of House
-        Passage above1 = new Passage(Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE);
-        Passage above2 = new Passage(Location.WEST_OF_HOUSE, Location.SOUTH_OF_HOUSE);
-        Passage above3 = new Passage(Location.WEST_OF_HOUSE, Location.STONE_BARROW);
-        Passage above4 = new Passage(Location.WEST_OF_HOUSE, Location.FOREST_WEST);
+        Passage house1 = new Passage(Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE);
+        Passage house2 = new Passage(Location.WEST_OF_HOUSE, Location.SOUTH_OF_HOUSE);
+        Passage house3 = new Passage(Location.WEST_OF_HOUSE, Location.STONE_BARROW);
+        Passage house4 = new Passage(Location.WEST_OF_HOUSE, Location.FOREST_WEST);
 
         // North of House
-        Passage above5 = new Passage(Location.NORTH_OF_HOUSE, Location.FOREST_PATH);
-        Passage above6 = new Passage(Location.NORTH_OF_HOUSE, Location.BEHIND_HOUSE);
+        Passage house5 = new Passage(Location.NORTH_OF_HOUSE, Location.FOREST_PATH);
+        Passage house6 = new Passage(Location.NORTH_OF_HOUSE, Location.BEHIND_HOUSE);
 
         // Behind house
-        Passage above7 = new Passage(Location.BEHIND_HOUSE, Location.CLEARING_EAST);
-        Passage above8 = new Passage(Location.BEHIND_HOUSE, Location.SOUTH_OF_HOUSE);
-        Passage above9 = new Passage(Location.BEHIND_HOUSE, Location.KITCHEN);
+        Passage house7 = new Passage(Location.BEHIND_HOUSE, Location.CLEARING_EAST);
+        Passage house8 = new Passage(Location.BEHIND_HOUSE, Location.SOUTH_OF_HOUSE);
+        Passage house9 = new Passage(Location.BEHIND_HOUSE, Location.KITCHEN);
 
         // South of House
-        Passage above10 = new Passage(Location.SOUTH_OF_HOUSE, Location.FOREST_SOUTH);
-
-        // Forest Path
-        Passage above11 = new Passage(Location.FOREST_PATH, Location.CLEARING_NORTH);
-        Passage above12 = new Passage(Location.FOREST_PATH, Location.UP_TREE);
-        Passage above13 = new Passage(Location.FOREST_PATH, Location.FOREST_EAST);
-        Passage above14 = new Passage(Location.FOREST_PATH, Location.FOREST_WEST);
-
-        // Clearing North
-        Passage above15 = new Passage(Location.CLEARING_NORTH, Location.FOREST_EAST);
-        Passage above16 = new Passage(Location.CLEARING_NORTH, Location.FOREST_WEST);
-
-        // Forest East
-        Passage above17 = new Passage(Location.FOREST_EAST, Location.FOREST_NORTHEAST);
-        Passage above18 = new Passage(Location.FOREST_EAST, Location.CLEARING_EAST);
-
-        // Clearing East
-        Passage above19 = new Passage(Location.CLEARING_EAST, Location.CANYON_VIEW);
-        Passage above20 = new Passage(Location.CLEARING_EAST, Location.FOREST_SOUTH);
-
-        // Canyon View
-        Passage above21 = new Passage(Location.CANYON_VIEW, Location.ROCKY_LEDGE);
-
-        // Rocky Ledge
-        Passage above22 = new Passage(Location.ROCKY_LEDGE, Location.CANYON_BOTTOM);
-
-        // Canyon Bottom
-        Passage above23 = new Passage(Location.CANYON_BOTTOM, Location.END_OF_RAINBOW);
-
-        // Forest South
-        Passage above24 = new Passage(Location.FOREST_SOUTH, Location.FOREST_WEST);
-        Passage above28 = new Passage(Location.FOREST_SOUTH, Location.CANYON_VIEW);
-
-        // Stone Barrow
-        Passage above25 = new Passage(Location.STONE_BARROW, Location.INSIDE_STONE_BARROW);
+        Passage house10 = new Passage(Location.SOUTH_OF_HOUSE, Location.FOREST_SOUTH);
 
         // Kitchen
-        Passage above26 = new Passage(Location.KITCHEN, Location.ATTIC);
-        Passage above27 = new Passage(Location.KITCHEN, Location.LIVING_ROOM);
+        Passage house11 = new Passage(Location.KITCHEN, Location.ATTIC);
+        Passage house12 = new Passage(Location.KITCHEN, Location.LIVING_ROOM);
+
+        // Forest Path
+        Passage forest1 = new Passage(Location.FOREST_PATH, Location.CLEARING_NORTH);
+        Passage forest2 = new Passage(Location.FOREST_PATH, Location.FOREST_EAST);
+        Passage forest3 = new Passage(Location.FOREST_PATH, Location.FOREST_WEST);
+        Passage forest4 = new Passage(Location.FOREST_PATH, Location.UP_TREE);
+
+        // Clearing North
+        Passage forest5 = new Passage(Location.CLEARING_NORTH, Location.FOREST_EAST);
+        Passage forest6 = new Passage(Location.CLEARING_NORTH, Location.FOREST_WEST);
+
+        // Forest East
+        Passage forest7 = new Passage(Location.FOREST_EAST, Location.CLEARING_EAST);
+        Passage forest8 = new Passage(Location.FOREST_EAST, Location.FOREST_NORTHEAST);
+
+        // Clearing East
+        Passage forest9 = new Passage(Location.CLEARING_EAST, Location.FOREST_SOUTH);
+        Passage forest10 = new Passage(Location.CLEARING_EAST, Location.CANYON_VIEW);
+
+        // Forest South
+        Passage forest11 = new Passage(Location.FOREST_SOUTH, Location.CANYON_VIEW);
+        Passage forest12 = new Passage(Location.FOREST_SOUTH, Location.FOREST_WEST);
+
+        // Canyon View
+        Passage canyon1 = new Passage(Location.CANYON_VIEW, Location.ROCKY_LEDGE);
+
+        // Rocky Ledge
+        Passage canyon2 = new Passage(Location.ROCKY_LEDGE, Location.CANYON_BOTTOM);
+
+        // Canyon Bottom
+        Passage canyon3 = new Passage(Location.CANYON_BOTTOM, Location.END_OF_RAINBOW);
+
+        // Stone Barrow
+        Passage barrow1 = new Passage(Location.STONE_BARROW, Location.INSIDE_STONE_BARROW);
 
 
 
-        // Rooms: Name, description, ID, North, South, East, West,
-        // Northeast, Northwest, Southeast, Southwest, Up, Down
-        Room westOfHouse = new Room("West of House", GameStrings.DESC_WEST_OF_HOUSE, Location.WEST_OF_HOUSE,
-            above1, above2, nullPassage, above4,
-            above1, nullPassage, above2, above3,
-            nullPassage, nullPassage);
-
-        Room northOfHouse = new Room("North of House", GameStrings.DESC_NORTH_OF_HOUSE, Location.NORTH_OF_HOUSE,
-            above5, nullPassage, above6, above1,
-            nullPassage, nullPassage, above6, above1,
-            nullPassage, nullPassage);
 
 
-        Room behindHouse = new Room("Behind House", GameStrings.DESC_BEHIND_HOUSE, Location.BEHIND_HOUSE,
-            above6, above8, above7, above9,
-            nullPassage, above6, nullPassage, above8,
-            nullPassage, nullPassage);
+        // Rooms: Name, description, ID
+        Room westOfHouse = new Room("West of House", GameStrings.DESC_WEST_OF_HOUSE, Location.WEST_OF_HOUSE);
+        westOfHouse.addExit(Action.EXIT_NORTH, house1);
+        westOfHouse.addExit(Action.EXIT_NORTHEAST, house1);
+        westOfHouse.addExit(Action.EXIT_SOUTH, house2);
+        westOfHouse.addExit(Action.EXIT_SOUTHEAST, house2);
+        westOfHouse.addExit(Action.EXIT_SOUTHWEST, house3);
+        westOfHouse.addExit(Action.EXIT_WEST, house4);
+
+        Room northOfHouse = new Room("North of House", GameStrings.DESC_NORTH_OF_HOUSE, Location.NORTH_OF_HOUSE);
+        northOfHouse.addExit(Action.EXIT_NORTH, house5);
+        northOfHouse.addExit(Action.EXIT_EAST, house6);
+        northOfHouse.addExit(Action.EXIT_SOUTHEAST, house6);
+        northOfHouse.addExit(Action.EXIT_WEST, house1);
+        northOfHouse.addExit(Action.EXIT_SOUTHWEST, house1);
 
 
-        Room southOfHouse = new Room("South of House", GameStrings.DESC_SOUTH_OF_HOUSE, Location.SOUTH_OF_HOUSE,
-            nullPassage, above10, above8, above2,
-            above8, above2, nullPassage, nullPassage,
-            nullPassage, nullPassage);
+        Room behindHouse = new Room("Behind House", GameStrings.DESC_BEHIND_HOUSE, Location.BEHIND_HOUSE);
+
+
+        Room southOfHouse = new Room("South of House", GameStrings.DESC_SOUTH_OF_HOUSE, Location.SOUTH_OF_HOUSE);
 
 
 
-        Room kitchen = new Room("Kitchen", GameStrings.DESC_KITCHEN, Location.KITCHEN,
-            nullPassage, nullPassage, above9, above27,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            above26, nullPassage);
+        Room kitchen = new Room("Kitchen", GameStrings.DESC_KITCHEN, Location.KITCHEN);
 
-        Room attic = new Room("Attic", GameStrings.DESC_ATTIC, Location.ATTIC,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, above26);
+        Room attic = new Room("Attic", GameStrings.DESC_ATTIC, Location.ATTIC);
 
-        Room livingRoom = new Room("Living Room", GameStrings.DESC_LIVING_ROOM, Location.LIVING_ROOM,
-            nullPassage, nullPassage, above27, nullPassage,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage);
+        Room livingRoom = new Room("Living Room", GameStrings.DESC_LIVING_ROOM, Location.LIVING_ROOM);
 
-        Room forestPath = new Room("Forest Path", GameStrings.DESC_FOREST_PATH, Location.FOREST_PATH,
-            above11, above5, above13, above14,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            above12, nullPassage);
+        Room forestPath = new Room("Forest Path", GameStrings.DESC_FOREST_PATH, Location.FOREST_PATH);
 
-        Room upTree = new Room("Up a Tree", GameStrings.DESC_UP_TREE, Location.UP_TREE,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, above12);
+        Room upTree = new Room("Up a Tree", GameStrings.DESC_UP_TREE, Location.UP_TREE);
 
-        Room forestWest = new Room("Forest", GameStrings.DESC_FOREST_WEST, Location.FOREST_WEST,
-            above16, above24, above13, nullPassage,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage);
+        Room forestWest = new Room("Forest", GameStrings.DESC_FOREST_WEST, Location.FOREST_WEST);
 
-        Room forestEast = new Room("Forest", GameStrings.DESC_FOREST_EAST, Location.FOREST_EAST,
-            nullPassage, above18, above17, above13,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage);
+        Room forestEast = new Room("Forest", GameStrings.DESC_FOREST_EAST, Location.FOREST_EAST);
 
-        Room forestNortheast = new Room("Forest", GameStrings.DESC_FOREST_NORTHEAST, Location.FOREST_NORTHEAST,
-            above17, above17, nullPassage, above17,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage);
+        Room forestNortheast = new Room("Forest", GameStrings.DESC_FOREST_NORTHEAST, Location.FOREST_NORTHEAST);
 
-        Room forestSouth = new Room("Forest", GameStrings.DESC_FOREST_SOUTH, Location.FOREST_SOUTH,
-            above20, nullPassage, above28, above24,
-            nullPassage, above10, nullPassage, nullPassage,
-            nullPassage, nullPassage);
+        Room forestSouth = new Room("Forest", GameStrings.DESC_FOREST_SOUTH, Location.FOREST_SOUTH);
 
-        Room clearingNorth = new Room("Clearing", GameStrings.DESC_CLEARING_NORTH, Location.CLEARING_NORTH,
-            nullPassage, above11, above15, above16,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage);
+        Room clearingNorth = new Room("Clearing", GameStrings.DESC_CLEARING_NORTH, Location.CLEARING_NORTH);
 
-        Room clearingEast = new Room("Clearing", GameStrings.DESC_CLEARING_EAST, Location.CLEARING_EAST,
-            above18, above20, above19, above7,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage);
+        Room clearingEast = new Room("Clearing", GameStrings.DESC_CLEARING_EAST, Location.CLEARING_EAST);
 
-        Room canyonView = new Room("Canyon View", GameStrings.DESC_CANYON_VIEW, Location.CANYON_VIEW,
-            nullPassage, nullPassage, nullPassage, above28,
-            nullPassage, above19, nullPassage, nullPassage,
-            nullPassage, above21);
+        Room canyonView = new Room("Canyon View", GameStrings.DESC_CANYON_VIEW, Location.CANYON_VIEW);
 
-        Room rockyLedge = new Room("Rocky Ledge", GameStrings.DESC_ROCKY_LEDGE, Location.ROCKY_LEDGE,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            above21, above22);
+        Room rockyLedge = new Room("Rocky Ledge", GameStrings.DESC_ROCKY_LEDGE, Location.ROCKY_LEDGE);
 
-        Room canyonBottom = new Room("Canyon Bottom", GameStrings.DESC_CANYON_BOTTOM, Location.CANYON_BOTTOM,
-            above23, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            above22, nullPassage);
+        Room canyonBottom = new Room("Canyon Bottom", GameStrings.DESC_CANYON_BOTTOM, Location.CANYON_BOTTOM);
 
-        Room endOfRainbow = new Room("End of Rainbow", GameStrings.DESC_END_OF_RAINBOW, Location.END_OF_RAINBOW,
-            nullPassage, above23, nullPassage, nullPassage,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage);
+        Room endOfRainbow = new Room("End of Rainbow", GameStrings.DESC_END_OF_RAINBOW, Location.END_OF_RAINBOW);
 
-        Room stoneBarrow = new Room("Stone Barrow", GameStrings.DESC_STONE_BARROW, Location.STONE_BARROW,
-            nullPassage, nullPassage, nullPassage, above25,
-            nullPassage, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage);
+        Room stoneBarrow = new Room("Stone Barrow", GameStrings.DESC_STONE_BARROW, Location.STONE_BARROW);
 
-        Room insideStoneBarrow = new Room("Inside Stone Barrow", GameStrings.DESC_INSIDE_STONE_BARROW, Location.INSIDE_STONE_BARROW,
-            nullPassage, nullPassage, above25, nullPassage,
-            above3, nullPassage, nullPassage, nullPassage,
-            nullPassage, nullPassage);
+        Room insideStoneBarrow = new Room("Inside Stone Barrow", GameStrings.DESC_INSIDE_STONE_BARROW, Location.INSIDE_STONE_BARROW);
 
 
         state.worldMap.put(westOfHouse.roomID, westOfHouse);
