@@ -8,6 +8,7 @@ class Room {
 
 	public boolean firstVisit;
 
+	private boolean darkness;
 
 	private HashMap<Action, Passage> exits;
 	private HashMap<Action, String> failMessages;
@@ -39,6 +40,14 @@ class Room {
 	{
 		this.exits.put(act, psg);
 	}
+
+	public void addFailMessage(Action act, String msg)
+	{
+		this.failMessages.put(act, msg);
+	}
+
+	public void setDark() { darkness = true; }
+	public boolean isDark() { return darkness; }
 
 
 

@@ -32,16 +32,16 @@ enum Action {
 	SHOUT,
 	LOOK,
 	INVENTORY,
-	EXIT_NORTH,
-	EXIT_SOUTH,
-	EXIT_EAST,
-	EXIT_WEST,
-    EXIT_NORTHEAST,
-    EXIT_NORTHWEST,
-    EXIT_SOUTHEAST,
-    EXIT_SOUTHWEST,
-	EXIT_UP,
-	EXIT_DOWN,
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+    NORTHEAST,
+    NORTHWEST,
+    SOUTHEAST,
+    SOUTHWEST,
+	UP,
+	DOWN,
 	NULL_ACTION,
 	GODMODE_TOGGLE,
 	GIBBERISH,
@@ -145,60 +145,60 @@ public final class Game {
 		Passage nullPassage = new Passage();
 
         // West of House
-        Passage house1 = new Passage(Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE);
-        Passage house2 = new Passage(Location.WEST_OF_HOUSE, Location.SOUTH_OF_HOUSE);
-        Passage house3 = new Passage(Location.WEST_OF_HOUSE, Location.STONE_BARROW);
-        Passage house4 = new Passage(Location.WEST_OF_HOUSE, Location.FOREST_WEST);
+        Passage house_west_north = new Passage(Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE);
+        Passage house_west_south = new Passage(Location.WEST_OF_HOUSE, Location.SOUTH_OF_HOUSE);
+        Passage house_west_barrow = new Passage(Location.WEST_OF_HOUSE, Location.STONE_BARROW);
+        Passage house_west_forestW = new Passage(Location.WEST_OF_HOUSE, Location.FOREST_WEST);
 
         // North of House
-        Passage house5 = new Passage(Location.NORTH_OF_HOUSE, Location.FOREST_PATH);
-        Passage house6 = new Passage(Location.NORTH_OF_HOUSE, Location.BEHIND_HOUSE);
+        Passage house_north_forestpath = new Passage(Location.NORTH_OF_HOUSE, Location.FOREST_PATH);
+        Passage house_north_behind = new Passage(Location.NORTH_OF_HOUSE, Location.BEHIND_HOUSE);
 
         // Behind house
-        Passage house7 = new Passage(Location.BEHIND_HOUSE, Location.CLEARING_EAST);
-        Passage house8 = new Passage(Location.BEHIND_HOUSE, Location.SOUTH_OF_HOUSE);
-        Passage house9 = new Passage(Location.BEHIND_HOUSE, Location.KITCHEN);
+        Passage house_behind_clearingE = new Passage(Location.BEHIND_HOUSE, Location.CLEARING_EAST);
+        Passage house_behind_south = new Passage(Location.BEHIND_HOUSE, Location.SOUTH_OF_HOUSE);
+        Passage house_behind_kitchen = new Passage(Location.BEHIND_HOUSE, Location.KITCHEN);
 
         // South of House
-        Passage house10 = new Passage(Location.SOUTH_OF_HOUSE, Location.FOREST_SOUTH);
+        Passage house_south_forestS = new Passage(Location.SOUTH_OF_HOUSE, Location.FOREST_SOUTH);
 
         // Kitchen
-        Passage house11 = new Passage(Location.KITCHEN, Location.ATTIC);
-        Passage house12 = new Passage(Location.KITCHEN, Location.LIVING_ROOM);
+        Passage kitchen_attic = new Passage(Location.KITCHEN, Location.ATTIC);
+        Passage kitchen_livingroom = new Passage(Location.KITCHEN, Location.LIVING_ROOM);
 
         // Forest Path
-        Passage forest1 = new Passage(Location.FOREST_PATH, Location.CLEARING_NORTH);
-        Passage forest2 = new Passage(Location.FOREST_PATH, Location.FOREST_EAST);
-        Passage forest3 = new Passage(Location.FOREST_PATH, Location.FOREST_WEST);
-        Passage forest4 = new Passage(Location.FOREST_PATH, Location.UP_TREE);
+        Passage forestpath_clearingN = new Passage(Location.FOREST_PATH, Location.CLEARING_NORTH);
+        Passage forestpath_forestE = new Passage(Location.FOREST_PATH, Location.FOREST_EAST);
+        Passage forestpath_forestW = new Passage(Location.FOREST_PATH, Location.FOREST_WEST);
+        Passage forestpath_uptree = new Passage(Location.FOREST_PATH, Location.UP_TREE);
 
         // Clearing North
-        Passage forest5 = new Passage(Location.CLEARING_NORTH, Location.FOREST_EAST);
-        Passage forest6 = new Passage(Location.CLEARING_NORTH, Location.FOREST_WEST);
+        Passage clearingN_forestE = new Passage(Location.CLEARING_NORTH, Location.FOREST_EAST);
+        Passage clearingN_forestW = new Passage(Location.CLEARING_NORTH, Location.FOREST_WEST);
 
         // Forest East
-        Passage forest7 = new Passage(Location.FOREST_EAST, Location.CLEARING_EAST);
-        Passage forest8 = new Passage(Location.FOREST_EAST, Location.FOREST_NORTHEAST);
+        Passage forestE_clearingE = new Passage(Location.FOREST_EAST, Location.CLEARING_EAST);
+        Passage forestE_forestNE = new Passage(Location.FOREST_EAST, Location.FOREST_NORTHEAST);
 
         // Clearing East
-        Passage forest9 = new Passage(Location.CLEARING_EAST, Location.FOREST_SOUTH);
-        Passage forest10 = new Passage(Location.CLEARING_EAST, Location.CANYON_VIEW);
+        Passage clearingE_forestS = new Passage(Location.CLEARING_EAST, Location.FOREST_SOUTH);
+        Passage clearingE_canyon = new Passage(Location.CLEARING_EAST, Location.CANYON_VIEW);
 
         // Forest South
-        Passage forest11 = new Passage(Location.FOREST_SOUTH, Location.CANYON_VIEW);
-        Passage forest12 = new Passage(Location.FOREST_SOUTH, Location.FOREST_WEST);
+        Passage forestS_canyon = new Passage(Location.FOREST_SOUTH, Location.CANYON_VIEW);
+        Passage forestS_forestW = new Passage(Location.FOREST_SOUTH, Location.FOREST_WEST);
 
         // Canyon View
-        Passage canyon1 = new Passage(Location.CANYON_VIEW, Location.ROCKY_LEDGE);
+        Passage canyon_ledge = new Passage(Location.CANYON_VIEW, Location.ROCKY_LEDGE);
 
         // Rocky Ledge
-        Passage canyon2 = new Passage(Location.ROCKY_LEDGE, Location.CANYON_BOTTOM);
+        Passage ledge_bottom = new Passage(Location.ROCKY_LEDGE, Location.CANYON_BOTTOM);
 
         // Canyon Bottom
-        Passage canyon3 = new Passage(Location.CANYON_BOTTOM, Location.END_OF_RAINBOW);
+        Passage canyon_bottom_rainbow = new Passage(Location.CANYON_BOTTOM, Location.END_OF_RAINBOW);
 
         // Stone Barrow
-        Passage barrow1 = new Passage(Location.STONE_BARROW, Location.INSIDE_STONE_BARROW);
+        Passage barrowInside = new Passage(Location.STONE_BARROW, Location.INSIDE_STONE_BARROW);
 
 
 
@@ -206,35 +206,56 @@ public final class Game {
 
         // Rooms: Name, description, ID
         Room westOfHouse = new Room("West of House", GameStrings.DESC_WEST_OF_HOUSE, Location.WEST_OF_HOUSE);
-        westOfHouse.addExit(Action.EXIT_NORTH, house1);
-        westOfHouse.addExit(Action.EXIT_NORTHEAST, house1);
-        westOfHouse.addExit(Action.EXIT_SOUTH, house2);
-        westOfHouse.addExit(Action.EXIT_SOUTHEAST, house2);
-        westOfHouse.addExit(Action.EXIT_SOUTHWEST, house3);
-        westOfHouse.addExit(Action.EXIT_WEST, house4);
+        westOfHouse.addExit(Action.NORTH, house_west_north);
+        westOfHouse.addExit(Action.NORTHEAST, house_west_north);
+        westOfHouse.addExit(Action.SOUTH, house_west_south);
+        westOfHouse.addExit(Action.SOUTHEAST, house_west_south);
+        westOfHouse.addExit(Action.SOUTHWEST, house_west_barrow);
+        westOfHouse.addExit(Action.WEST, house_west_forestW);
 
         Room northOfHouse = new Room("North of House", GameStrings.DESC_NORTH_OF_HOUSE, Location.NORTH_OF_HOUSE);
-        northOfHouse.addExit(Action.EXIT_NORTH, house5);
-        northOfHouse.addExit(Action.EXIT_EAST, house6);
-        northOfHouse.addExit(Action.EXIT_SOUTHEAST, house6);
-        northOfHouse.addExit(Action.EXIT_WEST, house1);
-        northOfHouse.addExit(Action.EXIT_SOUTHWEST, house1);
+        northOfHouse.addExit(Action.NORTH, house_north_forestpath);
+        northOfHouse.addExit(Action.EAST, house_north_behind);
+        northOfHouse.addExit(Action.SOUTHEAST, house_north_behind);
+        northOfHouse.addExit(Action.WEST, house_west_north);
+        northOfHouse.addExit(Action.SOUTHWEST, house_west_north);
 
 
         Room behindHouse = new Room("Behind House", GameStrings.DESC_BEHIND_HOUSE, Location.BEHIND_HOUSE);
+        behindHouse.addExit(Action.NORTH, house_north_behind);
+        behindHouse.addExit(Action.NORTHWEST, house_north_behind);
+        behindHouse.addExit(Action.SOUTH, house_behind_south);
+        behindHouse.addExit(Action.SOUTHWEST, house_behind_south);
+        behindHouse.addExit(Action.EAST, house_behind_clearingE);
+        behindHouse.addExit(Action.WEST, house_behind_kitchen);
 
 
         Room southOfHouse = new Room("South of House", GameStrings.DESC_SOUTH_OF_HOUSE, Location.SOUTH_OF_HOUSE);
-
+        southOfHouse.addExit(Action.EAST, house_behind_south);
+        southOfHouse.addExit(Action.NORTHEAST, house_behind_south);
+        southOfHouse.addExit(Action.WEST, house_west_south);
+        southOfHouse.addExit(Action.NORTHWEST, house_west_south);
+        southOfHouse.addExit(Action.SOUTH, house_south_forestS);
 
 
         Room kitchen = new Room("Kitchen", GameStrings.DESC_KITCHEN, Location.KITCHEN);
+        kitchen.addExit(Action.EAST, house_behind_kitchen);
+        kitchen.addExit(Action.WEST, kitchen_livingroom);
+        kitchen.addExit(Action.UP, kitchen_attic);
 
         Room attic = new Room("Attic", GameStrings.DESC_ATTIC, Location.ATTIC);
+        attic.addExit(Action.DOWN, kitchen_attic);
+        attic.setDark();
 
         Room livingRoom = new Room("Living Room", GameStrings.DESC_LIVING_ROOM, Location.LIVING_ROOM);
+        livingRoom.addExit(Action.EAST, kitchen_livingroom);
 
         Room forestPath = new Room("Forest Path", GameStrings.DESC_FOREST_PATH, Location.FOREST_PATH);
+        forestPath.addExit(Action.NORTH, forestpath_clearingN);
+        forestPath.addExit(Action.EAST, forestpath_forestE);
+        forestPath.addExit(Action.WEST, forestpath_forestW);
+        forestPath.addExit(Action.SOUTH, house_north_forestpath);
+        forestPath.addExit(Action.UP, forestpath_uptree);
 
         Room upTree = new Room("Up a Tree", GameStrings.DESC_UP_TREE, Location.UP_TREE);
 
@@ -778,16 +799,16 @@ public final class Game {
 			} break;
 
 
-			case EXIT_NORTH:
-			case EXIT_SOUTH:
-			case EXIT_EAST:
-			case EXIT_WEST:
-            case EXIT_NORTHEAST:
-            case EXIT_NORTHWEST:
-            case EXIT_SOUTHEAST:
-            case EXIT_SOUTHWEST:
-			case EXIT_UP:
-			case EXIT_DOWN:
+			case NORTH:
+			case SOUTH:
+			case EAST:
+			case WEST:
+            case NORTHEAST:
+            case NORTHWEST:
+            case SOUTHEAST:
+            case SOUTHWEST:
+			case UP:
+			case DOWN:
 			{
 				boolean exited = curRoom.exit(state, curAction);
 
@@ -837,91 +858,91 @@ public final class Game {
 
 	private static void createActions()
 	{
-		commandOne.put("north",       Action.EXIT_NORTH);
-		commandOne.put("go north",    Action.EXIT_NORTH);
-		commandOne.put("walk north",  Action.EXIT_NORTH);
-		commandOne.put("exit north",  Action.EXIT_NORTH);
-		commandOne.put("n",           Action.EXIT_NORTH);
-		commandOne.put("go n",        Action.EXIT_NORTH);
-		commandOne.put("walk n",      Action.EXIT_NORTH);
-		commandOne.put("exit n",      Action.EXIT_NORTH);
+		commandOne.put("north",       Action.NORTH);
+		commandOne.put("go north",    Action.NORTH);
+		commandOne.put("walk north",  Action.NORTH);
+		commandOne.put("exit north",  Action.NORTH);
+		commandOne.put("n",           Action.NORTH);
+		commandOne.put("go n",        Action.NORTH);
+		commandOne.put("walk n",      Action.NORTH);
+		commandOne.put("exit n",      Action.NORTH);
 
-		commandOne.put("south",       Action.EXIT_SOUTH);
-		commandOne.put("go south",    Action.EXIT_SOUTH);
-		commandOne.put("walk south",  Action.EXIT_SOUTH);
-		commandOne.put("exit south",  Action.EXIT_SOUTH);
-		commandOne.put("s",           Action.EXIT_SOUTH);
-		commandOne.put("go s",        Action.EXIT_SOUTH);
-		commandOne.put("walk s",      Action.EXIT_SOUTH);
-		commandOne.put("exit s",      Action.EXIT_SOUTH);
+		commandOne.put("south",       Action.SOUTH);
+		commandOne.put("go south",    Action.SOUTH);
+		commandOne.put("walk south",  Action.SOUTH);
+		commandOne.put("exit south",  Action.SOUTH);
+		commandOne.put("s",           Action.SOUTH);
+		commandOne.put("go s",        Action.SOUTH);
+		commandOne.put("walk s",      Action.SOUTH);
+		commandOne.put("exit s",      Action.SOUTH);
 
-		commandOne.put("east",        Action.EXIT_EAST);
-		commandOne.put("e",           Action.EXIT_EAST);
-		commandOne.put("go east",     Action.EXIT_EAST);
-		commandOne.put("walk east",   Action.EXIT_EAST);
-		commandOne.put("exit east",   Action.EXIT_EAST);
-		commandOne.put("go e",        Action.EXIT_EAST);
-		commandOne.put("walk e",      Action.EXIT_EAST);
-		commandOne.put("exit e",      Action.EXIT_EAST);
+		commandOne.put("east",        Action.EAST);
+		commandOne.put("e",           Action.EAST);
+		commandOne.put("go east",     Action.EAST);
+		commandOne.put("walk east",   Action.EAST);
+		commandOne.put("exit east",   Action.EAST);
+		commandOne.put("go e",        Action.EAST);
+		commandOne.put("walk e",      Action.EAST);
+		commandOne.put("exit e",      Action.EAST);
 
-		commandOne.put("west",        Action.EXIT_WEST);
-		commandOne.put("go west",     Action.EXIT_WEST);
-		commandOne.put("walk west",   Action.EXIT_WEST);
-		commandOne.put("exit west",   Action.EXIT_WEST);
-		commandOne.put("w",           Action.EXIT_WEST);
-		commandOne.put("go w",        Action.EXIT_WEST);
-		commandOne.put("walk w",      Action.EXIT_WEST);
-		commandOne.put("exit w",      Action.EXIT_WEST);
+		commandOne.put("west",        Action.WEST);
+		commandOne.put("go west",     Action.WEST);
+		commandOne.put("walk west",   Action.WEST);
+		commandOne.put("exit west",   Action.WEST);
+		commandOne.put("w",           Action.WEST);
+		commandOne.put("go w",        Action.WEST);
+		commandOne.put("walk w",      Action.WEST);
+		commandOne.put("exit w",      Action.WEST);
 
-        commandOne.put("northeast",        Action.EXIT_NORTHEAST);
-        commandOne.put("go northeast",     Action.EXIT_NORTHEAST);
-        commandOne.put("walk northeast",   Action.EXIT_NORTHEAST);
-        commandOne.put("exit northeast",   Action.EXIT_NORTHEAST);
-        commandOne.put("ne",               Action.EXIT_NORTHEAST);
-        commandOne.put("go ne",            Action.EXIT_NORTHEAST);
-        commandOne.put("walk ne",          Action.EXIT_NORTHEAST);
-        commandOne.put("exit ne",          Action.EXIT_NORTHEAST);
+        commandOne.put("northeast",        Action.NORTHEAST);
+        commandOne.put("go northeast",     Action.NORTHEAST);
+        commandOne.put("walk northeast",   Action.NORTHEAST);
+        commandOne.put("exit northeast",   Action.NORTHEAST);
+        commandOne.put("ne",               Action.NORTHEAST);
+        commandOne.put("go ne",            Action.NORTHEAST);
+        commandOne.put("walk ne",          Action.NORTHEAST);
+        commandOne.put("exit ne",          Action.NORTHEAST);
 
-        commandOne.put("northwest",        Action.EXIT_NORTHWEST);
-        commandOne.put("go northwest",     Action.EXIT_NORTHWEST);
-        commandOne.put("walk northwest",   Action.EXIT_NORTHWEST);
-        commandOne.put("exit northwest",   Action.EXIT_NORTHWEST);
-        commandOne.put("nw",               Action.EXIT_NORTHWEST);
-        commandOne.put("go nw",            Action.EXIT_NORTHWEST);
-        commandOne.put("walk nw",          Action.EXIT_NORTHWEST);
-        commandOne.put("exit nw",          Action.EXIT_NORTHWEST);
+        commandOne.put("northwest",        Action.NORTHWEST);
+        commandOne.put("go northwest",     Action.NORTHWEST);
+        commandOne.put("walk northwest",   Action.NORTHWEST);
+        commandOne.put("exit northwest",   Action.NORTHWEST);
+        commandOne.put("nw",               Action.NORTHWEST);
+        commandOne.put("go nw",            Action.NORTHWEST);
+        commandOne.put("walk nw",          Action.NORTHWEST);
+        commandOne.put("exit nw",          Action.NORTHWEST);
 
-        commandOne.put("southeast",        Action.EXIT_SOUTHEAST);
-        commandOne.put("go southeast",     Action.EXIT_SOUTHEAST);
-        commandOne.put("walk southeast",   Action.EXIT_SOUTHEAST);
-        commandOne.put("exit southeast",   Action.EXIT_SOUTHEAST);
-        commandOne.put("se",               Action.EXIT_SOUTHEAST);
-        commandOne.put("go se",            Action.EXIT_SOUTHEAST);
-        commandOne.put("walk se",          Action.EXIT_SOUTHEAST);
-        commandOne.put("exit se",          Action.EXIT_SOUTHEAST);
+        commandOne.put("southeast",        Action.SOUTHEAST);
+        commandOne.put("go southeast",     Action.SOUTHEAST);
+        commandOne.put("walk southeast",   Action.SOUTHEAST);
+        commandOne.put("exit southeast",   Action.SOUTHEAST);
+        commandOne.put("se",               Action.SOUTHEAST);
+        commandOne.put("go se",            Action.SOUTHEAST);
+        commandOne.put("walk se",          Action.SOUTHEAST);
+        commandOne.put("exit se",          Action.SOUTHEAST);
 
-        commandOne.put("southwest",        Action.EXIT_SOUTHWEST);
-        commandOne.put("go southwest",     Action.EXIT_SOUTHWEST);
-        commandOne.put("walk southwest",   Action.EXIT_SOUTHWEST);
-        commandOne.put("exit southwest",   Action.EXIT_SOUTHWEST);
-        commandOne.put("sw",               Action.EXIT_SOUTHWEST);
-        commandOne.put("go sw",            Action.EXIT_SOUTHWEST);
-        commandOne.put("walk sw",          Action.EXIT_SOUTHWEST);
-        commandOne.put("exit sw",          Action.EXIT_SOUTHWEST);
+        commandOne.put("southwest",        Action.SOUTHWEST);
+        commandOne.put("go southwest",     Action.SOUTHWEST);
+        commandOne.put("walk southwest",   Action.SOUTHWEST);
+        commandOne.put("exit southwest",   Action.SOUTHWEST);
+        commandOne.put("sw",               Action.SOUTHWEST);
+        commandOne.put("go sw",            Action.SOUTHWEST);
+        commandOne.put("walk sw",          Action.SOUTHWEST);
+        commandOne.put("exit sw",          Action.SOUTHWEST);
 
-		commandOne.put("up",	     Action.EXIT_UP);
-		commandOne.put("go up",	     Action.EXIT_UP);
-		commandOne.put("exit up",	 Action.EXIT_UP);
-		commandOne.put("u",	         Action.EXIT_UP);
-		commandOne.put("go u",	     Action.EXIT_UP);
-		commandOne.put("exit u",	 Action.EXIT_UP);
+		commandOne.put("up",	     Action.UP);
+		commandOne.put("go up",	     Action.UP);
+		commandOne.put("exit up",	 Action.UP);
+		commandOne.put("u",	         Action.UP);
+		commandOne.put("go u",	     Action.UP);
+		commandOne.put("exit u",	 Action.UP);
 
-		commandOne.put("down",       Action.EXIT_DOWN);
-		commandOne.put("go down",    Action.EXIT_DOWN);
-		commandOne.put("exit down",  Action.EXIT_DOWN);
-		commandOne.put("d",          Action.EXIT_DOWN);
-		commandOne.put("go d",       Action.EXIT_DOWN);
-		commandOne.put("exit d",     Action.EXIT_DOWN);
+		commandOne.put("down",       Action.DOWN);
+		commandOne.put("go down",    Action.DOWN);
+		commandOne.put("exit down",  Action.DOWN);
+		commandOne.put("d",          Action.DOWN);
+		commandOne.put("go d",       Action.DOWN);
+		commandOne.put("exit d",     Action.DOWN);
 
 		commandOne.put("quit",  Action.QUIT);
 		commandOne.put("q",     Action.QUIT);
