@@ -217,16 +217,16 @@ public final class Game {
         northOfHouse.addExit(Action.NORTH, house_north_forestpath);
         northOfHouse.addExit(Action.EAST, house_north_behind);
         northOfHouse.addExit(Action.SOUTHEAST, house_north_behind);
-        northOfHouse.addExit(Action.WEST, house_west_north);
         northOfHouse.addExit(Action.SOUTHWEST, house_west_north);
+        northOfHouse.addExit(Action.WEST, house_west_north);
 
 
         Room behindHouse = new Room("Behind House", GameStrings.DESC_BEHIND_HOUSE, Location.BEHIND_HOUSE);
         behindHouse.addExit(Action.NORTH, house_north_behind);
         behindHouse.addExit(Action.NORTHWEST, house_north_behind);
+        behindHouse.addExit(Action.EAST, house_behind_clearingE);
         behindHouse.addExit(Action.SOUTH, house_behind_south);
         behindHouse.addExit(Action.SOUTHWEST, house_behind_south);
-        behindHouse.addExit(Action.EAST, house_behind_clearingE);
         behindHouse.addExit(Action.WEST, house_behind_kitchen);
 
 
@@ -253,35 +253,71 @@ public final class Game {
         Room forestPath = new Room("Forest Path", GameStrings.DESC_FOREST_PATH, Location.FOREST_PATH);
         forestPath.addExit(Action.NORTH, forestpath_clearingN);
         forestPath.addExit(Action.EAST, forestpath_forestE);
-        forestPath.addExit(Action.WEST, forestpath_forestW);
         forestPath.addExit(Action.SOUTH, house_north_forestpath);
+        forestPath.addExit(Action.WEST, forestpath_forestW);
         forestPath.addExit(Action.UP, forestpath_uptree);
 
         Room upTree = new Room("Up a Tree", GameStrings.DESC_UP_TREE, Location.UP_TREE);
+        upTree.addExit(Action.DOWN, forestpath_uptree);
 
         Room forestWest = new Room("Forest", GameStrings.DESC_FOREST_WEST, Location.FOREST_WEST);
+        forestWest.addExit(Action.NORTH, clearingN_forestW);
+        forestWest.addExit(Action.EAST, forestpath_forestW);
+        forestWest.addExit(Action.SOUTH, forestS_forestW);
 
         Room forestEast = new Room("Forest", GameStrings.DESC_FOREST_EAST, Location.FOREST_EAST);
+        forestEast.addExit(Action.NORTHWEST, clearingN_forestE);
+        forestEast.addExit(Action.EAST, forestE_forestNE);
+        forestEast.addExit(Action.SOUTH, forestE_clearingE);
+        forestEast.addExit(Action.WEST, forestpath_forestE);
 
         Room forestNortheast = new Room("Forest", GameStrings.DESC_FOREST_NORTHEAST, Location.FOREST_NORTHEAST);
+        forestNortheast.addExit(Action.NORTH, forestE_forestNE);
+        forestNortheast.addExit(Action.SOUTH, forestE_forestNE);
+        forestNortheast.addExit(Action.WEST, forestE_forestNE);
+        forestNortheast.addFailMessage(Action.EAST, GameStrings.FOREST_NE_FAIL_1);
 
         Room forestSouth = new Room("Forest", GameStrings.DESC_FOREST_SOUTH, Location.FOREST_SOUTH);
+        forestSouth.addExit(Action.NORTH, clearingE_forestS);
+        forestSouth.addExit(Action.EAST, forestS_canyon);
+        forestSouth.addExit(Action.WEST, forestS_forestW);
+        forestSouth.addExit(Action.NORTHWEST, house_south_forestS);
+
 
         Room clearingNorth = new Room("Clearing", GameStrings.DESC_CLEARING_NORTH, Location.CLEARING_NORTH);
+        clearingNorth.addExit(Action.EAST, clearingN_forestE);
+        clearingNorth.addExit(Action.SOUTH, forestpath_clearingN);
+        clearingNorth.addExit(Action.WEST, clearingN_forestW);
 
         Room clearingEast = new Room("Clearing", GameStrings.DESC_CLEARING_EAST, Location.CLEARING_EAST);
+        clearingEast.addExit(Action.NORTH, forestE_clearingE);
+        clearingEast.addExit(Action.EAST, forestE_clearingE);
+        clearingEast.addExit(Action.SOUTH, clearingE_forestS);
+        clearingEast.addExit(Action.WEST, forestE_clearingE);
+
 
         Room canyonView = new Room("Canyon View", GameStrings.DESC_CANYON_VIEW, Location.CANYON_VIEW);
+        canyonView.addExit(Action.NORTHWEST, clearingE_canyon);
+        canyonView.addExit(Action.WEST, forestS_canyon);
+        canyonView.addExit(Action.DOWN, canyon_ledge);
 
         Room rockyLedge = new Room("Rocky Ledge", GameStrings.DESC_ROCKY_LEDGE, Location.ROCKY_LEDGE);
+        rockyLedge.addExit(Action.UP, canyon_ledge);
+        rockyLedge.addExit(Action.DOWN, ledge_bottom);
 
         Room canyonBottom = new Room("Canyon Bottom", GameStrings.DESC_CANYON_BOTTOM, Location.CANYON_BOTTOM);
+        canyonBottom.addExit(Action.UP, ledge_bottom);
+        canyonBottom.addExit(Action.NORTH, canyon_bottom_rainbow);
 
         Room endOfRainbow = new Room("End of Rainbow", GameStrings.DESC_END_OF_RAINBOW, Location.END_OF_RAINBOW);
+        endOfRainbow.addExit(Action.SOUTHWEST, canyon_bottom_rainbow);
 
         Room stoneBarrow = new Room("Stone Barrow", GameStrings.DESC_STONE_BARROW, Location.STONE_BARROW);
+        stoneBarrow.addExit(Action.NORTHEAST, house_west_barrow);
+        stoneBarrow.addExit(Action.WEST, barrowInside);
 
         Room insideStoneBarrow = new Room("Inside Stone Barrow", GameStrings.DESC_INSIDE_STONE_BARROW, Location.INSIDE_STONE_BARROW);
+        insideStoneBarrow.addExit(Action.EAST, barrowInside);
 
 
         state.worldMap.put(westOfHouse.roomID, westOfHouse);

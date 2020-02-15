@@ -32,6 +32,7 @@ class Room {
 		this.name = name;
 		this.description = desc;
 		this.roomID = loc;
+		this.firstVisit = true;
 		this.exits = new HashMap<Action, Passage>();
 		this.failMessages = new HashMap<Action, String>();
 	}
