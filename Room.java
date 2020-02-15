@@ -3,7 +3,7 @@ import java.util.HashMap;
 class Room {
 	
 	public final String name;
-	public final String description;
+	private String description;
 	public final Location roomID;
 
 	public boolean firstVisit;
@@ -49,6 +49,16 @@ class Room {
 
 	public void setDark() { darkness = true; }
 	public boolean isDark() { return darkness; }
+
+	public void setDescription(String s)
+	{
+		this.description = s;
+	}
+
+	public String getDescription()
+	{
+		return this.description;
+	}
 
 
 

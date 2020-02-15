@@ -100,6 +100,8 @@ public final class Game {
 
 	private static Location initialLocation = Location.WEST_OF_HOUSE;
 
+    private static final int LINE_LENGTH = 50;
+
 
 	public static void main(String[] args)
 	{
@@ -238,7 +240,7 @@ public final class Game {
         southOfHouse.addExit(Action.SOUTH, house_south_forestS);
 
 
-        Room kitchen = new Room("Kitchen", GameStrings.DESC_KITCHEN, Location.KITCHEN);
+        Room kitchen = new Room("Kitchen", GameStrings.DESC_KITCHEN_WINDOW_CLOSED, Location.KITCHEN);
         kitchen.addExit(Action.EAST, house_behind_kitchen);
         kitchen.addExit(Action.WEST, kitchen_livingroom);
         kitchen.addExit(Action.UP, kitchen_attic);
@@ -247,7 +249,7 @@ public final class Game {
         attic.addExit(Action.DOWN, kitchen_attic);
         attic.setDark();
 
-        Room livingRoom = new Room("Living Room", GameStrings.DESC_LIVING_ROOM, Location.LIVING_ROOM);
+        Room livingRoom = new Room("Living Room", GameStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED, Location.LIVING_ROOM);
         livingRoom.addExit(Action.EAST, kitchen_livingroom);
 
         Room forestPath = new Room("Forest Path", GameStrings.DESC_FOREST_PATH, Location.FOREST_PATH);
@@ -387,8 +389,10 @@ public final class Game {
 		state.worldMap.get(initialLocation).firstVisit = false;
 
 		// Beginning text of the game.
-		outputLine();
+        outputLine();
+        output(state.worldMap.get(initialLocation).name);
 		output(GameStrings.DESC_WEST_OF_HOUSE);
+        outputLine();
 		
 	}
 
@@ -777,6 +781,7 @@ public final class Game {
 
 			case LOOK:
 			{
+                output(curRoom.name);
 				curRoom.lookAround(state);
 
 			} break;
@@ -886,6 +891,7 @@ public final class Game {
 		}
 
 		state.addTurn();
+        outputLine();
 
 	}
 
@@ -1032,7 +1038,26 @@ public final class Game {
 	public static void prompt() { System.out.print(">> "); }
 	public static void outputLine() { System.out.println(); }
 	public static void output() { System.out.println(); }
-	public static void output(String s) { System.out.println(s); }
+	public static void output(String s)
+    {
+        String[] words = s.split(" ");
+        int count = 0;
+
+        for (int i = 0; i < words.length; ++i)
+        {
+            if (count > 50)
+            {
+                if (words[i].charAt(0) != '\n')
+                    System.out.print("\n");
+                count = 0;
+            }
+
+            System.out.print(words[i] + " ");
+            count += words[i].length();
+        }
+
+        System.out.print("\n");
+    }
 
 	private static String getPlayerText()
 	{
