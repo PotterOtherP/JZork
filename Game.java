@@ -358,7 +358,6 @@ public final class Game {
 
 		
 
-		createActions();
 
 
         ActivateMethod dummyMethod = (GameState gs, Action act) -> {};
@@ -1005,6 +1004,8 @@ public final class Game {
 
 		commandTwo.put("take", Action.TAKE);
 		commandTwo.put("pick up", Action.TAKE);
+        commandTwo.put("get", Action.TAKE);
+        commandTwo.put("acquire", Action.TAKE);
 		commandTwo.put("drop", Action.DROP);
 		commandTwo.put("open", Action.OPEN);
 		commandTwo.put("close", Action.CLOSE);
