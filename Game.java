@@ -137,14 +137,14 @@ public final class Game {
 		fillDictionary();
 
 		// Create all the objects, then add them to the lists, then add their methods
+
+        // Dummy objects
 		Feature nullFeature = new Feature();
-
 		Item nullItem = new Item();
-
 		Actor nullActor = new Actor();
+		Passage nullPassage = new Passage();
 
         // Passages: 
-		Passage nullPassage = new Passage();
 
         // West of House
         Passage house_west_north = new Passage(Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE);
@@ -201,9 +201,6 @@ public final class Game {
 
         // Stone Barrow
         Passage barrowInside = new Passage(Location.STONE_BARROW, Location.INSIDE_STONE_BARROW);
-
-
-
 
 
         // Rooms: Name, description, ID
@@ -349,15 +346,49 @@ public final class Game {
         state.worldMap.put(insideStoneBarrow.roomID, insideStoneBarrow);
 
 
-		// 
+		/* Features - Overworld
+         * 
+         * Mailbox (West of House)
+         * Window (Kitchen, Behind House)
+         * Carpet (Living Room)
+         * Trophy Case (Living Room)
+         * Trap Door (Living Room)
+         * Pile of Leaves(Clearing North)
+         *
+         */
 
+
+		state.featureList.put(nullFeature.name, nullFeature);	
+
+        /* Items - Overworld
+         * 
+         * Rope (Attic)
+         * Rusty Knife (Attic)
+         * Glass Bottle (Kitchen)
+         * Brown Sack (Kitchen)
+         * Brass Lantern (Living Room)
+         * Elvish Sword (Living Room)
+         * Jewel-Encrusted Egg (Up a Tree)
+         * Small Bird's Nest (Up a Tree)
+         *
+         */
 		state.itemList.put(nullItem.name, nullItem);
-		state.featureList.put(nullFeature.name, nullFeature);
-	
+
+
+        /* Actors - Underworld
+         *
+         * Troll
+         * Thief
+         * Cyclops
+         *
+         */
 		state.actorList.put(nullActor.name, nullActor);
 
 		
 
+
+
+        
 
 
         ActivateMethod dummyMethod = (GameState gs, Action act) -> {};
@@ -374,14 +405,7 @@ public final class Game {
 
 	
 
-		// Game objects complete. Start setting up the game
-
-
-
-	
-
-		
-
+		// Object creation complete. Start setting up the game
 
 		// Put the player in the starting location
 		state.setPlayerLocation(initialLocation);
