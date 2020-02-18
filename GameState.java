@@ -5,6 +5,9 @@ class GameState {
 	// gameplay information
 	public int turns;
 
+	// game events
+	public boolean mailboxOpen;
+
 
 	// player attributes
 	public Location playerLocation;
@@ -37,6 +40,8 @@ class GameState {
 	public HashMap<String, Actor> actorList;
 
 
+
+
 	// constructor
 	public GameState()
 	{
@@ -48,6 +53,8 @@ class GameState {
 		this.turns = 0;
 		this.playerLocation = Location.NULL_LOCATION;
 		this.playerPreviousLocation = Location.NULL_LOCATION;
+
+		this.mailboxOpen = false;
 		
 
 		worldMap = new HashMap<Location, Room>();
@@ -76,7 +83,7 @@ class GameState {
 		this.third = "";
 
 		this.playerAction = Action.NULL_ACTION;
-		this.type = ActionType.BLANK;
+		this.type = ActionType.NULL_ACTION_TYPE;
 		this.objectFeature = dummyFeature;
 		this.objectItem = dummyItem;
 		this.objectActor = dummyActor;

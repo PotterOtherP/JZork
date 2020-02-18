@@ -16,7 +16,7 @@ enum Location {
     STONE_BARROW, INSIDE_STONE_BARROW,
 
     BIRDS_NEST,
-    MAILBOX,
+    INSIDE_MAILBOX,
 	PLAYER_INVENTORY,
     INSIDE_TROPHY_CASE,
 	NULL_LOCATION
@@ -44,7 +44,6 @@ enum Action {
 	DOWN,
 	NULL_ACTION,
 	GODMODE_TOGGLE,
-	GIBBERISH,
 	QUIT,
 	VERBOSE,
 	PROFANITY,
@@ -54,6 +53,8 @@ enum Action {
 
 	TAKE,
 	DROP,
+    STORE,
+    PLACE,
 	SPEAK,
 	ACTIVATE,
 	RING,
@@ -73,10 +74,13 @@ enum Action {
 
 enum ActionType {
 
-	BLANK,
+	NULL_ACTION_TYPE,
 	REFLEXIVE,
 	DIRECT,
-	INDIRECT
+	INDIRECT,
+    EXIT,
+    TAKE_DROP,
+    OPEN_CLOSE
 }
 
 
@@ -84,17 +88,29 @@ enum ActionType {
 /**
  * This program is my attempt to replicate Zork I as closely as possible.
  *
- * @author Nathan Tryon January 2020
+ * @author Nathan Tryon January 2020 - 
  */
 public final class Game {
+
+    /* TODO
+     *
+     * Ambiguous words
+     * Create dictionary from existing lists
+     * Object presence strings
+     * New object type: Container
+     * List of currently actionable objects?
+     * Universal action methods in class definitions (take, put, open, read, etc)
+     *
+     */
 
 
 	private static boolean gameover = true;
 	private static boolean godmode = false;
 
-	private static HashMap<String, Action> commandOne = new HashMap<String, Action>();
-	private static HashMap<String, Action> commandTwo = new HashMap<String, Action>();
-	private static HashMap<String, Action> commandThree = new HashMap<String, Action>();
+
+
+    private static HashMap<String, Action> actions = new HashMap<String, Action>();
+	private static HashMap<Action, ActionType> actionTypes = new HashMap<Action, ActionType>();
 
 	private static ArrayList<String> dictionary = new ArrayList<String>();
 
@@ -356,9 +372,8 @@ public final class Game {
          * Pile of Leaves(Clearing North)
          *
          */
-
-
-		state.featureList.put(nullFeature.name, nullFeature);	
+        
+        Container mailbox = new Container("mailbox", Location.WEST_OF_HOUSE, 10, Location.INSIDE_MAILBOX);
 
         /* Items - Overworld
          * 
@@ -370,8 +385,13 @@ public final class Game {
          * Elvish Sword (Living Room)
          * Jewel-Encrusted Egg (Up a Tree)
          * Small Bird's Nest (Up a Tree)
+         * Leaflet (West of House)
          *
+         * Item: name, location, point value, weight
          */
+        Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX, 0, 0);
+
+        state.itemList.put(leaflet.name, leaflet);
 		state.itemList.put(nullItem.name, nullItem);
 
 
@@ -393,9 +413,21 @@ public final class Game {
 
         ActivateMethod dummyMethod = (GameState gs, Action act) -> {};
 
+        
 
-		
 
+        ActivateMethod leafletMethod = (GameState gs, Action act) -> {
+
+            switch(act)
+            {
+                case READ:
+                {
+                    output(GameStrings.LEAFLET_TEXT);
+                }
+            }
+
+
+        };
 		
 
 	
@@ -469,7 +501,7 @@ public final class Game {
 		String arg2 = "";
 		String arg3 = "";
 
-		for (String token : commandOne.keySet())
+		for (String token : actions.keySet())
 		{
 			
 			if (startsWith(token, playerText))
@@ -479,7 +511,7 @@ public final class Game {
 			}
 		}
 
-		for (String token : commandTwo.keySet())
+		for (String token : actions.keySet())
 		{
 			if (startsWith(token, playerText))
 			{
@@ -488,7 +520,7 @@ public final class Game {
 			}
 		}
 
-		for (String token : commandThree.keySet())
+		for (String token : actions.keySet())
 		{
 			if (startsWith(token, playerText))
 			{
@@ -591,9 +623,9 @@ public final class Game {
 		String third = state.third;
 
 		Action act = Action.NULL_ACTION;
-		if (commandOne.containsKey(first)) { act = commandOne.get(first); }
-		else if (commandTwo.containsKey(first)) { act = commandTwo.get(first); }
-		else if (commandThree.containsKey(first)) { act = commandThree.get(first); }
+		if (actions.containsKey(first)) { act = actions.get(first); }
+		else if (actions.containsKey(first)) { act = actions.get(first); }
+		else if (actions.containsKey(first)) { act = actions.get(first); }
 		else
 		{ 
 			return false;
@@ -603,7 +635,7 @@ public final class Game {
 
 
 		// Incomplete actions
-		if (commandTwo.containsKey(first) && second.isEmpty())
+		if (actions.containsKey(first) && second.isEmpty())
 		{
 			output("What do you want to " + first + "?");
 			String input = getPlayerText();
@@ -619,7 +651,7 @@ public final class Game {
 		}
 
 
-		if (commandThree.containsKey(first) && third.isEmpty())
+		if (actions.containsKey(first) && third.isEmpty())
 		{
 
 			if (second.isEmpty())
@@ -654,7 +686,7 @@ public final class Game {
 
 		switch(state.type)
 		{
-			case BLANK:
+			case NULL_ACTION_TYPE:
 			{
 
 			} break;
@@ -771,6 +803,7 @@ public final class Game {
 			case ATTACK:
 			case HIGH_FIVE:
 			case OPEN:
+            case CLOSE:
 			{
 				if (!objFeature.name.equals("null"))
 				{
@@ -923,133 +956,167 @@ public final class Game {
 
 	private static void createActions()
 	{
-		commandOne.put("north",       Action.NORTH);
-		commandOne.put("go north",    Action.NORTH);
-		commandOne.put("walk north",  Action.NORTH);
-		commandOne.put("exit north",  Action.NORTH);
-		commandOne.put("n",           Action.NORTH);
-		commandOne.put("go n",        Action.NORTH);
-		commandOne.put("walk n",      Action.NORTH);
-		commandOne.put("exit n",      Action.NORTH);
+        // Movement actions
+		actions.put("north",       Action.NORTH);
+		actions.put("go north",    Action.NORTH);
+		actions.put("walk north",  Action.NORTH);
+		actions.put("exit north",  Action.NORTH);
+		actions.put("n",           Action.NORTH);
+		actions.put("go n",        Action.NORTH);
+		actions.put("walk n",      Action.NORTH);
+		actions.put("exit n",      Action.NORTH);
 
-		commandOne.put("south",       Action.SOUTH);
-		commandOne.put("go south",    Action.SOUTH);
-		commandOne.put("walk south",  Action.SOUTH);
-		commandOne.put("exit south",  Action.SOUTH);
-		commandOne.put("s",           Action.SOUTH);
-		commandOne.put("go s",        Action.SOUTH);
-		commandOne.put("walk s",      Action.SOUTH);
-		commandOne.put("exit s",      Action.SOUTH);
+		actions.put("south",       Action.SOUTH);
+		actions.put("go south",    Action.SOUTH);
+		actions.put("walk south",  Action.SOUTH);
+		actions.put("exit south",  Action.SOUTH);
+		actions.put("s",           Action.SOUTH);
+		actions.put("go s",        Action.SOUTH);
+		actions.put("walk s",      Action.SOUTH);
+		actions.put("exit s",      Action.SOUTH);
 
-		commandOne.put("east",        Action.EAST);
-		commandOne.put("e",           Action.EAST);
-		commandOne.put("go east",     Action.EAST);
-		commandOne.put("walk east",   Action.EAST);
-		commandOne.put("exit east",   Action.EAST);
-		commandOne.put("go e",        Action.EAST);
-		commandOne.put("walk e",      Action.EAST);
-		commandOne.put("exit e",      Action.EAST);
+		actions.put("east",        Action.EAST);
+		actions.put("e",           Action.EAST);
+		actions.put("go east",     Action.EAST);
+		actions.put("walk east",   Action.EAST);
+		actions.put("exit east",   Action.EAST);
+		actions.put("go e",        Action.EAST);
+		actions.put("walk e",      Action.EAST);
+		actions.put("exit e",      Action.EAST);
 
-		commandOne.put("west",        Action.WEST);
-		commandOne.put("go west",     Action.WEST);
-		commandOne.put("walk west",   Action.WEST);
-		commandOne.put("exit west",   Action.WEST);
-		commandOne.put("w",           Action.WEST);
-		commandOne.put("go w",        Action.WEST);
-		commandOne.put("walk w",      Action.WEST);
-		commandOne.put("exit w",      Action.WEST);
+		actions.put("west",        Action.WEST);
+		actions.put("go west",     Action.WEST);
+		actions.put("walk west",   Action.WEST);
+		actions.put("exit west",   Action.WEST);
+		actions.put("w",           Action.WEST);
+		actions.put("go w",        Action.WEST);
+		actions.put("walk w",      Action.WEST);
+		actions.put("exit w",      Action.WEST);
 
-        commandOne.put("northeast",        Action.NORTHEAST);
-        commandOne.put("go northeast",     Action.NORTHEAST);
-        commandOne.put("walk northeast",   Action.NORTHEAST);
-        commandOne.put("exit northeast",   Action.NORTHEAST);
-        commandOne.put("ne",               Action.NORTHEAST);
-        commandOne.put("go ne",            Action.NORTHEAST);
-        commandOne.put("walk ne",          Action.NORTHEAST);
-        commandOne.put("exit ne",          Action.NORTHEAST);
+        actions.put("northeast",        Action.NORTHEAST);
+        actions.put("go northeast",     Action.NORTHEAST);
+        actions.put("walk northeast",   Action.NORTHEAST);
+        actions.put("exit northeast",   Action.NORTHEAST);
+        actions.put("ne",               Action.NORTHEAST);
+        actions.put("go ne",            Action.NORTHEAST);
+        actions.put("walk ne",          Action.NORTHEAST);
+        actions.put("exit ne",          Action.NORTHEAST);
 
-        commandOne.put("northwest",        Action.NORTHWEST);
-        commandOne.put("go northwest",     Action.NORTHWEST);
-        commandOne.put("walk northwest",   Action.NORTHWEST);
-        commandOne.put("exit northwest",   Action.NORTHWEST);
-        commandOne.put("nw",               Action.NORTHWEST);
-        commandOne.put("go nw",            Action.NORTHWEST);
-        commandOne.put("walk nw",          Action.NORTHWEST);
-        commandOne.put("exit nw",          Action.NORTHWEST);
+        actions.put("northwest",        Action.NORTHWEST);
+        actions.put("go northwest",     Action.NORTHWEST);
+        actions.put("walk northwest",   Action.NORTHWEST);
+        actions.put("exit northwest",   Action.NORTHWEST);
+        actions.put("nw",               Action.NORTHWEST);
+        actions.put("go nw",            Action.NORTHWEST);
+        actions.put("walk nw",          Action.NORTHWEST);
+        actions.put("exit nw",          Action.NORTHWEST);
 
-        commandOne.put("southeast",        Action.SOUTHEAST);
-        commandOne.put("go southeast",     Action.SOUTHEAST);
-        commandOne.put("walk southeast",   Action.SOUTHEAST);
-        commandOne.put("exit southeast",   Action.SOUTHEAST);
-        commandOne.put("se",               Action.SOUTHEAST);
-        commandOne.put("go se",            Action.SOUTHEAST);
-        commandOne.put("walk se",          Action.SOUTHEAST);
-        commandOne.put("exit se",          Action.SOUTHEAST);
+        actions.put("southeast",        Action.SOUTHEAST);
+        actions.put("go southeast",     Action.SOUTHEAST);
+        actions.put("walk southeast",   Action.SOUTHEAST);
+        actions.put("exit southeast",   Action.SOUTHEAST);
+        actions.put("se",               Action.SOUTHEAST);
+        actions.put("go se",            Action.SOUTHEAST);
+        actions.put("walk se",          Action.SOUTHEAST);
+        actions.put("exit se",          Action.SOUTHEAST);
 
-        commandOne.put("southwest",        Action.SOUTHWEST);
-        commandOne.put("go southwest",     Action.SOUTHWEST);
-        commandOne.put("walk southwest",   Action.SOUTHWEST);
-        commandOne.put("exit southwest",   Action.SOUTHWEST);
-        commandOne.put("sw",               Action.SOUTHWEST);
-        commandOne.put("go sw",            Action.SOUTHWEST);
-        commandOne.put("walk sw",          Action.SOUTHWEST);
-        commandOne.put("exit sw",          Action.SOUTHWEST);
+        actions.put("southwest",        Action.SOUTHWEST);
+        actions.put("go southwest",     Action.SOUTHWEST);
+        actions.put("walk southwest",   Action.SOUTHWEST);
+        actions.put("exit southwest",   Action.SOUTHWEST);
+        actions.put("sw",               Action.SOUTHWEST);
+        actions.put("go sw",            Action.SOUTHWEST);
+        actions.put("walk sw",          Action.SOUTHWEST);
+        actions.put("exit sw",          Action.SOUTHWEST);
 
-		commandOne.put("up",	     Action.UP);
-		commandOne.put("go up",	     Action.UP);
-		commandOne.put("exit up",	 Action.UP);
-		commandOne.put("u",	         Action.UP);
-		commandOne.put("go u",	     Action.UP);
-		commandOne.put("exit u",	 Action.UP);
+		actions.put("up",	     Action.UP);
+		actions.put("go up",	     Action.UP);
+		actions.put("exit up",	 Action.UP);
+		actions.put("u",	         Action.UP);
+		actions.put("go u",	     Action.UP);
+		actions.put("exit u",	 Action.UP);
 
-		commandOne.put("down",       Action.DOWN);
-		commandOne.put("go down",    Action.DOWN);
-		commandOne.put("exit down",  Action.DOWN);
-		commandOne.put("d",          Action.DOWN);
-		commandOne.put("go d",       Action.DOWN);
-		commandOne.put("exit d",     Action.DOWN);
+		actions.put("down",       Action.DOWN);
+		actions.put("go down",    Action.DOWN);
+		actions.put("exit down",  Action.DOWN);
+		actions.put("d",          Action.DOWN);
+		actions.put("go d",       Action.DOWN);
+		actions.put("exit d",     Action.DOWN);
 
-		commandOne.put("quit",  Action.QUIT);
-		commandOne.put("q",     Action.QUIT);
-		commandOne.put("jump",  Action.JUMP);
+        // Simple actions: no interaction with game objects
+		actions.put("quit",  Action.QUIT);
+		actions.put("q",     Action.QUIT);
+		actions.put("jump",  Action.JUMP);
+		actions.put("look",  Action.LOOK);
+		actions.put("look around",  Action.LOOK);
+		actions.put("l",     Action.LOOK);
+		actions.put("inventory", Action.INVENTORY);
+		actions.put("i",         Action.INVENTORY);
+		actions.put("fuck",  Action.PROFANITY);
+		actions.put("shit",  Action.PROFANITY);
+		actions.put("shout", Action.SHOUT);
+		actions.put("yell",  Action.SHOUT);
+		actions.put("scream",  Action.SHOUT);
+		actions.put("wait", Action.WAIT);
+		actions.put("say", Action.SPEAK);
 
-		commandOne.put("look",  Action.LOOK);
-		commandOne.put("look around",  Action.LOOK);
-		commandOne.put("l",     Action.LOOK);
 
-		commandOne.put("inventory", Action.INVENTORY);
-		commandOne.put("i",         Action.INVENTORY);
-		commandOne.put("fuck",  Action.PROFANITY);
-		commandOne.put("shit",  Action.PROFANITY);
-		commandOne.put("shout", Action.SHOUT);
-		commandOne.put("yell",  Action.SHOUT);
-		commandOne.put("scream",  Action.SHOUT);
-		commandOne.put("wait", Action.WAIT);
+        // General object interaction actions
+        actions.put("take", Action.TAKE);
+        actions.put("pick up", Action.TAKE);
+        actions.put("get", Action.TAKE);
+        actions.put("acquire", Action.TAKE);
+        actions.put("drop", Action.DROP);
+        actions.put("open", Action.OPEN);
+        actions.put("close", Action.CLOSE);
+        actions.put("lock", Action.LOCK);
+        actions.put("read", Action.READ);
+        actions.put("unlock", Action.UNLOCK);
+        actions.put("lock", Action.LOCK);
 
-		commandTwo.put("take", Action.TAKE);
-		commandTwo.put("pick up", Action.TAKE);
-        commandTwo.put("get", Action.TAKE);
-        commandTwo.put("acquire", Action.TAKE);
-		commandTwo.put("drop", Action.DROP);
-		commandTwo.put("open", Action.OPEN);
-		commandTwo.put("close", Action.CLOSE);
-		commandTwo.put("lock", Action.LOCK);
-		commandTwo.put("say", Action.SPEAK);
-		commandTwo.put("ring", Action.RING);
-		commandTwo.put("play", Action.PLAY);
-		commandTwo.put("read", Action.READ);
-		commandTwo.put("kick", Action.KICK);
-		commandTwo.put("hit", Action.ATTACK);
-		commandTwo.put("attack", Action.ATTACK);
-		commandTwo.put("punch", Action.ATTACK);
-		commandTwo.put("slap", Action.SLAP);
-		commandTwo.put("highfive", Action.HIGH_FIVE);
-		commandTwo.put("high five", Action.HIGH_FIVE);
+        // Combat actions
+        actions.put("kick", Action.KICK);
+        actions.put("hit", Action.ATTACK);
+        actions.put("attack", Action.ATTACK);
+        actions.put("punch", Action.ATTACK);
+        actions.put("slap", Action.SLAP);
 
-		commandThree.put("open", Action.OPEN);
-		commandThree.put("unlock", Action.UNLOCK);
-		commandThree.put("lock", Action.LOCK);
-		commandThree.put("tie", Action.TIE);
+
+        // Special actions
+        actions.put("play", Action.PLAY);
+		actions.put("ring", Action.RING);
+        actions.put("highfive", Action.HIGH_FIVE);
+        actions.put("high five", Action.HIGH_FIVE);
+		actions.put("tie", Action.TIE);
+
+
+        // Assigning action types
+
+        actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
+
+        actionTypes.put(Action.NORTH, ActionType.EXIT);
+        actionTypes.put(Action.SOUTH, ActionType.EXIT);
+        actionTypes.put(Action.EAST, ActionType.EXIT);
+        actionTypes.put(Action.WEST, ActionType.EXIT);
+        actionTypes.put(Action.NORTHEAST, ActionType.EXIT);
+        actionTypes.put(Action.NORTHWEST, ActionType.EXIT);
+        actionTypes.put(Action.SOUTHEAST, ActionType.EXIT);
+        actionTypes.put(Action.SOUTHWEST, ActionType.EXIT);
+        actionTypes.put(Action.UP, ActionType.EXIT);
+        actionTypes.put(Action.DOWN, ActionType.EXIT);
+
+        actionTypes.put(Action.TAKE, ActionType.TAKE_DROP);
+        actionTypes.put(Action.DROP, ActionType.TAKE_DROP);
+        actionTypes.put(Action.STORE, ActionType.TAKE_DROP);
+        actionTypes.put(Action.PLACE, ActionType.TAKE_DROP);
+
+        actionTypes.put(Action.OPEN, ActionType.OPEN_CLOSE);
+        actionTypes.put(Action.CLOSE, ActionType.OPEN_CLOSE);
+        actionTypes.put(Action.LOCK, ActionType.OPEN_CLOSE);
+        actionTypes.put(Action.UNLOCK, ActionType.OPEN_CLOSE);
+
+
+
 	}
 
 	private static void fillDictionary()

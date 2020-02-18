@@ -82,6 +82,14 @@ class GameStrings {
 
 	public static final String FOREST_NE_FAIL_1 = "The mountains are impassable.";
 
+	public static final String MAILBOX_OPEN = "You open the mailbox.";
+	public static final String MAILBOX_OPEN_FAIL = "The mailbox is already open.";
+	public static final String MAILBOX_CLOSE = "You close the mailbox.";
+	public static final String MAILBOX_CLOSE_FAIL = "The mailbox is already closed.";
+
+	public static final String LEAFLET_TEXT = "WELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore "
+		+ "some of the most amazing territory ever seen by mortals. No computer should be without one!";
+
 
 
 	public static final String PROFANITY_ONE = "There's no need for that kind of language.";
@@ -95,9 +103,9 @@ class GameStrings {
 	"k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
 	"u", "v", "w", "x", "y", "z", "ne", "nw", "se", "sw",
 	"an", "around", "at", "attach", "attack",
-	"bell", "close", "door", "down", "drop", "east", "egg", "exit", "five",
+	"bell", "box", "close", "door", "down", "drop", "east", "egg", "exit", "five",
 	"fuck", "go", "hand", "high", "highfive", "hit", "inventory", "jump", "juniper",
-	"key", "kick", "lock", "look", "north", "northeast", "northwest", "note", "open", "passage", "piano", "pick",
+	"key", "kick", "lock", "look", "mailbox", "north", "northeast", "northwest", "note", "open", "passage", "piano", "pick",
 	"play", "pull", "punch", "quit", "read", "ring", "room", "rope", "say", "scream",
 	"shit", "shout", "slap", "south", "southeast", "southwest", "take", "the", "tie", "to", "unlock", "up", "wait",
 	"walk", "west", "with", "wizard", "yell"};
