@@ -123,6 +123,7 @@ public final class Game {
     private static HashMap<String, ObjectType> currentObjects = new HashMap<String, ObjectType>();
 
 	private static ArrayList<String> dictionary = new ArrayList<String>();
+    private static ArrayList<String> objectStrings = new ArrayList<String>();
 
 	private static Location initialLocation = Location.WEST_OF_HOUSE;
 
@@ -441,7 +442,8 @@ public final class Game {
 
 		
 
-	
+	   fillObjectStringList(state);
+
 
 		// Object creation complete. Start setting up the game
 
@@ -464,8 +466,13 @@ public final class Game {
 
 	private static void parsePlayerInput(GameState state, String playerText)
 	{
+        /* ACTION OBJECT OBJECT.
 
+        Not assigning direct or indirect objects in this method, or validating anything else.
+        Just checking for 1 to 3 game-recognized phrases. Look for one, remove it, if there is more in the string,
+        check for another phrase.
 
+        */
 		state.resetInput();
 
 		
@@ -536,6 +543,11 @@ public final class Game {
             case TAKE_DROP:
             {
                 state.second = playerText;
+
+                if (objectStrings.contains(state.second))
+                {
+                    output("Direct object is " + state.second);
+                }
 
                 if (state.itemList.containsKey(playerText))
                 {
@@ -1065,6 +1077,28 @@ public final class Game {
 			dictionary.add(GameStrings.GAME_WORDS[i]);
 		}
 	}
+
+    private static void fillObjectStringList(GameState state)
+    {
+        for (Feature f : state.featureList.values())
+        {
+            objectStrings.add(f.name);
+        }
+
+        for (Item i : state.itemList.values())
+        {
+            objectStrings.add(i.name);
+        }
+        for (Actor a : state.actorList.values())
+        {
+            objectStrings.add(a.name);
+        }
+
+        for (Container c : state.containerList.values())
+        {
+            objectStrings.add(c.name);
+        }
+    }
 
 	public static void prompt() { System.out.print(">> "); }
 	public static void outputLine() { System.out.println(); }
