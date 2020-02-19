@@ -3,19 +3,14 @@ import java.util.ArrayList;
 class Container extends GameObject {
 
     public final Location containerID;
+    public final ObjectType type = ObjectType.CONTAINER;
     private ArrayList<Item> inventory;
 
 
     private int capacity;
+    private boolean open;
+    private boolean locked;
 
-
-    public Container()
-    {
-        super();
-        capacity = 0;
-        containerID = Location.NULL_LOCATION;
-        inventory = new ArrayList<Item>();    
-    }
 
     
     public Container(String name, Location loc, int cap, Location id)

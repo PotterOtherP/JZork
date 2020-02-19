@@ -74,13 +74,22 @@ enum Action {
 
 enum ActionType {
 
-	NULL_ACTION_TYPE,
+	NULL_TYPE,
 	REFLEXIVE,
 	DIRECT,
 	INDIRECT,
     EXIT,
     TAKE_DROP,
     OPEN_CLOSE
+}
+
+enum ObjectType {
+
+    NULL_TYPE,
+    FEATURE,
+    ITEM,
+    ACTOR,
+    CONTAINER
 }
 
 
@@ -94,7 +103,7 @@ public final class Game {
 
     /* TODO
      *
-     * Ambiguous words
+     * Ambiguous words - Alternate names for objects
      * Create dictionary from existing lists
      * Object presence strings
      * New object type: Container
@@ -111,6 +120,7 @@ public final class Game {
 
     private static HashMap<String, Action> actions = new HashMap<String, Action>();
 	private static HashMap<Action, ActionType> actionTypes = new HashMap<Action, ActionType>();
+    private static HashMap<String, ObjectType> currentObjects = new HashMap<String, ObjectType>();
 
 	private static ArrayList<String> dictionary = new ArrayList<String>();
 
@@ -123,6 +133,8 @@ public final class Game {
 	{
 
 		GameState gameState = new GameState();
+
+
 		String playerText = "";
 
 		
@@ -154,11 +166,7 @@ public final class Game {
 
 		// Create all the objects, then add them to the lists, then add their methods
 
-        // Dummy objects
-		Feature nullFeature = new Feature();
-		Item nullItem = new Item();
-		Actor nullActor = new Actor();
-		Passage nullPassage = new Passage();
+
 
         // Passages: 
 
@@ -389,10 +397,9 @@ public final class Game {
          *
          * Item: name, location, point value, weight
          */
-        Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX, 0, 0);
+        Item leaflet = new Item("leaflet", Location.WEST_OF_HOUSE, 0, 0);
 
         state.itemList.put(leaflet.name, leaflet);
-		state.itemList.put(nullItem.name, nullItem);
 
 
         /* Actors - Underworld
@@ -402,7 +409,6 @@ public final class Game {
          * Cyclops
          *
          */
-		state.actorList.put(nullActor.name, nullActor);
 
 		
 
@@ -429,7 +435,7 @@ public final class Game {
 
         };
 		
-
+        leaflet.setMethod(leafletMethod);
 	
 
 
@@ -459,11 +465,6 @@ public final class Game {
 	private static void parsePlayerInput(GameState state, String playerText)
 	{
 
-		/* Takes whatever the player entered and sets three strings in the gamestate:
-		   first (action), second (object 1), third (object 2).
-		   Also sets the number of action arguments (non-empty strings).
-
-		*/
 
 		state.resetInput();
 
@@ -481,9 +482,11 @@ public final class Game {
 		}
 
 		// Make sure we're deleting the words, not portions of other words...
+        playerText = " " + playerText + " ";
 		playerText = playerText.replaceAll(" the ", " ");
 		playerText = playerText.replaceAll(" to ", " ");
 		playerText = playerText.replaceAll(" with ", " ");
+        playerText = playerText.trim();
 
 		// get rid of extra spaces
 		while (playerText.contains("  "))
@@ -491,120 +494,87 @@ public final class Game {
 			playerText = playerText.replaceAll("  ", " ");		
 		}
 
-		/* Check for an action. If the action is found, set it and trim it
-		   from the beginning of the string. If not, check if the first word
-		   is recognized by the game.
 
-		*/
 
-		String arg1 = "";
-		String arg2 = "";
-		String arg3 = "";
-
+        // See if the player text starts with an action.
 		for (String token : actions.keySet())
 		{
 			
 			if (startsWith(token, playerText))
 			{
-				arg1 = token;
-				state.type = ActionType.REFLEXIVE;
+                state.first = token;
+                state.playerAction = actions.get(token);
+				state.type = actionTypes.get(state.playerAction);
 			}
 		}
 
-		for (String token : actions.keySet())
+
+        // If not, exit		
+		if (state.first.isEmpty())
 		{
-			if (startsWith(token, playerText))
-			{
-				arg1 = token;
-				state.type = ActionType.DIRECT;
-			}
+			output("Sentence did not start with an action.");
+            return;
 		}
 
-		for (String token : actions.keySet())
-		{
-			if (startsWith(token, playerText))
-			{
-				arg1 = token;
-				state.type = ActionType.INDIRECT;
-			}
-		}
-
-				
-		if (arg1.isEmpty())
-		{
-			arg1 = words[0];
-		}
-
-		state.first = arg1;
-
-		playerText = playerText.substring(arg1.length()).trim();
-		if (playerText.isEmpty()) return;
-
-
-		// Set the second argument
-
-		for (String token : state.featureList.keySet())
-		{
-			if (startsWith(token, playerText))
-				arg2 = token;
-		}
-
-		for (String token : state.itemList.keySet())
-		{
-			if (startsWith(token, playerText))
-				arg2 = token;
-		}
-
-		for (String token : state.actorList.keySet())
-		{
-			if (startsWith(token, playerText))
-				arg2 = token;
-		}
-
-		words = playerText.split(" ");
-		if (arg2.isEmpty())
-		{
-			arg2 = words[0];
-		}
-
-		state.second = arg2;
-		playerText = playerText.substring(arg2.length()).trim();
-		if (playerText.isEmpty()) return;
-
-
-		// Set the third argument
 		
-		for (String token : state.featureList.keySet())
-		{
-			if (startsWith(token, playerText))
-				arg3 = token;
-		}
+		playerText = playerText.substring(state.first.length()).trim();
+		if (playerText.isEmpty()) return;
 
-		for (String token : state.itemList.keySet())
-		{
-			if (startsWith(token, playerText))
-				arg3 = token;
-		}
 
-		for (String token : state.actorList.keySet())
-		{
-			if (startsWith(token, playerText))
-				arg3 = token;
-		}
+		switch (state.type)
+        {
+            // No more arguments
+            case REFLEXIVE:
+            case EXIT:
+            {
 
-		words = playerText.split(" ");
-		if (arg3.isEmpty())
-		{
-			arg3 = words[0];
-		}
+            } break;
 
-		state.third = arg3;
-		playerText = playerText.substring(arg3.length()).trim();
-		if (!playerText.isEmpty())
-		{
-			output("I don't know what \"" + playerText + "\" means.");
-		}
+            // One additional argument: the direct object. Remaining text should be an object.
+            case DIRECT:
+            case OPEN_CLOSE:
+            case TAKE_DROP:
+            {
+                state.second = playerText;
 
+                if (state.itemList.containsKey(playerText))
+                {
+                    state.objectItem = state.itemList.get(playerText);
+                    return;
+                }
+
+                if (state.featureList.containsKey(playerText))
+                {
+                    state.objectFeature = state.featureList.get(playerText);
+                    return;
+                }
+
+                if (state.containerList.containsKey(playerText))
+                {
+                    state.objectContainer = state.containerList.get(playerText);
+                    return;
+                }
+
+                if (state.actorList.containsKey(playerText))
+                {
+                    state.objectActor = state.actorList.get(playerText);
+                    return;
+                }
+
+            } break;
+
+            // Two additional arguments: the direct object and an (item) indirect object
+            case INDIRECT:
+            {
+
+            } break;
+
+            default:
+            {
+
+            } break;
+
+        }
 
 
 	}
@@ -622,74 +592,16 @@ public final class Game {
 		String second = state.second;
 		String third = state.third;
 
-		Action act = Action.NULL_ACTION;
-		if (actions.containsKey(first)) { act = actions.get(first); }
-		else if (actions.containsKey(first)) { act = actions.get(first); }
-		else if (actions.containsKey(first)) { act = actions.get(first); }
-		else
-		{ 
-			return false;
-		}
+		
 
-		state.playerAction = act;
-
-
-		// Incomplete actions
-		if (actions.containsKey(first) && second.isEmpty())
-		{
-			output("What do you want to " + first + "?");
-			String input = getPlayerText();
-			if (isGameWord(input))
-			{
-				second = input;
-			}
-			else
-			{
-				parsePlayerInput(state, input);
-				return validateAction(state);
-			}
-		}
-
-
-		if (actions.containsKey(first) && third.isEmpty())
-		{
-
-			if (second.isEmpty())
-			{
-				output("What do you want to " + first + "?");
-				String input = getPlayerText();
-				if (isGameWord(input))
-				{
-					second = input;
-				}
-				else
-				{
-					parsePlayerInput(state, input);
-					return validateAction(state);
-				}
-			}
-
-			output("What do you want to " + first + " the " + second + " with?");
-			{
-				String input2 = getPlayerText();
-				if (isGameWord(input2))
-				{
-					third = input2;
-				}
-				else
-				{
-					parsePlayerInput(state, input2);
-					return validateAction(state);
-				}
-			}
-		}
+        if (state.playerAction == Action.QUIT)
+        {
+            return true;
+        }
 
 		switch(state.type)
 		{
-			case NULL_ACTION_TYPE:
-			{
 
-			} break;
 			case REFLEXIVE:
 			{
 
@@ -697,6 +609,12 @@ public final class Game {
 
 
 			case DIRECT:
+            case OPEN_CLOSE:
+            case TAKE_DROP:
+            {
+
+            } break;
+
 			case INDIRECT:
 			{
 
@@ -783,6 +701,7 @@ public final class Game {
 			output("Selected feature is " + objFeature.name);
 			output("Selected item is " + objItem.name);
 			output("Selected actor is " + objActor.name);
+            output("Selected container is " + state.objectContainer.name);
 			output("Indirect object is " + indItem.name);
 		}
 		
@@ -805,7 +724,7 @@ public final class Game {
 			case OPEN:
             case CLOSE:
 			{
-				if (!objFeature.name.equals("null"))
+				if (!objFeature.name.equals("dummy_feature"))
 				{
 					if (objFeature.location == curLoc)
 						objFeature.activate(state, curAction);
@@ -813,7 +732,7 @@ public final class Game {
 						output("There's no " + objFeature.name + " here.");
 				}
 
-				if (!objActor.name.equals("null"))
+				if (!objActor.name.equals("dummy_actor"))
 				{
 					if (objActor.location == curLoc)
 						objActor.activate(state, curAction);
@@ -821,13 +740,20 @@ public final class Game {
 						output("There's no " + objActor.name + " here.");
 				}
 
-				if (!objItem.name.equals("null"))
+				if (!objItem.name.equals("dummy_item"))
 				{
 					if (objItem.getLocation() == Location.PLAYER_INVENTORY)
 						objItem.activate(state, curAction);
 					else
 						output("You're not carrying the " + objItem.name + ".");
 				}
+                if (!state.objectContainer.name.equals("dummy_container"))
+                {
+                    if (state.objectContainer.location == curLoc)
+                        state.objectContainer.activate(state, curAction);
+                    else
+                        output("There's no " + state.objectContainer.name + " here.");
+                }
 
 				
 
@@ -1092,6 +1018,12 @@ public final class Game {
 
         // Assigning action types
 
+        actionTypes.put(Action.QUIT, ActionType.REFLEXIVE);
+        actionTypes.put(Action.LOOK, ActionType.REFLEXIVE);
+        actionTypes.put(Action.INVENTORY, ActionType.REFLEXIVE);
+        actionTypes.put(Action.SHOUT, ActionType.REFLEXIVE);
+        actionTypes.put(Action.WAIT, ActionType.REFLEXIVE);
+        actionTypes.put(Action.PROFANITY, ActionType.REFLEXIVE);
         actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
 
         actionTypes.put(Action.NORTH, ActionType.EXIT);
@@ -1112,10 +1044,17 @@ public final class Game {
 
         actionTypes.put(Action.OPEN, ActionType.OPEN_CLOSE);
         actionTypes.put(Action.CLOSE, ActionType.OPEN_CLOSE);
-        actionTypes.put(Action.LOCK, ActionType.OPEN_CLOSE);
-        actionTypes.put(Action.UNLOCK, ActionType.OPEN_CLOSE);
 
+        actionTypes.put(Action.READ, ActionType.DIRECT);
+        actionTypes.put(Action.SLAP, ActionType.DIRECT);
+        actionTypes.put(Action.PLAY, ActionType.DIRECT);
+        actionTypes.put(Action.RING, ActionType.DIRECT);
+        actionTypes.put(Action.HIGH_FIVE, ActionType.DIRECT);
+        actionTypes.put(Action.TIE, ActionType.DIRECT);
 
+        actionTypes.put(Action.UNLOCK, ActionType.INDIRECT);
+        actionTypes.put(Action.LOCK, ActionType.INDIRECT);
+        actionTypes.put(Action.ATTACK, ActionType.INDIRECT);
 
 	}
 

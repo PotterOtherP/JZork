@@ -2,6 +2,7 @@ class Item extends GameObject{
 
 	// Items can be picked up and moved to other locations, including the player's inventory.
 
+	public final ObjectType type = ObjectType.ITEM;
 	private final Location startLocation;
 	private Location location;
 	private final int pointValue;
@@ -11,17 +12,6 @@ class Item extends GameObject{
 	private boolean activated;
 	private int lifespan;
 
-
-	public Item()
-	{
-		super();
-		this.startLocation = super.location;
-		this.location = this.startLocation;
-		this.pointValue = 0;
-		this.weight = 0;
-		this.activated = false;
-		this.lifespan = 0;
-	}
 
 	public Item(String name, Location loc, int value, int weight)
 	{

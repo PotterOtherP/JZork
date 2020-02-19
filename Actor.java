@@ -7,6 +7,7 @@ interface ActorMethod {
 class Actor extends GameObject {
 	
 	public final Location startLocation;
+	public final ObjectType type = ObjectType.ACTOR;
 	public Location currentLocation;
 	public Location previousLocation;
 
@@ -17,17 +18,6 @@ class Actor extends GameObject {
 	private boolean encountered;
 
 
-	// Constructors. An actor must be either empty or have a location, activation method
-	// and its own actor method.
-	public Actor()
-	{
-		super();
-		setVariables();
-		this.startLocation = Location.NULL_LOCATION;
-		this.currentLocation = Location.NULL_LOCATION;
-		this.previousLocation = Location.NULL_LOCATION;
-		this.actorMethod = () -> {};
-	}
 
 
 	public Actor(String name, Location loc)

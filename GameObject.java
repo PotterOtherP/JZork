@@ -9,22 +9,8 @@ abstract class GameObject {
     public final Location location;
     private ActivateMethod method;
 
+
     // Constructors
-    public GameObject()
-    {
-        this.name = "null";
-        this.location = Location.NULL_LOCATION;
-        this.method = (GameState state, Action act) -> {};
-    }
-
-    public GameObject(String name)
-    {
-        this.name = name;
-        this.location = Location.NULL_LOCATION;
-        this.method = (GameState state, Action act) -> {};
-
-    }
-
     public GameObject(String name, Location loc)
     {
         this.name = name;
