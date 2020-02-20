@@ -19,6 +19,7 @@ enum Location {
     INSIDE_MAILBOX,
 	PLAYER_INVENTORY,
     INSIDE_TROPHY_CASE,
+    INSIDE_SACK,
 	NULL_LOCATION
 
 	}
@@ -128,6 +129,7 @@ public final class Game {
 	private static Location initialLocation = Location.WEST_OF_HOUSE;
 
     private static final int LINE_LENGTH = 50;
+    private static final boolean DEBUG = true;
 
 
 	public static void main(String[] args)
@@ -147,9 +149,13 @@ public final class Game {
 		while (!gameover)
 		{	
 			playerText = getPlayerText();
-			parsePlayerInput(gameState, playerText);
-			validateAction(gameState);
-			updateGame(gameState);
+
+			if (parsePlayerInput(gameState, playerText))
+            {
+                validateAction(gameState);
+                updateGame(gameState);
+            }
+
 
 		}
 
@@ -383,6 +389,26 @@ public final class Game {
          */
         
         Container mailbox = new Container("mailbox", Location.WEST_OF_HOUSE, 10, Location.INSIDE_MAILBOX);
+        Container trophyCase = new Container("trophy case", Location.LIVING_ROOM, 1000, Location.INSIDE_TROPHY_CASE);
+        Container brownSack = new Container("sack", Location.KITCHEN, 50, Location.INSIDE_SACK);
+
+        state.containerList.put(mailbox.name, mailbox);
+        state.containerList.put(trophyCase.name, trophyCase);
+        state.containerList.put(brownSack.name, brownSack);
+
+        // These are the same window!
+        Feature houseWindow = new Feature("house window", Location.BEHIND_HOUSE);
+        Feature kitchenWindow = new Feature("kitchen window", Location.KITCHEN);
+        Feature carpet = new Feature("carpet", Location.LIVING_ROOM);
+        Feature trapDoor = new Feature("trap door", Location.LIVING_ROOM);
+        Feature leafPile = new Feature("pile", Location.CLEARING_NORTH);
+
+        state.featureList.put(houseWindow.name, houseWindow);
+        state.featureList.put(kitchenWindow.name, kitchenWindow);
+        state.featureList.put(carpet.name, carpet);
+        state.featureList.put(trapDoor.name, trapDoor);
+        state.featureList.put(leafPile.name, leafPile);
+
 
         /* Items - Overworld
          * 
@@ -399,8 +425,20 @@ public final class Game {
          * Item: name, location, point value, weight
          */
         Item leaflet = new Item("leaflet", Location.WEST_OF_HOUSE, 0, 0);
+        Item rope = new Item("rope", Location.ATTIC, 0, 0);
+        Item rustyKnife = new Item("knife", Location.ATTIC, 0, 0);
+        Item glassBottle = new Item("bottle", Location.KITCHEN, 0, 0);
+        Item elvishSword = new Item("sword", Location.LIVING_ROOM, 0, 0);
+        Item jewelEgg = new Item("egg", Location.UP_TREE, 0, 0);
+        Item birdsNest = new Item("nest", Location.UP_TREE, 0, 0);
 
         state.itemList.put(leaflet.name, leaflet);
+        state.itemList.put(rope.name, rope);
+        state.itemList.put(rustyKnife.name, rustyKnife);
+        state.itemList.put(glassBottle.name, glassBottle);
+        state.itemList.put(elvishSword.name, elvishSword);
+        state.itemList.put(jewelEgg.name, jewelEgg);
+        state.itemList.put(birdsNest.name, birdsNest);
 
 
         /* Actors - Underworld
@@ -410,7 +448,13 @@ public final class Game {
          * Cyclops
          *
          */
+        
+        // Testing an actor in the overworld.
+        Actor giant = new Actor("giant", Location.FOREST_SOUTH);
+        ActorMethod giantMethod = () -> {};
+        giant.setActorMethod(giantMethod);
 
+        state.actorList.put(giant.name, giant);
 		
 
 
@@ -464,7 +508,7 @@ public final class Game {
 
 
 
-	private static void parsePlayerInput(GameState state, String playerText)
+	private static boolean parsePlayerInput(GameState state, String playerText)
 	{
         /* ACTION OBJECT OBJECT.
 
@@ -483,8 +527,8 @@ public final class Game {
 		{
 			if (!isGameWord(words[i]))
 			{
-				output("I don't know what " + words[i] + " means.");
-				return;
+				output("I don't know what \"" + words[i] + "\" means.");
+				return false;
 			}
 		}
 
@@ -510,8 +554,7 @@ public final class Game {
 			if (startsWith(token, playerText))
 			{
                 state.first = token;
-                state.playerAction = actions.get(token);
-				state.type = actionTypes.get(state.playerAction);
+                
 			}
 		}
 
@@ -520,90 +563,84 @@ public final class Game {
 		if (state.first.isEmpty())
 		{
 			output("Sentence did not start with an action.");
-            return;
+            return true;
 		}
 
 		
 		playerText = playerText.substring(state.first.length()).trim();
-		if (playerText.isEmpty()) return;
+		if (playerText.isEmpty()) return true;
 
-
-		switch (state.type)
+        for (String token : objectStrings)
         {
-            // No more arguments
-            case REFLEXIVE:
-            case EXIT:
+            if (startsWith(token, playerText))
             {
-
-            } break;
-
-            // One additional argument: the direct object. Remaining text should be an object.
-            case DIRECT:
-            case OPEN_CLOSE:
-            case TAKE_DROP:
-            {
-                state.second = playerText;
-
-                if (objectStrings.contains(state.second))
-                {
-                    output("Direct object is " + state.second);
-                }
-
-                if (state.itemList.containsKey(playerText))
-                {
-                    state.objectItem = state.itemList.get(playerText);
-                    return;
-                }
-
-                if (state.featureList.containsKey(playerText))
-                {
-                    state.objectFeature = state.featureList.get(playerText);
-                    return;
-                }
-
-                if (state.containerList.containsKey(playerText))
-                {
-                    state.objectContainer = state.containerList.get(playerText);
-                    return;
-                }
-
-                if (state.actorList.containsKey(playerText))
-                {
-                    state.objectActor = state.actorList.get(playerText);
-                    return;
-                }
-
-            } break;
-
-            // Two additional arguments: the direct object and an (item) indirect object
-            case INDIRECT:
-            {
-
-            } break;
-
-            default:
-            {
-
-            } break;
-
+                state.second = token;
+            }
         }
 
+        if (state.second.isEmpty())
+        {
+            output("Second phrase not recognized.");
+            return true;
+        }
+
+        playerText = playerText.substring(state.second.length()).trim();
+        if (playerText.isEmpty()) return true;
+
+        for (String token : objectStrings)
+        {
+            if (startsWith(token, playerText))
+            {
+                state.third = token;
+            }
+        }
+
+        if (state.third.isEmpty())
+        {
+            output("Third phrase not recognized.");
+            return true;
+        }
+
+
+		return true;
 
 	}
 
 	private static boolean validateAction(GameState state)
 	{
-		/* Verifies that the action arguments are recognized by the game.
+		/* 
+            Create a list of actionable objects at the beginning of each turn.
+            Use the objects in the player's location, inventory, and any containers in the same location.
 
-		   Gets more information from the player if the action is incomplete.
+            Recognize the selected action from the first phrase.
+
+            Based on action type, recognize the direct and indirect objects if warranted.
+            Find the objects in the actionable object list.
+
 		*/
+
 		boolean result = true;
+
+        // Need to address ambiguous words here - the same key can't occur twice in a hashmap.
+        fillCurrentObjectList(state);
+
+        if (false)
+        {
+            output("Parse player text results: ");
+            output("First phrase is: " + state.first);
+            output("Second phrase is: " + state.second);
+            output("Third phrase is: " + state.third);
+        }
 
 
 		String first = state.first;
 		String second = state.second;
 		String third = state.third;
 
+        state.playerAction = actions.get(first);
+        state.type = actionTypes.get(state.playerAction);
+
+        
 		
 
         if (state.playerAction == Action.QUIT)
@@ -624,34 +661,55 @@ public final class Game {
             case OPEN_CLOSE:
             case TAKE_DROP:
             {
+                if (currentObjects.containsKey(second))
+                {
+                    ObjectType objType = currentObjects.get(second);
 
+                    switch(objType)
+                    {
+                        case FEATURE:
+                            state.objectFeature = state.featureList.get(second);
+                            break;
+                        case ITEM:
+                            state.objectItem = state.itemList.get(second);
+                            break;
+                        case ACTOR:
+                            state.objectActor = state.actorList.get(second);
+                            break;
+                        case CONTAINER:
+                            state.objectContainer = state.containerList.get(second);
+                            break;
+                        default:
+                            break;
+                    }
+                }
             } break;
 
 			case INDIRECT:
 			{
 
-				if (state.featureList.containsKey(second))
-				// if (actionObjects.get(second).equals("feature"))
-				{
-					state.objectFeature = state.featureList.get(second);
-				}
+				if (currentObjects.containsKey(second))
+                {
+                    ObjectType objType = currentObjects.get(second);
 
-				else if (state.itemList.containsKey(second))
-				//if (actionObjects.get(second).equals("item"))
-				{
-					state.objectItem = state.itemList.get(second);
-				}
-
-				else if (state.actorList.containsKey(second))
-				//if (actionObjects.get(second).equals("actor"))
-				{
-					state.objectActor = state.actorList.get(second);
-				}
-				
-				else 
-				{
-					return false;
-				}
+                    switch(objType)
+                    {
+                        case FEATURE:
+                            state.objectFeature = state.featureList.get(second);
+                            break;
+                        case ITEM:
+                            state.objectItem = state.itemList.get(second);
+                            break;
+                        case ACTOR:
+                            state.objectActor = state.actorList.get(second);
+                            break;
+                        case CONTAINER:
+                            state.objectContainer = state.containerList.get(second);
+                            break;
+                        default:
+                            break;
+                    }
+                }
 
 				if (!third.isEmpty())
 				{
@@ -665,7 +723,7 @@ public final class Game {
 							return false;
 						}
 
-						state.usedItem = it;
+						state.indirectObject = it;
 					}
 
 					else
@@ -704,17 +762,17 @@ public final class Game {
 		Item objItem = state.objectItem;
 		Actor objActor = state.objectActor;
 
-		Item indItem = state.usedItem;
+		Item indObj = state.indirectObject;
 
 		// For testing
 		if (false)
 		{
-			output("Selection action is " + curAction);
+			output("Selected action is " + curAction);
 			output("Selected feature is " + objFeature.name);
 			output("Selected item is " + objItem.name);
 			output("Selected actor is " + objActor.name);
             output("Selected container is " + state.objectContainer.name);
-			output("Indirect object is " + indItem.name);
+			output("Indirect object is " + indObj.name);
 		}
 		
 
@@ -985,8 +1043,8 @@ public final class Game {
 		actions.put("quit",  Action.QUIT);
 		actions.put("q",     Action.QUIT);
 		actions.put("jump",  Action.JUMP);
-		actions.put("look",  Action.LOOK);
 		actions.put("look around",  Action.LOOK);
+		actions.put("look",  Action.LOOK);
 		actions.put("l",     Action.LOOK);
 		actions.put("inventory", Action.INVENTORY);
 		actions.put("i",         Action.INVENTORY);
@@ -1059,6 +1117,7 @@ public final class Game {
 
         actionTypes.put(Action.READ, ActionType.DIRECT);
         actionTypes.put(Action.SLAP, ActionType.DIRECT);
+        actionTypes.put(Action.KICK, ActionType.DIRECT);
         actionTypes.put(Action.PLAY, ActionType.DIRECT);
         actionTypes.put(Action.RING, ActionType.DIRECT);
         actionTypes.put(Action.HIGH_FIVE, ActionType.DIRECT);
@@ -1097,6 +1156,42 @@ public final class Game {
         for (Container c : state.containerList.values())
         {
             objectStrings.add(c.name);
+        }
+    }
+
+    private static void fillCurrentObjectList(GameState state)
+    {
+        for (Feature f : state.featureList.values())
+        {
+            if (f.location == state.playerLocation)
+                currentObjects.put(f.name, f.type);
+        }
+
+        for (Item it : state.itemList.values())
+        {
+            if (it.getLocation() == state.playerLocation ||
+                it.getLocation() == Location.PLAYER_INVENTORY)
+                currentObjects.put(it.name, it.type);
+        }
+
+        for (Actor a : state.actorList.values())
+        {
+            if (a.location == state.playerLocation)
+                currentObjects.put(a.name, a.type);
+        }
+
+        for (Container c : state.containerList.values())
+        {
+            if (c.location == state.playerLocation)
+            {
+                currentObjects.put(c.name, c.type);
+
+                if (c.isOpen())
+                {
+                    for (Item it : c.inventory)
+                        currentObjects.put(it.name, it.type);
+                }
+            }
         }
     }
 

@@ -4,7 +4,7 @@ class Container extends GameObject {
 
     public final Location containerID;
     public final ObjectType type = ObjectType.CONTAINER;
-    private ArrayList<Item> inventory;
+    public ArrayList<Item> inventory;
 
 
     private int capacity;
@@ -40,4 +40,6 @@ class Container extends GameObject {
             Game.output("There's no " + it.name + " in the " + this.name);
         }
     }
+
+    public boolean isOpen() { return open; }
 }

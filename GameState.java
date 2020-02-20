@@ -26,7 +26,7 @@ class GameState {
 	public Actor objectActor;
 	public Item objectItem;
 	public Container objectContainer;
-	public Item usedItem;
+	public Item indirectObject;
 	public String speechText;
 
 	public Feature dummyFeature;
@@ -91,7 +91,7 @@ class GameState {
 		this.objectItem = dummyItem;
 		this.objectActor = dummyActor;
 		this.objectContainer = dummyContainer;
-		this.usedItem = dummyItem;
+		this.indirectObject = dummyItem;
 	}
 
 
