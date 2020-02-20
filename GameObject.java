@@ -7,6 +7,7 @@ abstract class GameObject {
     
     public final String name;
     public final Location location;
+    public String takeFail;
     private ActivateMethod method;
 
 
@@ -15,6 +16,7 @@ abstract class GameObject {
     {
         this.name = name;
         this.location = loc;
+        this.takeFail = ("You can't take that.");
         this.method = (GameState state, Action act) -> {};
     }
 

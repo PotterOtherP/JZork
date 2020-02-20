@@ -25,6 +25,29 @@ class Item extends GameObject{
 	}
 
 
+	public void takeItem(GameState state)
+	{
+
+		if ((state.playerCarryWeight + weight) >= state.playerMaxCarryWeight)
+        {
+            Game.output(GameStrings.OVERBURDENED);
+            return;
+        }
+
+		state.playerCarryWeight += weight;
+		setLocation(Location.PLAYER_INVENTORY);
+		Game.output("Taken.");
+
+	}
+
+	public void dropItem(GameState state)
+	{
+		state.playerCarryWeight -= weight;
+		setLocation(state.playerLocation);
+		Game.output("Dropped.");
+	}
+
+
 	public void setLocation(Location loc) { this.location = loc; }
 	public Location getLocation() { return this.location; }
 	public int getValue() { return pointValue; }

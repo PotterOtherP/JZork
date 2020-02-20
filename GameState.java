@@ -12,13 +12,15 @@ class GameState {
 	public Location playerLocation;
 	public Location playerPreviousLocation;
 	public int playerHitPoints;
+	public int playerCarryWeight;
+	public int playerMaxCarryWeight;
 
 
 	// player action
 	public String first;
 	public String second;
 	public String third;
-	public ActionType type;
+	public ActionType actionType;
 
 
 	public Action playerAction;
@@ -56,6 +58,8 @@ class GameState {
 		this.turns = 0;
 		this.playerLocation = Location.NULL_LOCATION;
 		this.playerPreviousLocation = Location.NULL_LOCATION;
+		playerCarryWeight = 0;
+		playerMaxCarryWeight = 100;
 
 		
 
@@ -86,7 +90,7 @@ class GameState {
 		this.third = "";
 
 		this.playerAction = Action.NULL_ACTION;
-		this.type = ActionType.NULL_TYPE;
+		this.actionType = ActionType.NULL_TYPE;
 		this.objectFeature = dummyFeature;
 		this.objectItem = dummyItem;
 		this.objectActor = dummyActor;

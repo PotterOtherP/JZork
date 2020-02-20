@@ -92,6 +92,8 @@ class GameStrings {
 
 
 
+	public static final String OVERBURDENED = "You can't carry any more.";
+
 	public static final String PROFANITY_ONE = "There's no need for that kind of language.";
 	public static final String PROFANITY_TWO = "Do you have to use so many cuss words?";
 

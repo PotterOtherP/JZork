@@ -638,7 +638,7 @@ public final class Game {
 		String third = state.third;
 
         state.playerAction = actions.get(first);
-        state.type = actionTypes.get(state.playerAction);
+        state.actionType = actionTypes.get(state.playerAction);
 
         
 		
@@ -648,7 +648,8 @@ public final class Game {
             return true;
         }
 
-		switch(state.type)
+
+		switch(state.actionType)
 		{
 
 			case REFLEXIVE:
@@ -743,6 +744,7 @@ public final class Game {
 			} break;
 		}
 
+
 		return result;
 
 	}
@@ -761,6 +763,10 @@ public final class Game {
 		Feature objFeature = state.objectFeature;
 		Item objItem = state.objectItem;
 		Actor objActor = state.objectActor;
+        Container objContainer = state.objectContainer;
+
+        GameObject obj = objContainer;
+        output("Abstract object is " + obj.name);
 
 		Item indObj = state.indirectObject;
 
@@ -781,8 +787,9 @@ public final class Game {
 		switch (curAction)
 		{
 
-			// Features
 
+
+            // These actions will activate the object's lambda method.
 			case ACTIVATE:
 			case RING:
 			case PLAY:
@@ -791,8 +798,7 @@ public final class Game {
 			case TIE:
 			case ATTACK:
 			case HIGH_FIVE:
-			case OPEN:
-            case CLOSE:
+
 			{
 				if (!objFeature.name.equals("dummy_feature"))
 				{
@@ -817,12 +823,12 @@ public final class Game {
 					else
 						output("You're not carrying the " + objItem.name + ".");
 				}
-                if (!state.objectContainer.name.equals("dummy_container"))
+                if (!objContainer.name.equals("dummy_container"))
                 {
-                    if (state.objectContainer.location == curLoc)
-                        state.objectContainer.activate(state, curAction);
+                    if (objContainer.location == curLoc)
+                        objContainer.activate(state, curAction);
                     else
-                        output("There's no " + state.objectContainer.name + " here.");
+                        output("There's no " + objContainer.name + " here.");
                 }
 
 				
@@ -830,56 +836,64 @@ public final class Game {
 			} break;
 
 
+            case OPEN:
+            case CLOSE:
+            {
 
-			case LOOK:
-			{
-                output(curRoom.name);
-				curRoom.lookAround(state);
+            } break;
 
-			} break;
+
+            case UNLOCK:
+            case LOCK:
+            {
+
+            } break;
+
+
 
 			case TAKE:
 			{
+                // The direct object is not an item.
                 if (objItem.name.equals("null"))
                 {
+                    // output the specific fail string instead.
                     output("That's not something you can take.");
                     return;
                 }
 
-                if (objItem.getLocation() == Location.PLAYER_INVENTORY)
-				{
-					output("You're already carrying the " + objItem.name + "!");
-					return;
-				}
-				
-				// Successful take
-				if (objItem.getLocation() == curLoc)
-				{
-					objItem.setLocation(Location.PLAYER_INVENTORY);
-					output("You picked up the " + objItem.name + ".");
+                // Once this point is reached, the game has already determined that the object item
+                // is in the same location as the player.
+                else
+                {
+                    objItem.takeItem(state);
+                }
 
-					// Special cases where taking items affects the game state
-					
-				}
-
-				else
-				{
-					output("There's no " + objItem.name + " here.");
-				}	
+                	
 			} break;
 
 			case DROP:
 			{
 				if (objItem.getLocation() == Location.PLAYER_INVENTORY)
 				{
-					objItem.setLocation(curLoc);
-					output("You dropped the " + objItem.name + ".");
+					objItem.dropItem(state);
 				}
 				else
 				{
 					output("You're not carrying that.");
 				}
 			} break;
+
+
+
+
+            // Simpler actions
+
+            case LOOK:
+            {
+                output(curRoom.name);
+                curRoom.lookAround(state);
+
+            } break;
 
 			case INVENTORY:
 			{
