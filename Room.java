@@ -65,22 +65,13 @@ class Room {
 	public void lookAround(GameState state)
 	{
 		Game.output(description);
-		for (Item it : state.itemList.values())
-		{
-			if (it.getLocation() == this.roomID)
-			{
-				String word = (it.vowelStart()? "an " : "a ");
-				Game.output("There is " + word + it.name + " here.");
-			}
-				
-		}
 
-		for (Actor a : state.actorList.values())
+		for (GameObject g : state.objectList.values())
 		{
-			if (a.getLocation() == this.roomID)
+			if (g.location == roomID)
 			{
-				String word = (a.vowelStart()? "an " : "a ");
-				Game.output("There is " + word + a.name + " here.");
+				String word = (g.vowelStart() ? "an " : "a ");
+				Game.output("There is " + word + g.name + " here.");
 			}
 		}
 	}

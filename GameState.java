@@ -24,24 +24,13 @@ class GameState {
 
 
 	public Action playerAction;
-	public Feature objectFeature;
-	public Actor objectActor;
-	public Item objectItem;
-	public Container objectContainer;
-	public Item indirectObject;
-	public String speechText;
-
-	public Feature dummyFeature;
-	public Item dummyItem;
-	public Actor dummyActor;
-	public Container dummyContainer;
+	public GameObject directObject;
+	public GameObject indirectObject;
+	public Feature dummyObject;
 
 	// lists of game objects
 	public HashMap<Location, Room> worldMap;
-	public HashMap<String, Feature> featureList;
-	public HashMap<String, Item> itemList;
-	public HashMap<String, Actor> actorList;
-	public HashMap<String, Container> containerList;
+	public HashMap<String, GameObject> objectList;
 
 
 
@@ -49,10 +38,7 @@ class GameState {
 	// constructor
 	public GameState()
 	{
-		this.dummyFeature = new Feature("dummy_feature", Location.NULL_LOCATION);
-		this.dummyItem = new Item("dummy_item", Location.NULL_LOCATION, 0, 0);
-		this.dummyActor = new Actor("dummy_actor", Location.NULL_LOCATION);
-		this.dummyContainer = new Container("dummy_container", Location.NULL_LOCATION, 0, Location.NULL_LOCATION);
+		this.dummyObject = new Feature("dummy_feature", Location.NULL_LOCATION);
 		this.resetInput();
 
 		this.turns = 0;
@@ -64,10 +50,7 @@ class GameState {
 		
 
 		worldMap = new HashMap<Location, Room>();
-		featureList = new HashMap<String, Feature>();
-		itemList = new HashMap<String, Item>();
-		actorList = new HashMap<String, Actor>();
-		containerList = new HashMap<String, Container>();
+		objectList = new HashMap<String, GameObject>();
 	}
 
 
@@ -91,11 +74,8 @@ class GameState {
 
 		this.playerAction = Action.NULL_ACTION;
 		this.actionType = ActionType.NULL_TYPE;
-		this.objectFeature = dummyFeature;
-		this.objectItem = dummyItem;
-		this.objectActor = dummyActor;
-		this.objectContainer = dummyContainer;
-		this.indirectObject = dummyItem;
+		this.directObject = dummyObject;
+		this.indirectObject = dummyObject;
 	}
 
 

@@ -5,13 +5,13 @@ class Feature extends GameObject {
 
 	*/
 
-	public final ObjectType type = ObjectType.FEATURE;
 	
 	
 
 	public Feature(String name, Location loc)
 	{
 		super(name, loc);
+		this.type = ObjectType.FEATURE;
 	}
 
 	

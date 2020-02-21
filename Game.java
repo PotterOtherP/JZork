@@ -113,23 +113,23 @@ public final class Game {
      *
      */
 
-
+    // Global variables
 	private static boolean gameover = true;
 	private static boolean godmode = false;
+    private static boolean TESTING = false;
 
 
-
+    // Lists and hashmaps
     private static HashMap<String, Action> actions = new HashMap<String, Action>();
 	private static HashMap<Action, ActionType> actionTypes = new HashMap<Action, ActionType>();
     private static HashMap<String, ObjectType> currentObjects = new HashMap<String, ObjectType>();
-
 	private static ArrayList<String> dictionary = new ArrayList<String>();
-    private static ArrayList<String> objectStrings = new ArrayList<String>();
 
-	private static Location initialLocation = Location.WEST_OF_HOUSE;
 
+
+    // Constants
     private static final int LINE_LENGTH = 50;
-    private static final boolean DEBUG = true;
+	private static final Location STARTING_LOCATION = Location.WEST_OF_HOUSE;
 
 
 	public static void main(String[] args)
@@ -137,12 +137,16 @@ public final class Game {
 
 		GameState gameState = new GameState();
 
+        if (args.length > 0 && args[0].equals("test"))
+        {
+            TESTING = true;
+            output("Testing");
+        }
+
 
 		String playerText = "";
-
-		
+	
 		initGame(gameState);
-
 
 		gameover = false;
 
@@ -152,11 +156,11 @@ public final class Game {
 
 			if (parsePlayerInput(gameState, playerText))
             {
-                validateAction(gameState);
-                updateGame(gameState);
+                if (validateAction(gameState))
+                    updateGame(gameState);
             }
 
-
+            outputLine();
 		}
 
 
@@ -392,9 +396,11 @@ public final class Game {
         Container trophyCase = new Container("trophy case", Location.LIVING_ROOM, 1000, Location.INSIDE_TROPHY_CASE);
         Container brownSack = new Container("sack", Location.KITCHEN, 50, Location.INSIDE_SACK);
 
-        state.containerList.put(mailbox.name, mailbox);
-        state.containerList.put(trophyCase.name, trophyCase);
-        state.containerList.put(brownSack.name, brownSack);
+        state.objectList.put(mailbox.name, mailbox);
+        state.objectList.put(trophyCase.name, trophyCase);
+        state.objectList.put(brownSack.name, brownSack);
+
+        state.objectList.put(mailbox.name, mailbox);
 
         // These are the same window!
         Feature houseWindow = new Feature("house window", Location.BEHIND_HOUSE);
@@ -403,11 +409,11 @@ public final class Game {
         Feature trapDoor = new Feature("trap door", Location.LIVING_ROOM);
         Feature leafPile = new Feature("pile", Location.CLEARING_NORTH);
 
-        state.featureList.put(houseWindow.name, houseWindow);
-        state.featureList.put(kitchenWindow.name, kitchenWindow);
-        state.featureList.put(carpet.name, carpet);
-        state.featureList.put(trapDoor.name, trapDoor);
-        state.featureList.put(leafPile.name, leafPile);
+        state.objectList.put(houseWindow.name, houseWindow);
+        state.objectList.put(kitchenWindow.name, kitchenWindow);
+        state.objectList.put(carpet.name, carpet);
+        state.objectList.put(trapDoor.name, trapDoor);
+        state.objectList.put(leafPile.name, leafPile);
 
 
         /* Items - Overworld
@@ -432,13 +438,13 @@ public final class Game {
         Item jewelEgg = new Item("egg", Location.UP_TREE, 0, 0);
         Item birdsNest = new Item("nest", Location.UP_TREE, 0, 0);
 
-        state.itemList.put(leaflet.name, leaflet);
-        state.itemList.put(rope.name, rope);
-        state.itemList.put(rustyKnife.name, rustyKnife);
-        state.itemList.put(glassBottle.name, glassBottle);
-        state.itemList.put(elvishSword.name, elvishSword);
-        state.itemList.put(jewelEgg.name, jewelEgg);
-        state.itemList.put(birdsNest.name, birdsNest);
+        state.objectList.put(leaflet.name, leaflet);
+        state.objectList.put(rope.name, rope);
+        state.objectList.put(rustyKnife.name, rustyKnife);
+        state.objectList.put(glassBottle.name, glassBottle);
+        state.objectList.put(elvishSword.name, elvishSword);
+        state.objectList.put(jewelEgg.name, jewelEgg);
+        state.objectList.put(birdsNest.name, birdsNest);
 
 
         /* Actors - Underworld
@@ -454,7 +460,7 @@ public final class Game {
         ActorMethod giantMethod = () -> {};
         giant.setActorMethod(giantMethod);
 
-        state.actorList.put(giant.name, giant);
+        state.objectList.put(giant.name, giant);
 		
 
 
@@ -483,21 +489,15 @@ public final class Game {
         leaflet.setMethod(leafletMethod);
 	
 
-
-		
-
-	   fillObjectStringList(state);
-
-
 		// Object creation complete. Start setting up the game
 
 		// Put the player in the starting location
-		state.setPlayerLocation(initialLocation);
-		state.worldMap.get(initialLocation).firstVisit = false;
+		state.setPlayerLocation(STARTING_LOCATION);
+		state.worldMap.get(STARTING_LOCATION).firstVisit = false;
 
 		// Beginning text of the game.
         outputLine();
-        output(state.worldMap.get(initialLocation).name);
+        output(state.worldMap.get(STARTING_LOCATION).name);
 		output(GameStrings.DESC_WEST_OF_HOUSE);
         outputLine();
 		
@@ -570,7 +570,7 @@ public final class Game {
 		playerText = playerText.substring(state.first.length()).trim();
 		if (playerText.isEmpty()) return true;
 
-        for (String token : objectStrings)
+        for (String token : state.objectList.keySet())
         {
             if (startsWith(token, playerText))
             {
@@ -587,7 +587,7 @@ public final class Game {
         playerText = playerText.substring(state.second.length()).trim();
         if (playerText.isEmpty()) return true;
 
-        for (String token : objectStrings)
+        for (String token : state.objectList.keySet())
         {
             if (startsWith(token, playerText))
             {
@@ -624,7 +624,8 @@ public final class Game {
         // Need to address ambiguous words here - the same key can't occur twice in a hashmap.
         fillCurrentObjectList(state);
 
-        if (false)
+        /* TESTING */
+        if (TESTING)
         {
             output("Parse player text results: ");
             output("First phrase is: " + state.first);
@@ -664,25 +665,13 @@ public final class Game {
             {
                 if (currentObjects.containsKey(second))
                 {
-                    ObjectType objType = currentObjects.get(second);
+                    state.directObject = state.objectList.get(second);
+                }
 
-                    switch(objType)
-                    {
-                        case FEATURE:
-                            state.objectFeature = state.featureList.get(second);
-                            break;
-                        case ITEM:
-                            state.objectItem = state.itemList.get(second);
-                            break;
-                        case ACTOR:
-                            state.objectActor = state.actorList.get(second);
-                            break;
-                        case CONTAINER:
-                            state.objectContainer = state.containerList.get(second);
-                            break;
-                        default:
-                            break;
-                    }
+                else
+                {
+                    output("There's no " + second + " here!");
+                    return false;
                 }
             } break;
 
@@ -691,49 +680,18 @@ public final class Game {
 
 				if (currentObjects.containsKey(second))
                 {
-                    ObjectType objType = currentObjects.get(second);
-
-                    switch(objType)
-                    {
-                        case FEATURE:
-                            state.objectFeature = state.featureList.get(second);
-                            break;
-                        case ITEM:
-                            state.objectItem = state.itemList.get(second);
-                            break;
-                        case ACTOR:
-                            state.objectActor = state.actorList.get(second);
-                            break;
-                        case CONTAINER:
-                            state.objectContainer = state.containerList.get(second);
-                            break;
-                        default:
-                            break;
-                    }
+                    state.directObject = state.objectList.get(second);
                 }
 
-				if (!third.isEmpty())
-				{
+
+				state.indirectObject = state.objectList.get(third);
+
+                if (state.indirectObject.getLocation() != Location.PLAYER_INVENTORY)
+                {
+                    output("You're not carrying the " + state.indirectObject.name + ".");
+                    return false;
+                }
 				
-					if (state.itemList.containsKey(third))
-					{
-						Item it = state.itemList.get(third);
-						if (it.getLocation() != Location.PLAYER_INVENTORY)
-						{
-							output("You're not carrying the " + it.name + ".");
-							return false;
-						}
-
-						state.indirectObject = it;
-					}
-
-					else
-					{
-						output("That isn't going to work.");
-					}
-					
-
-				}
 			
 			} break;
 
@@ -755,36 +713,27 @@ public final class Game {
 		
 
 
-		Location curLoc = state.getPlayerLocation();
-		Room curRoom = state.worldMap.get(curLoc);
+		Location currentLocation = state.getPlayerLocation();
+		Room currentRoom = state.worldMap.get(currentLocation);
 
-		Action curAction = state.getPlayerAction();
+		Action currentAction = state.getPlayerAction();
 
-		Feature objFeature = state.objectFeature;
-		Item objItem = state.objectItem;
-		Actor objActor = state.objectActor;
-        Container objContainer = state.objectContainer;
+        GameObject obj = state.directObject;
 
-        GameObject obj = objContainer;
-        output("Abstract object is " + obj.name);
+		GameObject indObj = state.indirectObject;
 
-		Item indObj = state.indirectObject;
-
-		// For testing
-		if (false)
+        /* TESTING */
+		if (TESTING)
 		{
-			output("Selected action is " + curAction);
-			output("Selected feature is " + objFeature.name);
-			output("Selected item is " + objItem.name);
-			output("Selected actor is " + objActor.name);
-            output("Selected container is " + state.objectContainer.name);
+			output("Selected action is " + currentAction);
+			output("Abstract object is " + obj.name);
 			output("Indirect object is " + indObj.name);
 		}
 		
 
 
 
-		switch (curAction)
+		switch (currentAction)
 		{
 
 
@@ -798,40 +747,8 @@ public final class Game {
 			case TIE:
 			case ATTACK:
 			case HIGH_FIVE:
-
 			{
-				if (!objFeature.name.equals("dummy_feature"))
-				{
-					if (objFeature.location == curLoc)
-						objFeature.activate(state, curAction);
-					else
-						output("There's no " + objFeature.name + " here.");
-				}
-
-				if (!objActor.name.equals("dummy_actor"))
-				{
-					if (objActor.location == curLoc)
-						objActor.activate(state, curAction);
-					else
-						output("There's no " + objActor.name + " here.");
-				}
-
-				if (!objItem.name.equals("dummy_item"))
-				{
-					if (objItem.getLocation() == Location.PLAYER_INVENTORY)
-						objItem.activate(state, curAction);
-					else
-						output("You're not carrying the " + objItem.name + ".");
-				}
-                if (!objContainer.name.equals("dummy_container"))
-                {
-                    if (objContainer.location == curLoc)
-                        objContainer.activate(state, curAction);
-                    else
-                        output("There's no " + objContainer.name + " here.");
-                }
-
-				
+                obj.activate(state, currentAction);
 
 			} break;
 
@@ -853,29 +770,18 @@ public final class Game {
 
 			case TAKE:
 			{
-                // The direct object is not an item.
-                if (objItem.name.equals("null"))
-                {
-                    // output the specific fail string instead.
-                    output("That's not something you can take.");
-                    return;
-                }
-
                 // Once this point is reached, the game has already determined that the object item
                 // is in the same location as the player.
-                else
-                {
-                    objItem.takeItem(state);
-                }
 
+                obj.take(state);
                 	
 			} break;
 
 			case DROP:
 			{
-				if (objItem.getLocation() == Location.PLAYER_INVENTORY)
+				if (obj.getLocation() == Location.PLAYER_INVENTORY)
 				{
-					objItem.dropItem(state);
+					obj.drop(state);
 				}
 				else
 				{
@@ -890,19 +796,31 @@ public final class Game {
 
             case LOOK:
             {
-                output(curRoom.name);
-                curRoom.lookAround(state);
+                output(currentRoom.name);
+                currentRoom.lookAround(state);
 
             } break;
 
 			case INVENTORY:
 			{
-				output("You are carrying: \n");
-				for (Item it : state.itemList.values())
+                int count = 0;
+				for (GameObject item : state.objectList.values())
 				{
-					if (it.getLocation() == Location.PLAYER_INVENTORY)
-						output(it.name);
+                    
+					if (item.location == Location.PLAYER_INVENTORY)
+                    {
+                        ++count;
+                        if (count == 1)
+                            output("You are carrying: \n");
+						output(item.name);
+                    }
+
 				}
+
+
+                if (count == 0)
+                    output("You are empty-handed.");
+
 			} break;
 
 
@@ -917,17 +835,17 @@ public final class Game {
 			case UP:
 			case DOWN:
 			{
-				boolean exited = curRoom.exit(state, curAction);
-
-				if (exited)
+				
+				if (currentRoom.exit(state, currentAction))
 				{
-					curRoom = state.worldMap.get(state.getPlayerLocation());
-					output(curRoom.name);
+
+					Room nextRoom = state.worldMap.get(state.getPlayerLocation());
+					output(nextRoom.name);
 					outputLine();
-					if (curRoom.firstVisit)
+					if (nextRoom.firstVisit)
 					{
-						curRoom.firstVisit = false;
-						curRoom.lookAround(state);
+						nextRoom.firstVisit = false;
+						nextRoom.lookAround(state);
 					}
 				}
 
@@ -950,14 +868,16 @@ public final class Game {
 		// The player's action could end the game before anything else happens.
 		if (gameover) return;
 
-
-		for (Actor a : state.actorList.values())
-		{
-			if (a.isAlive()) { a.actorTurn(); }
-		}
+        // The actors get to take their turns
+        for (GameObject actor : state.objectList.values())
+        {
+            if (actor.type == ObjectType.ACTOR && actor.isAlive())
+            {
+                actor.actorTurn();
+            }
+        }
 
 		state.addTurn();
-        outputLine();
 
 	}
 
@@ -1151,62 +1071,21 @@ public final class Game {
 		}
 	}
 
-    private static void fillObjectStringList(GameState state)
-    {
-        for (Feature f : state.featureList.values())
-        {
-            objectStrings.add(f.name);
-        }
-
-        for (Item i : state.itemList.values())
-        {
-            objectStrings.add(i.name);
-        }
-        for (Actor a : state.actorList.values())
-        {
-            objectStrings.add(a.name);
-        }
-
-        for (Container c : state.containerList.values())
-        {
-            objectStrings.add(c.name);
-        }
-    }
-
     private static void fillCurrentObjectList(GameState state)
     {
-        for (Feature f : state.featureList.values())
+        for (GameObject g : state.objectList.values())
         {
-            if (f.location == state.playerLocation)
-                currentObjects.put(f.name, f.type);
-        }
+            if (g.location == state.playerLocation ||
+                g.location == Location.PLAYER_INVENTORY)
+                currentObjects.put(g.name, g.type);
 
-        for (Item it : state.itemList.values())
-        {
-            if (it.getLocation() == state.playerLocation ||
-                it.getLocation() == Location.PLAYER_INVENTORY)
-                currentObjects.put(it.name, it.type);
-        }
-
-        for (Actor a : state.actorList.values())
-        {
-            if (a.location == state.playerLocation)
-                currentObjects.put(a.name, a.type);
-        }
-
-        for (Container c : state.containerList.values())
-        {
-            if (c.location == state.playerLocation)
+            if (g.type == ObjectType.CONTAINER && g.isOpen())
             {
-                currentObjects.put(c.name, c.type);
-
-                if (c.isOpen())
-                {
-                    for (Item it : c.inventory)
-                        currentObjects.put(it.name, it.type);
-                }
+                for (Item it : g.inventory)
+                    currentObjects.put(it.name, it.type);
             }
         }
+
     }
 
 	public static void prompt() { System.out.print(">> "); }
@@ -1219,7 +1098,7 @@ public final class Game {
 
         for (int i = 0; i < words.length; ++i)
         {
-            if (count > 50)
+            if (count > LINE_LENGTH)
             {
                 if (words[i].charAt(0) != '\n')
                     System.out.print("\n");
@@ -1245,7 +1124,7 @@ public final class Game {
 
 			if (result.isEmpty())
 			{
-				output("What?");
+				output("\nWhat?\n");
 				prompt();
 			}
 		}

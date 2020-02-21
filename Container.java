@@ -3,7 +3,6 @@ import java.util.ArrayList;
 class Container extends GameObject {
 
     public final Location containerID;
-    public final ObjectType type = ObjectType.CONTAINER;
     public ArrayList<Item> inventory;
 
 
@@ -18,7 +17,8 @@ class Container extends GameObject {
         super(name, loc);
         capacity = cap;
         containerID = id;
-        inventory = new ArrayList<Item>();    
+        inventory = new ArrayList<Item>();
+        this.type = ObjectType.CONTAINER;    
     }
 
     public void store(Item it)

@@ -2,9 +2,8 @@ class Item extends GameObject{
 
 	// Items can be picked up and moved to other locations, including the player's inventory.
 
-	public final ObjectType type = ObjectType.ITEM;
 	private final Location startLocation;
-	private Location location;
+	public Location location;
 	private final int pointValue;
 	private final int weight;
 
@@ -22,10 +21,11 @@ class Item extends GameObject{
 		this.weight = weight;
 		this.activated = false;
 		this.lifespan = 0;
+		this.type = ObjectType.ITEM;
 	}
 
 
-	public void takeItem(GameState state)
+	public void take(GameState state)
 	{
 
 		if ((state.playerCarryWeight + weight) >= state.playerMaxCarryWeight)
@@ -40,7 +40,7 @@ class Item extends GameObject{
 
 	}
 
-	public void dropItem(GameState state)
+	public void drop(GameState state)
 	{
 		state.playerCarryWeight -= weight;
 		setLocation(state.playerLocation);

@@ -18,11 +18,11 @@ class GameStrings {
 		+ "and all the windows are boarded.";
 
 	public static final String DESC_KITCHEN_WINDOW_OPEN = "You are in the kitchen of the white house. A table seems to have been used recently "
-		+ "for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney"
+		+ "for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney "
 		+ "leads down and to the east is a small window which is open.";
 
 	public static final String DESC_KITCHEN_WINDOW_CLOSED = "You are in the kitchen of the white house. A table seems to have been used recently "
-		+ "for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney"
+		+ "for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney "
 		+ "leads down and to the east is a small window which is slightly ajar.";
 
 	public static final String DESC_ATTIC = "This is the attic. The only exit is a stairway leading down.";

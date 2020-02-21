@@ -7,7 +7,6 @@ interface ActorMethod {
 class Actor extends GameObject {
 	
 	public final Location startLocation;
-	public final ObjectType type = ObjectType.ACTOR;
 	public Location currentLocation;
 	public Location previousLocation;
 
@@ -27,6 +26,7 @@ class Actor extends GameObject {
 		this.startLocation = super.location;
 		this.currentLocation = super.location;
 		this.previousLocation = super.location;
+		this.type = ObjectType.ACTOR;
 	}
 
 
