@@ -570,7 +570,7 @@ public final class Game {
 		if (state.first.isEmpty())
 		{
 			output("Sentence did not start with an action.");
-            return true;
+            return false;
 		}
 
 		
@@ -590,8 +590,8 @@ public final class Game {
         // If the user entered something known by the game but is not a valid object.
         if (state.second.isEmpty())
         {
-            output("Second phrase not recognized.");
-            return true;
+            output("Second phrase was not an object.");
+            return false;
         }
 
         // Remove the second phrase and check if there is more text.
@@ -610,8 +610,8 @@ public final class Game {
         // If the user entered something known by the game but is not a valid object.
         if (state.third.isEmpty())
         {
-            output("Third phrase not recognized.");
-            return true;
+            output("Third phrase was not an object.");
+            return false;
         }
 
 
@@ -676,6 +676,24 @@ public final class Game {
             case OPEN_CLOSE:
             case TAKE_DROP:
             {
+                // If player entered just "take" with no object
+                if (second.isEmpty())
+                {
+                    output("What do you want to take?");
+                    second = getPlayerText();
+
+                    // Player is starting over with a new phrase.
+                    if (second.split(" ").length > 1)
+                    {
+                        if (parsePlayerInput(state, second))
+                            return validateAction(state);
+                    }
+
+                    if (!state.objectList.containsKey(second))
+                    {
+                        output("You used the word " + second + " in a way I don't understand.");
+                    }
+                }
 
                 if (currentObjects.containsKey(second))
                 {
@@ -698,9 +716,14 @@ public final class Game {
                 }
 
 
-				state.indirectObject = state.objectList.get(third);
+				if (currentObjects.containsKey(third))
+                {
+                    state.indirectObject = state.objectList.get(third);
+                }
 
-                if (state.indirectObject.getLocation() != Location.PLAYER_INVENTORY)
+
+
+                if (state.indirectObject.location != Location.PLAYER_INVENTORY)
                 {
                     output("You're not carrying the " + state.indirectObject.name + ".");
                     return false;

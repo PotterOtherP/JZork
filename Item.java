@@ -2,8 +2,6 @@ class Item extends GameObject{
 
 	// Items can be picked up and moved to other locations, including the player's inventory.
 
-	private final Location startLocation;
-	public Location location;
 	private final int pointValue;
 	private final int weight;
 
@@ -15,8 +13,6 @@ class Item extends GameObject{
 	public Item(String name, Location loc, int value, int weight)
 	{
 		super(name, loc);
-		this.startLocation = super.location;
-		this.location = this.startLocation;
 		this.pointValue = value;
 		this.weight = weight;
 		this.activated = false;
@@ -24,7 +20,7 @@ class Item extends GameObject{
 		this.type = ObjectType.ITEM;
 	}
 
-
+	@Override
 	public void take(GameState state)
 	{
 
@@ -35,11 +31,12 @@ class Item extends GameObject{
         }
 
 		state.playerCarryWeight += weight;
-		setLocation(Location.PLAYER_INVENTORY);
+		location = Location.PLAYER_INVENTORY;
 		Game.output("Taken.");
 
 	}
 
+	@Override
 	public void drop(GameState state)
 	{
 		state.playerCarryWeight -= weight;

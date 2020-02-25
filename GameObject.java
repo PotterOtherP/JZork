@@ -8,7 +8,7 @@ interface ActivateMethod {
 abstract class GameObject {
     
     public final String name;
-    public final Location location;
+    public Location location;
     public String takeFail;
     private ActivateMethod method;
     public ObjectType type;
