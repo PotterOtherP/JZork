@@ -408,7 +408,12 @@ public final class Game {
         Feature carpet = new Feature("carpet", Location.LIVING_ROOM);
         Feature trapDoor = new Feature("trap door", Location.LIVING_ROOM);
         Feature leafPile = new Feature("pile", Location.CLEARING_NORTH);
+        Feature house = new Feature("house", Location.WEST_OF_HOUSE);
+        house.altLocations.add(Location.NORTH_OF_HOUSE);
+        house.altLocations.add(Location.BEHIND_HOUSE);
+        house.altLocations.add(Location.SOUTH_OF_HOUSE);
 
+        state.objectList.put(house.name, house);
         state.objectList.put(houseWindow.name, houseWindow);
         state.objectList.put(kitchenWindow.name, kitchenWindow);
         state.objectList.put(carpet.name, carpet);
@@ -437,6 +442,7 @@ public final class Game {
         Item elvishSword = new Item("sword", Location.LIVING_ROOM, 0, 0);
         Item jewelEgg = new Item("egg", Location.UP_TREE, 0, 0);
         Item birdsNest = new Item("nest", Location.UP_TREE, 0, 0);
+        Item lantern = new Item("lantern", Location.LIVING_ROOM, 0, 0);
 
         state.objectList.put(leaflet.name, leaflet);
         state.objectList.put(rope.name, rope);
@@ -445,6 +451,7 @@ public final class Game {
         state.objectList.put(elvishSword.name, elvishSword);
         state.objectList.put(jewelEgg.name, jewelEgg);
         state.objectList.put(birdsNest.name, birdsNest);
+        state.objectList.put(lantern.name, lantern);
 
 
         /* Actors - Underworld
@@ -520,7 +527,7 @@ public final class Game {
 		state.resetInput();
 
 		
-
+        // Method fails if any word the player typed is not known by the game.
 		String[] words = playerText.split(" ");
 
 		for (int i = 0; i < words.length; ++i)
@@ -567,6 +574,8 @@ public final class Game {
 		}
 
 		
+        // Remove the first phrase and check if there is more text.
+        // The next token should be an object.
 		playerText = playerText.substring(state.first.length()).trim();
 		if (playerText.isEmpty()) return true;
 
@@ -578,12 +587,15 @@ public final class Game {
             }
         }
 
+        // If the user entered something known by the game but is not a valid object.
         if (state.second.isEmpty())
         {
             output("Second phrase not recognized.");
             return true;
         }
 
+        // Remove the second phrase and check if there is more text.
+        // The next token should also be an ojbect.
         playerText = playerText.substring(state.second.length()).trim();
         if (playerText.isEmpty()) return true;
 
@@ -595,6 +607,7 @@ public final class Game {
             }
         }
 
+        // If the user entered something known by the game but is not a valid object.
         if (state.third.isEmpty())
         {
             output("Third phrase not recognized.");
@@ -663,6 +676,7 @@ public final class Game {
             case OPEN_CLOSE:
             case TAKE_DROP:
             {
+
                 if (currentObjects.containsKey(second))
                 {
                     state.directObject = state.objectList.get(second);
@@ -841,7 +855,6 @@ public final class Game {
 
 					Room nextRoom = state.worldMap.get(state.getPlayerLocation());
 					output(nextRoom.name);
-					outputLine();
 					if (nextRoom.firstVisit)
 					{
 						nextRoom.firstVisit = false;
@@ -960,17 +973,21 @@ public final class Game {
         actions.put("exit sw",          Action.SOUTHWEST);
 
 		actions.put("up",	     Action.UP);
-		actions.put("go up",	     Action.UP);
+        actions.put("go up",         Action.UP);
+		actions.put("walk up",	     Action.UP);
 		actions.put("exit up",	 Action.UP);
 		actions.put("u",	         Action.UP);
-		actions.put("go u",	     Action.UP);
+        actions.put("go u",      Action.UP);
+		actions.put("walk u",	     Action.UP);
 		actions.put("exit u",	 Action.UP);
 
 		actions.put("down",       Action.DOWN);
-		actions.put("go down",    Action.DOWN);
+        actions.put("go down",    Action.DOWN);
+		actions.put("walk down",    Action.DOWN);
 		actions.put("exit down",  Action.DOWN);
 		actions.put("d",          Action.DOWN);
-		actions.put("go d",       Action.DOWN);
+        actions.put("go d",       Action.DOWN);
+		actions.put("walk d",       Action.DOWN);
 		actions.put("exit d",     Action.DOWN);
 
         // Simple actions: no interaction with game objects
@@ -1073,16 +1090,26 @@ public final class Game {
 
     private static void fillCurrentObjectList(GameState state)
     {
+        currentObjects.clear();
+
         for (GameObject g : state.objectList.values())
         {
             if (g.location == state.playerLocation ||
                 g.location == Location.PLAYER_INVENTORY)
                 currentObjects.put(g.name, g.type);
 
+            // Items in an open container that is present in the room
             if (g.type == ObjectType.CONTAINER && g.isOpen())
             {
                 for (Item it : g.inventory)
                     currentObjects.put(it.name, it.type);
+            }
+
+            // Features that can exist in multiple locations (e.g. the house)
+            if (g.type == ObjectType.FEATURE)
+            {
+                if (g.altLocations.contains(state.playerLocation))
+                    currentObjects.put(g.name, g.type);
             }
         }
 

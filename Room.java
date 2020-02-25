@@ -64,6 +64,7 @@ class Room {
 
 	public void lookAround(GameState state)
 	{
+		Game.outputLine();
 		Game.output(description);
 
 		for (GameObject g : state.objectList.values())
@@ -74,6 +75,7 @@ class Room {
 				Game.output("There is " + word + g.name + " here.");
 			}
 		}
+
 	}
 
 

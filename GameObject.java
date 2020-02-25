@@ -13,6 +13,7 @@ abstract class GameObject {
     private ActivateMethod method;
     public ObjectType type;
     public ArrayList<Item> inventory;
+    public ArrayList<Location> altLocations;
 
 
     // Constructors

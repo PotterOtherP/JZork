@@ -107,7 +107,7 @@ class GameStrings {
 	"an", "around", "at", "attach", "attack",
 	"bell", "box", "close", "door", "down", "drop", "east", "egg", "exit", "five",
 	"fuck", "giant", "go", "hand", "high", "highfive", "hit", "house", "inventory", "jump", "juniper",
-	"key", "kick", "kitchen", "leaflet", "lock", "look", "mailbox", "north", "northeast", "northwest",
+	"key", "kick", "kitchen", "lantern", "leaflet", "lock", "look", "mailbox", "north", "northeast", "northwest",
 	"note", "open", "passage", "piano", "pick",
 	"play", "please", "pull", "punch", "quit", "read", "ring", "room", "rope", "say", "scream",
 	"shit", "shout", "slap", "south", "southeast", "southwest", "take", "the", "tie", "to", "unlock", "up", "wait",

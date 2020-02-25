@@ -3,7 +3,7 @@ import java.util.ArrayList;
 class Container extends GameObject {
 
     public final Location containerID;
-    public ArrayList<Item> inventory;
+    // public ArrayList<Item> inventory;
 
 
     private int capacity;
