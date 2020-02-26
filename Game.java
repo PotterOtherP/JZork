@@ -525,6 +525,7 @@ public final class Game {
 
         */
 		state.resetInput();
+        state.phrase = playerText;
 
 		
         // Method fails if any word the player typed is not known by the game.
@@ -654,15 +655,67 @@ public final class Game {
         state.playerAction = actions.get(first);
         state.actionType = actionTypes.get(state.playerAction);
 
-        
-		
 
         if (state.playerAction == Action.QUIT)
         {
             return true;
         }
 
+        // If the player entered an incomplete phrase, we probably want to
+        // prompt them to complete it before doing any further validation.
 
+        switch(state.actionType)
+        {
+            // Handling the case where the player types stuff after a one-word action.
+            // Special cases can go here too.
+            case REFLEXIVE:
+            {
+                if (!second.isEmpty())
+                {
+                    output("I don't understand what \"" + state.phrase + "\" means.");
+                    return false;
+                }
+            } break;
+
+            case DIRECT:
+            case OPEN_CLOSE:
+            case TAKE_DROP:
+            {
+                // If player entered just "take" with no object
+                if (second.isEmpty())
+                {
+                    output("What do you want to " + first + "?");
+                    second = getPlayerText();
+
+                    // Player is starting over with a new phrase.
+                    if (second.split(" ").length > 1)
+                    {
+                        if (parsePlayerInput(state, second))
+                            return validateAction(state);
+                    }
+
+                    if (!state.objectList.containsKey(second))
+                    {
+                        output("You used the word " + second + " in a way I don't understand.");
+                        return false;
+                    }
+                }
+            } break;
+
+            case INDIRECT:
+            {
+
+            } break;
+
+            default:
+            {
+
+            } break;
+
+        }
+
+        // Second switch, at this point we either have a complete phrase or
+        // the method has returned.
 		switch(state.actionType)
 		{
 
@@ -676,25 +729,7 @@ public final class Game {
             case OPEN_CLOSE:
             case TAKE_DROP:
             {
-                // If player entered just "take" with no object
-                if (second.isEmpty())
-                {
-                    output("What do you want to take?");
-                    second = getPlayerText();
-
-                    // Player is starting over with a new phrase.
-                    if (second.split(" ").length > 1)
-                    {
-                        if (parsePlayerInput(state, second))
-                            return validateAction(state);
-                    }
-
-                    if (!state.objectList.containsKey(second))
-                    {
-                        output("You used the word " + second + " in a way I don't understand.");
-                    }
-                }
-
+                
                 if (currentObjects.containsKey(second))
                 {
                     state.directObject = state.objectList.get(second);

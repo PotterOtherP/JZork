@@ -17,6 +17,7 @@ class GameState {
 
 
 	// player action
+	public String phrase;
 	public String first;
 	public String second;
 	public String third;
@@ -71,6 +72,7 @@ class GameState {
 		this.first = "";
 		this.second = "";
 		this.third = "";
+		this.phrase = "";
 
 		this.playerAction = Action.NULL_ACTION;
 		this.actionType = ActionType.NULL_TYPE;
