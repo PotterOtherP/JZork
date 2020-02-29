@@ -100,6 +100,8 @@ abstract class GameObject {
     public void place(GameState state, Item it) { Game.output("You can't place that."); }
     public void remove(GameState state, Item it) { Game.output("You can't do that."); }
 
+    public void examine(GameState state) { Game.output("There's nothing special about the " + name + "."); }
+
     
 
 }

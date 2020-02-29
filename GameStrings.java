@@ -14,6 +14,9 @@ class GameStrings {
 	public static final String DESC_BEHIND_HOUSE = "You are behind the white house. A path leads into the forest to the east. "
 		+ "\nIn one corner of the house there is a small window which is slightly ajar.";
 
+	public static final String DESC_BEHIND_HOUSE_WINDOW_OPEN = "You are behind the white house. A path leads into the forest to the east. "
+		+ "\nIn one corner of the house there is a small window which is open.";
+
 	public static final String DESC_SOUTH_OF_HOUSE = "You are facing the south side of a white house. There is no door here, "
 		+ "and all the windows are boarded.";
 
@@ -24,6 +27,10 @@ class GameStrings {
 	public static final String DESC_KITCHEN_WINDOW_CLOSED = "You are in the kitchen of the white house. A table seems to have been used recently "
 		+ "for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney "
 		+ "leads down and to the east is a small window which is slightly ajar.";
+
+	public static final String KITCHEN_WINDOW_CLOSED = "The kitchen window is closed.";
+	public static final String WINDOW_OPENS = "With great effort, you open the window far enough to allow entry.";
+	public static final String WINDOW_CLOSES = "The window closes (more easily than it opened).";
 
 	public static final String DESC_ATTIC = "This is the attic. The only exit is a stairway leading down.";
 
@@ -82,10 +89,6 @@ class GameStrings {
 
 	public static final String FOREST_NE_FAIL_1 = "The mountains are impassable.";
 
-	public static final String MAILBOX_OPEN = "You open the mailbox.";
-	public static final String MAILBOX_OPEN_FAIL = "The mailbox is already open.";
-	public static final String MAILBOX_CLOSE = "You close the mailbox.";
-	public static final String MAILBOX_CLOSE_FAIL = "The mailbox is already closed.";
 
 	public static final String LEAFLET_TEXT = "WELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore "
 		+ "some of the most amazing territory ever seen by mortals. No computer should be without one!";
@@ -112,7 +115,7 @@ class GameStrings {
 	"bell", "bottle", "box",
 	"carpet", "case", "close",
 	"door", "down", "drop",
-	"east", "egg", "exit",
+	"east", "egg", "examine", "exit",
 	"five", "fuck",
 	"giant", "go",
 	"hand", "high", "highfive", "hit", "house",

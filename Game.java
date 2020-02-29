@@ -68,6 +68,7 @@ enum Action {
 	READ,
 	KICK,
 	SLAP,
+    EXAMINE,
 
 	ATTACK,
 	TIE
@@ -111,6 +112,21 @@ public final class Game {
      * New object type: Container
      * List of currently actionable objects?
      * Universal action methods in class definitions (take, put, open, read, etc)
+     * Fix action lookup
+     *
+     * Overworld objects:
+     *
+     * Kitchen window - passage from Behind House to Kitchen
+     * Songbird
+     * Attic - Darkness
+     * Lantern - turn on, lifetime
+     * Object weights and point values
+     * Trophy case - points
+     * Kitchen table
+     * Sack, lunch, water
+     * Egg, clockwork canary
+     * Leaf pile
+     * Carpet and trap door
      *
      */
 
@@ -195,7 +211,11 @@ public final class Game {
         // Behind house
         Passage house_behind_clearingE = new Passage(Location.BEHIND_HOUSE, Location.CLEARING_EAST);
         Passage house_behind_south = new Passage(Location.BEHIND_HOUSE, Location.SOUTH_OF_HOUSE);
+
+        // This passage is initially closed and controlled by the kitchen window.
         Passage house_behind_kitchen = new Passage(Location.BEHIND_HOUSE, Location.KITCHEN);
+        house_behind_kitchen.close();
+        house_behind_kitchen.closedFail = GameStrings.KITCHEN_WINDOW_CLOSED;
 
         // South of House
         Passage house_south_forestS = new Passage(Location.SOUTH_OF_HOUSE, Location.FOREST_SOUTH);
@@ -404,7 +424,7 @@ public final class Game {
         state.objectList.put(mailbox.name, mailbox);
 
         // These are the same window!
-        Feature houseWindow = new Feature("house window", Location.BEHIND_HOUSE);
+        Feature houseWindow = new Feature("window", Location.BEHIND_HOUSE);
         Feature kitchenWindow = new Feature("kitchen window", Location.KITCHEN);
         Feature carpet = new Feature("carpet", Location.LIVING_ROOM);
         Feature trapDoor = new Feature("trap door", Location.LIVING_ROOM);
@@ -563,7 +583,6 @@ public final class Game {
 		playerText = playerText.replaceAll(" to ", " ");
 		playerText = playerText.replaceAll(" with ", " ");
         playerText = playerText.replaceAll(" in ", " ");
-        playerText = playerText.replaceAll(" at ", " ");
         playerText = playerText.trim();
 
 		// get rid of extra spaces
@@ -715,7 +734,7 @@ public final class Game {
 
                     if (!state.objectList.containsKey(second))
                     {
-                        output("You used the word " + second + " in a way I don't understand.");
+                        output("You used the word \"" + second + "\" in a way I don't understand.");
                         return false;
                     }
                 }
@@ -868,11 +887,18 @@ public final class Game {
 			} break;
 
 
+            // Specific actions involving an object.
+
+            case EXAMINE:
+            {
+                obj.examine(state);
+            } break;
+
             case OPEN:
             {
                 obj.open(state);
             } break;
-            
+
             case CLOSE:
             {
                 obj.close(state);
@@ -1119,6 +1145,9 @@ public final class Game {
 		actions.put("look around",  Action.LOOK);
 		actions.put("look",  Action.LOOK);
 		actions.put("l",     Action.LOOK);
+        actions.put("examine", Action.EXAMINE);
+        actions.put("look at", Action.EXAMINE);
+        actions.put("l at", Action.EXAMINE);
 		actions.put("inventory", Action.INVENTORY);
 		actions.put("i",         Action.INVENTORY);
 		actions.put("fuck",  Action.PROFANITY);
@@ -1192,6 +1221,7 @@ public final class Game {
         actionTypes.put(Action.OPEN, ActionType.OPEN_CLOSE);
         actionTypes.put(Action.CLOSE, ActionType.OPEN_CLOSE);
 
+        actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
         actionTypes.put(Action.READ, ActionType.DIRECT);
         actionTypes.put(Action.SLAP, ActionType.DIRECT);
         actionTypes.put(Action.KICK, ActionType.DIRECT);

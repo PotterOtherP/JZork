@@ -65,7 +65,7 @@ class Room {
 	public void lookAround(GameState state)
 	{
 		Game.outputLine();
-		Game.output(description);
+		Game.output(getDescription(state));
 
 		for (GameObject g : state.objectList.values())
 		{
@@ -141,6 +141,25 @@ class Room {
 			}
 		}
 		
+
+		return result;
+	}
+
+
+	public String getDescription(GameState state)
+	{
+		String result = this.description;	
+
+		switch (roomID)
+		{
+			
+
+
+			default:
+			{
+				
+			} break;
+		}
 
 		return result;
 	}

@@ -2,8 +2,8 @@ class Passage {
 	
 
 	public final String name;
-	public final String lockFail;
-	public final String closedFail;
+	public String lockFail;
+	public String closedFail;
 	public final Location locationA;
 	public final Location locationB;
 
