@@ -3,15 +3,15 @@ import java.util.HashMap;
 class Room {
 	
 	public final String name;
-	private String description;
+	public String description;
 	public final Location roomID;
 
 	public boolean firstVisit;
 
-	private boolean darkness;
+	public boolean darkness;
 
-	private HashMap<Action, Passage> exits;
-	private HashMap<Action, String> failMessages;
+	public HashMap<Action, Passage> exits;
+	public HashMap<Action, String> failMessages;
 
 
 
@@ -71,9 +71,19 @@ class Room {
 		{
 			if (g.location == roomID)
 			{
-				String word = (g.vowelStart() ? "an " : "a ");
-				Game.output("There is " + word + g.name + " here.");
-			}
+				if ((g.isItem() || g.isActor()))
+				{
+					String word = (g.vowelStart() ? "an " : "a ");
+					Game.output("There is " + word + g.name + " here.");		
+				}
+
+				if (g.isContainer() && g.isOpen() && !g.inventory.isEmpty())
+				{
+					Game.output("The " + g.name + " contains: ");
+					for (GameObject it : g.inventory)
+						Game.output(it.name);
+				}
+			}		
 		}
 
 	}
@@ -111,8 +121,8 @@ class Room {
 		// If the Passage is open... success
 		if (psg.isOpen())
 		{
-			state.setPreviousLocation(state.getPlayerLocation());
-			state.setPlayerLocation(dest);
+			state.playerPreviousLocation = state.playerLocation;
+			state.playerLocation = dest;
 			result = true;
 		}
 

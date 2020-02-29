@@ -11,10 +11,10 @@ class Actor extends GameObject {
 	public Location previousLocation;
 
 
-	private ActorMethod actorMethod;
+	public ActorMethod actorMethod;
 	
-	private boolean alive;
-	private boolean encountered;
+	public boolean alive;
+	public boolean encountered;
 
 
 

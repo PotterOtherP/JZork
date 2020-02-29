@@ -2,12 +2,12 @@ class Item extends GameObject{
 
 	// Items can be picked up and moved to other locations, including the player's inventory.
 
-	private final int pointValue;
-	private final int weight;
+	public final int pointValue;
+	public final int weight;
 
 	// For items that can be turned on and expire, like the lamp
-	private boolean activated;
-	private int lifespan;
+	public boolean activated;
+	public int lifespan;
 
 
 	public Item(String name, Location loc, int value, int weight)
@@ -34,13 +34,15 @@ class Item extends GameObject{
 		location = Location.PLAYER_INVENTORY;
 		Game.output("Taken.");
 
+		movedFromStart = true;
+
 	}
 
 	@Override
 	public void drop(GameState state)
 	{
 		state.playerCarryWeight -= weight;
-		setLocation(state.playerLocation);
+		location = state.playerLocation;
 		Game.output("Dropped.");
 	}
 

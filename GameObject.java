@@ -10,7 +10,8 @@ abstract class GameObject {
     public final String name;
     public Location location;
     public String takeFail;
-    private ActivateMethod method;
+    public boolean movedFromStart;
+    public ActivateMethod method;
     public ObjectType type;
     public ArrayList<Item> inventory;
     public ArrayList<Location> altLocations;
@@ -21,6 +22,7 @@ abstract class GameObject {
     {
         this.name = name;
         this.location = loc;
+        this.movedFromStart = false;
         this.takeFail = ("That's not something you can take, really.");
         this.method = (GameState state, Action act) -> {};
     }
@@ -72,12 +74,18 @@ abstract class GameObject {
         return result;
     }
 
+    public boolean isActor() { return this.type == ObjectType.ACTOR; }
+    public boolean isContainer() { return this.type == ObjectType.CONTAINER; }
+    public boolean isItem() { return this.type == ObjectType.ITEM; }
+    public boolean isFeature() { return this.type == ObjectType.FEATURE; }
+    public boolean playerHasObject() { return this.location == Location.PLAYER_INVENTORY; }
+
     // Common methods to all objects, which will be overridden in the child classes.
 
-    public void open(GameState state) {}
-    public void close(GameState state) {}
-    public void unlock(GameState state) {}
-    public void lock(GameState state) {}
+    public void open(GameState state) { Game.output("You can't open that."); }
+    public void close(GameState state) { Game.output("You can't close that."); }
+    public void unlock(GameState state) { Game.output("You can't unlock that."); }
+    public void lock(GameState state) { Game.output("You can't lock that."); }
 
     public boolean isOpen() { return false; }
     public boolean isAlive() { return false; }
@@ -87,7 +95,10 @@ abstract class GameObject {
         Game.output(takeFail);
     }
 
-    public void drop(GameState state) {}
+    public void drop(GameState state) { Game.output("You can't drop that."); }
+
+    public void place(GameState state, Item it) { Game.output("You can't place that."); }
+    public void remove(GameState state, Item it) { Game.output("You can't do that."); }
 
     
 

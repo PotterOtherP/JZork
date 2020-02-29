@@ -51,6 +51,7 @@ enum Action {
 	WAIT,
 	DEFEND,
 	HIGH_FIVE,
+    AUTHOR,
 
 	TAKE,
 	DROP,
@@ -80,7 +81,7 @@ enum ActionType {
 	DIRECT,
 	INDIRECT,
     EXIT,
-    TAKE_DROP,
+    PLACE_REMOVE,
     OPEN_CLOSE
 }
 
@@ -435,7 +436,7 @@ public final class Game {
          *
          * Item: name, location, point value, weight
          */
-        Item leaflet = new Item("leaflet", Location.WEST_OF_HOUSE, 0, 0);
+        Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX, 0, 0);
         Item rope = new Item("rope", Location.ATTIC, 0, 0);
         Item rustyKnife = new Item("knife", Location.ATTIC, 0, 0);
         Item glassBottle = new Item("bottle", Location.KITCHEN, 0, 0);
@@ -452,6 +453,22 @@ public final class Game {
         state.objectList.put(jewelEgg.name, jewelEgg);
         state.objectList.put(birdsNest.name, birdsNest);
         state.objectList.put(lantern.name, lantern);
+
+        // Fill the inventories of the containers
+
+        for (GameObject cont : state.objectList.values())
+        {
+            if (cont.isContainer())
+            {
+                Container c = (Container)(cont);
+
+                for (GameObject it : state.objectList.values())
+                {
+                    if (it.location == c.containerID)
+                        c.inventory.add((Item)it);
+                }
+            }
+        }
 
 
         /* Actors - Underworld
@@ -545,6 +562,8 @@ public final class Game {
 		playerText = playerText.replaceAll(" the ", " ");
 		playerText = playerText.replaceAll(" to ", " ");
 		playerText = playerText.replaceAll(" with ", " ");
+        playerText = playerText.replaceAll(" in ", " ");
+        playerText = playerText.replaceAll(" at ", " ");
         playerText = playerText.trim();
 
 		// get rid of extra spaces
@@ -661,6 +680,7 @@ public final class Game {
             return true;
         }
 
+        // FIRST SWITCH
         // If the player entered an incomplete phrase, we probably want to
         // prompt them to complete it before doing any further validation.
 
@@ -679,9 +699,8 @@ public final class Game {
 
             case DIRECT:
             case OPEN_CLOSE:
-            case TAKE_DROP:
             {
-                // If player entered just "take" with no object
+                // If player entered just "action" with no object
                 if (second.isEmpty())
                 {
                     output("What do you want to " + first + "?");
@@ -714,8 +733,8 @@ public final class Game {
 
         }
 
-        // Second switch, at this point we either have a complete phrase or
-        // the method has returned.
+        // SECOND SWITCH
+        // At this point we either have a complete phrase or the method has returned.
 		switch(state.actionType)
 		{
 
@@ -727,7 +746,6 @@ public final class Game {
 
 			case DIRECT:
             case OPEN_CLOSE:
-            case TAKE_DROP:
             {
                 
                 if (currentObjects.containsKey(second))
@@ -740,9 +758,18 @@ public final class Game {
                     output("There's no " + second + " here!");
                     return false;
                 }
+
+                if (state.directObject.isItem() && !state.directObject.playerHasObject() && state.playerAction != Action.TAKE)
+                {
+                    output("You're not carrying the " + state.directObject.name + ".");
+                    return false;
+                }
             } break;
 
+            
+
 			case INDIRECT:
+            case PLACE_REMOVE:
 			{
 
 				if (currentObjects.containsKey(second))
@@ -750,15 +777,30 @@ public final class Game {
                     state.directObject = state.objectList.get(second);
                 }
 
+                else
+                {
+                    output("There's no " + second + " here!");
+                    return false;
+                }
 
-				if (currentObjects.containsKey(third))
+                if (currentObjects.containsKey(third))
                 {
                     state.indirectObject = state.objectList.get(third);
                 }
 
+                else
+                {
+                    output("There's no " + third + " here!");
+                    return false;
+                }
 
+                if (state.directObject.isItem() && !state.directObject.playerHasObject())
+                {
+                    output("You're not carrying the " + state.directObject.name + ".");
+                    return false;
+                }
 
-                if (state.indirectObject.location != Location.PLAYER_INVENTORY)
+                if (state.indirectObject.isItem() && !state.indirectObject.playerHasObject())
                 {
                     output("You're not carrying the " + state.indirectObject.name + ".");
                     return false;
@@ -785,10 +827,10 @@ public final class Game {
 		
 
 
-		Location currentLocation = state.getPlayerLocation();
+		Location currentLocation = state.playerLocation;
 		Room currentRoom = state.worldMap.get(currentLocation);
 
-		Action currentAction = state.getPlayerAction();
+		Action currentAction = state.playerAction;
 
         GameObject obj = state.directObject;
 
@@ -820,15 +862,20 @@ public final class Game {
 			case ATTACK:
 			case HIGH_FIVE:
 			{
+
                 obj.activate(state, currentAction);
 
 			} break;
 
 
             case OPEN:
+            {
+                obj.open(state);
+            } break;
+            
             case CLOSE:
             {
-
+                obj.close(state);
             } break;
 
 
@@ -842,26 +889,42 @@ public final class Game {
 
 			case TAKE:
 			{
-                // Once this point is reached, the game has already determined that the object item
-                // is in the same location as the player.
+                // If the player already has the item
+                if (obj.playerHasObject())
+                {
+                    output("You're already carrying the " + obj.name + "!");
+                    return;
+                }
 
-                obj.take(state);
+                // If the item is in an open container, remove it from the container.
+
+                boolean taken = false;
+                for (GameObject cont : state.objectList.values())
+                {
+                    if (cont.isOpen() && cont.inventory.contains(obj))
+                    {
+                        cont.remove(state, (Item)obj);
+                        taken = true;
+                    }
+                }
+
+                // Otherwise, it is in the player's location and we just take it.
+                if (!taken)
+                    obj.take(state);
                 	
 			} break;
 
 			case DROP:
 			{
-				if (obj.getLocation() == Location.PLAYER_INVENTORY)
-				{
-					obj.drop(state);
-				}
-				else
-				{
-					output("You're not carrying that.");
-				}
+				obj.drop(state);
 			} break;
 
+            case PLACE:
+            {
+                if (obj.isItem())
+                    indObj.place(state, (Item)obj);
 
+            } break;
 
 
             // Simpler actions
@@ -879,7 +942,7 @@ public final class Game {
 				for (GameObject item : state.objectList.values())
 				{
                     
-					if (item.location == Location.PLAYER_INVENTORY)
+					if (item.playerHasObject())
                     {
                         ++count;
                         if (count == 1)
@@ -911,7 +974,7 @@ public final class Game {
 				if (currentRoom.exit(state, currentAction))
 				{
 
-					Room nextRoom = state.worldMap.get(state.getPlayerLocation());
+					Room nextRoom = state.worldMap.get(state.playerLocation);
 					output(nextRoom.name);
 					if (nextRoom.firstVisit)
 					{
@@ -932,6 +995,7 @@ public final class Game {
 			case VERBOSE: { output("You said too many words."); } break;
 			case PROFANITY: { output(GameStrings.PROFANITY_ONE); } break;			
 			case QUIT: { /* if (verifyQuit()) */ gameover = true; } break;
+            case AUTHOR: { output(GameStrings.AUTHOR_INFO); } break;
 
 			default: {} break;
 		}
@@ -942,7 +1006,7 @@ public final class Game {
         // The actors get to take their turns
         for (GameObject actor : state.objectList.values())
         {
-            if (actor.type == ObjectType.ACTOR && actor.isAlive())
+            if (actor.isActor() && actor.isAlive())
             {
                 actor.actorTurn();
             }
@@ -1063,7 +1127,7 @@ public final class Game {
 		actions.put("yell",  Action.SHOUT);
 		actions.put("scream",  Action.SHOUT);
 		actions.put("wait", Action.WAIT);
-		actions.put("say", Action.SPEAK);
+        actions.put("author", Action.AUTHOR);
 
 
         // General object interaction actions
@@ -1078,6 +1142,8 @@ public final class Game {
         actions.put("read", Action.READ);
         actions.put("unlock", Action.UNLOCK);
         actions.put("lock", Action.LOCK);
+        actions.put("put", Action.PLACE);
+        actions.put("place", Action.PLACE);
 
         // Combat actions
         actions.put("kick", Action.KICK);
@@ -1088,6 +1154,7 @@ public final class Game {
 
 
         // Special actions
+		actions.put("say", Action.SPEAK);
         actions.put("play", Action.PLAY);
 		actions.put("ring", Action.RING);
         actions.put("highfive", Action.HIGH_FIVE);
@@ -1104,6 +1171,7 @@ public final class Game {
         actionTypes.put(Action.WAIT, ActionType.REFLEXIVE);
         actionTypes.put(Action.PROFANITY, ActionType.REFLEXIVE);
         actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
+        actionTypes.put(Action.AUTHOR, ActionType.REFLEXIVE);
 
         actionTypes.put(Action.NORTH, ActionType.EXIT);
         actionTypes.put(Action.SOUTH, ActionType.EXIT);
@@ -1116,10 +1184,10 @@ public final class Game {
         actionTypes.put(Action.UP, ActionType.EXIT);
         actionTypes.put(Action.DOWN, ActionType.EXIT);
 
-        actionTypes.put(Action.TAKE, ActionType.TAKE_DROP);
-        actionTypes.put(Action.DROP, ActionType.TAKE_DROP);
-        actionTypes.put(Action.STORE, ActionType.TAKE_DROP);
-        actionTypes.put(Action.PLACE, ActionType.TAKE_DROP);
+        actionTypes.put(Action.TAKE, ActionType.DIRECT);
+        actionTypes.put(Action.DROP, ActionType.DIRECT);
+        actionTypes.put(Action.STORE, ActionType.DIRECT);
+        actionTypes.put(Action.PLACE, ActionType.PLACE_REMOVE);
 
         actionTypes.put(Action.OPEN, ActionType.OPEN_CLOSE);
         actionTypes.put(Action.CLOSE, ActionType.OPEN_CLOSE);
@@ -1157,14 +1225,14 @@ public final class Game {
                 currentObjects.put(g.name, g.type);
 
             // Items in an open container that is present in the room
-            if (g.type == ObjectType.CONTAINER && g.isOpen())
+            if (g.location == state.playerLocation && g.isContainer() && g.isOpen())
             {
                 for (Item it : g.inventory)
                     currentObjects.put(it.name, it.type);
             }
 
             // Features that can exist in multiple locations (e.g. the house)
-            if (g.type == ObjectType.FEATURE)
+            if (g.isFeature())
             {
                 if (g.altLocations.contains(state.playerLocation))
                     currentObjects.put(g.name, g.type);

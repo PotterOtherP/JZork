@@ -7,8 +7,8 @@ class Passage {
 	public final Location locationA;
 	public final Location locationB;
 
-	private boolean open;
-	private boolean locked;
+	public boolean open;
+	public boolean locked;
 
 	// Constructors
 	public Passage()

@@ -100,19 +100,38 @@ class GameStrings {
 
 	public static final String GAME_WON = "You won the game!";
 
+	public static final String AUTHOR_INFO = "This sad attempt to recreate Zork was written by Nate Tryon "
+		+ "in the year of are Lord 2020.\n\nhttps://github.com/PotterOtherP/JZork";
+
+
 	// All the words recognized by the game.
 	public static final String[] GAME_WORDS = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
 	"k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
 	"u", "v", "w", "x", "y", "z", "ne", "nw", "se", "sw",
-	"an", "around", "at", "attach", "attack",
-	"bell", "box", "close", "door", "down", "drop", "east", "egg", "exit", "five",
-	"fuck", "giant", "go", "hand", "high", "highfive", "hit", "house", "inventory", "jump", "juniper",
-	"key", "kick", "kitchen", "lantern", "leaflet", "lock", "look", "mailbox", "north", "northeast", "northwest",
-	"note", "open", "passage", "piano", "pick",
-	"play", "please", "pull", "punch", "quit", "read", "ring", "room", "rope", "say", "scream",
-	"shit", "shout", "slap", "south", "southeast", "southwest", "take", "the", "tie", "to", "unlock", "up", "wait",
-	"walk", "west", "with", "wizard", "yell",
-	"mailbox", "trophy", "case", "sack", "window", "carpet", "trap", "pile", "knife", "bottle", "sword", "egg", "nest"};
+	"an", "around", "at", "attach", "attack", "author",
+	"bell", "bottle", "box",
+	"carpet", "case", "close",
+	"door", "down", "drop",
+	"east", "egg", "exit",
+	"five", "fuck",
+	"giant", "go",
+	"hand", "high", "highfive", "hit", "house",
+	"in", "inventory",
+	"jump", "juniper",
+	"key", "kick", "kitchen", "knife",
+	"lantern", "leaflet", "lock", "look",
+	"mailbox",
+	"nest", "next", "north", "northeast", "northwest", "note",
+	"open",
+	"passage", "piano", "pick", "pile", "place", "put", "play", "please", "pull", "punch",
+	"quit",
+	"read", "ring", "room", "rope",
+	"sack", "say", "scream", "shit", "shout", "slap", "south", "southeast", "southwest", "store", "sword",
+	"take", "the", "tie", "to", "trap", "trophy",
+	"unlock", "up",
+	"wait", "walk", "west", "window", "with", "wizard",
+	"yell"
+	};
 
 	// This class does not get instantiated.
 	private GameStrings() {}
