@@ -70,6 +70,7 @@ enum Action {
 	KICK,
 	SLAP,
     EXAMINE,
+    LIGHT,
 
 	ATTACK,
 	TIE
@@ -897,8 +898,27 @@ public final class Game {
 			output("Indirect object is " + indObj.name);
 		}
 		
+        /* If the room is dark, you can't do anything except:
+         * Drop items
+         * Turn on a light (in your inventory)
+         * Move in a direction (resulting in death if not back to a light room)
+         * Reflexive actions
+         * Three consecutive turns in darkness without moving will result in death.
+         * This is a change from the original game, which allows you to do some things
+         * that don't really make sense.
+         */
 
+        if (state.lightActivated)
+            state.darknessTurns = 0;
 
+        if (state.darknessTurns == 3)
+        {
+            output(GameStrings.GRUE_DEATH_2);
+            gameover = true;
+            return;
+        }
+
+        boolean dark = (currentRoom.isDark() && !state.lightActivated);
 
 		switch (currentAction)
 		{
@@ -906,6 +926,12 @@ public final class Game {
 
 
             // These actions will activate the object's lambda method.
+
+            case LIGHT:
+            {
+                obj.activate(state, Action.LIGHT);
+            } break;
+
 			case ACTIVATE:
 			case RING:
 			case PLAY:
@@ -915,16 +941,24 @@ public final class Game {
 			case ATTACK:
 			case HIGH_FIVE:
 			{
-
+                if (dark)
+                {
+                    output(GameStrings.TOO_DARK);
+                    ++state.darknessTurns;
+                    return;
+                }
                 obj.activate(state, currentAction);
 
 			} break;
+
+            
 
 
             // Specific actions involving an object.
 
             case EXAMINE:
             {
+
                 obj.examine(state);
             } break;
 
@@ -1035,6 +1069,13 @@ public final class Game {
 				{
 
 					Room nextRoom = state.worldMap.get(state.playerLocation);
+
+                    if (dark && nextRoom.roomID != state.playerPreviousLocation)
+                    {
+                        output(GameStrings.GRUE_DEATH_1);
+                        gameover = true;
+                        return;
+                    }
 					output(nextRoom.name);
 					if (nextRoom.firstVisit)
 					{
@@ -1222,6 +1263,8 @@ public final class Game {
 		actions.put("say", Action.SPEAK);
         actions.put("play", Action.PLAY);
 		actions.put("ring", Action.RING);
+        actions.put("light", Action.LIGHT);
+        actions.put("turn on", Action.LIGHT);
         actions.put("highfive", Action.HIGH_FIVE);
         actions.put("high five", Action.HIGH_FIVE);
 		actions.put("tie", Action.TIE);
@@ -1252,6 +1295,7 @@ public final class Game {
         actionTypes.put(Action.TAKE, ActionType.DIRECT);
         actionTypes.put(Action.DROP, ActionType.DIRECT);
         actionTypes.put(Action.STORE, ActionType.DIRECT);
+        actionTypes.put(Action.LIGHT, ActionType.DIRECT);
         actionTypes.put(Action.PLACE, ActionType.PLACE_REMOVE);
 
         actionTypes.put(Action.OPEN, ActionType.OPEN_CLOSE);

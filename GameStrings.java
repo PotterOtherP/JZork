@@ -36,6 +36,9 @@ class GameStrings {
 
     public static final String ENTER_DARKNESS = "You have moved into a dark place.";
     public static final String DARKNESS = "It is pitch black. You are likely to be eaten by a grue.";
+    public static final String TOO_DARK = "It's too dark to see!";
+    public static final String GRUE_DEATH_1 = "Oh no! You have walked into the slavering fangs of a lurking grue!";
+    public static final String GRUE_DEATH_2 = "Oh no! A lurking grue slithered into the room and devoured you!";
 
 	public static final String DESC_LIVING_ROOM = "You are in the living room. There is a doorway to the east, a wooden door with strange "
 		+ "gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.";
@@ -126,15 +129,15 @@ class GameStrings {
 	"in", "inventory",
 	"jump", "juniper",
 	"key", "kick", "kitchen", "knife",
-	"lantern", "leaflet", "lock", "look",
+	"lantern", "leaflet", "light", "lock", "look",
 	"mailbox",
 	"nest", "next", "north", "northeast", "northwest", "note",
-	"open",
+	"on", "open",
 	"passage", "piano", "pick", "pile", "place", "put", "play", "please", "pull", "punch",
 	"quit",
 	"read", "ring", "room", "rope",
 	"sack", "say", "scream", "shit", "shout", "slap", "songbird", "south", "southeast", "southwest", "store", "sword",
-	"take", "the", "tie", "to", "trap", "trophy",
+	"take", "the", "tie", "to", "trap", "trophy", "turn",
 	"unlock", "up",
 	"wait", "walk", "west", "window", "with", "wizard",
 	"yell"

@@ -4,6 +4,8 @@ class GameState {
 
 	// gameplay information
 	public int turns;
+    public int darknessTurns;
+    public boolean lightActivated;
 
 	// game events
 
