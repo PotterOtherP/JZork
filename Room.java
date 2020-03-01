@@ -106,6 +106,14 @@ class Room {
 
 		else
 		{
+			// Darkness check
+			if (isDark() && !state.lightActivated)
+			{
+				Game.output(GameStrings.GRUE_DEATH_1);
+				state.playerAlive = false;
+				return false;
+			}
+
 			if (failMessages.containsKey(act))
 				Game.output(failMessages.get(act));
 			else
@@ -119,6 +127,16 @@ class Room {
 		// Figure out which side of the Passage the player is on.
 		if (psg.locationA == this.roomID) { dest = psg.locationB; }
 		else { dest = psg.locationA; }
+
+		// Darkness check. If the room is in darkness, and the destination
+		// is not the previous room, player dies by grue.
+		if (isDark() && !state.lightActivated && (dest != state.playerPreviousLocation))
+		{
+			Game.output(GameStrings.GRUE_DEATH_1);
+			state.playerAlive = false;
+			return false;
+
+		}
 
 		// If the Passage is open... success
 		if (psg.isOpen())

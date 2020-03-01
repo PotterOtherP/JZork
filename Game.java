@@ -876,11 +876,28 @@ public final class Game {
 	}
 
 
+    private static boolean checkDark(GameState state, boolean dark)
+    {
+        if (state.darknessTurns >= 2)
+        {
+            output(GameStrings.GRUE_DEATH_2);
+            state.playerAlive = false;
+            return false;
+        }
+
+        if (dark)
+        {
+            output(GameStrings.TOO_DARK);
+            ++state.darknessTurns;
+            return false;
+        }
+
+        return true;
+    }
+
 	private static void updateGame(GameState state)
 	{
 		
-
-
 		Location currentLocation = state.playerLocation;
 		Room currentRoom = state.worldMap.get(currentLocation);
 
@@ -894,7 +911,7 @@ public final class Game {
 		if (TESTING)
 		{
 			output("Selected action is " + currentAction);
-			output("Abstract object is " + obj.name);
+			output("Direct object is " + obj.name);
 			output("Indirect object is " + indObj.name);
 		}
 		
@@ -903,22 +920,19 @@ public final class Game {
          * Turn on a light (in your inventory)
          * Move in a direction (resulting in death if not back to a light room)
          * Reflexive actions
+         *
          * Three consecutive turns in darkness without moving will result in death.
          * This is a change from the original game, which allows you to do some things
          * that don't really make sense.
          */
 
-        if (state.lightActivated)
+        boolean dark = (currentRoom.isDark() && !state.lightActivated);
+
+        if (!dark)
             state.darknessTurns = 0;
 
-        if (state.darknessTurns == 3)
-        {
-            output(GameStrings.GRUE_DEATH_2);
-            gameover = true;
-            return;
-        }
+       
 
-        boolean dark = (currentRoom.isDark() && !state.lightActivated);
 
 		switch (currentAction)
 		{
@@ -941,12 +955,8 @@ public final class Game {
 			case ATTACK:
 			case HIGH_FIVE:
 			{
-                if (dark)
-                {
-                    output(GameStrings.TOO_DARK);
-                    ++state.darknessTurns;
-                    return;
-                }
+                if (!checkDark(state, dark)) return;
+
                 obj.activate(state, currentAction);
 
 			} break;
@@ -958,17 +968,19 @@ public final class Game {
 
             case EXAMINE:
             {
-
+                if (!checkDark(state, dark)) return;
                 obj.examine(state);
             } break;
 
             case OPEN:
             {
+                if (!checkDark(state, dark)) return;
                 obj.open(state);
             } break;
 
             case CLOSE:
             {
+                if (!checkDark(state, dark)) return;
                 obj.close(state);
             } break;
 
@@ -976,6 +988,7 @@ public final class Game {
             case UNLOCK:
             case LOCK:
             {
+                if (!checkDark(state, dark)) return;
 
             } break;
 
@@ -983,6 +996,8 @@ public final class Game {
 
 			case TAKE:
 			{
+                if (!checkDark(state, dark)) return;
+
                 // If the player already has the item
                 if (obj.playerHasObject())
                 {
@@ -1010,11 +1025,14 @@ public final class Game {
 
 			case DROP:
 			{
+                if (dark) ++state.darknessTurns;
 				obj.drop(state);
 			} break;
 
             case PLACE:
             {
+                if (!checkDark(state, dark)) return;
+
                 if (obj.isItem())
                     indObj.place(state, (Item)obj);
 
@@ -1025,6 +1043,7 @@ public final class Game {
 
             case LOOK:
             {
+                if (!checkDark(state, dark)) return;
                 output(currentRoom.name);
                 currentRoom.lookAround(state);
 
@@ -1070,18 +1089,14 @@ public final class Game {
 
 					Room nextRoom = state.worldMap.get(state.playerLocation);
 
-                    if (dark && nextRoom.roomID != state.playerPreviousLocation)
-                    {
-                        output(GameStrings.GRUE_DEATH_1);
-                        gameover = true;
-                        return;
-                    }
 					output(nextRoom.name);
+
+                    if (nextRoom.isDark())
+                            output(GameStrings.ENTER_DARKNESS);
+
 					if (nextRoom.firstVisit)
 					{
-						nextRoom.firstVisit = false;
-                        if (nextRoom.isDark())
-                            output(GameStrings.ENTER_DARKNESS);
+						nextRoom.firstVisit = false;              
 						nextRoom.lookAround(state);
 					}
 				}
@@ -1091,9 +1106,24 @@ public final class Game {
 
 			// Simple actions
 
-			case WAIT: { output("Time passes..."); } break;
-			case JUMP: { output("Wheeeeeeee!"); } break;
-			case SHOUT: { output("Yaaaaarrrrggghhh!"); } break;
+			case WAIT:
+            {
+                if (!checkDark(state, dark)) return;
+                output("Time passes...");
+            } break;
+
+			case JUMP:
+            {
+                if (!checkDark(state, dark)) return;
+                output("Wheeeeeeee!");
+            } break;
+
+			case SHOUT:
+            { 
+                if (!checkDark(state, dark)) return;
+                output("Yaaaaarrrrggghhh!");
+            } break;
+
 			case NULL_ACTION: {} break;
 			case VERBOSE: { output("You said too many words."); } break;
 			case PROFANITY: { output(GameStrings.PROFANITY_ONE); } break;			
@@ -1104,6 +1134,9 @@ public final class Game {
 		}
 
 		// The player's action could end the game before anything else happens.
+
+        if (!state.playerAlive) gameover = true;
+
 		if (gameover) return;
 
         // The actors get to take their turns

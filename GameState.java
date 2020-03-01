@@ -16,6 +16,7 @@ class GameState {
 	public int playerHitPoints;
 	public int playerCarryWeight;
 	public int playerMaxCarryWeight;
+	public boolean playerAlive;
 
 
 	// player action
@@ -47,6 +48,8 @@ class GameState {
 		this.turns = 0;
 		this.playerLocation = Location.NULL_LOCATION;
 		this.playerPreviousLocation = Location.NULL_LOCATION;
+		this.lightActivated = false;
+		this.playerAlive = true;
 		playerCarryWeight = 0;
 		playerMaxCarryWeight = 100;
 
