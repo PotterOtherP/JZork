@@ -59,6 +59,7 @@ enum Action {
     STORE,
     PLACE,
 	SPEAK,
+    MOVE,
 	ACTIVATE,
 	RING,
 	PLAY,
@@ -101,7 +102,7 @@ enum ObjectType {
 
 
 /**
- * This program is my attempt to replicate Zork I as closely as possible.
+ * This program is my attempt to recreate Zork I as well as possible.
  *
  * @author Nathan Tryon January 2020 - 
  */
@@ -150,6 +151,7 @@ public final class Game {
     // Constants
     private static final int LINE_LENGTH = 50;
 	private static final Location STARTING_LOCATION = Location.WEST_OF_HOUSE;
+    private static final int LANTERN_LIFESPAN = 100;
 
 
 	public static void main(String[] args)
@@ -413,6 +415,7 @@ public final class Game {
          * Trophy Case (Living Room)
          * Trap Door (Living Room)
          * Pile of Leaves(Clearing North)
+         * Grating (Null Location / Clearing North)
          *
          */
         
@@ -426,20 +429,21 @@ public final class Game {
 
         state.objectList.put(mailbox.name, mailbox);
 
-        // These are the same window!
         Feature houseWindow = new Feature("window", Location.BEHIND_HOUSE);
-        Feature kitchenWindow = new Feature("kitchen window", Location.KITCHEN);
+        houseWindow.altLocations.add(Location.KITCHEN);
+
         Feature carpet = new Feature("carpet", Location.LIVING_ROOM);
         Feature trapDoor = new Feature("trap door", Location.LIVING_ROOM);
         Feature leafPile = new Feature("pile", Location.CLEARING_NORTH);
         Feature house = new Feature("house", Location.WEST_OF_HOUSE);
+        Feature grating = new Feature("grating", Location.NULL_LOCATION);
         house.altLocations.add(Location.NORTH_OF_HOUSE);
         house.altLocations.add(Location.BEHIND_HOUSE);
         house.altLocations.add(Location.SOUTH_OF_HOUSE);
 
         state.objectList.put(house.name, house);
         state.objectList.put(houseWindow.name, houseWindow);
-        state.objectList.put(kitchenWindow.name, kitchenWindow);
+        //state.objectList.put(kitchenWindow.name, kitchenWindow);
         state.objectList.put(carpet.name, carpet);
         state.objectList.put(trapDoor.name, trapDoor);
         state.objectList.put(leafPile.name, leafPile);
@@ -467,6 +471,7 @@ public final class Game {
         Item jewelEgg = new Item("egg", Location.UP_TREE, 0, 0);
         Item birdsNest = new Item("nest", Location.UP_TREE, 0, 0);
         Item lantern = new Item("lantern", Location.LIVING_ROOM, 0, 0);
+        lantern.lifespan = LANTERN_LIFESPAN;
 
         state.objectList.put(leaflet.name, leaflet);
         state.objectList.put(rope.name, rope);
@@ -478,7 +483,6 @@ public final class Game {
         state.objectList.put(lantern.name, lantern);
 
         // Fill the inventories of the containers
-
         for (GameObject cont : state.objectList.values())
         {
             if (cont.isContainer())
@@ -519,6 +523,7 @@ public final class Game {
                 case FOREST_WEST:
                 case CLEARING_NORTH:
                 case CLEARING_EAST:
+                case UP_TREE:
                 {
                     songbird.location = state.playerLocation;
                     Random rand = new Random();
@@ -602,6 +607,38 @@ public final class Game {
         };
 
         lantern.setMethod(lanternMethod);
+
+
+        ActivateMethod leafPileMethod = (GameState gs, Action act) -> {
+
+            switch (act)
+            {
+                case MOVE:
+                {
+                    if (!gs.leafPileMoved)
+                    {
+                        gs.leafPileMoved = true;
+                        grating.location = Location.CLEARING_NORTH;
+
+
+                    }
+                    else
+                    {
+                        output("Having moved the leaf pile once, you find it impossible to move again.");
+                    }
+
+                } break;
+
+                default:
+                {
+                    output("You can't do that to the leaf pile.");
+                } break;
+            }
+
+
+        };
+
+        leafPile.setMethod(leafPileMethod);
 	
 
 		// Object creation complete. Start setting up the game
@@ -979,6 +1016,7 @@ public final class Game {
 			case TIE:
 			case ATTACK:
 			case HIGH_FIVE:
+            case MOVE:
 			{
                 if (dark)
                 {
@@ -1371,6 +1409,7 @@ public final class Game {
 
 
         // Special actions
+        actions.put("move", Action.MOVE);
 		actions.put("say", Action.SPEAK);
         actions.put("play", Action.PLAY);
 		actions.put("ring", Action.RING);
@@ -1405,6 +1444,7 @@ public final class Game {
         actionTypes.put(Action.DOWN, ActionType.EXIT);
 
         actionTypes.put(Action.TAKE, ActionType.DIRECT);
+        actionTypes.put(Action.MOVE, ActionType.DIRECT);
         actionTypes.put(Action.DROP, ActionType.DIRECT);
         actionTypes.put(Action.STORE, ActionType.DIRECT);
         actionTypes.put(Action.LIGHT, ActionType.DIRECT);

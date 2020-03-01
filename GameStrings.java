@@ -130,7 +130,7 @@ class GameStrings {
 	"jump", "juniper",
 	"key", "kick", "kitchen", "knife",
 	"lantern", "leaflet", "light", "lock", "look",
-	"mailbox",
+	"mailbox", "move",
 	"nest", "next", "north", "northeast", "northwest", "note",
 	"off", "on", "open",
 	"passage", "piano", "pick", "pile", "place", "put", "play", "please", "pull", "punch",

@@ -35,17 +35,6 @@ class Passage {
 
 	}
 
-	public Passage(String name, String exit, String closed, Location locA, Location locB)
-	{
-		this.name = name;
-		this.lockFail = exit;
-		this.closedFail = closed;
-		this.locationA = locA;
-		this.locationB = locB;
-		this.locked = false;
-		this.open = true;
-	}
-
 	
 	public void unlock() { locked = false; }
 	public void lock() { locked = true; }

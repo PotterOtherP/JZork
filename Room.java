@@ -9,6 +9,7 @@ class Room {
 	public boolean firstVisit;
 
 	public boolean darkness;
+	public boolean gas;
 
 	public HashMap<Action, Passage> exits;
 	public HashMap<Action, String> failMessages;

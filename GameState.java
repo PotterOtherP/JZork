@@ -8,6 +8,7 @@ class GameState {
     public boolean lightActivated;
 
 	// game events
+	public boolean leafPileMoved;
 
 
 	// player attributes

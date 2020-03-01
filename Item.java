@@ -8,6 +8,7 @@ class Item extends GameObject{
 	// For items that can be turned on and expire, like the lamp
 	public boolean activated;
 	public int lifespan;
+	public int life;
 
 
 	public Item(String name, Location loc, int value, int weight)
@@ -17,6 +18,7 @@ class Item extends GameObject{
 		this.weight = weight;
 		this.activated = false;
 		this.lifespan = 0;
+		this.life = 0;
 		this.type = ObjectType.ITEM;
 	}
 
