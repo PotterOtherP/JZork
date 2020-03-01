@@ -71,6 +71,7 @@ enum Action {
 	SLAP,
     EXAMINE,
     LIGHT,
+    UNLIGHT,
 
 	ATTACK,
 	TIE
@@ -559,13 +560,48 @@ public final class Game {
                 case READ:
                 {
                     output(GameStrings.LEAFLET_TEXT);
-                }
+                } break;
+
+                default:
+                {
+                    output("You can't do that to the leaflet.");
+                } break;
             }
 
 
         };
 		
         leaflet.setMethod(leafletMethod);
+
+        ActivateMethod lanternMethod = (GameState gs, Action act) -> {
+
+            Item self = (Item)(gs.objectList.get("lantern"));
+            switch (act)
+            {
+                case LIGHT:
+                {
+                    self.activated = true;
+                    gs.lightActivated = true;
+                    output("You turn on the lantern.");
+                    self.examineString = "The lantern is on.";
+                } break;
+
+                case UNLIGHT:
+                {
+                    self.activated = false;
+                    gs.lightActivated = false;
+                    output("You turn off the lantern.");
+                } break;
+
+                default:
+                {
+                    output("You can't do that to the lantern.");
+
+                } break;
+            }
+        };
+
+        lantern.setMethod(lanternMethod);
 	
 
 		// Object creation complete. Start setting up the game
@@ -876,24 +912,7 @@ public final class Game {
 	}
 
 
-    private static boolean checkDark(GameState state, boolean dark)
-    {
-        if (state.darknessTurns >= 2)
-        {
-            output(GameStrings.GRUE_DEATH_2);
-            state.playerAlive = false;
-            return false;
-        }
 
-        if (dark)
-        {
-            output(GameStrings.TOO_DARK);
-            ++state.darknessTurns;
-            return false;
-        }
-
-        return true;
-    }
 
 	private static void updateGame(GameState state)
 	{
@@ -928,8 +947,7 @@ public final class Game {
 
         boolean dark = (currentRoom.isDark() && !state.lightActivated);
 
-        if (!dark)
-            state.darknessTurns = 0;
+        if (!dark) state.darknessTurns = 0;
 
        
 
@@ -944,8 +962,15 @@ public final class Game {
             case LIGHT:
             {
                 obj.activate(state, Action.LIGHT);
+                currentRoom.lookAround(state);
             } break;
 
+            case UNLIGHT:
+            {
+                obj.activate(state, Action.UNLIGHT);
+                currentRoom.lookAround(state);
+            } break;
+            
 			case ACTIVATE:
 			case RING:
 			case PLAY:
@@ -955,7 +980,11 @@ public final class Game {
 			case ATTACK:
 			case HIGH_FIVE:
 			{
-                if (!checkDark(state, dark)) return;
+                if (dark)
+                {
+                    output(GameStrings.TOO_DARK);
+                    break;
+                }
 
                 obj.activate(state, currentAction);
 
@@ -968,19 +997,31 @@ public final class Game {
 
             case EXAMINE:
             {
-                if (!checkDark(state, dark)) return;
+                if (dark)
+                {
+                    output(GameStrings.TOO_DARK);
+                    break;
+                }
                 obj.examine(state);
             } break;
 
             case OPEN:
             {
-                if (!checkDark(state, dark)) return;
+                if (dark)
+                {
+                    output(GameStrings.TOO_DARK);
+                    break;
+                }
                 obj.open(state);
             } break;
 
             case CLOSE:
             {
-                if (!checkDark(state, dark)) return;
+                if (dark)
+                {
+                    output(GameStrings.TOO_DARK);
+                    break;
+                }
                 obj.close(state);
             } break;
 
@@ -988,7 +1029,11 @@ public final class Game {
             case UNLOCK:
             case LOCK:
             {
-                if (!checkDark(state, dark)) return;
+                if (dark)
+                {
+                    output(GameStrings.TOO_DARK);
+                    break;
+                }
 
             } break;
 
@@ -996,7 +1041,11 @@ public final class Game {
 
 			case TAKE:
 			{
-                if (!checkDark(state, dark)) return;
+                if (dark)
+                {
+                    output(GameStrings.TOO_DARK);
+                    break;
+                }
 
                 // If the player already has the item
                 if (obj.playerHasObject())
@@ -1025,13 +1074,16 @@ public final class Game {
 
 			case DROP:
 			{
-                if (dark) ++state.darknessTurns;
 				obj.drop(state);
 			} break;
 
             case PLACE:
             {
-                if (!checkDark(state, dark)) return;
+                if (dark)
+                {
+                    output(GameStrings.TOO_DARK);
+                    break;
+                }
 
                 if (obj.isItem())
                     indObj.place(state, (Item)obj);
@@ -1043,7 +1095,6 @@ public final class Game {
 
             case LOOK:
             {
-                if (!checkDark(state, dark)) return;
                 output(currentRoom.name);
                 currentRoom.lookAround(state);
 
@@ -1091,7 +1142,7 @@ public final class Game {
 
 					output(nextRoom.name);
 
-                    if (nextRoom.isDark())
+                    if (nextRoom.isDark() && !state.lightActivated)
                             output(GameStrings.ENTER_DARKNESS);
 
 					if (nextRoom.firstVisit)
@@ -1108,19 +1159,46 @@ public final class Game {
 
 			case WAIT:
             {
-                if (!checkDark(state, dark)) return;
+                if (dark)
+                {   
+                    if (state.darknessTurns >= 2)
+                    {
+                        output(GameStrings.GRUE_DEATH_2);
+                        state.playerAlive = false;
+                        break;
+                    }
+                    ++state.darknessTurns;
+                }
                 output("Time passes...");
             } break;
 
 			case JUMP:
             {
-                if (!checkDark(state, dark)) return;
+                if (dark)
+                {   
+                    if (state.darknessTurns >= 2)
+                    {
+                        output(GameStrings.GRUE_DEATH_2);
+                        state.playerAlive = false;
+                        break;
+                    }
+                    ++state.darknessTurns;
+                }
                 output("Wheeeeeeee!");
             } break;
 
 			case SHOUT:
             { 
-                if (!checkDark(state, dark)) return;
+                if (dark)
+                {   
+                    if (state.darknessTurns >= 2)
+                    {
+                        output(GameStrings.GRUE_DEATH_2);
+                        state.playerAlive = false;
+                        break;
+                    }
+                    ++state.darknessTurns;
+                }
                 output("Yaaaaarrrrggghhh!");
             } break;
 
@@ -1298,6 +1376,7 @@ public final class Game {
 		actions.put("ring", Action.RING);
         actions.put("light", Action.LIGHT);
         actions.put("turn on", Action.LIGHT);
+        actions.put("turn off", Action.UNLIGHT);
         actions.put("highfive", Action.HIGH_FIVE);
         actions.put("high five", Action.HIGH_FIVE);
 		actions.put("tie", Action.TIE);
@@ -1329,6 +1408,7 @@ public final class Game {
         actionTypes.put(Action.DROP, ActionType.DIRECT);
         actionTypes.put(Action.STORE, ActionType.DIRECT);
         actionTypes.put(Action.LIGHT, ActionType.DIRECT);
+        actionTypes.put(Action.UNLIGHT, ActionType.DIRECT);
         actionTypes.put(Action.PLACE, ActionType.PLACE_REMOVE);
 
         actionTypes.put(Action.OPEN, ActionType.OPEN_CLOSE);

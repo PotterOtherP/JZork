@@ -62,7 +62,7 @@ class Room {
 	{
 		Game.outputLine();
 
-        if (darkness)
+        if (darkness && !state.lightActivated)
         {
             Game.output(GameStrings.DARKNESS);
             return;

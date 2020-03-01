@@ -132,7 +132,7 @@ class GameStrings {
 	"lantern", "leaflet", "light", "lock", "look",
 	"mailbox",
 	"nest", "next", "north", "northeast", "northwest", "note",
-	"on", "open",
+	"off", "on", "open",
 	"passage", "piano", "pick", "pile", "place", "put", "play", "please", "pull", "punch",
 	"quit",
 	"read", "ring", "room", "rope",
