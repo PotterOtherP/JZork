@@ -34,6 +34,9 @@ class GameStrings {
 
 	public static final String DESC_ATTIC = "This is the attic. The only exit is a stairway leading down.";
 
+    public static final String ENTER_DARKNESS = "You have moved into a dark place.";
+    public static final String DARKNESS = "It is pitch black. You are likely to be eaten by a grue.";
+
 	public static final String DESC_LIVING_ROOM = "You are in the living room. There is a doorway to the east, a wooden door with strange "
 		+ "gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.";
 
@@ -84,6 +87,7 @@ class GameStrings {
 	public static final String DESC_INSIDE_STONE_BARROW = "Inside the stone barrow!";
 
 	public static final String SONGBIRD = "You hear in the distance the chirping of a song bird.";
+    public static final String SONGBIRD_NEARBY = "You don't see the song bird, but it's probably somewhere nearby.";
 
 	public static final String CANT_GO = "You can't go that way.";
 
@@ -112,7 +116,7 @@ class GameStrings {
 	"k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
 	"u", "v", "w", "x", "y", "z", "ne", "nw", "se", "sw",
 	"an", "around", "at", "attach", "attack", "author",
-	"bell", "bottle", "box",
+	"bell", "bird", "bottle", "box",
 	"carpet", "case", "close",
 	"door", "down", "drop",
 	"east", "egg", "examine", "exit",
@@ -129,7 +133,7 @@ class GameStrings {
 	"passage", "piano", "pick", "pile", "place", "put", "play", "please", "pull", "punch",
 	"quit",
 	"read", "ring", "room", "rope",
-	"sack", "say", "scream", "shit", "shout", "slap", "south", "southeast", "southwest", "store", "sword",
+	"sack", "say", "scream", "shit", "shout", "slap", "songbird", "south", "southeast", "southwest", "store", "sword",
 	"take", "the", "tie", "to", "trap", "trophy",
 	"unlock", "up",
 	"wait", "walk", "west", "window", "with", "wizard",

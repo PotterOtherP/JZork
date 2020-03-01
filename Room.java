@@ -55,26 +55,28 @@ class Room {
 		this.description = s;
 	}
 
-	public String getDescription()
-	{
-		return this.description;
-	}
 
 
 
 	public void lookAround(GameState state)
 	{
 		Game.outputLine();
+
+        if (darkness)
+        {
+            Game.output(GameStrings.DARKNESS);
+            return;
+        }
+
 		Game.output(getDescription(state));
 
 		for (GameObject g : state.objectList.values())
 		{
 			if (g.location == roomID)
 			{
-				if ((g.isItem() || g.isActor()))
+				if ( (g.isItem() || g.isActor()) && !g.presence.isEmpty() )
 				{
-					String word = (g.vowelStart() ? "an " : "a ");
-					Game.output("There is " + word + g.name + " here.");		
+					Game.output(g.presence);		
 				}
 
 				if (g.isContainer() && g.isOpen() && !g.inventory.isEmpty())
@@ -148,11 +150,28 @@ class Room {
 
 	public String getDescription(GameState state)
 	{
-		String result = this.description;	
+		String result = this.description;
+
+
 
 		switch (roomID)
 		{
-			
+			case BEHIND_HOUSE:
+            {
+                if (exits.get(Action.WEST).isOpen())
+                    result = GameStrings.DESC_BEHIND_HOUSE_WINDOW_OPEN;
+            } break;
+
+            case KITCHEN:
+            {
+                if (exits.get(Action.EAST).isOpen())
+                    result = GameStrings.DESC_KITCHEN_WINDOW_OPEN;
+            } break;
+
+            case LIVING_ROOM:
+            {
+
+            } break;
 
 
 			default:

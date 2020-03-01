@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A location is any place a moveable object can exist.
@@ -504,7 +505,40 @@ public final class Game {
         ActorMethod giantMethod = () -> {};
         giant.setActorMethod(giantMethod);
 
+        Actor songbird = new Actor("songbird", Location.NULL_LOCATION);
+        ActorMethod songbirdMethod = () -> {
+
+            switch (state.playerLocation)
+            {
+                case FOREST_PATH:
+                case FOREST_SOUTH:
+                case FOREST_EAST:
+                case FOREST_NORTHEAST:
+                case FOREST_WEST:
+                case CLEARING_NORTH:
+                case CLEARING_EAST:
+                {
+                    songbird.location = state.playerLocation;
+                    Random rand = new Random();
+                    if (rand.nextInt(100) < 37)
+                        output(GameStrings.SONGBIRD);
+                } break;
+
+                default: {} break;
+            }
+
+
+
+
+        };
+
+        songbird.setActorMethod(songbirdMethod);
+        songbird.presence = "";
+        songbird.takeFail = GameStrings.SONGBIRD_NEARBY;
+        songbird.examineString = GameStrings.SONGBIRD_NEARBY;
+
         state.objectList.put(giant.name, giant);
+        state.objectList.put(songbird.name, songbird);
 		
 
 
@@ -1005,6 +1039,8 @@ public final class Game {
 					if (nextRoom.firstVisit)
 					{
 						nextRoom.firstVisit = false;
+                        if (nextRoom.isDark())
+                            output(GameStrings.ENTER_DARKNESS);
 						nextRoom.lookAround(state);
 					}
 				}
@@ -1030,11 +1066,11 @@ public final class Game {
 		if (gameover) return;
 
         // The actors get to take their turns
-        for (GameObject actor : state.objectList.values())
+        for (GameObject objAct : state.objectList.values())
         {
-            if (actor.isActor() && actor.isAlive())
+            if (objAct.isActor() && objAct.isAlive())
             {
-                actor.actorTurn();
+                objAct.actorTurn();
             }
         }
 

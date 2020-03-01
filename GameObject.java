@@ -8,8 +8,11 @@ interface ActivateMethod {
 abstract class GameObject {
     
     public final String name;
+    public String article;
     public Location location;
     public String takeFail;
+    public String presence;
+    public String examineString;
     public boolean movedFromStart;
     public ActivateMethod method;
     public ObjectType type;
@@ -21,9 +24,12 @@ abstract class GameObject {
     public GameObject(String name, Location loc)
     {
         this.name = name;
+        this.article = vowelStart() ? "an" : "a";
         this.location = loc;
         this.movedFromStart = false;
-        this.takeFail = ("That's not something you can take, really.");
+        this.takeFail = "That's not something you can take, really.";
+        this.presence = "There is " + article + " " + name + " here.";
+        this.examineString = "There's nothing special about the " + name + ".";
         this.method = (GameState state, Action act) -> {};
     }
 
@@ -100,7 +106,7 @@ abstract class GameObject {
     public void place(GameState state, Item it) { Game.output("You can't place that."); }
     public void remove(GameState state, Item it) { Game.output("You can't do that."); }
 
-    public void examine(GameState state) { Game.output("There's nothing special about the " + name + "."); }
+    public void examine(GameState state) { Game.output(examineString); }
 
     
 
