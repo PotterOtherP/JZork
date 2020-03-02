@@ -1,9 +1,6 @@
 class GameStrings {
 	
-	public static final String GAME_BEGIN = "ZORK I: The Great Underground Empire"
-		+ "\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. All rights reserved."
-		+ "\n ZORK is a registered trademark of Infocom, Inc."
-		+ "\n Revision 88 / Serial number 840726";	
+	
 	
 	public static final String DESC_WEST_OF_HOUSE = "You are standing in an open field west of a white house, with a boarded front door."
 		+ "\nThere is a small mailbox here.";
@@ -28,17 +25,7 @@ class GameStrings {
 		+ "for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney "
 		+ "leads down and to the east is a small window which is slightly ajar.";
 
-	public static final String KITCHEN_WINDOW_CLOSED = "The kitchen window is closed.";
-	public static final String WINDOW_OPENS = "With great effort, you open the window far enough to allow entry.";
-	public static final String WINDOW_CLOSES = "The window closes (more easily than it opened).";
-
 	public static final String DESC_ATTIC = "This is the attic. The only exit is a stairway leading down.";
-
-    public static final String ENTER_DARKNESS = "You have moved into a dark place.";
-    public static final String DARKNESS = "It is pitch black. You are likely to be eaten by a grue.";
-    public static final String TOO_DARK = "It's too dark to see!";
-    public static final String GRUE_DEATH_1 = "Oh no! You have walked into the slavering fangs of a lurking grue!";
-    public static final String GRUE_DEATH_2 = "Oh no! A lurking grue slithered into the room and devoured you!";
 
 	public static final String DESC_LIVING_ROOM = "You are in the living room. There is a doorway to the east, a wooden door with strange "
 		+ "gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.";
@@ -88,6 +75,62 @@ class GameStrings {
 	public static final String DESC_STONE_BARROW = "The stone barrow!";
 
 	public static final String DESC_INSIDE_STONE_BARROW = "Inside the stone barrow!";
+
+
+	public static final String DESC_CELLAR = "";
+	public static final String DESC_EAST_OF_CHASM = "";
+	public static final String DESC_GALLERY = "";
+	public static final String DESC_STUDIO = "";
+	public static final String DESC_TROLL_ROOM = "";
+	public static final String DESC_EAST_WEST_PASSAGE = "";
+    public static final String DESC_ROUND_ROOM = "";
+    public static final String DESC_NARROW_PASSAGE = "";
+    public static final String DESC_MIRROR_ROOM_SOUTH = "";
+    public static final String DESC_WINDING_PASSAGE = "";
+    public static final String DESC_CAVE_SOUTH = "";
+    public static final String DESC_ENTRANCE_TO_HADES = "";
+    public static final String DESC_LAND_OF_THE_DEAD = "";
+    public static final String DESC_ALTAR = "";
+    public static final String DESC_TEMPLE = "";
+    public static final String DESC_EGYPTIAN_ROOM = "";
+    public static final String DESC_TORCH_ROOM = "";
+    public static final String DESC_DOME_ROOM = "";
+    public static final String DESC_ENGRAVINGS_CAVE = "";
+    public static final String DESC_LOUD_ROOM = "";
+    public static final String DESC_DAMP_CAVE = "";
+    public static final String DESC_WHITE_CLIFFS_BEACH_NORTH = "";
+    public static final String DESC_WHITE_CLIFFS_BEACH_SOUTH = "";
+    public static final String DESC_FRIGID_RIVER_1 = "";
+    public static final String DESC_FRIGID_RIVER_2 = "";
+    public static final String DESC_FRIGID_RIVER_3 = "";
+    public static final String DESC_FRIGID_RIVER_4 = "";
+    public static final String DESC_FRIGID_RIVER_5 = "";
+    public static final String DESC_SANDY_BEACH = "";
+    public static final String DESC_SANDY_CAVE = "";
+    public static final String DESC_SHORE = "";
+    public static final String DESC_ARAGAIN_FALLS = "";
+    public static final String DESC_ON_THE_RAINBOW = "";
+    public static final String DESC_DAM_BASE = "";
+    public static final String DESC_DAM = "";
+    public static final String DESC_DAM_LOBBY = "";
+    public static final String DESC_MAINTENANCE_ROOM = "";
+
+
+
+	public static final String GAME_BEGIN = "ZORK I: The Great Underground Empire"
+		+ "\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. All rights reserved."
+		+ "\n ZORK is a registered trademark of Infocom, Inc."
+		+ "\n Revision 88 / Serial number 840726";	
+
+	public static final String KITCHEN_WINDOW_CLOSED = "The kitchen window is closed.";
+	public static final String WINDOW_OPENS = "With great effort, you open the window far enough to allow entry.";
+	public static final String WINDOW_CLOSES = "The window closes (more easily than it opened).";
+
+	public static final String ENTER_DARKNESS = "You have moved into a dark place.";
+    public static final String DARKNESS = "It is pitch black. You are likely to be eaten by a grue.";
+    public static final String TOO_DARK = "It's too dark to see!";
+    public static final String GRUE_DEATH_1 = "Oh no! You have walked into the slavering fangs of a lurking grue!";
+    public static final String GRUE_DEATH_2 = "Oh no! A lurking grue slithered into the room and devoured you!";
 
 	public static final String SONGBIRD = "You hear in the distance the chirping of a song bird.";
     public static final String SONGBIRD_NEARBY = "You don't see the song bird, but it's probably somewhere nearby.";
