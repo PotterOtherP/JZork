@@ -16,11 +16,41 @@ enum Location {
     CANYON_VIEW, ROCKY_LEDGE, CANYON_BOTTOM, END_OF_RAINBOW,
     STONE_BARROW, INSIDE_STONE_BARROW,
 
+    CELLAR, EAST_OF_CHASM, GALLERY, STUDIO, TROLL_ROOM, EAST_WEST_PASSAGE,
+    ROUND_ROOM, NARROW_PASSAGE, MIRROR_ROOM_SOUTH, WINDING_PASSAGE, CAVE_SOUTH,
+    ENTRANCE_TO_HADES, LAND_OF_THE_DEAD, ALTAR, TEMPLE, EGYPTIAN_ROOM,
+    TORCH_ROOM, DOME_ROOM, ENGRAVINGS_CAVE,
+
+    LOUD_ROOM, DAMP_CAVE,
+    WHITE_CLIFFS_BEACH_NORTH, WHITE_CLIFFS_BEACH_SOUTH, FRIGID_RIVER_1,
+    FRIGID_RIVER_2, FRIGID_RIVER_3, FRIGID_RIVER_4, FRIGID_RIVER_5,
+    SANDY_BEACH, SANDY_CAVE, SHORE, ARAGAIN_FALLS, ON_THE_RAINBOW,
+    DAM_BASE, DAM, DAM_LOBBY, MAINTENANCE_ROOM,
+
+    NORTH_SOUTH_PASSAGE, CHASM, DEEP_CANYON, RESERVOIR_SOUTH, STREAM_VIEW,
+    STREAM, RESERVOIR, RESERVOIR_NORTH, ATLANTIS_ROOM, CAVE_NORTH,
+    TWISTING_PASSAGE, MIRROR_ROOM_NORTH, COLD_PASSAGE, SLIDE_ROOM,
+    MINE_ENTRANCE, SQUEAKY_ROOM, BAT_ROOM,
+
+    SHAFT_ROOM, SMELLY_ROOM, GAS_ROOM, COAL_MINE_1, COAL_MINE_2,
+    COAL_MINE_3, COAL_MINE_4, LADDER_TOP, LADDER_BOTTOM, DEAD_END_COAL_MINE,
+    TIMBER_ROOM, DRAFTY_ROOM, MACHINE_ROOM,
+
+    GRATING_ROOM, CYCLOPS_ROOM, STRANGE_PASSAGE, TREASURE_ROOM,
+
+    MAZE_1, MAZE_2, MAZE_3, MAZE_4, MAZE_5, MAZE_6, MAZE_7, MAZE_8,
+    MAZE_9, MAZE_10, MAZE_11, MAZE_12, MAZE_13, MAZE_14, MAZE_15,
+    DEAD_END_MAZE_NORTH, DEAD_END_MAZE_SOUTHEAST, DEAD_END_MAZE_CENTER,
+    DEAD_END_MAZE_SOUTHWEST, 
+
+
     BIRDS_NEST,
     INSIDE_MAILBOX,
 	PLAYER_INVENTORY,
     INSIDE_TROPHY_CASE,
     INSIDE_SACK,
+
+
 	NULL_LOCATION
 
 	}
@@ -30,53 +60,32 @@ enum Location {
  */
 enum Action {
 
-	JUMP,
-	SHOUT,
-	LOOK,
-	INVENTORY,
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST,
-    NORTHEAST,
-    NORTHWEST,
-    SOUTHEAST,
-    SOUTHWEST,
-	UP,
-	DOWN,
-	NULL_ACTION,
-	GODMODE_TOGGLE,
-	QUIT,
-	VERBOSE,
-	PROFANITY,
-	WAIT,
+	SHOUT, INVENTORY, WAIT,
+
+    NORTH, SOUTH, EAST,	WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
+	UP,	DOWN, IN, OUT,
+
+    ANSWER, ATTACK, BLOW, BREAK, BURN, CLIMB, CLOSE, COUNT, CROSS, CUT,
+    DEFLATE, DIG, DRINK, DROP, EAT, ENTER, EXAMINE, EXIT, EXTINGUISH,
+    FILL, FOLLOW, GIVE, INFLATE, JUMP, KICK, KNOCK, LIGHT, LISTEN,
+    LOCK, LOOK, LOWER, MOVE, OPEN, POUR, PRAY, PULL, PUSH, PUT, RAISE,
+    READ, SAY, SEARCH, SHAKE, SLIDE, SMELL, STAY, STRIKE, SWIM, TAKE,
+    TELL, THROW, TIE, TOUCH, TURN, UNLOCK, WAKE, WALK, WAVE, WEAR, WIND,
+
+
+	STORE, PLACE,
+
+	SPEAK, MOVE_OBJECT,	ACTIVATE, RING,	PLAY,
+	UNLIGHT,
+
 	DEFEND,
-	HIGH_FIVE,
-    AUTHOR,
 
-	TAKE,
-	DROP,
-    STORE,
-    PLACE,
-	SPEAK,
-    MOVE,
-	ACTIVATE,
-	RING,
-	PLAY,
-	OPEN,
-	CLOSE,
-	UNLOCK,
-	LOCK,
-	READ,
-	KICK,
-	SLAP,
-    EXAMINE,
-    LIGHT,
-    UNLIGHT,
+	BRIEF, SUPERBRIEF, VERBOSE, PROFANITY, AGAIN,
+    DIAGNOSE, SCORE, SAVE, RESTART, RESTORE, QUIT,
+    GODMODE_TOGGLE, AUTHOR,
 
-	ATTACK,
-	TIE
 
+	NULL_ACTION
 	}
 
 enum ActionType {
@@ -168,6 +177,7 @@ public final class Game {
 
 		String playerText = "";
 	
+        createWorldMap(gameState);
 		initGame(gameState);
 
 		gameover = false;
@@ -191,221 +201,13 @@ public final class Game {
 	}
 
 
+
+
 	private static void initGame(GameState state)
 	{	
 		// Populate the action lists and the dictionary
 		createActions();
 		fillDictionary();
-
-		// Create all the objects, then add them to the lists, then add their methods
-
-
-
-        // Passages: 
-
-        // West of House
-        Passage house_west_north = new Passage(Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE);
-        Passage house_west_south = new Passage(Location.WEST_OF_HOUSE, Location.SOUTH_OF_HOUSE);
-        Passage house_west_barrow = new Passage(Location.WEST_OF_HOUSE, Location.STONE_BARROW);
-        Passage house_west_forestW = new Passage(Location.WEST_OF_HOUSE, Location.FOREST_WEST);
-
-        // North of House
-        Passage house_north_forestpath = new Passage(Location.NORTH_OF_HOUSE, Location.FOREST_PATH);
-        Passage house_north_behind = new Passage(Location.NORTH_OF_HOUSE, Location.BEHIND_HOUSE);
-
-        // Behind house
-        Passage house_behind_clearingE = new Passage(Location.BEHIND_HOUSE, Location.CLEARING_EAST);
-        Passage house_behind_south = new Passage(Location.BEHIND_HOUSE, Location.SOUTH_OF_HOUSE);
-
-        // This passage is initially closed and controlled by the kitchen window.
-        Passage house_behind_kitchen = new Passage(Location.BEHIND_HOUSE, Location.KITCHEN);
-        house_behind_kitchen.close();
-        house_behind_kitchen.closedFail = GameStrings.KITCHEN_WINDOW_CLOSED;
-
-        // South of House
-        Passage house_south_forestS = new Passage(Location.SOUTH_OF_HOUSE, Location.FOREST_SOUTH);
-
-        // Kitchen
-        Passage kitchen_attic = new Passage(Location.KITCHEN, Location.ATTIC);
-        Passage kitchen_livingroom = new Passage(Location.KITCHEN, Location.LIVING_ROOM);
-
-        // Forest Path
-        Passage forestpath_clearingN = new Passage(Location.FOREST_PATH, Location.CLEARING_NORTH);
-        Passage forestpath_forestE = new Passage(Location.FOREST_PATH, Location.FOREST_EAST);
-        Passage forestpath_forestW = new Passage(Location.FOREST_PATH, Location.FOREST_WEST);
-        Passage forestpath_uptree = new Passage(Location.FOREST_PATH, Location.UP_TREE);
-
-        // Clearing North
-        Passage clearingN_forestE = new Passage(Location.CLEARING_NORTH, Location.FOREST_EAST);
-        Passage clearingN_forestW = new Passage(Location.CLEARING_NORTH, Location.FOREST_WEST);
-
-        // Forest East
-        Passage forestE_clearingE = new Passage(Location.FOREST_EAST, Location.CLEARING_EAST);
-        Passage forestE_forestNE = new Passage(Location.FOREST_EAST, Location.FOREST_NORTHEAST);
-
-        // Clearing East
-        Passage clearingE_forestS = new Passage(Location.CLEARING_EAST, Location.FOREST_SOUTH);
-        Passage clearingE_canyon = new Passage(Location.CLEARING_EAST, Location.CANYON_VIEW);
-
-        // Forest South
-        Passage forestS_canyon = new Passage(Location.FOREST_SOUTH, Location.CANYON_VIEW);
-        Passage forestS_forestW = new Passage(Location.FOREST_SOUTH, Location.FOREST_WEST);
-
-        // Canyon View
-        Passage canyon_ledge = new Passage(Location.CANYON_VIEW, Location.ROCKY_LEDGE);
-
-        // Rocky Ledge
-        Passage ledge_bottom = new Passage(Location.ROCKY_LEDGE, Location.CANYON_BOTTOM);
-
-        // Canyon Bottom
-        Passage canyon_bottom_rainbow = new Passage(Location.CANYON_BOTTOM, Location.END_OF_RAINBOW);
-
-        // Stone Barrow
-        Passage barrowInside = new Passage(Location.STONE_BARROW, Location.INSIDE_STONE_BARROW);
-
-
-        // Rooms: Name, description, ID
-        Room westOfHouse = new Room("West of House", GameStrings.DESC_WEST_OF_HOUSE, Location.WEST_OF_HOUSE);
-        westOfHouse.addExit(Action.NORTH, house_west_north);
-        westOfHouse.addExit(Action.NORTHEAST, house_west_north);
-        westOfHouse.addExit(Action.SOUTH, house_west_south);
-        westOfHouse.addExit(Action.SOUTHEAST, house_west_south);
-        westOfHouse.addExit(Action.SOUTHWEST, house_west_barrow);
-        westOfHouse.addExit(Action.WEST, house_west_forestW);
-
-        Room northOfHouse = new Room("North of House", GameStrings.DESC_NORTH_OF_HOUSE, Location.NORTH_OF_HOUSE);
-        northOfHouse.addExit(Action.NORTH, house_north_forestpath);
-        northOfHouse.addExit(Action.EAST, house_north_behind);
-        northOfHouse.addExit(Action.SOUTHEAST, house_north_behind);
-        northOfHouse.addExit(Action.SOUTHWEST, house_west_north);
-        northOfHouse.addExit(Action.WEST, house_west_north);
-
-
-        Room behindHouse = new Room("Behind House", GameStrings.DESC_BEHIND_HOUSE, Location.BEHIND_HOUSE);
-        behindHouse.addExit(Action.NORTH, house_north_behind);
-        behindHouse.addExit(Action.NORTHWEST, house_north_behind);
-        behindHouse.addExit(Action.EAST, house_behind_clearingE);
-        behindHouse.addExit(Action.SOUTH, house_behind_south);
-        behindHouse.addExit(Action.SOUTHWEST, house_behind_south);
-        behindHouse.addExit(Action.WEST, house_behind_kitchen);
-
-
-        Room southOfHouse = new Room("South of House", GameStrings.DESC_SOUTH_OF_HOUSE, Location.SOUTH_OF_HOUSE);
-        southOfHouse.addExit(Action.EAST, house_behind_south);
-        southOfHouse.addExit(Action.NORTHEAST, house_behind_south);
-        southOfHouse.addExit(Action.WEST, house_west_south);
-        southOfHouse.addExit(Action.NORTHWEST, house_west_south);
-        southOfHouse.addExit(Action.SOUTH, house_south_forestS);
-
-
-        Room kitchen = new Room("Kitchen", GameStrings.DESC_KITCHEN_WINDOW_CLOSED, Location.KITCHEN);
-        kitchen.addExit(Action.EAST, house_behind_kitchen);
-        kitchen.addExit(Action.WEST, kitchen_livingroom);
-        kitchen.addExit(Action.UP, kitchen_attic);
-
-        Room attic = new Room("Attic", GameStrings.DESC_ATTIC, Location.ATTIC);
-        attic.addExit(Action.DOWN, kitchen_attic);
-        attic.setDark();
-
-        Room livingRoom = new Room("Living Room", GameStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED, Location.LIVING_ROOM);
-        livingRoom.addExit(Action.EAST, kitchen_livingroom);
-
-        Room forestPath = new Room("Forest Path", GameStrings.DESC_FOREST_PATH, Location.FOREST_PATH);
-        forestPath.addExit(Action.NORTH, forestpath_clearingN);
-        forestPath.addExit(Action.EAST, forestpath_forestE);
-        forestPath.addExit(Action.SOUTH, house_north_forestpath);
-        forestPath.addExit(Action.WEST, forestpath_forestW);
-        forestPath.addExit(Action.UP, forestpath_uptree);
-
-        Room upTree = new Room("Up a Tree", GameStrings.DESC_UP_TREE, Location.UP_TREE);
-        upTree.addExit(Action.DOWN, forestpath_uptree);
-
-        Room forestWest = new Room("Forest", GameStrings.DESC_FOREST_WEST, Location.FOREST_WEST);
-        forestWest.addExit(Action.NORTH, clearingN_forestW);
-        forestWest.addExit(Action.EAST, forestpath_forestW);
-        forestWest.addExit(Action.SOUTH, forestS_forestW);
-
-        Room forestEast = new Room("Forest", GameStrings.DESC_FOREST_EAST, Location.FOREST_EAST);
-        forestEast.addExit(Action.NORTHWEST, clearingN_forestE);
-        forestEast.addExit(Action.EAST, forestE_forestNE);
-        forestEast.addExit(Action.SOUTH, forestE_clearingE);
-        forestEast.addExit(Action.WEST, forestpath_forestE);
-
-        Room forestNortheast = new Room("Forest", GameStrings.DESC_FOREST_NORTHEAST, Location.FOREST_NORTHEAST);
-        forestNortheast.addExit(Action.NORTH, forestE_forestNE);
-        forestNortheast.addExit(Action.SOUTH, forestE_forestNE);
-        forestNortheast.addExit(Action.WEST, forestE_forestNE);
-        forestNortheast.addFailMessage(Action.EAST, GameStrings.FOREST_NE_FAIL_1);
-
-        Room forestSouth = new Room("Forest", GameStrings.DESC_FOREST_SOUTH, Location.FOREST_SOUTH);
-        forestSouth.addExit(Action.NORTH, clearingE_forestS);
-        forestSouth.addExit(Action.EAST, forestS_canyon);
-        forestSouth.addExit(Action.WEST, forestS_forestW);
-        forestSouth.addExit(Action.NORTHWEST, house_south_forestS);
-
-
-        Room clearingNorth = new Room("Clearing", GameStrings.DESC_CLEARING_NORTH, Location.CLEARING_NORTH);
-        clearingNorth.addExit(Action.EAST, clearingN_forestE);
-        clearingNorth.addExit(Action.SOUTH, forestpath_clearingN);
-        clearingNorth.addExit(Action.WEST, clearingN_forestW);
-
-        Room clearingEast = new Room("Clearing", GameStrings.DESC_CLEARING_EAST, Location.CLEARING_EAST);
-        clearingEast.addExit(Action.NORTH, forestE_clearingE);
-        clearingEast.addExit(Action.EAST, forestE_clearingE);
-        clearingEast.addExit(Action.SOUTH, clearingE_forestS);
-        clearingEast.addExit(Action.WEST, forestE_clearingE);
-
-
-        Room canyonView = new Room("Canyon View", GameStrings.DESC_CANYON_VIEW, Location.CANYON_VIEW);
-        canyonView.addExit(Action.NORTHWEST, clearingE_canyon);
-        canyonView.addExit(Action.WEST, forestS_canyon);
-        canyonView.addExit(Action.DOWN, canyon_ledge);
-
-        Room rockyLedge = new Room("Rocky Ledge", GameStrings.DESC_ROCKY_LEDGE, Location.ROCKY_LEDGE);
-        rockyLedge.addExit(Action.UP, canyon_ledge);
-        rockyLedge.addExit(Action.DOWN, ledge_bottom);
-
-        Room canyonBottom = new Room("Canyon Bottom", GameStrings.DESC_CANYON_BOTTOM, Location.CANYON_BOTTOM);
-        canyonBottom.addExit(Action.UP, ledge_bottom);
-        canyonBottom.addExit(Action.NORTH, canyon_bottom_rainbow);
-
-        Room endOfRainbow = new Room("End of Rainbow", GameStrings.DESC_END_OF_RAINBOW, Location.END_OF_RAINBOW);
-        endOfRainbow.addExit(Action.SOUTHWEST, canyon_bottom_rainbow);
-
-        Room stoneBarrow = new Room("Stone Barrow", GameStrings.DESC_STONE_BARROW, Location.STONE_BARROW);
-        stoneBarrow.addExit(Action.NORTHEAST, house_west_barrow);
-        stoneBarrow.addExit(Action.WEST, barrowInside);
-
-        Room insideStoneBarrow = new Room("Inside Stone Barrow", GameStrings.DESC_INSIDE_STONE_BARROW, Location.INSIDE_STONE_BARROW);
-        insideStoneBarrow.addExit(Action.EAST, barrowInside);
-
-
-        state.worldMap.put(westOfHouse.roomID, westOfHouse);
-        state.worldMap.put(northOfHouse.roomID, northOfHouse);
-        state.worldMap.put(behindHouse.roomID, behindHouse);
-        state.worldMap.put(southOfHouse.roomID, southOfHouse);
-        state.worldMap.put(kitchen.roomID, kitchen);
-        state.worldMap.put(attic.roomID, attic);
-        state.worldMap.put(livingRoom.roomID, livingRoom);
-
-        state.worldMap.put(forestPath.roomID, forestPath);
-        state.worldMap.put(forestWest.roomID, forestWest);
-        state.worldMap.put(forestEast.roomID, forestEast);
-        state.worldMap.put(forestNortheast.roomID, forestNortheast);
-        state.worldMap.put(forestSouth.roomID, forestSouth);
-
-        state.worldMap.put(clearingNorth.roomID, clearingNorth);
-        state.worldMap.put(clearingEast.roomID, clearingEast);
-        state.worldMap.put(upTree.roomID, upTree);
-
-        state.worldMap.put(canyonView.roomID, canyonView);
-        state.worldMap.put(rockyLedge.roomID, rockyLedge);
-        state.worldMap.put(canyonBottom.roomID, canyonBottom);
-        state.worldMap.put(endOfRainbow.roomID, endOfRainbow);
-
-        state.worldMap.put(stoneBarrow.roomID, stoneBarrow);
-        state.worldMap.put(insideStoneBarrow.roomID, insideStoneBarrow);
-
 
 		/* Features - Overworld
          * 
@@ -613,7 +415,7 @@ public final class Game {
 
             switch (act)
             {
-                case MOVE:
+                case MOVE_OBJECT:
                 {
                     if (!gs.leafPileMoved)
                     {
@@ -656,8 +458,435 @@ public final class Game {
 	}
 
 
+    private static void createWorldMap(GameState state)
+    {
+        // Overworld passages
+        Passage house_west_north = new Passage(Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE);
+        Passage house_west_south = new Passage(Location.WEST_OF_HOUSE, Location.SOUTH_OF_HOUSE);
+        Passage house_west_barrow = new Passage(Location.WEST_OF_HOUSE, Location.STONE_BARROW);
+        Passage house_west_forestW = new Passage(Location.WEST_OF_HOUSE, Location.FOREST_WEST);
+        Passage house_north_forestpath = new Passage(Location.NORTH_OF_HOUSE, Location.FOREST_PATH);
+        Passage house_north_behind = new Passage(Location.NORTH_OF_HOUSE, Location.BEHIND_HOUSE);
+        Passage house_behind_clearingE = new Passage(Location.BEHIND_HOUSE, Location.CLEARING_EAST);
+        Passage house_behind_south = new Passage(Location.BEHIND_HOUSE, Location.SOUTH_OF_HOUSE);
+        Passage house_behind_kitchen = new Passage(Location.BEHIND_HOUSE, Location.KITCHEN);
+        Passage house_south_forestS = new Passage(Location.SOUTH_OF_HOUSE, Location.FOREST_SOUTH);
+        Passage kitchen_attic = new Passage(Location.KITCHEN, Location.ATTIC);
+        Passage kitchen_livingroom = new Passage(Location.KITCHEN, Location.LIVING_ROOM);
+        Passage forestpath_clearingN = new Passage(Location.FOREST_PATH, Location.CLEARING_NORTH);
+        Passage forestpath_forestE = new Passage(Location.FOREST_PATH, Location.FOREST_EAST);
+        Passage forestpath_forestW = new Passage(Location.FOREST_PATH, Location.FOREST_WEST);
+        Passage forestpath_uptree = new Passage(Location.FOREST_PATH, Location.UP_TREE);
+        Passage clearingN_forestE = new Passage(Location.CLEARING_NORTH, Location.FOREST_EAST);
+        Passage clearingN_forestW = new Passage(Location.CLEARING_NORTH, Location.FOREST_WEST);
+        Passage forestE_clearingE = new Passage(Location.FOREST_EAST, Location.CLEARING_EAST);
+        Passage forestE_forestNE = new Passage(Location.FOREST_EAST, Location.FOREST_NORTHEAST);
+        Passage clearingE_forestS = new Passage(Location.CLEARING_EAST, Location.FOREST_SOUTH);
+        Passage clearingE_canyon = new Passage(Location.CLEARING_EAST, Location.CANYON_VIEW);
+        Passage forestS_canyon = new Passage(Location.FOREST_SOUTH, Location.CANYON_VIEW);
+        Passage forestS_forestW = new Passage(Location.FOREST_SOUTH, Location.FOREST_WEST);
+        Passage canyon_ledge = new Passage(Location.CANYON_VIEW, Location.ROCKY_LEDGE);
+        Passage ledge_bottom = new Passage(Location.ROCKY_LEDGE, Location.CANYON_BOTTOM);
+        Passage canyon_bottom_rainbow = new Passage(Location.CANYON_BOTTOM, Location.END_OF_RAINBOW);
+        Passage barrowInside = new Passage(Location.STONE_BARROW, Location.INSIDE_STONE_BARROW);
+
+        // GUE southern passages
+        Passage cellar_livingroom = new Passage(Location.CELLAR, Location.LIVING_ROOM);
+        Passage cellar_troll = new Passage(Location.CELLAR, Location.TROLL_ROOM);
+        Passage cellar_eastchasm = new Passage(Location.CELLAR, Location.EAST_OF_CHASM);
+        Passage eastchasm_gallery = new Passage(Location.EAST_OF_CHASM, Location.GALLERY);
+        Passage gallery_studio = new Passage(Location.GALLERY, Location.STUDIO);
+        Passage studio_kitchen = new Passage(Location.STUDIO, Location.KITCHEN);
+        Passage troll_eastwest = new Passage(Location.TROLL_ROOM, Location.EAST_WEST_PASSAGE);
+        Passage eastwest_chasm  = new Passage(Location.EAST_WEST_PASSAGE, Location.CHASM);
+        Passage eastwest_round = new Passage(Location.EAST_WEST_PASSAGE, Location.ROUND_ROOM);
+        Passage round_northsouth = new Passage(Location.ROUND_ROOM, Location.NORTH_SOUTH_PASSAGE);
+        Passage round_narrow = new Passage(Location.ROUND_ROOM, Location.NARROW_PASSAGE);
+        Passage round_loud = new Passage(Location.ROUND_ROOM, Location.LOUD_ROOM);
+        Passage round_engravings = new Passage(Location.ROUND_ROOM, Location.ENGRAVINGS_CAVE);
+        Passage narrow_mirror = new Passage(Location.NARROW_PASSAGE, Location.MIRROR_ROOM_SOUTH);
+        Passage mirror_winding = new Passage(Location.MIRROR_ROOM_SOUTH, Location.WINDING_PASSAGE);
+        Passage mirror_cave = new Passage(Location.MIRROR_ROOM_SOUTH, Location.CAVE_SOUTH);
+        Passage winding_cave = new Passage(Location.WINDING_PASSAGE, Location.CAVE_SOUTH);
+        Passage cave_hades = new Passage(Location.CAVE_SOUTH, Location.ENTRANCE_TO_HADES);
+        Passage hades_land_dead = new Passage(Location.ENTRANCE_TO_HADES, Location.LAND_OF_THE_DEAD);
+        Passage engravings_dome = new Passage(Location.ENGRAVINGS_CAVE, Location.DOME_ROOM);
+        Passage dome_torch = new Passage(Location.DOME_ROOM, Location.TORCH_ROOM);
+        Passage torch_temple = new Passage(Location.TORCH_ROOM, Location.TEMPLE);
+        Passage temple_egypt = new Passage(Location.TEMPLE, Location.EGYPTIAN_ROOM);
+        Passage temple_altar = new Passage(Location.TEMPLE, Location.ALTAR);
+        Passage altar_cave = new Passage(Location.ALTAR, Location.CAVE_SOUTH);
+        Passage cyclops_strange = new Passage(Location.CYCLOPS_ROOM, Location.STRANGE_PASSAGE);
+        Passage cyclops_treasure = new Passage(Location.CYCLOPS_ROOM, Location.TREASURE_ROOM);
+        Passage strange_living_room = new Passage(Location.STRANGE_PASSAGE, Location.LIVING_ROOM);
+        Passage grating_clearing = new Passage(Location.GRATING_ROOM, Location.CLEARING_NORTH);
+
+        // GUE dam area passages
+        Passage loud_damp = new Passage(Location.LOUD_ROOM, Location.DAMP_CAVE);
+        Passage loud_deep_canyon = new Passage(Location.LOUD_ROOM, Location.DEEP_CANYON);
+        Passage damp_white_north = new Passage(Location.DAMP_CAVE, Location.WHITE_CLIFFS_BEACH_NORTH);
+        Passage white_cliffs_north_south = new Passage(Location.WHITE_CLIFFS_BEACH_NORTH, Location.WHITE_CLIFFS_BEACH_SOUTH);
+        Passage white_north_river = new Passage(Location.WHITE_CLIFFS_BEACH_NORTH, Location.FRIGID_RIVER_3);
+        Passage white_south_river = new Passage(Location.WHITE_CLIFFS_BEACH_SOUTH, Location.FRIGID_RIVER_4);
+        Passage river_one_two = new Passage(Location.FRIGID_RIVER_1, Location.FRIGID_RIVER_2);
+        Passage river_two_three = new Passage(Location.FRIGID_RIVER_2, Location.FRIGID_RIVER_3);
+        Passage river_three_four = new Passage(Location.FRIGID_RIVER_3, Location.FRIGID_RIVER_4);
+        Passage river_four_five = new Passage(Location.FRIGID_RIVER_4, Location.FRIGID_RIVER_5);
+        Passage river_sandy_beach = new Passage(Location.FRIGID_RIVER_4, Location.SANDY_BEACH);
+        Passage river_shore = new Passage(Location.FRIGID_RIVER_5, Location.SHORE);
+        Passage sandy_beach_cave = new Passage(Location.SANDY_BEACH, Location.SANDY_CAVE);
+        Passage shore_falls = new Passage(Location.SHORE, Location.ARAGAIN_FALLS);
+        Passage falls_rainbow = new Passage(Location.ARAGAIN_FALLS, Location.ON_THE_RAINBOW);
+        Passage rainbow_end = new Passage(Location.ON_THE_RAINBOW, Location.END_OF_RAINBOW);
+        Passage dam_base_river = new Passage(Location.DAM_BASE, Location.FRIGID_RIVER_1);
+        Passage dam_dam_base = new Passage(Location.DAM, Location.DAM_BASE);
+        Passage dam_dam_lobby = new Passage(Location.DAM, Location.DAM_LOBBY);
+        Passage dam_lobby_maintenance = new Passage(Location.DAM_LOBBY, Location.MAINTENANCE_ROOM);
+        Passage dam_deep_canyon = new Passage(Location.DAM, Location.DEEP_CANYON);
+        Passage dam_res_south = new Passage(Location.DAM, Location.RESERVOIR_SOUTH);
+        Passage northsouth_deep_canyon = new Passage(Location.NORTH_SOUTH_PASSAGE, Location.DEEP_CANYON);
+        Passage northsouth_chasm = new Passage(Location.NORTH_SOUTH_PASSAGE, Location.CHASM);
+        Passage res_south_chasm = new Passage(Location.RESERVOIR_SOUTH, Location.CHASM);
+        Passage res_south_stream_view = new Passage(Location.RESERVOIR_SOUTH, Location.STREAM_VIEW);
+        Passage res_south_res = new Passage(Location.RESERVOIR_SOUTH, Location.RESERVOIR);
+        Passage stream_view_stream = new Passage(Location.STREAM_VIEW, Location.STREAM);
+
+        // GUE northern passages
+        Passage reservoir_stream = new Passage(Location.RESERVOIR, Location.STREAM);
+        Passage res_north_res = new Passage(Location.RESERVOIR_NORTH, Location.RESERVOIR);
+        Passage res_north_atlantis = new Passage(Location.RESERVOIR_NORTH, Location.ATLANTIS_ROOM);
+        Passage atlantis_cave = new Passage(Location.ATLANTIS_ROOM, Location.CAVE_NORTH);
+        Passage cave_twisting = new Passage(Location.CAVE_NORTH, Location.TWISTING_PASSAGE);
+        Passage cave_mirror = new Passage(Location.CAVE_NORTH, Location.MIRROR_ROOM_NORTH);
+        Passage twisting_mirror = new Passage(Location.TWISTING_PASSAGE, Location.MIRROR_ROOM_NORTH);
+        Passage mirror_cold = new Passage(Location.MIRROR_ROOM_NORTH, Location.COLD_PASSAGE);
+        Passage cold_slide = new Passage(Location.COLD_PASSAGE, Location.SLIDE_ROOM);
+        Passage slide_cellar = new Passage(Location.SLIDE_ROOM, Location.CELLAR);
+        Passage slide_mine_entrance = new Passage(Location.SLIDE_ROOM, Location.MINE_ENTRANCE);
+        Passage mine_entrance_squeaky = new Passage(Location.MINE_ENTRANCE, Location.SQUEAKY_ROOM);
+        Passage squeaky_bat = new Passage(Location.SQUEAKY_ROOM, Location.BAT_ROOM);
+        Passage bat_shaft = new Passage(Location.BAT_ROOM, Location.SHAFT_ROOM);
+
+        // Coal mine passages
+
+        Passage shaft_smelly = new Passage(Location.SHAFT_ROOM, Location.SMELLY_ROOM);
+        Passage smelly_gas = new Passage(Location.SMELLY_ROOM, Location.GAS_ROOM);
+        Passage gas_coal_1 = new Passage(Location.GAS_ROOM, Location.COAL_MINE_1);
+        Passage coal_1_self = new Passage(Location.COAL_MINE_1, Location.COAL_MINE_1);
+        Passage coal_1_coal_2 = new Passage(Location.COAL_MINE_1, Location.COAL_MINE_2);
+        Passage coal_2_self = new Passage(Location.COAL_MINE_2, Location.COAL_MINE_2);
+        Passage coal_2_coal_3 = new Passage(Location.COAL_MINE_2, Location.COAL_MINE_3);
+        Passage coal_3_self = new Passage(Location.COAL_MINE_3, Location.COAL_MINE_3);
+        Passage coal_3_coal_4 = new Passage(Location.COAL_MINE_3, Location.COAL_MINE_4);
+        Passage coal_4_self = new Passage(Location.COAL_MINE_4, Location.COAL_MINE_4);
+        Passage coal_4_ladder_top = new Passage(Location.COAL_MINE_4, Location.LADDER_TOP);
+        Passage ladder_top_bottom = new Passage(Location.LADDER_TOP, Location.LADDER_BOTTOM);
+        Passage ladder_bottom_dead_end = new Passage(Location.LADDER_BOTTOM, Location.DEAD_END_COAL_MINE);
+        Passage ladder_bottom_timber = new Passage(Location.LADDER_BOTTOM, Location.TIMBER_ROOM);
+        Passage timber_drafty = new Passage(Location.TIMBER_ROOM, Location.DRAFTY_ROOM);
+        Passage drafty_machine = new Passage(Location.DRAFTY_ROOM, Location.MACHINE_ROOM);
+
+        // Maze passages
+        Passage troll_maze = new Passage(Location.TROLL_ROOM, Location.MAZE_1);
+        Passage maze1_maze2 = new Passage(Location.MAZE_1, Location.MAZE_2);
+        Passage maze1_maze4 = new Passage(Location.MAZE_1, Location.MAZE_4);
+        Passage maze1_self = new Passage(Location.MAZE_1, Location.MAZE_1);
+        
+        Passage maze2_maze3 = new Passage(Location.MAZE_2, Location.MAZE_3);
+        Passage maze2_maze4 = new Passage(Location.MAZE_2, Location.MAZE_4);
+
+        Passage maze3_maze4 = new Passage(Location.MAZE_3, Location.MAZE_4);
+        Passage maze3_maze5 = new Passage(Location.MAZE_3, Location.MAZE_5);
+
+        Passage maze4_dead_end = new Passage(Location.MAZE_4, Location.DEAD_END_MAZE_NORTH);
+
+        Passage maze5_maze6 = new Passage(Location.MAZE_5, Location.MAZE_6);
+        Passage maze5_dead_end = new Passage(Location.MAZE_5, Location.DEAD_END_MAZE_CENTER);
+
+        Passage maze6_maze7 = new Passage(Location.MAZE_6, Location.MAZE_7);
+        Passage maze6_maze9 = new Passage(Location.MAZE_6, Location.MAZE_9);
+        Passage maze6_self = new Passage(Location.MAZE_6, Location.MAZE_6);
+
+        Passage maze7_dead_end = new Passage(Location.MAZE_7, Location.DEAD_END_MAZE_NORTH);
+        Passage maze7_maze8 = new Passage(Location.MAZE_7, Location.MAZE_8);
+        Passage maze7_maze14 = new Passage(Location.MAZE_7, Location.MAZE_14);
+        Passage maze7_maze15 = new Passage(Location.MAZE_7, Location.MAZE_15);
+
+        Passage maze8_dead_end = new Passage(Location.MAZE_8, Location.DEAD_END_MAZE_SOUTHEAST);
+        Passage maze8_self = new Passage(Location.MAZE_8, Location.MAZE_8);
+
+        Passage maze9_maze10 = new Passage(Location.MAZE_9, Location.MAZE_10);
+        Passage maze9_maze11 = new Passage(Location.MAZE_9, Location.MAZE_11);
+        Passage maze9_maze12 = new Passage(Location.MAZE_9, Location.MAZE_12);
+        Passage maze9_maze13 = new Passage(Location.MAZE_9, Location.MAZE_13);
+        Passage maze9_self = new Passage(Location.MAZE_9, Location.MAZE_9);
+
+        Passage maze10_maze11 = new Passage(Location.MAZE_10, Location.MAZE_11);
+        Passage maze10_maze13 = new Passage(Location.MAZE_10, Location.MAZE_13);
+
+        Passage maze11_maze12 = new Passage(Location.MAZE_11, Location.MAZE_12);
+        Passage maze11_maze13 = new Passage(Location.MAZE_11, Location.MAZE_13);
+        Passage maze11_grating = new Passage(Location.MAZE_11, Location.GRATING_ROOM);
+
+        Passage maze12_maze13 = new Passage(Location.MAZE_12, Location.MAZE_13);
+        Passage maze12_maze5 = new Passage(Location.MAZE_12, Location.MAZE_5);
+        Passage maze12_dead_end = new Passage(Location.MAZE_12, Location.DEAD_END_MAZE_SOUTHEAST);
+
+        Passage maze14_maze15 = new Passage(Location.MAZE_14, Location.MAZE_15);
+        Passage maze14_self = new Passage(Location.MAZE_14, Location.MAZE_14);
+
+        Passage maze15_cyclops = new Passage(Location.MAZE_15, Location.CYCLOPS_ROOM);
 
 
+        // Special passage modifications
+        house_behind_kitchen.close();
+        house_behind_kitchen.closedFail = GameStrings.KITCHEN_WINDOW_CLOSED;
+
+
+        // Rooms: Name, description, ID
+        Room westOfHouse = new Room("West of House", GameStrings.DESC_WEST_OF_HOUSE, Location.WEST_OF_HOUSE);
+        westOfHouse.addExit(Action.NORTH, house_west_north);
+        westOfHouse.addExit(Action.NORTHEAST, house_west_north);
+        westOfHouse.addExit(Action.SOUTH, house_west_south);
+        westOfHouse.addExit(Action.SOUTHEAST, house_west_south);
+        westOfHouse.addExit(Action.SOUTHWEST, house_west_barrow);
+        westOfHouse.addExit(Action.WEST, house_west_forestW);
+
+        Room northOfHouse = new Room("North of House", GameStrings.DESC_NORTH_OF_HOUSE, Location.NORTH_OF_HOUSE);
+        northOfHouse.addExit(Action.NORTH, house_north_forestpath);
+        northOfHouse.addExit(Action.EAST, house_north_behind);
+        northOfHouse.addExit(Action.SOUTHEAST, house_north_behind);
+        northOfHouse.addExit(Action.SOUTHWEST, house_west_north);
+        northOfHouse.addExit(Action.WEST, house_west_north);
+
+
+        Room behindHouse = new Room("Behind House", GameStrings.DESC_BEHIND_HOUSE, Location.BEHIND_HOUSE);
+        behindHouse.addExit(Action.NORTH, house_north_behind);
+        behindHouse.addExit(Action.NORTHWEST, house_north_behind);
+        behindHouse.addExit(Action.EAST, house_behind_clearingE);
+        behindHouse.addExit(Action.SOUTH, house_behind_south);
+        behindHouse.addExit(Action.SOUTHWEST, house_behind_south);
+        behindHouse.addExit(Action.WEST, house_behind_kitchen);
+
+
+        Room southOfHouse = new Room("South of House", GameStrings.DESC_SOUTH_OF_HOUSE, Location.SOUTH_OF_HOUSE);
+        southOfHouse.addExit(Action.EAST, house_behind_south);
+        southOfHouse.addExit(Action.NORTHEAST, house_behind_south);
+        southOfHouse.addExit(Action.WEST, house_west_south);
+        southOfHouse.addExit(Action.NORTHWEST, house_west_south);
+        southOfHouse.addExit(Action.SOUTH, house_south_forestS);
+
+
+        Room kitchen = new Room("Kitchen", GameStrings.DESC_KITCHEN_WINDOW_CLOSED, Location.KITCHEN);
+        kitchen.addExit(Action.EAST, house_behind_kitchen);
+        kitchen.addExit(Action.WEST, kitchen_livingroom);
+        kitchen.addExit(Action.UP, kitchen_attic);
+
+        Room attic = new Room("Attic", GameStrings.DESC_ATTIC, Location.ATTIC);
+        attic.addExit(Action.DOWN, kitchen_attic);
+        
+
+        Room livingRoom = new Room("Living Room", GameStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED, Location.LIVING_ROOM);
+        livingRoom.addExit(Action.EAST, kitchen_livingroom);
+
+        Room forestPath = new Room("Forest Path", GameStrings.DESC_FOREST_PATH, Location.FOREST_PATH);
+        forestPath.addExit(Action.NORTH, forestpath_clearingN);
+        forestPath.addExit(Action.EAST, forestpath_forestE);
+        forestPath.addExit(Action.SOUTH, house_north_forestpath);
+        forestPath.addExit(Action.WEST, forestpath_forestW);
+        forestPath.addExit(Action.UP, forestpath_uptree);
+
+        Room upTree = new Room("Up a Tree", GameStrings.DESC_UP_TREE, Location.UP_TREE);
+        upTree.addExit(Action.DOWN, forestpath_uptree);
+
+        Room forestWest = new Room("Forest", GameStrings.DESC_FOREST_WEST, Location.FOREST_WEST);
+        forestWest.addExit(Action.NORTH, clearingN_forestW);
+        forestWest.addExit(Action.EAST, forestpath_forestW);
+        forestWest.addExit(Action.SOUTH, forestS_forestW);
+
+        Room forestEast = new Room("Forest", GameStrings.DESC_FOREST_EAST, Location.FOREST_EAST);
+        forestEast.addExit(Action.NORTHWEST, clearingN_forestE);
+        forestEast.addExit(Action.EAST, forestE_forestNE);
+        forestEast.addExit(Action.SOUTH, forestE_clearingE);
+        forestEast.addExit(Action.WEST, forestpath_forestE);
+
+        Room forestNortheast = new Room("Forest", GameStrings.DESC_FOREST_NORTHEAST, Location.FOREST_NORTHEAST);
+        forestNortheast.addExit(Action.NORTH, forestE_forestNE);
+        forestNortheast.addExit(Action.SOUTH, forestE_forestNE);
+        forestNortheast.addExit(Action.WEST, forestE_forestNE);
+        forestNortheast.addFailMessage(Action.EAST, GameStrings.FOREST_NE_FAIL_1);
+
+        Room forestSouth = new Room("Forest", GameStrings.DESC_FOREST_SOUTH, Location.FOREST_SOUTH);
+        forestSouth.addExit(Action.NORTH, clearingE_forestS);
+        forestSouth.addExit(Action.EAST, forestS_canyon);
+        forestSouth.addExit(Action.WEST, forestS_forestW);
+        forestSouth.addExit(Action.NORTHWEST, house_south_forestS);
+
+
+        Room clearingNorth = new Room("Clearing", GameStrings.DESC_CLEARING_NORTH, Location.CLEARING_NORTH);
+        clearingNorth.addExit(Action.EAST, clearingN_forestE);
+        clearingNorth.addExit(Action.SOUTH, forestpath_clearingN);
+        clearingNorth.addExit(Action.WEST, clearingN_forestW);
+
+        Room clearingEast = new Room("Clearing", GameStrings.DESC_CLEARING_EAST, Location.CLEARING_EAST);
+        clearingEast.addExit(Action.NORTH, forestE_clearingE);
+        clearingEast.addExit(Action.EAST, forestE_clearingE);
+        clearingEast.addExit(Action.SOUTH, clearingE_forestS);
+        clearingEast.addExit(Action.WEST, forestE_clearingE);
+
+
+        Room canyonView = new Room("Canyon View", GameStrings.DESC_CANYON_VIEW, Location.CANYON_VIEW);
+        canyonView.addExit(Action.NORTHWEST, clearingE_canyon);
+        canyonView.addExit(Action.WEST, forestS_canyon);
+        canyonView.addExit(Action.DOWN, canyon_ledge);
+
+        Room rockyLedge = new Room("Rocky Ledge", GameStrings.DESC_ROCKY_LEDGE, Location.ROCKY_LEDGE);
+        rockyLedge.addExit(Action.UP, canyon_ledge);
+        rockyLedge.addExit(Action.DOWN, ledge_bottom);
+
+        Room canyonBottom = new Room("Canyon Bottom", GameStrings.DESC_CANYON_BOTTOM, Location.CANYON_BOTTOM);
+        canyonBottom.addExit(Action.UP, ledge_bottom);
+        canyonBottom.addExit(Action.NORTH, canyon_bottom_rainbow);
+
+        Room endOfRainbow = new Room("End of Rainbow", GameStrings.DESC_END_OF_RAINBOW, Location.END_OF_RAINBOW);
+        endOfRainbow.addExit(Action.SOUTHWEST, canyon_bottom_rainbow);
+
+        Room stoneBarrow = new Room("Stone Barrow", GameStrings.DESC_STONE_BARROW, Location.STONE_BARROW);
+        stoneBarrow.addExit(Action.NORTHEAST, house_west_barrow);
+        stoneBarrow.addExit(Action.WEST, barrowInside);
+
+        Room insideStoneBarrow = new Room("Inside Stone Barrow", GameStrings.DESC_INSIDE_STONE_BARROW, Location.INSIDE_STONE_BARROW);
+        insideStoneBarrow.addExit(Action.EAST, barrowInside);
+
+        Room cellar = new Room("Cellar", "", Location.CELLAR);
+        Room eastOfChasm = new Room("East of Chasm", "", Location.EAST_OF_CHASM);
+        Room gallery = new Room("Gallery", "", Location.GALLERY);
+        Room studio = new Room("Studio", "", Location.STUDIO);
+        Room trollRoom = new Room("Troll Room", "", Location.TROLL_ROOM);
+        Room eastWestPassage = new Room("East-West Passage", "", Location.EAST_WEST_PASSAGE);
+        Room roundRoom = new Room("Round Room", "", Location.ROUND_ROOM);
+        Room narrowPassage = new Room("Narrow Passage", "", Location.NARROW_PASSAGE);
+        Room mirrorRoomSouth = new Room("Mirror Room", "", Location.MIRROR_ROOM_SOUTH);
+        Room windingPassage = new Room("Winding Passage", "", Location.WINDING_PASSAGE);
+        Room caveSouth = new Room("Cave", "", Location.CAVE_SOUTH);
+        Room entranceToHades = new Room("Entrance to Hades", "", Location.ENTRANCE_TO_HADES);
+        Room landOfTheDead = new Room();
+        Room engravingsCave = new Room();
+        Room domeRoom = new Room();
+        Room torchRoom = new Room();
+        Room temple = new Room();
+        Room egyptianRoom = new Room();
+        Room altar = new Room();
+        Room loudRoom = new Room();
+        Room dampCave = new Room();
+        Room whiteCliffsBeachNorth = new Room();
+        Room whiteCliffsBeachSouth = new Room();
+        Room frigidRiver1 = new Room();
+        Room frigidRiver2 = new Room();
+        Room frigidRiver3 = new Room();
+        Room frigidRiver4 = new Room();
+        Room frigidRiver5 = new Room();
+        Room sandyCave = new Room();
+        Room sandyBeach = new Room();
+        Room shore = new Room();
+        Room aragainFalls = new Room();
+        Room onTheRainbow = new Room();
+        Room dam = new Room();
+        Room damBase = new Room();
+        Room damLobby = new Room();
+        Room maintenanceRoom = new Room();
+        Room northSouthPassage = new Room();
+        Room deepCanyon = new Room();
+        Room chasm = new Room();
+        Room streamView = new Room();
+        Room stream = new Room();
+        Room reservoirSouth = new Room();
+        Room reservoir = new Room();
+        Room reservoirNorth = new Room();
+        Room atlantisRoom = new Room();
+        Room caveNorth = new Room();
+        Room twistingPassage = new Room();
+        Room mirrorRoomNorth = new Room();
+        Room coldPassage = new Room();
+        Room slideRoom = new Room();
+        Room mineEntrance = new Room();
+        Room squeakyRoom = new Room();
+        Room batRoom = new Room();
+        Room shaftRoom = new Room();
+        Room smellyRoom = new Room();
+        Room gasRoom = new Room();
+        Room coalMine1 = new Room();
+        Room coalMine2 = new Room();
+        Room coalMine3 = new Room();
+        Room coalMine4 = new Room();
+        Room ladderTop = new Room();
+        Room ladderBottom = new Room();
+        Room deadEndCoalMine = new Room();
+        Room timberRoom = new Room();
+        Room draftyRoom = new Room();
+        Room machineRoom = new Room();
+        Room gratingRoom = new Room();
+        Room cyclopsRoom = new Room();
+        Room strangePassage = new Room();
+        Room treasureRoom = new Room();
+        Room maze1 = new Room();
+        Room maze2 = new Room();
+        Room maze3 = new Room();
+        Room maze4 = new Room();
+        Room maze5 = new Room();
+        Room maze6 = new Room();
+        Room maze7 = new Room();
+        Room maze8 = new Room();
+        Room maze9 = new Room();
+        Room maze10 = new Room();
+        Room maze11 = new Room();
+        Room maze12 = new Room();
+        Room maze13 = new Room();
+        Room maze14 = new Room();
+        Room maze15 = new Room();
+        Room mazeDeadEndNorth = new Room();
+        Room mazeDeadEndCenter = new Room();
+        Room mazeDeadEndSouthEast = new Room();
+        Room mazeDeadEndSouthWest = new Room();
+
+
+        // Special room modifications
+        attic.setDark();
+
+
+        state.worldMap.put(westOfHouse.roomID, westOfHouse);
+        state.worldMap.put(northOfHouse.roomID, northOfHouse);
+        state.worldMap.put(behindHouse.roomID, behindHouse);
+        state.worldMap.put(southOfHouse.roomID, southOfHouse);
+        state.worldMap.put(kitchen.roomID, kitchen);
+        state.worldMap.put(attic.roomID, attic);
+        state.worldMap.put(livingRoom.roomID, livingRoom);
+
+        state.worldMap.put(forestPath.roomID, forestPath);
+        state.worldMap.put(forestWest.roomID, forestWest);
+        state.worldMap.put(forestEast.roomID, forestEast);
+        state.worldMap.put(forestNortheast.roomID, forestNortheast);
+        state.worldMap.put(forestSouth.roomID, forestSouth);
+
+        state.worldMap.put(clearingNorth.roomID, clearingNorth);
+        state.worldMap.put(clearingEast.roomID, clearingEast);
+        state.worldMap.put(upTree.roomID, upTree);
+
+        state.worldMap.put(canyonView.roomID, canyonView);
+        state.worldMap.put(rockyLedge.roomID, rockyLedge);
+        state.worldMap.put(canyonBottom.roomID, canyonBottom);
+        state.worldMap.put(endOfRainbow.roomID, endOfRainbow);
+
+        state.worldMap.put(stoneBarrow.roomID, stoneBarrow);
+        state.worldMap.put(insideStoneBarrow.roomID, insideStoneBarrow);
+
+        // end world map creation
+    }
+
+    private static void createGameObjects(GameState state)
+    {
+
+    }
 
 
 	private static boolean parsePlayerInput(GameState state, String playerText)
@@ -1015,8 +1244,7 @@ public final class Game {
 			case READ:
 			case TIE:
 			case ATTACK:
-			case HIGH_FIVE:
-            case MOVE:
+            case MOVE_OBJECT:
 			{
                 if (dark)
                 {
@@ -1405,19 +1633,16 @@ public final class Game {
         actions.put("hit", Action.ATTACK);
         actions.put("attack", Action.ATTACK);
         actions.put("punch", Action.ATTACK);
-        actions.put("slap", Action.SLAP);
 
 
         // Special actions
-        actions.put("move", Action.MOVE);
+        actions.put("move", Action.MOVE_OBJECT);
 		actions.put("say", Action.SPEAK);
         actions.put("play", Action.PLAY);
 		actions.put("ring", Action.RING);
         actions.put("light", Action.LIGHT);
         actions.put("turn on", Action.LIGHT);
         actions.put("turn off", Action.UNLIGHT);
-        actions.put("highfive", Action.HIGH_FIVE);
-        actions.put("high five", Action.HIGH_FIVE);
 		actions.put("tie", Action.TIE);
 
 
@@ -1444,7 +1669,7 @@ public final class Game {
         actionTypes.put(Action.DOWN, ActionType.EXIT);
 
         actionTypes.put(Action.TAKE, ActionType.DIRECT);
-        actionTypes.put(Action.MOVE, ActionType.DIRECT);
+        actionTypes.put(Action.MOVE_OBJECT, ActionType.DIRECT);
         actionTypes.put(Action.DROP, ActionType.DIRECT);
         actionTypes.put(Action.STORE, ActionType.DIRECT);
         actionTypes.put(Action.LIGHT, ActionType.DIRECT);
@@ -1456,11 +1681,9 @@ public final class Game {
 
         actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
         actionTypes.put(Action.READ, ActionType.DIRECT);
-        actionTypes.put(Action.SLAP, ActionType.DIRECT);
         actionTypes.put(Action.KICK, ActionType.DIRECT);
         actionTypes.put(Action.PLAY, ActionType.DIRECT);
         actionTypes.put(Action.RING, ActionType.DIRECT);
-        actionTypes.put(Action.HIGH_FIVE, ActionType.DIRECT);
         actionTypes.put(Action.TIE, ActionType.DIRECT);
 
         actionTypes.put(Action.UNLOCK, ActionType.INDIRECT);
