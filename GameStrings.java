@@ -76,53 +76,96 @@ class GameStrings {
 
 	public static final String DESC_INSIDE_STONE_BARROW = "Inside the stone barrow!";
 
-
 	public static final String DESC_CELLAR = "You are in a dark and damp cellar with a narrow passageway leading north, and a "
         + "crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.";
-	public static final String DESC_EAST_OF_CHASM = "You are on the east edge of a chasm, the bottom of which cannot be seen. A "
+	
+    public static final String DESC_EAST_OF_CHASM = "You are on the east edge of a chasm, the bottom of which cannot be seen. A "
         + "narrow passage goes north, and the path you are on continues to the east.";
-	public static final String DESC_GALLERY = "This is an art gallery. Most of the paintings have been stolen by vandals with "
+	
+    public static final String DESC_GALLERY = "This is an art gallery. Most of the paintings have been stolen by vandals with "
         + "exceptional taste. The vandals left through either the north or west exits. Fortunately, there is still one chance "
         + "for you to be a vandal, for on the far wall is a painting of unparalleled beauty.";
-	public static final String DESC_STUDIO = "This appears to have been an artist's studio. The walls and floors are splattered "
+	
+    public static final String DESC_STUDIO = "This appears to have been an artist's studio. The walls and floors are splattered "
         + "with paints of 69 different colors. Strangely enough, nothing of value is hanging here. At the south end of the room "
         + "is an open door (also covered with paint). A dark and narrow chimney leads up from a fireplace; although you might be "
         + "able to get up it, it seems unlikely you could get back down.";
-	public static final String DESC_TROLL_ROOM = "This is a small room with passages to the east and south and a forbidding hole "
+	
+    public static final String DESC_TROLL_ROOM = "This is a small room with passages to the east and south and a forbidding hole "
         + "leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.";
-	public static final String DESC_EAST_WEST_PASSAGE = "This is a narrow east-west passageway. There is a narrow stairway "
+	
+    public static final String DESC_EAST_WEST_PASSAGE = "This is a narrow east-west passageway. There is a narrow stairway "
         + "leading down at the north end of the room.";
+    
     public static final String DESC_ROUND_ROOM = "This is a circular stone room with passages in all directions. Several of them "
         + "have unfortunately been blocked by cave-ins.";
+    
     public static final String DESC_NARROW_PASSAGE = "This is a long and narrow corridor where a long north-south passageway "
         + "briefly narrows even further.";
+    
     public static final String DESC_MIRROR_ROOM_SOUTH = "You are in a large square room with tall ceilings. On the south wall is "
         + "an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.";
+    
     public static final String DESC_WINDING_PASSAGE = "This is a winding passage. It seems that there are only exits on the east "
         + "and north.";
+    
     public static final String DESC_CAVE_SOUTH = "This is a tiny cave with entrances west and north, and a dark, forbidding "
         + "staircase leading down.";
+    
     public static final String DESC_ENTRANCE_TO_HADES = "You are outside a large gateway, on which is inscribed\n\n"
         + "  Abandon every hope all ye who enter here!\n\n"
         + "The gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands "
         + "of voices, lamenting some hideous fate, can be heard.\n";
+   
     public static final String DESC_LAND_OF_THE_DEAD = "Land of the dead!";
-    public static final String DESC_ALTAR = "";
+    
+    public static final String DESC_ALTAR = "This is the south end of a large temple. In front of you is what appears to be "
+        + "an altar. In one corner is a small hole in the floor which leads into darkness. You probably could not get back up it.";
+    
     public static final String DESC_TEMPLE = "This is the north end of a large temple. On the east wall is an ancient "
         + "inscription, probably a prayer in a long-forgotten language. Below the prayer is a staircase leading down. "
         + "The west wall is solid granite. The exit to the north end of the room is through huge marble pillars.";
-    public static final String DESC_EGYPTIAN_ROOM = "";
+    
+    public static final String DESC_EGYPTIAN_ROOM = "This is a room which looks like an Egyptian tomb. There is an "
+        + "ascending staircase to the west.";
+    
     public static final String DESC_TORCH_ROOM = "This is a large room with a prominent doorway leading to a down staircase. "
         + "Above you is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In the center of the "
         + "room sits a white marble pedestal.";
+    
     public static final String DESC_DOME_ROOM = "You are at the periphery of a large dome, which forms the ceiling of another "
         + "room below. Protecting you from a precipitous drop is a wooden railing which circles the dome.";
+    
     public static final String DESC_ENGRAVINGS_CAVE = "You have entered a low cave with passages leading northwest and east. "
         + "There are old engravings on the walls here.";
-    public static final String DESC_LOUD_ROOM = "";
-    public static final String DESC_DAMP_CAVE = "";
-    public static final String DESC_WHITE_CLIFFS_BEACH_NORTH = "";
-    public static final String DESC_WHITE_CLIFFS_BEACH_SOUTH = "";
+    
+    public static final String DESC_LOUD_ROOM = "This is a large room with a ceiling which cannot be detected from the ground. "
+        + "There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly lout with an "
+        + "undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.";
+    
+    public static final String DESC_DAMP_CAVE = "This cave has exits to the west and east, and narrows to a crack toward the "
+        + "south. The earth is particularly damp here.";
+    
+    public static final String DESC_WHITE_CLIFFS_BEACH_NORTH = "You are on a narrow strip of beach which runs along the base of "
+        + "the White Cliffs. There is a narrow path heading south along the Cliffs and a tight passage leading west into the "
+        + "cliffs themselves.";
+    
+    public static final String DESC_WHITE_CLIFFS_BEACH_SOUTH = "You are on a rocky, narrow strip of beach beside the Cliffs. "
+        + "A narrow path leads north along the shore.";
+    
+    public static final String DESC_DAM_BASE = "You are at the base of Flood Control Dam #3, which looms above you and to the "
+        + "north. The river Frigid is flowing by here. Along the river are the White Cliffs which seem to form giant walls "
+        + "stretching from north to south along the shores of the river as it winds its way downstream.";
+    
+    public static final String DESC_DAM = "You are standing on the top of the Flood Control Dam #3, which was quite a tourist "
+        + "attraction in times far distant. There are paths to the north, south, and west, and a scramble down.\n"
+        + "The sluice gates on the dam are closed. Behind the dam, there can be seen a wide reservoir. Water is pouring over "
+        + "the top of the now abandoned dam.\n"
+        + "There is a control panel here, on which a large metal bolt is mounted. Directly above the bolt is a small green "
+        + "plastic bubble.";
+    
+    public static final String DESC_DAM_LOBBY = "";
+    public static final String DESC_MAINTENANCE_ROOM = "";
     public static final String DESC_FRIGID_RIVER_1 = "";
     public static final String DESC_FRIGID_RIVER_2 = "";
     public static final String DESC_FRIGID_RIVER_3 = "";
@@ -133,10 +176,63 @@ class GameStrings {
     public static final String DESC_SHORE = "";
     public static final String DESC_ARAGAIN_FALLS = "";
     public static final String DESC_ON_THE_RAINBOW = "";
-    public static final String DESC_DAM_BASE = "";
-    public static final String DESC_DAM = "";
-    public static final String DESC_DAM_LOBBY = "";
-    public static final String DESC_MAINTENANCE_ROOM = "";
+
+    public static final String DESC_NORTH_SOUTH_PASSAGE = "";
+    public static final String DESC_CHASM = "";
+    public static final String DESC_DEEP_CANYON = "";
+    public static final String DESC_RESERVOIR_SOUTH = "";
+    public static final String DESC_STREAM_VIEW = "";
+    public static final String DESC_STREAM = "";
+    public static final String DESC_RESERVOIR = "";
+    public static final String DESC_RESERVOIR_NORTH = "";
+    public static final String DESC_ATLANTIS_ROOM = "";
+    public static final String DESC_CAVE_NORTH = "";
+    public static final String DESC_TWISTING_PASSAGE = "";
+    public static final String DESC_MIRROR_ROOM_NORTH = "";
+    public static final String DESC_COLD_PASSAGE = "";
+    public static final String DESC_SLIDE_ROOM = "";
+    public static final String DESC_MINE_ENTRANCE = "";
+    public static final String DESC_SQUEAKY_ROOM = "";
+    public static final String DESC_BAT_ROOM = "";
+
+    public static final String DESC_SHAFT_ROOM = "";
+    public static final String DESC_SMELLY_ROOM = "";
+    public static final String DESC_GAS_ROOM = "";
+    public static final String DESC_COAL_MINE_1 = "";
+    public static final String DESC_COAL_MINE_2 = "";
+    public static final String DESC_COAL_MINE_3 = "";
+    public static final String DESC_COAL_MINE_4 = "";
+    public static final String DESC_LADDER_TOP = "";
+    public static final String DESC_LADDER_BOTTOM = "";
+    public static final String DESC_DEAD_END_COAL_MINE = "";
+    public static final String DESC_TIMBER_ROOM = "";
+    public static final String DESC_DRAFTY_ROOM = "";
+    public static final String DESC_MACHINE_ROOM = "";
+
+    public static final String DESC_GRATING_ROOM = "";
+    public static final String DESC_CYCLOPS_ROOM = "";
+    public static final String DESC_STRANGE_PASSAGE = "";
+    public static final String DESC_TREASURE_ROOM = "";
+
+    public static final String DESC_MAZE_1 = "";
+    public static final String DESC_MAZE_2 = "";
+    public static final String DESC_MAZE_3 = "";
+    public static final String DESC_MAZE_4 = "";
+    public static final String DESC_MAZE_5 = "";
+    public static final String DESC_MAZE_6 = "";
+    public static final String DESC_MAZE_7 = "";
+    public static final String DESC_MAZE_8 = "";
+    public static final String DESC_MAZE_9 = "";
+    public static final String DESC_MAZE_10 = "";
+    public static final String DESC_MAZE_11 = "";
+    public static final String DESC_MAZE_12 = "";
+    public static final String DESC_MAZE_13 = "";
+    public static final String DESC_MAZE_14 = "";
+    public static final String DESC_MAZE_15 = "";
+    public static final String DESC_DEAD_END_MAZE_NORTH = "";
+    public static final String DESC_DEAD_END_MAZE_SOUTHEAST = "";
+    public static final String DESC_DEAD_END_MAZE_CENTER = "";
+    public static final String DESC_DEAD_END_MAZE_SOUTHWEST = "";
 
 
 
@@ -163,7 +259,7 @@ class GameStrings {
 	public static final String FOREST_NE_FAIL_1 = "The mountains are impassable.";
 
 
-	public static final String LEAFLET_TEXT = "WELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore "
+	public static final String LEAFLET_TEXT = "\nWELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore "
 		+ "some of the most amazing territory ever seen by mortals. No computer should be without one!";
 
 
