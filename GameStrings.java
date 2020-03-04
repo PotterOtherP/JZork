@@ -299,7 +299,7 @@ class GameStrings {
 	"quit",
 	"read", "ring", "room", "rope",
 	"sack", "say", "scream", "shit", "shout", "slap", "songbird", "south", "southeast", "southwest", "store", "sword",
-	"take", "the", "tie", "to", "trap", "trophy", "turn",
+	"take", "teleport", "the", "tie", "to", "trap", "trophy", "turn",
 	"unlock", "up",
 	"wait", "walk", "west", "window", "with", "wizard",
 	"yell"

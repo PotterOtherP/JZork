@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Random;
+import java.lang.Integer;
 
 /**
  * A location is any place a moveable object can exist.
@@ -84,7 +85,7 @@ enum Action {
     DIAGNOSE, SCORE, SAVE, RESTART, RESTORE, QUIT,
     GODMODE_TOGGLE, AUTHOR,
 
-
+    TELEPORT,
 	NULL_ACTION
 	}
 
@@ -1158,17 +1159,22 @@ public final class Game {
         maze15.addExit(Action.SOUTHEAST, maze15_cyclops);
         
         Room mazeDeadEndNorth = new Room("Dead End", GameStrings.DESC_DEAD_END_MAZE_NORTH, Location.DEAD_END_MAZE_NORTH);
+        mazeDeadEndNorth.addExit(Action.SOUTH, maze4_dead_end);
         
         Room mazeDeadEndCenter = new Room("Dead End", GameStrings.DESC_DEAD_END_MAZE_CENTER, Location.DEAD_END_MAZE_CENTER);
-        
+        mazeDeadEndCenter.addExit(Action.WEST, maze5_dead_end);
+
         Room mazeDeadEndSouthEast = new Room("Dead End", GameStrings.DESC_DEAD_END_MAZE_SOUTHEAST, Location.DEAD_END_MAZE_SOUTHEAST);
-        
+        mazeDeadEndSouthEast.addExit(Action.NORTH, maze8_dead_end); 
+
         Room mazeDeadEndSouthWest = new Room("Dead End", GameStrings.DESC_DEAD_END_MAZE_SOUTHWEST, Location.DEAD_END_MAZE_SOUTHWEST);
+        mazeDeadEndSouthWest.addExit(Action.SOUTH, maze12_dead_end);
 
-
-        // Special room modifications
+        // Dark rooms
         attic.setDark();
 
+        // Gaseous rooms
+        // Closed passages
 
         state.worldMap.put(westOfHouse.roomID, westOfHouse);
         state.worldMap.put(northOfHouse.roomID, northOfHouse);
@@ -1879,6 +1885,34 @@ public final class Game {
 			case QUIT: { /* if (verifyQuit()) */ gameover = true; } break;
             case AUTHOR: { output(GameStrings.AUTHOR_INFO); } break;
 
+            case TELEPORT:
+            {
+                Scanner console = new Scanner(System.in);
+
+                output("Where do you want to go? ");
+                String dest = console.nextLine();
+
+                Room room = null;
+
+                for (Room r : state.worldMap.values())
+                {
+                    if (dest.equals(r.name));
+                        room = r;
+                }
+
+                if (room != null)
+                {
+                    state.playerLocation = room.roomID;
+                    room.lookAround(state);
+                }
+
+                else
+                {
+                    output("Room not found.");
+                }
+
+            } break;
+
 			default: {} break;
 		}
 
@@ -2016,6 +2050,7 @@ public final class Game {
 		actions.put("scream",  Action.SHOUT);
 		actions.put("wait", Action.WAIT);
         actions.put("author", Action.AUTHOR);
+        actions.put("teleport", Action.TELEPORT);
 
 
         // General object interaction actions
@@ -2061,6 +2096,7 @@ public final class Game {
         actionTypes.put(Action.PROFANITY, ActionType.REFLEXIVE);
         actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
         actionTypes.put(Action.AUTHOR, ActionType.REFLEXIVE);
+        actionTypes.put(Action.TELEPORT, ActionType.REFLEXIVE);
 
         actionTypes.put(Action.NORTH, ActionType.EXIT);
         actionTypes.put(Action.SOUTH, ActionType.EXIT);
