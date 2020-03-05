@@ -201,7 +201,8 @@ class GameStrings {
     public static final String DESC_ARAGAIN_FALLS = "You are at the top of Aragain Falls, an enormous waterfall with a drop of "
         + "about 450 feet. The only path here is on the north end.";
 
-    public static final String DESC_ON_THE_RAINBOW = "";
+    public static final String DESC_ON_THE_RAINBOW = "You are on top of a rainbow (I bet you never thought you woulk walk on "
+        + "a rainbow), with a magnificent view of the Falls. The rainbow travels east-west here.";
 
     public static final String DESC_NORTH_SOUTH_PASSAGE = "This is a high north-south passage, which forks to the northeast.";
 
@@ -218,8 +219,11 @@ class GameStrings {
     public static final String DESC_STREAM_VIEW = "You are standing on a path beside a gently flowing stream. The path follows "
         + "the stream, which flows from east to west.";
 
-    public static final String DESC_STREAM = "";
-    public static final String DESC_RESERVOIR = "";
+    public static final String DESC_STREAM = "You are on the gently flowing stream. The upstream route is too narrow to navigate, "
+        + "and the downstream route is invisible due to twisting walls. There is a narrow beach to land on.";
+
+    public static final String DESC_RESERVOIR = "You are on the lake. Beaches can be seen north and south. Upstream a small "
+     + "stream enters the lake through a narrow cleft in the rocks. The dam can be seen downstream.";
 
     public static final String DESC_RESERVOIR_NORTH = "You are in a large cavernous room, north of a large lake.\n There is a "
         + "slimy stairway leaving the room to the north.";

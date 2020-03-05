@@ -1301,6 +1301,12 @@ public final class Game {
 
     private static void createGameObjects(GameState state)
     {
+        /* Items */
+
+        // There are 19 treasure items with point values.
+        // Name, location, point value, weight.
+
+        Item brassBauble = new Item("Brass bauble", Location.NULL_LOCATION, 0, 0);
 
     }
 
