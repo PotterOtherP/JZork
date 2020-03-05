@@ -64,7 +64,7 @@ enum Action {
 	SHOUT, INVENTORY, WAIT,
 
     NORTH, SOUTH, EAST,	WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
-	UP,	DOWN, IN, OUT,
+	UP,	DOWN, IN, OUT, LAUNCH,
 
     ANSWER, ATTACK, BLOW, BREAK, BURN, CLIMB, CLOSE, COUNT, CROSS, CUT,
     DEFLATE, DIG, DRINK, DROP, EAT, ENTER, EXAMINE, EXIT, EXTINGUISH,
@@ -306,6 +306,9 @@ public final class Game {
          * Troll
          * Thief
          * Cyclops
+         * Vampire bat
+         * Spirits
+         *
          *
          */
         
@@ -906,6 +909,7 @@ public final class Game {
         dam.addExit(Action.NORTH, dam_dam_lobby);
         dam.addExit(Action.SOUTH, dam_deep_canyon);
         dam.addExit(Action.EAST, dam_dam_base);
+        dam.addExit(Action.DOWN, dam_dam_base);
 
         Room damBase = new Room("Dam Base", GameStrings.DESC_DAM_BASE, Location.DAM_BASE);
         damBase.addExit(Action.NORTH, dam_dam_base);
@@ -947,9 +951,9 @@ public final class Game {
         Room reservoirSouth = new Room("Reservoir South", GameStrings.DESC_RESERVOIR_SOUTH, Location.RESERVOIR_SOUTH);
         reservoirSouth.addExit(Action.NORTH, res_south_res);
         reservoirSouth.addExit(Action.WEST, res_south_stream_view);
-        reservoirSouth.addExit(Action.EAST, res_south_chasm);
-        reservoirSouth.addExit(Action.SOUTHWEST, res_south_deep);
-        reservoirSouth.addExit(Action.SOUTHEAST, dam_res_south);
+        reservoirSouth.addExit(Action.SOUTHEAST, res_south_deep);
+        reservoirSouth.addExit(Action.SOUTHWEST, res_south_chasm);
+        reservoirSouth.addExit(Action.EAST, dam_res_south);
         
         Room reservoir = new Room("Reservoir", GameStrings.DESC_RESERVOIR, Location.RESERVOIR);
         reservoir.addExit(Action.NORTH, res_north_res);
@@ -965,7 +969,8 @@ public final class Game {
         atlantisRoom.addExit(Action.SOUTH, res_north_atlantis);
         
         Room caveNorth = new Room("Cave", GameStrings.DESC_CAVE_NORTH, Location.CAVE_NORTH);
-        // Is this exit down or south???
+        // Is this exit down or south??? Both.
+        caveNorth.addExit(Action.SOUTH, atlantis_cave);
         caveNorth.addExit(Action.DOWN, atlantis_cave);
         caveNorth.addExit(Action.NORTH, cave_mirrornorth);
         caveNorth.addExit(Action.WEST, cave_twisting);
