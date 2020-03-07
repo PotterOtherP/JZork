@@ -8,16 +8,17 @@ interface ActivateMethod {
 abstract class GameObject {
     
     public final String name;
-    public String article;
+    public ObjectType type;
+    public String article;  // "a" or "an"
     public Location location;
     public String takeFail;
     public String presence;
     public String examineString;
-    public boolean movedFromStart;
+    
     public ActivateMethod method;
-    public ObjectType type;
     public ArrayList<Item> inventory;
     public ArrayList<Location> altLocations;
+    public ArrayList<String> altNames;
 
 
     // Constructors
@@ -26,7 +27,6 @@ abstract class GameObject {
         this.name = name;
         this.article = vowelStart() ? "an" : "a";
         this.location = loc;
-        this.movedFromStart = false;
         this.takeFail = "That's not something you can take, really.";
         this.presence = "There is " + article + " " + name + " here.";
         this.examineString = "There's nothing special about the " + name + ".";

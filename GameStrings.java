@@ -380,13 +380,13 @@ class GameStrings {
 	"five", "fuck",
 	"giant", "go",
 	"hand", "high", "highfive", "hit", "house",
-	"in", "inventory",
+	"in", "inn", "inside", "inventory",
 	"jump", "juniper",
 	"key", "kick", "kitchen", "knife",
 	"lantern", "leaflet", "light", "lock", "look",
 	"mailbox", "move",
 	"nest", "next", "north", "northeast", "northwest", "note",
-	"off", "on", "open",
+	"off", "on", "open", "out",
 	"passage", "piano", "pick", "pile", "place", "put", "play", "please", "pull", "punch",
 	"quit",
 	"read", "ring", "room", "rope",
@@ -396,6 +396,12 @@ class GameStrings {
 	"wait", "walk", "west", "window", "with", "wizard",
 	"yell"
 	};
+
+    public static final String[] PROFANITY = {
+
+    "fuck", "shit"
+
+    };
 
 	// This class does not get instantiated.
 	private GameStrings() {}

@@ -9,6 +9,7 @@ class Item extends GameObject{
 	public boolean activated;
 	public int lifespan;
 	public int life;
+	public boolean movedFromStart;
 
 
 	public Item(String name, Location loc, int value, int weight)
@@ -20,6 +21,7 @@ class Item extends GameObject{
 		this.lifespan = 0;
 		this.life = 0;
 		this.type = ObjectType.ITEM;
+		movedFromStart = false;
 	}
 
 	@Override

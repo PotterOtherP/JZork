@@ -85,7 +85,6 @@ enum Action {
     DIAGNOSE, SCORE, SAVE, RESTART, RESTORE, QUIT,
     GODMODE_TOGGLE, AUTHOR,
 
-    TELEPORT,
 	NULL_ACTION
 	}
 
@@ -106,7 +105,8 @@ enum ObjectType {
     FEATURE,
     ITEM,
     ACTOR,
-    CONTAINER
+    CONTAINER,
+    SURFACE
 }
 
 
@@ -268,7 +268,7 @@ public final class Game {
          */
         Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX, 0, 0);
         Item rope = new Item("rope", Location.ATTIC, 0, 0);
-        Item rustyKnife = new Item("knife", Location.ATTIC, 0, 0);
+        Item nastyKnife = new Item("knife", Location.ATTIC, 0, 0);
         Item glassBottle = new Item("bottle", Location.KITCHEN, 0, 0);
         Item elvishSword = new Item("sword", Location.LIVING_ROOM, 0, 0);
         Item jewelEgg = new Item("egg", Location.UP_TREE, 0, 0);
@@ -278,7 +278,7 @@ public final class Game {
 
         state.objectList.put(leaflet.name, leaflet);
         state.objectList.put(rope.name, rope);
-        state.objectList.put(rustyKnife.name, rustyKnife);
+        state.objectList.put(nastyKnife.name, nastyKnife);
         state.objectList.put(glassBottle.name, glassBottle);
         state.objectList.put(elvishSword.name, elvishSword);
         state.objectList.put(jewelEgg.name, jewelEgg);
@@ -673,6 +673,7 @@ public final class Game {
         behindHouse.addExit(Action.SOUTH, house_behind_south);
         behindHouse.addExit(Action.SOUTHWEST, house_behind_south);
         behindHouse.addExit(Action.WEST, house_behind_kitchen);
+        behindHouse.addExit(Action.IN, house_behind_kitchen);
 
 
         Room southOfHouse = new Room("South of House", GameStrings.DESC_SOUTH_OF_HOUSE, Location.SOUTH_OF_HOUSE);
@@ -685,6 +686,7 @@ public final class Game {
 
         Room kitchen = new Room("Kitchen", GameStrings.DESC_KITCHEN_WINDOW_CLOSED, Location.KITCHEN);
         kitchen.addExit(Action.EAST, house_behind_kitchen);
+        kitchen.addExit(Action.OUT, house_behind_kitchen);
         kitchen.addExit(Action.WEST, kitchen_livingroom);
         kitchen.addExit(Action.UP, kitchen_attic);
 
@@ -836,7 +838,6 @@ public final class Game {
         domeRoom.addExit(Action.DOWN, dome_torch);
 
         Room torchRoom = new Room("Torch Room", GameStrings.DESC_TORCH_ROOM, Location.TORCH_ROOM);
-        torchRoom.addExit(Action.UP, dome_torch);
         torchRoom.addExit(Action.SOUTH, torch_temple);
 
         Room temple = new Room("Temple", GameStrings.DESC_TEMPLE, Location.TEMPLE);
@@ -1307,6 +1308,61 @@ public final class Game {
         // Name, location, point value, weight.
 
         Item brassBauble = new Item("Brass bauble", Location.NULL_LOCATION, 0, 0);
+        Item crystalSkull = new Item("Crystal Skull", Location.LAND_OF_THE_DEAD, 0, 0);
+        Item coinBag = new Item("Bag of Coins", Location.MAZE_5, 0, 0);
+        Item canary = new Item("Golden Canary", Location.NULL_LOCATION, 0, 0);
+        Item diamond = new Item("Huge Diamond", Location.NULL_LOCATION, 0, 0);
+        Item torch = new Item("Ivory Torch", Location.TORCH_ROOM, 0, 0);
+        Item jade = new Item("Jade Figurine", Location.BAT_ROOM, 0, 0);
+        Item scarab = new Item("Jeweled Scarab", Location.SANDY_CAVE, 0, 0);
+        Item egg = new Item("jewel-encrusted egg", Location.UP_TREE, 0, 0);
+        Item emerald = new Item("jewel-encrusted egg", Location.UP_TREE, 0, 0);
+        Item platinumBar = new Item("platinum bar", Location.LOUD_ROOM, 0, 0);
+        Item trident = new Item("trident", Location.ATLANTIS_ROOM, 0, 0);
+        Item potOfGold = new Item("pot of gold", Location.NULL_LOCATION, 0, 0);
+        Item coffin = new Item("coffin", Location.EGYPTIAN_ROOM, 0, 0);
+        Item sapphire = new Item("sapphire bracelet", Location.GAS_ROOM, 0, 0);
+        Item chalice = new Item("silver chalice", Location.TREASURE_ROOM, 0, 0);
+        Item jewelTrunk = new Item("trunk of jewels", Location.NULL_LOCATION, 0, 0);
+        Item painting = new Item("painting", Location.GALLERY, 0, 0);
+
+        // And another 40 items that can be taken.
+
+        Item rope = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item knife = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item lantern = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item sword = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item garlic = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item lunch = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item bottle = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item nest = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item leaflet = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item brokenCanary = new Item("rope", Location.NULL_LOCATION, 0, 0);
+
+        Item brokenEgg = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item axe = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item studioPaper = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item bell = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item candles = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item blackBook = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item deflatedBoat = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item inflatedBoat = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item puncturedBoat = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item matchbook = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+
+        Item guideBook = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item tube = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item screwdriver = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item wrench = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item shovel = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item pump = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item timber = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item coal = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item uselessLantern = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item skeletonKey = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+
+        Item rustyKnife = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item stiletto = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
 
     }
 
@@ -1327,6 +1383,24 @@ public final class Game {
         // Method fails if any word the player typed is not known by the game.
 		String[] words = playerText.split(" ");
 
+        if (words[0].equals("teleport"))
+        {
+            String dest = playerText.substring(words[0].length() + 1);
+            for (Room r : state.worldMap.values())
+            {
+                String name = r.name.toLowerCase();
+                if (dest.equals(name))
+                {
+                    state.playerLocation = r.roomID;
+                    r.lookAround(state);
+                    return false;
+                }
+            }
+
+            output("Room not found.");
+            return false;
+        }
+
 		for (int i = 0; i < words.length; ++i)
 		{
 			if (!isGameWord(words[i]))
@@ -1341,7 +1415,6 @@ public final class Game {
 		playerText = playerText.replaceAll(" the ", " ");
 		playerText = playerText.replaceAll(" to ", " ");
 		playerText = playerText.replaceAll(" with ", " ");
-        playerText = playerText.replaceAll(" in ", " ");
         playerText = playerText.trim();
 
 		// get rid of extra spaces
@@ -1821,6 +1894,8 @@ public final class Game {
             case SOUTHWEST:
 			case UP:
 			case DOWN:
+            case IN:
+            case OUT:
 			{
 				
 				if (currentRoom.exit(state, currentAction))
@@ -1896,33 +1971,6 @@ public final class Game {
 			case QUIT: { /* if (verifyQuit()) */ gameover = true; } break;
             case AUTHOR: { output(GameStrings.AUTHOR_INFO); } break;
 
-            case TELEPORT:
-            {
-                Scanner console = new Scanner(System.in);
-
-                output("Where do you want to go? ");
-                String dest = console.nextLine();
-
-                Room room = null;
-
-                for (Room r : state.worldMap.values())
-                {
-                    if (dest.equals(r.name));
-                        room = r;
-                }
-
-                if (room != null)
-                {
-                    state.playerLocation = room.roomID;
-                    room.lookAround(state);
-                }
-
-                else
-                {
-                    output("Room not found.");
-                }
-
-            } break;
 
 			default: {} break;
 		}
@@ -2042,6 +2090,11 @@ public final class Game {
 		actions.put("walk d",       Action.DOWN);
 		actions.put("exit d",     Action.DOWN);
 
+        actions.put("in", Action.IN);
+        actions.put("inside", Action.IN);
+        actions.put("go in", Action.IN);
+        actions.put("out", Action.OUT);
+
         // Simple actions: no interaction with game objects
 		actions.put("quit",  Action.QUIT);
 		actions.put("q",     Action.QUIT);
@@ -2061,7 +2114,6 @@ public final class Game {
 		actions.put("scream",  Action.SHOUT);
 		actions.put("wait", Action.WAIT);
         actions.put("author", Action.AUTHOR);
-        actions.put("teleport", Action.TELEPORT);
 
 
         // General object interaction actions
@@ -2107,7 +2159,6 @@ public final class Game {
         actionTypes.put(Action.PROFANITY, ActionType.REFLEXIVE);
         actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
         actionTypes.put(Action.AUTHOR, ActionType.REFLEXIVE);
-        actionTypes.put(Action.TELEPORT, ActionType.REFLEXIVE);
 
         actionTypes.put(Action.NORTH, ActionType.EXIT);
         actionTypes.put(Action.SOUTH, ActionType.EXIT);
@@ -2119,6 +2170,8 @@ public final class Game {
         actionTypes.put(Action.SOUTHWEST, ActionType.EXIT);
         actionTypes.put(Action.UP, ActionType.EXIT);
         actionTypes.put(Action.DOWN, ActionType.EXIT);
+        actionTypes.put(Action.IN, ActionType.EXIT);
+        actionTypes.put(Action.OUT, ActionType.EXIT);
 
         actionTypes.put(Action.TAKE, ActionType.DIRECT);
         actionTypes.put(Action.MOVE_OBJECT, ActionType.DIRECT);
