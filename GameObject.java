@@ -84,6 +84,7 @@ abstract class GameObject {
     public boolean isContainer() { return this.type == ObjectType.CONTAINER; }
     public boolean isItem() { return this.type == ObjectType.ITEM; }
     public boolean isFeature() { return this.type == ObjectType.FEATURE; }
+    public boolean isSurface() { return this.type == ObjectType.SURFACE; }
     public boolean playerHasObject() { return this.location == Location.PLAYER_INVENTORY; }
 
     // Common methods to all objects, which will be overridden in the child classes.

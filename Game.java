@@ -45,13 +45,22 @@ enum Location {
     DEAD_END_MAZE_SOUTHWEST, 
 
 
-    BIRDS_NEST,
+    INSIDE_BIRDS_NEST,
+    INSIDE_BUOY,
+    INSIDE_COFFIN,
     INSIDE_MAILBOX,
-	PLAYER_INVENTORY,
     INSIDE_TROPHY_CASE,
     INSIDE_SACK,
+    INSIDE_BOAT,
+    INSIDE_BASKET,
+
+    ON_KITCHEN_TABLE,
+    ON_ATTIC_TABLE,
 
 
+	PLAYER_INVENTORY,
+    THIEF_INVENTORY,
+    TROLL_INVENTORY,
 	NULL_LOCATION
 
 	}
@@ -1307,62 +1316,102 @@ public final class Game {
         // There are 19 treasure items with point values.
         // Name, location, point value, weight.
 
-        Item brassBauble = new Item("Brass bauble", Location.NULL_LOCATION, 0, 0);
-        Item crystalSkull = new Item("Crystal Skull", Location.LAND_OF_THE_DEAD, 0, 0);
-        Item coinBag = new Item("Bag of Coins", Location.MAZE_5, 0, 0);
-        Item canary = new Item("Golden Canary", Location.NULL_LOCATION, 0, 0);
-        Item diamond = new Item("Huge Diamond", Location.NULL_LOCATION, 0, 0);
-        Item torch = new Item("Ivory Torch", Location.TORCH_ROOM, 0, 0);
-        Item jade = new Item("Jade Figurine", Location.BAT_ROOM, 0, 0);
-        Item scarab = new Item("Jeweled Scarab", Location.SANDY_CAVE, 0, 0);
-        Item egg = new Item("jewel-encrusted egg", Location.UP_TREE, 0, 0);
-        Item emerald = new Item("jewel-encrusted egg", Location.UP_TREE, 0, 0);
-        Item platinumBar = new Item("platinum bar", Location.LOUD_ROOM, 0, 0);
-        Item trident = new Item("trident", Location.ATLANTIS_ROOM, 0, 0);
-        Item potOfGold = new Item("pot of gold", Location.NULL_LOCATION, 0, 0);
-        Item coffin = new Item("coffin", Location.EGYPTIAN_ROOM, 0, 0);
-        Item sapphire = new Item("sapphire bracelet", Location.GAS_ROOM, 0, 0);
+        Item bar = new Item("platinum bar", Location.LOUD_ROOM, 0, 0);
+        Item bauble = new Item("bauble", Location.NULL_LOCATION, 0, 0);
         Item chalice = new Item("silver chalice", Location.TREASURE_ROOM, 0, 0);
-        Item jewelTrunk = new Item("trunk of jewels", Location.NULL_LOCATION, 0, 0);
+        Item coffin = new Item("coffin", Location.EGYPTIAN_ROOM, 0, 0);
+        Item coins = new Item("bag of coins", Location.MAZE_5, 0, 0);
+        Item canary = new Item("golden canary", Location.NULL_LOCATION, 0, 0);
+        Item diamond = new Item("diamond", Location.NULL_LOCATION, 0, 0);
+        Item egg = new Item("egg", Location.UP_TREE, 0, 0);
+        Item emerald = new Item("emerald", Location.UP_TREE, 0, 0);
+        Item jade = new Item("jade figurine", Location.BAT_ROOM, 0, 0);
         Item painting = new Item("painting", Location.GALLERY, 0, 0);
+        Item pot = new Item("pot", Location.NULL_LOCATION, 0, 0);
+        Item sapphire = new Item("sapphire bracelet", Location.GAS_ROOM, 0, 0);
+        Item scarab = new Item("scarab", Location.NULL_LOCATION, 0, 0);
+        Item sceptre = new Item("sceptre", Location.INSIDE_COFFIN, 0, 0);
+        Item skull = new Item("skull", Location.LAND_OF_THE_DEAD, 0, 0);
+        Item torch = new Item("torch", Location.TORCH_ROOM, 0, 0);
+        Item trident = new Item("trident", Location.ATLANTIS_ROOM, 0, 0);
+        Item trunk = new Item("trunk", Location.NULL_LOCATION, 0, 0);
 
         // And another 40 items that can be taken.
 
-        Item rope = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item knife = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item lantern = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item sword = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item garlic = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item lunch = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item bottle = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item nest = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item leaflet = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item brokenCanary = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item rope = new Item("rope", Location.ATTIC, 0, 0);
+        Item knife = new Item("nasty knife", Location.ATTIC, 0, 0);
+        Item lantern = new Item("brass lantern", Location.LIVING_ROOM, 0, 0);
+        Item sword = new Item("sword", Location.LIVING_ROOM, 0, 0);
+        Item garlic = new Item("garlic", Location.INSIDE_SACK, 0, 0);
+        Item lunch = new Item("lunch", Location.INSIDE_SACK, 0, 0);
+        Item bottle = new Item("bottle", Location.ON_KITCHEN_TABLE, 0, 0);
+        Item nest = new Item("nest", Location.UP_TREE, 0, 0);
+        Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX, 0, 0);
+        Item brokenCanary = new Item("broken canary", Location.NULL_LOCATION, 0, 0);
 
-        Item brokenEgg = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item axe = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item studioPaper = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item bell = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item candles = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item blackBook = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item deflatedBoat = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item inflatedBoat = new Item("rope", Location.NULL_LOCATION, 0, 0);
-        Item puncturedBoat = new Item("rope", Location.NULL_LOCATION, 0, 0);
+        Item brokenEgg = new Item("broken egg", Location.NULL_LOCATION, 0, 0);
+        Item axe = new Item("axe", Location.TROLL_INVENTORY, 0, 0);
+        Item studioPaper = new Item("piece of paper", Location.STUDIO, 0, 0);
+        Item bell = new Item("brass bell", Location.TEMPLE, 0, 0);
+        Item candles = new Item("candles", Location.ALTAR, 0, 0);
+        Item blackBook = new Item("black book", Location.ALTAR, 0, 0);
+        Item deflatedBoat = new Item("pile of plastic", Location.DAM_BASE, 0, 0);
+        Item inflatedBoat = new Item("magic boat", Location.NULL_LOCATION, 0, 0);
+        Item puncturedBoat = new Item("punctured boat", Location.NULL_LOCATION, 0, 0);
         Item matchbook = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
 
-        Item guideBook = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
-        Item tube = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
-        Item screwdriver = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
-        Item wrench = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
-        Item shovel = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
-        Item pump = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
-        Item timber = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
-        Item coal = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
-        Item uselessLantern = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
-        Item skeletonKey = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item guideBook = new Item("guidebook", Location.DAM_LOBBY, 0, 0);
+        Item tube = new Item("tube", Location.MAINTENANCE_ROOM, 0, 0);
+        Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM, 0, 0);
+        Item wrench = new Item("wrencg", Location.MAINTENANCE_ROOM, 0, 0);
+        Item shovel = new Item("shovel", Location.SANDY_BEACH, 0, 0);
+        Item pump = new Item("air pump", Location.RESERVOIR_NORTH, 0, 0);
+        Item timber = new Item("timber", Location.TIMBER_ROOM, 0, 0);
+        Item coal = new Item("pile of coal", Location.DEAD_END_COAL_MINE, 0, 0);
+        Item uselessLantern = new Item("useless lantern", Location.MAZE_5, 0, 0);
+        Item skeletonKey = new Item("skeleton key", Location.MAZE_5, 0, 0);
 
-        Item rustyKnife = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
-        Item stiletto = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item rustyKnife = new Item("rusty knife", Location.MAZE_5, 0, 0);
+        Item stiletto = new Item("stiletto", Location.THIEF_INVENTORY, 0, 0);
+
+
+        // Non item containers and surfaces
+
+        Container mailbox = new Container("mailbox", Location.WEST_OF_HOUSE, 5, Location.INSIDE_MAILBOX);
+        Container sack = new Container("sack", Location.KITCHEN, 5, Location.INSIDE_SACK);
+        Container basket = new Container("basket", Location.SHAFT_ROOM, 5, Location.INSIDE_BASKET);
+        Container birdsNest = new Container("bird's nest", Location.UP_TREE, 5, Location.INSIDE_BIRDS_NEST);
+        Container buoy = new Container("buoy", Location.FRIGID_RIVER_4, 5, Location.INSIDE_BUOY);
+
+        Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN, 5, Location.ON_KITCHEN_TABLE);
+        Surface atticTable = new Surface("attic table", Location.ATTIC, 5, Location.ON_ATTIC_TABLE);
+
+
+        // Features
+
+        Feature houseWindow = new Feature("window", Location.BEHIND_HOUSE);
+        houseWindow.altLocations.add(Location.KITCHEN);
+
+        Feature carpet = new Feature("carpet", Location.LIVING_ROOM);
+        Feature trapDoor = new Feature("trap door", Location.LIVING_ROOM);
+        Feature leafPile = new Feature("pile", Location.CLEARING_NORTH);
+        Feature house = new Feature("house", Location.WEST_OF_HOUSE);
+        Feature grating = new Feature("grating", Location.NULL_LOCATION);
+        house.altLocations.add(Location.NORTH_OF_HOUSE);
+        house.altLocations.add(Location.BEHIND_HOUSE);
+        house.altLocations.add(Location.SOUTH_OF_HOUSE);
+
+        
+        // Actors
+
+        Actor troll = new Actor("troll", Location.TROLL_ROOM);
+        Actor thief = new Actor("thief", Location.TREASURE_ROOM);
+        Actor cyclops = new Actor("cyclops", Location.CYCLOPS_ROOM);
+        Actor songbird = new Actor("songbird", Location.NULL_LOCATION);
+        Actor vampireBat = new Actor("vampire bat", Location.BAT_ROOM);
+        Actor spirits = new Actor("spirits", Location.ENTRANCE_TO_HADES);
+
+
 
     }
 
