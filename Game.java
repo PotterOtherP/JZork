@@ -172,7 +172,9 @@ public final class Game {
     public static final int LINE_LENGTH = 50;
 	public static final Location STARTING_LOCATION = Location.WEST_OF_HOUSE;
     public static final int LANTERN_LIFESPAN = 100;
-    public static final int CARRY_WEIGHT_LIMIT =20;
+    public static final int CARRY_WEIGHT_LIMIT = 20;
+    public static final int SONGBIRD_CHIRP_PERCENT = 31;
+
 
 
 	public static void main(String[] args)
@@ -323,9 +325,6 @@ public final class Game {
          */
         
         // Testing an actor in the overworld.
-        Actor giant = new Actor("giant", Location.FOREST_SOUTH);
-        ActorMethod giantMethod = () -> {};
-        giant.setActorMethod(giantMethod);
 
         Actor songbird = new Actor("songbird", Location.NULL_LOCATION);
         ActorMethod songbirdMethod = () -> {
@@ -343,7 +342,7 @@ public final class Game {
                 {
                     songbird.location = state.playerLocation;
                     Random rand = new Random();
-                    if (rand.nextInt(100) < 37)
+                    if (rand.nextInt(100) < SONGBIRD_CHIRP_PERCENT)
                         output(GameStrings.SONGBIRD);
                 } break;
 
@@ -360,7 +359,6 @@ public final class Game {
         songbird.takeFail = GameStrings.SONGBIRD_NEARBY;
         songbird.examineString = GameStrings.SONGBIRD_NEARBY;
 
-        state.objectList.put(giant.name, giant);
         state.objectList.put(songbird.name, songbird);
 		
 
@@ -667,6 +665,7 @@ public final class Game {
         westOfHouse.addExit(Action.SOUTHEAST, house_west_south);
         westOfHouse.addExit(Action.SOUTHWEST, house_west_barrow);
         westOfHouse.addExit(Action.WEST, house_west_forestW);
+        westOfHouse.addFailMessage(Action.EAST, "The door is boarded and you can't remove the boards.");
 
         Room northOfHouse = new Room("North of House", GameStrings.DESC_NORTH_OF_HOUSE, Location.NORTH_OF_HOUSE);
         northOfHouse.addExit(Action.NORTH, house_north_forestpath);
@@ -674,6 +673,7 @@ public final class Game {
         northOfHouse.addExit(Action.SOUTHEAST, house_north_behind);
         northOfHouse.addExit(Action.SOUTHWEST, house_west_north);
         northOfHouse.addExit(Action.WEST, house_west_north);
+        northOfHouse.addFailMessage(Action.SOUTH, "The windows are all boarded.");
 
 
         Room behindHouse = new Room("Behind House", GameStrings.DESC_BEHIND_HOUSE, Location.BEHIND_HOUSE);
@@ -692,6 +692,7 @@ public final class Game {
         southOfHouse.addExit(Action.WEST, house_west_south);
         southOfHouse.addExit(Action.NORTHWEST, house_west_south);
         southOfHouse.addExit(Action.SOUTH, house_south_forestS);
+        southOfHouse.addFailMessage(Action.NORTH, "The window are all boarded.");
 
 
         Room kitchen = new Room("Kitchen", GameStrings.DESC_KITCHEN_WINDOW_CLOSED, Location.KITCHEN);
@@ -699,6 +700,7 @@ public final class Game {
         kitchen.addExit(Action.OUT, house_behind_kitchen);
         kitchen.addExit(Action.WEST, kitchen_livingroom);
         kitchen.addExit(Action.UP, kitchen_attic);
+        kitchen.addFailMessage(Action.DOWN, "Only Santa Claus climbs down chimneys.");
 
         Room attic = new Room("Attic", GameStrings.DESC_ATTIC, Location.ATTIC);
         attic.addExit(Action.DOWN, kitchen_attic);
@@ -708,6 +710,7 @@ public final class Game {
         livingRoom.addExit(Action.EAST, kitchen_livingroom);
         livingRoom.addExit(Action.DOWN, cellar_livingroom);
         livingRoom.addExit(Action.WEST, strange_living_room);
+        livingRoom.addFailMessage(Action.WEST, "The door is nailed shut.");
 
         Room forestPath = new Room("Forest Path", GameStrings.DESC_FOREST_PATH, Location.FOREST_PATH);
         forestPath.addExit(Action.NORTH, forestpath_clearingN);
@@ -718,29 +721,36 @@ public final class Game {
 
         Room upTree = new Room("Up a Tree", GameStrings.DESC_UP_TREE, Location.UP_TREE);
         upTree.addExit(Action.DOWN, forestpath_uptree);
+        upTree.addFailMessage(Action.UP, "You cannot climb any higher.");
 
         Room forestWest = new Room("Forest", GameStrings.DESC_FOREST_WEST, Location.FOREST_WEST);
         forestWest.addExit(Action.NORTH, clearingN_forestW);
         forestWest.addExit(Action.EAST, forestpath_forestW);
         forestWest.addExit(Action.SOUTH, forestS_forestW);
+        forestWest.addFailMessage(Action.WEST, "You would need a machete to go further west.");
+        forestWest.addFailMessage(Action.UP, "There is no tree here suitable for climbing.");
 
         Room forestEast = new Room("Forest", GameStrings.DESC_FOREST_EAST, Location.FOREST_EAST);
-        forestEast.addExit(Action.NORTHWEST, clearingN_forestE);
         forestEast.addExit(Action.EAST, forestE_forestNE);
         forestEast.addExit(Action.SOUTH, forestE_clearingE);
         forestEast.addExit(Action.WEST, forestpath_forestE);
+        forestEast.addFailMessage(Action.NORTH, "The forest becomes impenetrable to the north.");
+        forestEast.addFailMessage(Action.UP, "There is no tree here suitable for climbing.");
 
         Room forestNortheast = new Room("Forest", GameStrings.DESC_FOREST_NORTHEAST, Location.FOREST_NORTHEAST);
         forestNortheast.addExit(Action.NORTH, forestE_forestNE);
         forestNortheast.addExit(Action.SOUTH, forestE_forestNE);
         forestNortheast.addExit(Action.WEST, forestE_forestNE);
         forestNortheast.addFailMessage(Action.EAST, GameStrings.FOREST_NE_FAIL_1);
+        forestNortheast.addFailMessage(Action.UP, GameStrings.FOREST_NE_FAIL_1);
 
         Room forestSouth = new Room("Forest", GameStrings.DESC_FOREST_SOUTH, Location.FOREST_SOUTH);
         forestSouth.addExit(Action.NORTH, clearingE_forestS);
-        forestSouth.addExit(Action.EAST, forestS_canyon);
         forestSouth.addExit(Action.WEST, forestS_forestW);
         forestSouth.addExit(Action.NORTHWEST, house_south_forestS);
+        forestSouth.addFailMessage(Action.UP, "There is no tree here suitable for climbing.");
+        forestSouth.addFailMessage(Action.EAST, "The rank undergrowth prevents eastward movement.");
+        forestSouth.addFailMessage(Action.SOUTH, "Storm-tossed trees block your way.");
 
 
         Room clearingNorth = new Room("Clearing", GameStrings.DESC_CLEARING_NORTH, Location.CLEARING_NORTH);
@@ -748,18 +758,23 @@ public final class Game {
         clearingNorth.addExit(Action.SOUTH, forestpath_clearingN);
         clearingNorth.addExit(Action.WEST, clearingN_forestW);
         clearingNorth.addExit(Action.DOWN, grating_clearing);
+        clearingNorth.addFailMessage(Action.UP, "There is no tree here suitable for climbing.");
+        clearingNorth.addFailMessage(Action.NORTH, "The forest becomes impenetrable to the north.");
 
         Room clearingEast = new Room("Clearing", GameStrings.DESC_CLEARING_EAST, Location.CLEARING_EAST);
         clearingEast.addExit(Action.NORTH, forestE_clearingE);
-        clearingEast.addExit(Action.EAST, forestE_clearingE);
+        clearingEast.addExit(Action.EAST, clearingE_canyon);
         clearingEast.addExit(Action.SOUTH, clearingE_forestS);
-        clearingEast.addExit(Action.WEST, forestE_clearingE);
+        clearingEast.addExit(Action.WEST, house_behind_clearingE);
+        clearingEast.addFailMessage(Action.UP, "There is no tree here suitable for climbing.");
 
 
         Room canyonView = new Room("Canyon View", GameStrings.DESC_CANYON_VIEW, Location.CANYON_VIEW);
         canyonView.addExit(Action.NORTHWEST, clearingE_canyon);
         canyonView.addExit(Action.WEST, forestS_canyon);
         canyonView.addExit(Action.DOWN, canyon_ledge);
+        canyonView.addExit(Action.EAST, canyon_ledge);
+        canyonView.addFailMessage(Action.SOUTH, "Storm-tossed trees block your way.");
 
         Room rockyLedge = new Room("Rocky Ledge", GameStrings.DESC_ROCKY_LEDGE, Location.ROCKY_LEDGE);
         rockyLedge.addExit(Action.UP, canyon_ledge);
@@ -783,12 +798,15 @@ public final class Game {
         Room cellar = new Room("Cellar", GameStrings.DESC_CELLAR, Location.CELLAR);
         cellar.addExit(Action.NORTH, cellar_troll);
         cellar.addExit(Action.SOUTH, cellar_eastchasm);
-        // This exit will be closed by the cyclops until he has been chased off.
+        // This exit will be closed by the cyclops until he has been chased off. (in its actor method).
         cellar.addExit(Action.UP, cellar_livingroom);
+        cellar.addFailMessage(Action.WEST, "You try to ascend the ramp, but it is impossible, and you slide back down.");
 
         Room eastOfChasm = new Room("East of Chasm", GameStrings.DESC_EAST_OF_CHASM, Location.EAST_OF_CHASM);
         eastOfChasm.addExit(Action.NORTH, cellar_eastchasm);
+        eastOfChasm.addExit(Action.DOWN, cellar_eastchasm);
         eastOfChasm.addExit(Action.EAST, eastchasm_gallery);
+        eastOfChasm.addFailMessage(Action.DOWN, "The chasm probably leads straight to the infernal regions.");
 
         Room gallery = new Room("Gallery", GameStrings.DESC_GALLERY, Location.GALLERY);
         gallery.addExit(Action.WEST, eastchasm_gallery);
@@ -951,6 +969,7 @@ public final class Game {
         Room chasm = new Room("Chasm", GameStrings.DESC_CHASM, Location.CHASM);
         chasm.addExit(Action.NORTHEAST, res_south_chasm);
         chasm.addExit(Action.SOUTHWEST, eastwest_chasm);
+        chasm.addExit(Action.UP, eastwest_chasm);
         chasm.addExit(Action.SOUTH, northsouth_chasm);
         
         Room streamView = new Room("Stream View", GameStrings.DESC_STREAM_VIEW, Location.STREAM_VIEW);
@@ -1439,8 +1458,8 @@ public final class Game {
         Feature carpet = new Feature("carpet", Location.LIVING_ROOM);
         Feature trapDoor = new Feature("trap door", Location.LIVING_ROOM);
         Feature leafPile = new Feature("pile", Location.CLEARING_NORTH);
-        Feature house = new Feature("house", Location.WEST_OF_HOUSE);
         Feature grating = new Feature("grating", Location.NULL_LOCATION);
+        Feature house = new Feature("house", Location.WEST_OF_HOUSE);
         house.altLocations.add(Location.NORTH_OF_HOUSE);
         house.altLocations.add(Location.BEHIND_HOUSE);
         house.altLocations.add(Location.SOUTH_OF_HOUSE);
