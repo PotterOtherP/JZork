@@ -142,7 +142,7 @@ class GameStrings {
         + "There are old engravings on the walls here.";
     
     public static final String DESC_LOUD_ROOM = "This is a large room with a ceiling which cannot be detected from the ground. "
-        + "There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly lout with an "
+        + "There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an "
         + "undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.";
     
     public static final String DESC_DAMP_CAVE = "This cave has exits to the west and east, and narrows to a crack toward the "
@@ -343,6 +343,7 @@ class GameStrings {
     public static final String SONGBIRD_NEARBY = "You don't see the song bird, but it's probably somewhere nearby.";
 
 	public static final String CANT_GO = "You can't go that way.";
+    public static final String PASSAGE_OVERBURDENED = "You are carrying too much.";
 
 	public static final String FOREST_NE_FAIL_1 = "The mountains are impassable.";
 

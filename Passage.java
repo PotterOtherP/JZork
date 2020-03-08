@@ -1,48 +1,42 @@
 class Passage {
 	
 
-	public final String name;
-	public String lockFail;
 	public String closedFail;
+	public String weightFail;
 	public final Location locationA;
 	public final Location locationB;
 
 	public boolean open;
-	public boolean locked;
+
+	public int weightLimit;
 
 	// Constructors
 	public Passage()
 	{
-		this.name = "null";
-		this.lockFail = GameStrings.CANT_GO;
-		this.closedFail = GameStrings.CANT_GO;
-		this.locationA = Location.NULL_LOCATION;
-		this.locationB = Location.NULL_LOCATION;
-		this.locked = true;
-		this.open = false;
+		closedFail = GameStrings.CANT_GO;
+		weightFail = GameStrings.PASSAGE_OVERBURDENED;
+		locationA = Location.NULL_LOCATION;
+		locationB = Location.NULL_LOCATION;
+		open = false;
+		weightLimit = Game.CARRY_WEIGHT_LIMIT;
 	}
 
 	public Passage(Location locA, Location locB)
 	{
-		this.locationA = locA;
-		this.locationB = locB;
+		locationA = locA;
+		locationB = locB;
 
-		this.name = "";
-		this.lockFail = "";
-		this.closedFail = "";
-		this.open = true;
-		this.locked = false;
+		closedFail = GameStrings.CANT_GO;
+		weightFail = GameStrings.PASSAGE_OVERBURDENED;
+		open = true;
 
 	}
 
 	
-	public void unlock() { locked = false; }
-	public void lock() { locked = true; }
 
 	public void open() { open = true; }
 	public void close() { open = false; }
 
-	public boolean isLocked() { return locked; }
 	public boolean isOpen() { return open; }
 
 

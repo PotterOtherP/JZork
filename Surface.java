@@ -13,7 +13,7 @@ class Surface extends GameObject {
         capacity = cap;
         surfaceID = id;
         inventory = new ArrayList<Item>();
-        this.type = ObjectType.SURFACE;    
+        type = ObjectType.SURFACE;    
     }
 
     @Override
@@ -43,7 +43,7 @@ class Surface extends GameObject {
 
         else
         {
-            Game.output("There's no " + it.name + " on the " + this.name);
+            Game.output("There's no " + it.name + " on the " + name);
         }
         
     }

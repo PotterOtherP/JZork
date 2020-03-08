@@ -10,7 +10,9 @@ class Room {
 
 	public boolean darkness;
 	public boolean gas;
-	public int danger;
+    public int danger;
+    public int loudness;
+
 
 	public HashMap<Action, Passage> exits;
 	public HashMap<Action, String> failMessages;
@@ -19,42 +21,45 @@ class Room {
 
 	public Room()
 	{
-		this.name = "";
-		this.description = "";
-		this.roomID = Location.NULL_LOCATION;		
-		this.exits = new HashMap<Action, Passage>();
-		this.failMessages = new HashMap<Action, String>();
-		this.firstVisit = true;
+		name = "";
+		description = "";
+		roomID = Location.NULL_LOCATION;		
+		exits = new HashMap<Action, Passage>();
+		failMessages = new HashMap<Action, String>();
+		firstVisit = true;
 
 
 	}
 
-	public Room(String name, String desc, Location loc)
+	public Room(String nm, String desc, Location loc)
 	{
-		this.name = name;
-		this.description = desc;
-		this.roomID = loc;
-		this.firstVisit = true;
-		this.exits = new HashMap<Action, Passage>();
-		this.failMessages = new HashMap<Action, String>();
+		name = nm;
+		description = desc;
+		roomID = loc;
+		firstVisit = true;
+		exits = new HashMap<Action, Passage>();
+		failMessages = new HashMap<Action, String>();
 	}
 
 	public void addExit(Action act, Passage psg)
 	{
-		this.exits.put(act, psg);
+		exits.put(act, psg);
 	}
 
 	public void addFailMessage(Action act, String msg)
 	{
-		this.failMessages.put(act, msg);
+		failMessages.put(act, msg);
 	}
 
 	public void setDark() { darkness = true; }
+	public void setLight() { darkness = false; }
 	public boolean isDark() { return darkness; }
+	public void setGas() { gas = true; }
+	public boolean hasGas() { return gas; }
 
 	public void setDescription(String s)
 	{
-		this.description = s;
+		description = s;
 	}
 
 
@@ -106,6 +111,9 @@ class Room {
 			psg = exits.get(act);
 		}
 
+
+
+
 		else
 		{
 			// Darkness check
@@ -124,10 +132,17 @@ class Room {
 			return false;
 		}
 
+		// Check here for baggage limit passages.
+
+		if (state.playerCarryWeight > psg.weightLimit)
+		{
+			Game.output(psg.weightFail);
+			return false;
+		}
 
 
 		// Figure out which side of the Passage the player is on.
-		if (psg.locationA == this.roomID) { dest = psg.locationB; }
+		if (psg.locationA == roomID) { dest = psg.locationB; }
 		else { dest = psg.locationA; }
 
 		// Darkness check. If the room is in darkness, and the destination
@@ -149,18 +164,8 @@ class Room {
 		}
 
 		else
-		{
-			// If the Passage is locked, print the Passage's locked message.
-			if (psg.isLocked())
-			{
-				Game.output(psg.lockFail);
-			}
-
-			// If the Passage is closed, but not locked.
-			else
-			{
-				Game.output(psg.closedFail);
-			}
+		{	
+			Game.output(psg.closedFail);
 		}
 		
 
@@ -170,7 +175,7 @@ class Room {
 
 	public String getDescription(GameState state)
 	{
-		String result = this.description;
+		String result = description;
 
 
 

@@ -22,20 +22,20 @@ abstract class GameObject {
 
 
     // Constructors
-    public GameObject(String name, Location loc)
+    public GameObject(String nm, Location loc)
     {
-        this.name = name;
-        this.article = vowelStart() ? "an" : "a";
-        this.location = loc;
-        this.takeFail = "That's not something you can take, really.";
-        this.presence = "There is " + article + " " + name + " here.";
-        this.examineString = "There's nothing special about the " + name + ".";
-        this.method = (GameState state, Action act) -> {};
+        name = nm;
+        article = vowelStart() ? "an" : "a";
+        location = loc;
+        takeFail = "That's not something you can take, really.";
+        presence = "There is " + article + " " + name + " here.";
+        examineString = "There's nothing special about the " + name + ".";
+        method = (GameState state, Action act) -> {};
     }
 
     public void setMethod(ActivateMethod am)
     {
-        this.method = am;
+        method = am;
     }
 
     public Location getLocation() { return location; }
@@ -57,7 +57,7 @@ abstract class GameObject {
 
         boolean result = false;
 
-        String str = this.name.toLowerCase();
+        String str = name.toLowerCase();
         char c  = str.charAt(0);
 
         switch(c)
@@ -80,12 +80,12 @@ abstract class GameObject {
         return result;
     }
 
-    public boolean isActor() { return this.type == ObjectType.ACTOR; }
-    public boolean isContainer() { return this.type == ObjectType.CONTAINER; }
-    public boolean isItem() { return this.type == ObjectType.ITEM; }
-    public boolean isFeature() { return this.type == ObjectType.FEATURE; }
-    public boolean isSurface() { return this.type == ObjectType.SURFACE; }
-    public boolean playerHasObject() { return this.location == Location.PLAYER_INVENTORY; }
+    public boolean isActor() { return type == ObjectType.ACTOR; }
+    public boolean isContainer() { return type == ObjectType.CONTAINER; }
+    public boolean isItem() { return type == ObjectType.ITEM; }
+    public boolean isFeature() { return type == ObjectType.FEATURE; }
+    public boolean isSurface() { return type == ObjectType.SURFACE; }
+    public boolean playerHasObject() { return location == Location.PLAYER_INVENTORY; }
 
     // Common methods to all objects, which will be overridden in the child classes.
 

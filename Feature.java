@@ -12,7 +12,7 @@ class Feature extends GameObject {
 	public Feature(String name, Location loc)
 	{
 		super(name, loc);
-		this.type = ObjectType.FEATURE;
+		type = ObjectType.FEATURE;
 		altLocations = new ArrayList<Location>();
 		altLocations.add(loc);
 	}

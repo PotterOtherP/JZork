@@ -12,15 +12,15 @@ class Item extends GameObject{
 	public boolean movedFromStart;
 
 
-	public Item(String name, Location loc, int value, int weight)
+	public Item(String name, Location loc, int value, int wt)
 	{
 		super(name, loc);
-		this.pointValue = value;
-		this.weight = weight;
-		this.activated = false;
-		this.lifespan = 0;
-		this.life = 0;
-		this.type = ObjectType.ITEM;
+		pointValue = value;
+		weight = wt;
+		activated = false;
+		lifespan = 0;
+		life = 0;
+		type = ObjectType.ITEM;
 		movedFromStart = false;
 	}
 
@@ -51,8 +51,8 @@ class Item extends GameObject{
 	}
 
 
-	public void setLocation(Location loc) { this.location = loc; }
-	public Location getLocation() { return this.location; }
+	public void setLocation(Location loc) { location = loc; }
+	public Location getLocation() { return location; }
 	public int getValue() { return pointValue; }
 	public int getWeight() { return weight; }
 	public void activateItem() { activated = true; }

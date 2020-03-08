@@ -23,10 +23,10 @@ class Actor extends GameObject {
 	{
 		super(name, loc);
 		setVariables();
-		this.startLocation = super.location;
-		this.currentLocation = super.location;
-		this.previousLocation = super.location;
-		this.type = ObjectType.ACTOR;
+		startLocation = super.location;
+		currentLocation = super.location;
+		previousLocation = super.location;
+		type = ObjectType.ACTOR;
 	}
 
 
@@ -35,15 +35,15 @@ class Actor extends GameObject {
 		actorMethod.actorUpdate();
 	}
 
-	private void setVariables()
+	public void setVariables()
 	{
-		this.alive = true;
-		this.encountered = false;
+		alive = true;
+		encountered = false;
 	}
 
 	public void setActorMethod(ActorMethod am)
 	{
-		this.actorMethod = am;
+		actorMethod = am;
 	}
 
 

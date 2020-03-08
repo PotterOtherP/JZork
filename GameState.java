@@ -15,6 +15,7 @@ class GameState {
 	public Location playerLocation;
 	public Location playerPreviousLocation;
 	public int playerHitPoints;
+	public int playerScore;
 	public int playerCarryWeight;
 	public int playerMaxCarryWeight;
 	public boolean playerAlive;
@@ -43,16 +44,17 @@ class GameState {
 	// constructor
 	public GameState()
 	{
-		this.dummyObject = new Feature("dummy_feature", Location.NULL_LOCATION);
-		this.resetInput();
+		dummyObject = new Feature("dummy_feature", Location.NULL_LOCATION);
+		resetInput();
 
-		this.turns = 0;
-		this.playerLocation = Location.NULL_LOCATION;
-		this.playerPreviousLocation = Location.NULL_LOCATION;
-		this.lightActivated = false;
-		this.playerAlive = true;
+		turns = 0;
+		playerLocation = Location.NULL_LOCATION;
+		playerPreviousLocation = Location.NULL_LOCATION;
+		lightActivated = false;
+		playerAlive = true;
 		playerCarryWeight = 0;
-		playerMaxCarryWeight = 100;
+		playerScore = 0;
+		playerMaxCarryWeight = Game.CARRY_WEIGHT_LIMIT;
 
 		
 
@@ -75,15 +77,15 @@ class GameState {
 
 	public void resetInput()
 	{
-		this.first = "";
-		this.second = "";
-		this.third = "";
-		this.phrase = "";
+		first = "";
+		second = "";
+		third = "";
+		phrase = "";
 
-		this.playerAction = Action.NULL_ACTION;
-		this.actionType = ActionType.NULL_TYPE;
-		this.directObject = dummyObject;
-		this.indirectObject = dummyObject;
+		playerAction = Action.NULL_ACTION;
+		actionType = ActionType.NULL_TYPE;
+		directObject = dummyObject;
+		indirectObject = dummyObject;
 	}
 
 

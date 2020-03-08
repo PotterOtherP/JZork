@@ -56,6 +56,7 @@ enum Location {
 
     ON_KITCHEN_TABLE,
     ON_ATTIC_TABLE,
+    ON_PEDESTAL,
 
 
 	PLAYER_INVENTORY,
@@ -154,23 +155,24 @@ public final class Game {
      */
 
     // Global variables
-	private static boolean gameover = true;
-	private static boolean godmode = false;
-    private static boolean TESTING = false;
+	public static boolean gameover = true;
+	public static boolean godmode = false;
+    public static boolean TESTING = false;
 
 
     // Lists and hashmaps
-    private static HashMap<String, Action> actions = new HashMap<String, Action>();
-	private static HashMap<Action, ActionType> actionTypes = new HashMap<Action, ActionType>();
-    private static HashMap<String, ObjectType> currentObjects = new HashMap<String, ObjectType>();
-	private static ArrayList<String> dictionary = new ArrayList<String>();
+    public static HashMap<String, Action> actions = new HashMap<String, Action>();
+	public static HashMap<Action, ActionType> actionTypes = new HashMap<Action, ActionType>();
+    public static HashMap<String, ObjectType> currentObjects = new HashMap<String, ObjectType>();
+	public static ArrayList<String> dictionary = new ArrayList<String>();
 
 
 
     // Constants
-    private static final int LINE_LENGTH = 50;
-	private static final Location STARTING_LOCATION = Location.WEST_OF_HOUSE;
-    private static final int LANTERN_LIFESPAN = 100;
+    public static final int LINE_LENGTH = 50;
+	public static final Location STARTING_LOCATION = Location.WEST_OF_HOUSE;
+    public static final int LANTERN_LIFESPAN = 100;
+    public static final int CARRY_WEIGHT_LIMIT =20;
 
 
 	public static void main(String[] args)
@@ -213,7 +215,7 @@ public final class Game {
 
 
 
-	private static void initGame(GameState state)
+	public static void initGame(GameState state)
 	{	
 		// Populate the action lists and the dictionary
 		createActions();
@@ -255,7 +257,6 @@ public final class Game {
 
         state.objectList.put(house.name, house);
         state.objectList.put(houseWindow.name, houseWindow);
-        //state.objectList.put(kitchenWindow.name, kitchenWindow);
         state.objectList.put(carpet.name, carpet);
         state.objectList.put(trapDoor.name, trapDoor);
         state.objectList.put(leafPile.name, leafPile);
@@ -471,7 +472,7 @@ public final class Game {
 	}
 
 
-    private static void createWorldMap(GameState state)
+    public static void createWorldMap(GameState state)
     {
         // Overworld passages
         Passage house_west_north = new Passage(Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE);
@@ -782,6 +783,8 @@ public final class Game {
         Room cellar = new Room("Cellar", GameStrings.DESC_CELLAR, Location.CELLAR);
         cellar.addExit(Action.NORTH, cellar_troll);
         cellar.addExit(Action.SOUTH, cellar_eastchasm);
+        // This exit will be closed by the cyclops until he has been chased off.
+        cellar.addExit(Action.UP, cellar_livingroom);
 
         Room eastOfChasm = new Room("East of Chasm", GameStrings.DESC_EAST_OF_CHASM, Location.EAST_OF_CHASM);
         eastOfChasm.addExit(Action.NORTH, cellar_eastchasm);
@@ -1186,10 +1189,50 @@ public final class Game {
         mazeDeadEndSouthWest.addExit(Action.SOUTH, maze12_dead_end);
 
         // Dark rooms
-        attic.setDark();
+        attic.setDark(); cellar.setDark(); eastOfChasm.setDark(); gallery.setDark(); studio.setDark(); eastWestPassage.setDark();
+        roundRoom.setDark(); narrowPassage.setDark(); mirrorRoomSouth.setDark(); windingPassage.setDark(); caveSouth.setDark();
+        entranceToHades.setDark(); landOfTheDead.setDark(); engravingsCave.setDark(); domeRoom.setDark(); torchRoom.setDark(); 
+        temple.setDark(); egyptianRoom.setDark(); altar.setDark(); loudRoom.setDark(); dampCave.setDark(); northSouthPassage.setDark();
+        chasm.setDark(); deepCanyon.setDark(); damLobby.setDark(); maintenanceRoom.setDark(); atlantisRoom.setDark(); caveNorth.setDark();
+        twistingPassage.setDark(); mirrorRoomNorth.setDark(); coldPassage.setDark(); slideRoom.setDark(); mineEntrance.setDark();
+        squeakyRoom.setDark(); batRoom.setDark(); shaftRoom.setDark(); gasRoom.setDark(); coalMine1.setDark(); coalMine2.setDark();
+        coalMine3.setDark(); coalMine4.setDark(); ladderTop.setDark(); ladderBottom.setDark(); deadEndCoalMine.setDark(); timberRoom.setDark();
+        draftyRoom.setDark(); machineRoom.setDark(); maze1.setDark(); maze2.setDark(); maze3.setDark(); maze4.setDark(); maze5.setDark();
+        maze6.setDark(); maze7.setDark(); maze8.setDark(); maze8.setDark(); maze10.setDark(); maze11.setDark(); maze12.setDark(); maze13.setDark();
+        maze14.setDark(); maze15.setDark(); mazeDeadEndCenter.setDark(); mazeDeadEndNorth.setDark(); mazeDeadEndSouthWest.setDark();
+        mazeDeadEndSouthEast.setDark(); gratingRoom.setDark(); cyclopsRoom.setDark(); strangePassage.setDark(); treasureRoom.setDark();
 
         // Gaseous rooms
+        gasRoom.setGas();
+
         // Closed passages
+        grating_clearing.close();
+        house_behind_kitchen.close();
+        cellar_livingroom.close();
+        strange_living_room.close();
+        house_west_barrow.close();
+        rainbow_end.close();
+        falls_rainbow.close();
+        dome_torch.close();
+        hades_land_dead.close();
+        dam_base_river.close();
+        white_north_river.close();
+        white_south_river.close();
+        river_sandy_beach.close();
+        river_shore.close();
+        res_south_res.close();
+        res_north_res.close();
+        stream_view_stream.close();
+        cyclops_strange.close();
+        cyclops_treasure.close();
+
+        // Narrow passages
+        studio_kitchen.weightLimit = 5;
+        altar_cave.weightLimit = 5;
+        timber_drafty.weightLimit = 0;
+
+
+
 
         state.worldMap.put(westOfHouse.roomID, westOfHouse);
         state.worldMap.put(northOfHouse.roomID, northOfHouse);
@@ -1309,7 +1352,7 @@ public final class Game {
         // end world map creation
     }
 
-    private static void createGameObjects(GameState state)
+    public static void createGameObjects(GameState state)
     {
         /* Items */
 
@@ -1385,6 +1428,7 @@ public final class Game {
 
         Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN, 5, Location.ON_KITCHEN_TABLE);
         Surface atticTable = new Surface("attic table", Location.ATTIC, 5, Location.ON_ATTIC_TABLE);
+        Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM, 5, Location.ON_PEDESTAL);
 
 
         // Features
@@ -1401,6 +1445,24 @@ public final class Game {
         house.altLocations.add(Location.BEHIND_HOUSE);
         house.altLocations.add(Location.SOUTH_OF_HOUSE);
 
+        Feature mirror = new Feature("mirror", Location.MIRROR_ROOM_SOUTH);
+        mirror.altLocations.add(Location.MIRROR_ROOM_NORTH);
+
+        Feature skeleton = new Feature("skeleton", Location.MAZE_5);
+        Feature damBolt = new Feature("bolt", Location.DAM);
+        Feature blueButton = new Feature("blue button", Location.MAINTENANCE_ROOM);
+        Feature yellowButton = new Feature("yellow button", Location.MAINTENANCE_ROOM);
+        Feature brownButton = new Feature("brown button", Location.MAINTENANCE_ROOM);
+        Feature redButton = new Feature("red button", Location.MAINTENANCE_ROOM);
+        Feature toolChests = new Feature("tool chests", Location.MAINTENANCE_ROOM);
+        Feature shaftBasket = new Feature("basket", Location.SHAFT_ROOM);
+        Feature coalMachine = new Feature("machine", Location.MACHINE_ROOM);
+        Feature current = new Feature("current", Location.FRIGID_RIVER_1);
+        current.altLocations.add(Location.FRIGID_RIVER_2);
+        current.altLocations.add(Location.FRIGID_RIVER_3);
+        current.altLocations.add(Location.FRIGID_RIVER_4);
+        current.altLocations.add(Location.FRIGID_RIVER_5);
+
         
         // Actors
 
@@ -1416,7 +1478,7 @@ public final class Game {
     }
 
 
-	private static boolean parsePlayerInput(GameState state, String playerText)
+	public static boolean parsePlayerInput(GameState state, String playerText)
 	{
         /* ACTION OBJECT OBJECT.
 
@@ -1539,7 +1601,7 @@ public final class Game {
 
 	}
 
-	private static boolean validateAction(GameState state)
+	public static boolean validateAction(GameState state)
 	{
 		/* 
             Create a list of actionable objects at the beginning of each turn.
@@ -1724,7 +1786,7 @@ public final class Game {
 
 
 
-	private static void updateGame(GameState state)
+	public static void updateGame(GameState state)
 	{
 		
 		Location currentLocation = state.playerLocation;
@@ -2046,7 +2108,7 @@ public final class Game {
 
 	// Utility methods used by the other methods in Game.java
 
-	private static void createActions()
+	public static void createActions()
 	{
         // Movement actions
 		actions.put("north",       Action.NORTH);
@@ -2246,7 +2308,7 @@ public final class Game {
 
 	}
 
-	private static void fillDictionary()
+	public static void fillDictionary()
 	{
 		for (int i = 0; i < GameStrings.GAME_WORDS.length; ++i)
 		{
@@ -2254,7 +2316,7 @@ public final class Game {
 		}
 	}
 
-    private static void fillCurrentObjectList(GameState state)
+    public static void fillCurrentObjectList(GameState state)
     {
         currentObjects.clear();
 
@@ -2305,7 +2367,7 @@ public final class Game {
         System.out.print("\n");
     }
 
-	private static String getPlayerText()
+	public static String getPlayerText()
 	{
 		Scanner scn = new Scanner(System.in);
 		String result = "";
@@ -2327,7 +2389,7 @@ public final class Game {
 	}
 
 	// Checks if "input" starts with "token"
-	private static boolean startsWith(String tok, String inp)
+	public static boolean startsWith(String tok, String inp)
 	{
 		String[] token = tok.split(" ");
 		String[] input  = inp.split(" ");
@@ -2344,7 +2406,7 @@ public final class Game {
 		return true;
 	}
 
-	private static boolean isGameWord(String str)
+	public static boolean isGameWord(String str)
 	{
 		return (dictionary.contains(str));
 	}
@@ -2363,7 +2425,7 @@ public final class Game {
 
 
 
-	private static void endGame(GameState state)
+	public static void endGame(GameState state)
 	{
 		// Save the gamestate
 

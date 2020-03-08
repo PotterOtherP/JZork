@@ -18,7 +18,7 @@ class Container extends GameObject {
         containerID = id;
         open = false;
         inventory = new ArrayList<Item>();
-        this.type = ObjectType.CONTAINER;    
+        type = ObjectType.CONTAINER;    
     }
 
     @Override
@@ -28,7 +28,7 @@ class Container extends GameObject {
         {
             inventory.add(it);
             it.location = containerID;
-            Game.output("You put the " + it.name + " in the " + this.name + ".");
+            Game.output("You put the " + it.name + " in the " + name + ".");
         }
         else
         {
@@ -50,7 +50,7 @@ class Container extends GameObject {
 
             else
             {
-                Game.output("There's no " + it.name + " in the " + this.name);
+                Game.output("There's no " + it.name + " in the " + name);
             }
         }
 
