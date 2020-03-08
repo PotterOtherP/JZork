@@ -128,29 +128,22 @@ enum ObjectType {
  */
 public final class Game {
 
-    /* TODO
+    /* TODO (After break)
      *
-     * Ambiguous words - Alternate names for objects
-     * Create dictionary from existing lists
-     * Object presence strings
-     * New object type: Container
-     * List of currently actionable objects?
-     * Universal action methods in class definitions (take, put, open, read, etc)
-     * Fix action lookup
-     *
-     * Overworld objects:
-     *
-     * Kitchen window - passage from Behind House to Kitchen
-     * Songbird
-     * Attic - Darkness
-     * Lantern - turn on, lifetime
-     * Object weights and point values
-     * Trophy case - points
-     * Kitchen table
-     * Sack, lunch, water
-     * Egg, clockwork canary
-     * Leaf pile
-     * Carpet and trap door
+     * Item/container/inventory issue
+     * Object creation
+     * Carry weight
+     * Implement all objects, one by one
+     * All text responses - sarcasm, random selection, etc
+     * Player death - less harsh than original? Unlimited lives, auto-restore
+     * Score and winning
+     * Ambiguity
+     * Acting on multiple objects, "all except", etc
+     * Easter eggs and trivia
+     * Save files
+     * Transcripts
+     * Web/Javascript version
+     * AI program... ???
      *
      */
 
@@ -191,7 +184,6 @@ public final class Game {
 
 		String playerText = "";
 	
-        createWorldMap(gameState);
 		initGame(gameState);
 
 		gameover = false;
@@ -222,237 +214,11 @@ public final class Game {
 		// Populate the action lists and the dictionary
 		createActions();
 		fillDictionary();
-
-		/* Features - Overworld
-         * 
-         * Mailbox (West of House)
-         * Window (Kitchen, Behind House)
-         * Carpet (Living Room)
-         * Trophy Case (Living Room)
-         * Trap Door (Living Room)
-         * Pile of Leaves(Clearing North)
-         * Grating (Null Location / Clearing North)
-         *
-         */
         
-        Container mailbox = new Container("mailbox", Location.WEST_OF_HOUSE, 10, Location.INSIDE_MAILBOX);
-        Container trophyCase = new Container("trophy case", Location.LIVING_ROOM, 1000, Location.INSIDE_TROPHY_CASE);
-        Container brownSack = new Container("sack", Location.KITCHEN, 50, Location.INSIDE_SACK);
-
-        state.objectList.put(mailbox.name, mailbox);
-        state.objectList.put(trophyCase.name, trophyCase);
-        state.objectList.put(brownSack.name, brownSack);
-
-        state.objectList.put(mailbox.name, mailbox);
-
-        Feature houseWindow = new Feature("window", Location.BEHIND_HOUSE);
-        houseWindow.altLocations.add(Location.KITCHEN);
-
-        Feature carpet = new Feature("carpet", Location.LIVING_ROOM);
-        Feature trapDoor = new Feature("trap door", Location.LIVING_ROOM);
-        Feature leafPile = new Feature("pile", Location.CLEARING_NORTH);
-        Feature house = new Feature("house", Location.WEST_OF_HOUSE);
-        Feature grating = new Feature("grating", Location.NULL_LOCATION);
-        house.altLocations.add(Location.NORTH_OF_HOUSE);
-        house.altLocations.add(Location.BEHIND_HOUSE);
-        house.altLocations.add(Location.SOUTH_OF_HOUSE);
-
-        state.objectList.put(house.name, house);
-        state.objectList.put(houseWindow.name, houseWindow);
-        state.objectList.put(carpet.name, carpet);
-        state.objectList.put(trapDoor.name, trapDoor);
-        state.objectList.put(leafPile.name, leafPile);
-
-
-        /* Items - Overworld
-         * 
-         * Rope (Attic)
-         * Rusty Knife (Attic)
-         * Glass Bottle (Kitchen)
-         * Brown Sack (Kitchen)
-         * Brass Lantern (Living Room)
-         * Elvish Sword (Living Room)
-         * Jewel-Encrusted Egg (Up a Tree)
-         * Small Bird's Nest (Up a Tree)
-         * Leaflet (West of House)
-         *
-         * Item: name, location, point value, weight
-         */
-        Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX, 0, 0);
-        Item rope = new Item("rope", Location.ATTIC, 0, 0);
-        Item nastyKnife = new Item("knife", Location.ATTIC, 0, 0);
-        Item glassBottle = new Item("bottle", Location.KITCHEN, 0, 0);
-        Item elvishSword = new Item("sword", Location.LIVING_ROOM, 0, 0);
-        Item jewelEgg = new Item("egg", Location.UP_TREE, 0, 0);
-        Item birdsNest = new Item("nest", Location.UP_TREE, 0, 0);
-        Item lantern = new Item("lantern", Location.LIVING_ROOM, 0, 0);
-        lantern.lifespan = LANTERN_LIFESPAN;
-
-        state.objectList.put(leaflet.name, leaflet);
-        state.objectList.put(rope.name, rope);
-        state.objectList.put(nastyKnife.name, nastyKnife);
-        state.objectList.put(glassBottle.name, glassBottle);
-        state.objectList.put(elvishSword.name, elvishSword);
-        state.objectList.put(jewelEgg.name, jewelEgg);
-        state.objectList.put(birdsNest.name, birdsNest);
-        state.objectList.put(lantern.name, lantern);
-
-        // Fill the inventories of the containers
-        for (GameObject cont : state.objectList.values())
-        {
-            if (cont.isContainer())
-            {
-                Container c = (Container)(cont);
-
-                for (GameObject it : state.objectList.values())
-                {
-                    if (it.location == c.containerID)
-                        c.inventory.add((Item)it);
-                }
-            }
-        }
-
-
-        /* Actors - Underworld
-         *
-         * Troll
-         * Thief
-         * Cyclops
-         * Vampire bat
-         * Spirits
-         *
-         *
-         */
-        
-        // Testing an actor in the overworld.
-
-        Actor songbird = new Actor("songbird", Location.NULL_LOCATION);
-        ActorMethod songbirdMethod = () -> {
-
-            switch (state.playerLocation)
-            {
-                case FOREST_PATH:
-                case FOREST_SOUTH:
-                case FOREST_EAST:
-                case FOREST_NORTHEAST:
-                case FOREST_WEST:
-                case CLEARING_NORTH:
-                case CLEARING_EAST:
-                case UP_TREE:
-                {
-                    songbird.location = state.playerLocation;
-                    Random rand = new Random();
-                    if (rand.nextInt(100) < SONGBIRD_CHIRP_PERCENT)
-                        output(GameStrings.SONGBIRD);
-                } break;
-
-                default: {} break;
-            }
-
-
-
-
-        };
-
-        songbird.setActorMethod(songbirdMethod);
-        songbird.presence = "";
-        songbird.takeFail = GameStrings.SONGBIRD_NEARBY;
-        songbird.examineString = GameStrings.SONGBIRD_NEARBY;
-
-        state.objectList.put(songbird.name, songbird);
-		
-
-
+        createWorldMap(state);
+        createGameObjects(state);
 
         
-
-
-        ActivateMethod dummyMethod = (GameState gs, Action act) -> {};
-
-        
-
-
-        ActivateMethod leafletMethod = (GameState gs, Action act) -> {
-
-            switch(act)
-            {
-                case READ:
-                {
-                    output(GameStrings.LEAFLET_TEXT);
-                } break;
-
-                default:
-                {
-                    output("You can't do that to the leaflet.");
-                } break;
-            }
-
-
-        };
-		
-        leaflet.setMethod(leafletMethod);
-
-        ActivateMethod lanternMethod = (GameState gs, Action act) -> {
-
-            Item self = (Item)(gs.objectList.get("lantern"));
-            switch (act)
-            {
-                case LIGHT:
-                {
-                    self.activated = true;
-                    gs.lightActivated = true;
-                    output("You turn on the lantern.");
-                    self.examineString = "The lantern is on.";
-                } break;
-
-                case UNLIGHT:
-                {
-                    self.activated = false;
-                    gs.lightActivated = false;
-                    output("You turn off the lantern.");
-                } break;
-
-                default:
-                {
-                    output("You can't do that to the lantern.");
-
-                } break;
-            }
-        };
-
-        lantern.setMethod(lanternMethod);
-
-
-        ActivateMethod leafPileMethod = (GameState gs, Action act) -> {
-
-            switch (act)
-            {
-                case MOVE_OBJECT:
-                {
-                    if (!gs.leafPileMoved)
-                    {
-                        gs.leafPileMoved = true;
-                        grating.location = Location.CLEARING_NORTH;
-
-
-                    }
-                    else
-                    {
-                        output("Having moved the leaf pile once, you find it impossible to move again.");
-                    }
-
-                } break;
-
-                default:
-                {
-                    output("You can't do that to the leaf pile.");
-                } break;
-            }
-
-
-        };
-
-        leafPile.setMethod(leafPileMethod);
 	
 
 		// Object creation complete. Start setting up the game
@@ -1410,7 +1176,7 @@ public final class Game {
         Item nest = new Item("nest", Location.UP_TREE, 0, 0);
         Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX, 0, 0);
         Item brokenCanary = new Item("broken canary", Location.NULL_LOCATION, 0, 0);
-
+        
         Item brokenEgg = new Item("broken egg", Location.NULL_LOCATION, 0, 0);
         Item axe = new Item("axe", Location.TROLL_INVENTORY, 0, 0);
         Item studioPaper = new Item("piece of paper", Location.STUDIO, 0, 0);
@@ -1425,7 +1191,7 @@ public final class Game {
         Item guideBook = new Item("guidebook", Location.DAM_LOBBY, 0, 0);
         Item tube = new Item("tube", Location.MAINTENANCE_ROOM, 0, 0);
         Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM, 0, 0);
-        Item wrench = new Item("wrencg", Location.MAINTENANCE_ROOM, 0, 0);
+        Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM, 0, 0);
         Item shovel = new Item("shovel", Location.SANDY_BEACH, 0, 0);
         Item pump = new Item("air pump", Location.RESERVOIR_NORTH, 0, 0);
         Item timber = new Item("timber", Location.TIMBER_ROOM, 0, 0);
@@ -1435,20 +1201,23 @@ public final class Game {
 
         Item rustyKnife = new Item("rusty knife", Location.MAZE_5, 0, 0);
         Item stiletto = new Item("stiletto", Location.THIEF_INVENTORY, 0, 0);
+        Item buoy = new Item("buoy", Location.FRIGID_RIVER_4, 0, 0);
+        Item brownSack = new Item("sack", Location.KITCHEN, 0, 0);
 
+        
 
         // Non item containers and surfaces
 
         Container mailbox = new Container("mailbox", Location.WEST_OF_HOUSE, 5, Location.INSIDE_MAILBOX);
-        Container sack = new Container("sack", Location.KITCHEN, 5, Location.INSIDE_SACK);
         Container basket = new Container("basket", Location.SHAFT_ROOM, 5, Location.INSIDE_BASKET);
-        Container birdsNest = new Container("bird's nest", Location.UP_TREE, 5, Location.INSIDE_BIRDS_NEST);
-        Container buoy = new Container("buoy", Location.FRIGID_RIVER_4, 5, Location.INSIDE_BUOY);
+        Container trophyCase = new Container("trophy case", Location.LIVING_ROOM, 1000, Location.INSIDE_TROPHY_CASE);
+        
 
         Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN, 5, Location.ON_KITCHEN_TABLE);
         Surface atticTable = new Surface("attic table", Location.ATTIC, 5, Location.ON_ATTIC_TABLE);
         Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM, 5, Location.ON_PEDESTAL);
 
+        
 
         // Features
 
@@ -1476,12 +1245,89 @@ public final class Game {
         Feature toolChests = new Feature("tool chests", Location.MAINTENANCE_ROOM);
         Feature shaftBasket = new Feature("basket", Location.SHAFT_ROOM);
         Feature coalMachine = new Feature("machine", Location.MACHINE_ROOM);
-        Feature current = new Feature("current", Location.FRIGID_RIVER_1);
-        current.altLocations.add(Location.FRIGID_RIVER_2);
-        current.altLocations.add(Location.FRIGID_RIVER_3);
-        current.altLocations.add(Location.FRIGID_RIVER_4);
-        current.altLocations.add(Location.FRIGID_RIVER_5);
 
+        // Feature methods
+
+        ActivateMethod dummyMethod = (GameState gs, Action act) -> {};
+
+        ActivateMethod leafletMethod = (GameState gs, Action act) -> {
+
+            switch(act)
+            {
+                case READ:
+                {
+                    output(GameStrings.LEAFLET_TEXT);
+                } break;
+
+                default:
+                {
+                    output("You can't do that to the leaflet.");
+                } break;
+            }
+
+
+        };
+        
+        ActivateMethod lanternMethod = (GameState gs, Action act) -> {
+
+            Item self = (Item)(gs.objectList.get("lantern"));
+            switch (act)
+            {
+                case LIGHT:
+                {
+                    self.activated = true;
+                    gs.lightActivated = true;
+                    output("You turn on the lantern.");
+                    self.examineString = "The lantern is on.";
+                } break;
+
+                case UNLIGHT:
+                {
+                    self.activated = false;
+                    gs.lightActivated = false;
+                    output("You turn off the lantern.");
+                } break;
+
+                default:
+                {
+                    output("You can't do that to the lantern.");
+
+                } break;
+            }
+        };
+
+        ActivateMethod leafPileMethod = (GameState gs, Action act) -> {
+
+            switch (act)
+            {
+                case MOVE_OBJECT:
+                {
+                    if (!gs.leafPileMoved)
+                    {
+                        gs.leafPileMoved = true;
+                        grating.location = Location.CLEARING_NORTH;
+
+
+                    }
+                    else
+                    {
+                        output("Having moved the leaf pile once, you find it impossible to move again.");
+                    }
+
+                } break;
+
+                default:
+                {
+                    output("You can't do that to the leaf pile.");
+                } break;
+            }
+
+
+        };
+
+        leafPile.setMethod(leafPileMethod);
+        leaflet.setMethod(leafletMethod);
+        lantern.setMethod(lanternMethod);
         
         // Actors
 
@@ -1491,7 +1337,134 @@ public final class Game {
         Actor songbird = new Actor("songbird", Location.NULL_LOCATION);
         Actor vampireBat = new Actor("vampire bat", Location.BAT_ROOM);
         Actor spirits = new Actor("spirits", Location.ENTRANCE_TO_HADES);
+        Actor gustOfWind = new Actor("gust of wind", Location.CAVE_SOUTH);
+        Actor flood = new Actor("", Location.MAINTENANCE_ROOM);
+        Actor current = new Actor("current", Location.FRIGID_RIVER_1);
+        current.altLocations.add(Location.FRIGID_RIVER_2);
+        current.altLocations.add(Location.FRIGID_RIVER_3);
+        current.altLocations.add(Location.FRIGID_RIVER_4);
+        current.altLocations.add(Location.FRIGID_RIVER_5);
 
+
+        // Actor methods
+
+        ActorMethod songbirdMethod = () -> {
+
+            switch (state.playerLocation)
+            {
+                case FOREST_PATH:
+                case FOREST_SOUTH:
+                case FOREST_EAST:
+                case FOREST_NORTHEAST:
+                case FOREST_WEST:
+                case CLEARING_NORTH:
+                case CLEARING_EAST:
+                case UP_TREE:
+                {
+                    songbird.location = state.playerLocation;
+                    Random rand = new Random();
+                    if (rand.nextInt(100) < SONGBIRD_CHIRP_PERCENT)
+                        output(GameStrings.SONGBIRD);
+                } break;
+
+                default: {} break;
+            }
+
+
+
+
+        };
+
+        songbird.setActorMethod(songbirdMethod);
+        songbird.presence = "";
+        songbird.takeFail = GameStrings.SONGBIRD_NEARBY;
+        songbird.examineString = GameStrings.SONGBIRD_NEARBY;
+
+
+
+
+        // Fill the inventories of the containers
+        for (GameObject cont : state.objectList.values())
+        {
+            if (cont.isContainer())
+            {
+                Container c = (Container)(cont);
+
+                for (GameObject it : state.objectList.values())
+                {
+                    if (it.location == c.containerID)
+                        c.inventory.add((Item)it);
+                }
+            }
+        }
+
+        // Add all objects to the gamestate list
+
+        state.objectList.put(bar.name, bar);
+        state.objectList.put(bauble.name, bauble);
+        state.objectList.put(chalice.name, chalice);
+        state.objectList.put(coffin.name, coffin);
+        state.objectList.put(coins.name, coins);
+        state.objectList.put(canary.name, canary);
+        state.objectList.put(diamond.name, diamond);
+        state.objectList.put(egg.name, egg);
+        state.objectList.put(emerald.name, emerald);
+        state.objectList.put(jade.name, jade);
+        state.objectList.put(painting.name, painting);
+        state.objectList.put(pot.name, pot);
+        state.objectList.put(sapphire.name, sapphire);
+        state.objectList.put(scarab.name, scarab);
+        state.objectList.put(sceptre.name, sceptre);
+        state.objectList.put(skull.name, skull);
+        state.objectList.put(torch.name, torch);
+        state.objectList.put(trident.name, trident);
+        state.objectList.put(trunk.name, trunk);
+
+        state.objectList.put(rope.name, rope);
+        state.objectList.put(knife.name, knife);
+        state.objectList.put(lantern.name, lantern);
+        state.objectList.put(sword.name, sword);
+        state.objectList.put(garlic.name, garlic);
+        state.objectList.put(lunch.name, lunch);
+        state.objectList.put(bottle.name, bottle);
+        state.objectList.put(nest.name, nest);
+        state.objectList.put(leaflet.name, leaflet);
+        state.objectList.put(brokenCanary.name, brokenCanary);
+
+        state.objectList.put(brokenEgg.name, brokenEgg);
+        state.objectList.put(axe.name, axe);
+        state.objectList.put(studioPaper.name, studioPaper);
+        state.objectList.put(bell.name, bell);
+        state.objectList.put(candles.name, candles);
+        state.objectList.put(blackBook.name, blackBook);
+        state.objectList.put(deflatedBoat.name, deflatedBoat);
+        state.objectList.put(inflatedBoat.name, inflatedBoat);
+        state.objectList.put(puncturedBoat.name, puncturedBoat);
+        state.objectList.put(matchbook.name, matchbook);
+
+        state.objectList.put(guideBook.name, guideBook);
+        state.objectList.put(tube.name, tube);
+        state.objectList.put(screwdriver.name, screwdriver);
+        state.objectList.put(wrench.name, wrench);
+        state.objectList.put(shovel.name, shovel);
+        state.objectList.put(pump.name, pump);
+        state.objectList.put(timber.name, timber);
+        state.objectList.put(coal.name, coal);
+        state.objectList.put(uselessLantern.name, uselessLantern);
+        state.objectList.put(skeletonKey.name, skeletonKey);
+
+        state.objectList.put(rustyKnife.name, rustyKnife);
+        state.objectList.put(stiletto.name, stiletto);
+        state.objectList.put(buoy.name, buoy);
+        state.objectList.put(brownSack.name, brownSack);
+
+        state.objectList.put(mailbox.name, mailbox);
+        state.objectList.put(basket.name, basket);
+        state.objectList.put(trophyCase.name, trophyCase);
+
+        state.objectList.put(kitchenTable.name, kitchenTable);
+        state.objectList.put(atticTable.name, atticTable);
+        state.objectList.put(pedestal.name, pedestal);
 
 
     }
