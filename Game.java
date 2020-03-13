@@ -993,6 +993,8 @@ public final class Game {
         grating_clearing.close();
         house_behind_kitchen.close();
         cellar_livingroom.close();
+        troll_maze.close();
+        troll_eastwest.close();
         strange_living_room.close();
         house_west_barrow.close();
         rainbow_end.close();
@@ -1010,8 +1012,20 @@ public final class Game {
         cyclops_strange.close();
         cyclops_treasure.close();
 
+        grating_clearing.closedFail = "The grating is closed!";
         house_behind_kitchen.closedFail = GameStrings.KITCHEN_WINDOW_CLOSED;
         strange_living_room.closedFail = "The door is nailed shut.";
+        cellar_livingroom.closedFail = "The trap door is closed.";
+        troll_eastwest.closedFail = "The troll fends you off with a menacing gesture.";
+        troll_maze.closedFail = "The troll fends you off with a menacing gesture.";
+        dome_torch.closedFail = "You cannot do gown without fracturing many bones.";
+        hades_land_dead.closedFail = "Some invisible force prevents you from passing through the gate.";
+        res_south_res.closedFail = "You would drown.";
+        res_north_res.closedFail = "You would drown.";
+        cyclops_strange.closedFail = "The east wall is solid rock.";
+        cyclops_treasure.closedFail = "The cyclops doesn't look like he'll let you past.";
+        maze2_maze4.message = "You won't be able to get back up to the tunnel you are going through "
+            + "when it gets to the next room.";
 
         // Narrow passages
         studio_kitchen.weightLimit = 5;

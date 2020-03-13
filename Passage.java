@@ -3,6 +3,7 @@ class Passage {
 
 	public String closedFail;
 	public String weightFail;
+	public String message;
 	public final Location locationA;
 	public final Location locationB;
 
@@ -15,6 +16,7 @@ class Passage {
 	{
 		closedFail = GameStrings.CANT_GO;
 		weightFail = GameStrings.PASSAGE_OVERBURDENED;
+		message = "";
 		locationA = Location.NULL_LOCATION;
 		locationB = Location.NULL_LOCATION;
 		open = false;
@@ -28,6 +30,7 @@ class Passage {
 
 		closedFail = GameStrings.CANT_GO;
 		weightFail = GameStrings.PASSAGE_OVERBURDENED;
+		message = "";
 		open = true;
 
 	}
