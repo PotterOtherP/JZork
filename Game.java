@@ -418,9 +418,7 @@ public final class Game {
         Passage maze15_cyclops = new Passage(Location.MAZE_15, Location.CYCLOPS_ROOM);
 
 
-        // Special passage modifications
-        house_behind_kitchen.close();
-        house_behind_kitchen.closedFail = GameStrings.KITCHEN_WINDOW_CLOSED;
+        
 
 
         // Rooms: Name, description, ID
@@ -458,7 +456,7 @@ public final class Game {
         southOfHouse.addExit(Action.WEST, house_west_south);
         southOfHouse.addExit(Action.NORTHWEST, house_west_south);
         southOfHouse.addExit(Action.SOUTH, house_south_forestS);
-        southOfHouse.addFailMessage(Action.NORTH, "The window are all boarded.");
+        southOfHouse.addFailMessage(Action.NORTH, "The windows are all boarded.");
 
 
         Room kitchen = new Room("Kitchen", GameStrings.DESC_KITCHEN_WINDOW_CLOSED, Location.KITCHEN);
@@ -476,7 +474,6 @@ public final class Game {
         livingRoom.addExit(Action.EAST, kitchen_livingroom);
         livingRoom.addExit(Action.DOWN, cellar_livingroom);
         livingRoom.addExit(Action.WEST, strange_living_room);
-        livingRoom.addFailMessage(Action.WEST, "The door is nailed shut.");
 
         Room forestPath = new Room("Forest Path", GameStrings.DESC_FOREST_PATH, Location.FOREST_PATH);
         forestPath.addExit(Action.NORTH, forestpath_clearingN);
@@ -990,6 +987,8 @@ public final class Game {
         // Gaseous rooms
         gasRoom.setGas();
 
+        house_behind_kitchen.close();
+
         // Closed passages
         grating_clearing.close();
         house_behind_kitchen.close();
@@ -1010,6 +1009,9 @@ public final class Game {
         stream_view_stream.close();
         cyclops_strange.close();
         cyclops_treasure.close();
+
+        house_behind_kitchen.closedFail = GameStrings.KITCHEN_WINDOW_CLOSED;
+        strange_living_room.closedFail = "The door is nailed shut.";
 
         // Narrow passages
         studio_kitchen.weightLimit = 5;
@@ -1168,7 +1170,7 @@ public final class Game {
 
         Item rope = new Item("rope", Location.ATTIC, 0, 0);
         Item knife = new Item("nasty knife", Location.ATTIC, 0, 0);
-        Item lantern = new Item("brass lantern", Location.LIVING_ROOM, 0, 0);
+        Item lantern = new Item("lantern", Location.LIVING_ROOM, 0, 0);
         Item sword = new Item("sword", Location.LIVING_ROOM, 0, 0);
         Item garlic = new Item("garlic", Location.INSIDE_SACK, 0, 0);
         Item lunch = new Item("lunch", Location.INSIDE_SACK, 0, 0);
@@ -1338,7 +1340,7 @@ public final class Game {
         Actor vampireBat = new Actor("vampire bat", Location.BAT_ROOM);
         Actor spirits = new Actor("spirits", Location.ENTRANCE_TO_HADES);
         Actor gustOfWind = new Actor("gust of wind", Location.CAVE_SOUTH);
-        Actor flood = new Actor("", Location.MAINTENANCE_ROOM);
+        Actor flood = new Actor("flood", Location.MAINTENANCE_ROOM);
         Actor current = new Actor("current", Location.FRIGID_RIVER_1);
         current.altLocations.add(Location.FRIGID_RIVER_2);
         current.altLocations.add(Location.FRIGID_RIVER_3);
@@ -1466,6 +1468,8 @@ public final class Game {
         state.objectList.put(atticTable.name, atticTable);
         state.objectList.put(pedestal.name, pedestal);
 
+        state.objectList.put(houseWindow.name, houseWindow);
+
 
     }
 
@@ -1494,6 +1498,8 @@ public final class Game {
                 String name = r.name.toLowerCase();
                 if (dest.equals(name))
                 {
+                    outputLine();
+                    output(r.name);
                     state.playerLocation = r.roomID;
                     r.lookAround(state);
                     return false;
@@ -2000,6 +2006,7 @@ public final class Game {
             case IN:
             case OUT:
 			{
+                outputLine();
 				
 				if (currentRoom.exit(state, currentAction))
 				{

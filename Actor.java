@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 // Method for an actor's "turn"
 interface ActorMethod {
 
@@ -27,6 +29,8 @@ class Actor extends GameObject {
 		currentLocation = super.location;
 		previousLocation = super.location;
 		type = ObjectType.ACTOR;
+		altLocations = new ArrayList<Location>();
+		altLocations.add(loc);
 	}
 
 
