@@ -131,6 +131,7 @@ public final class Game {
     /* TODO (After break)
      *
      * Item/container/inventory issue
+     * Update object class definitions
      * Object creation
      * Carry weight
      * Implement all objects, one by one
@@ -213,11 +214,11 @@ public final class Game {
 	{	
 		// Populate the action lists and the dictionary
 		createActions();
-		fillDictionary();
         
         createWorldMap(state);
         createGameObjects(state);
 
+		fillDictionary(state);
         
 	
 
@@ -1168,7 +1169,7 @@ public final class Game {
         Item canary = new Item("golden canary", Location.NULL_LOCATION, 0, 0);
         Item diamond = new Item("diamond", Location.NULL_LOCATION, 0, 0);
         Item egg = new Item("egg", Location.UP_TREE, 0, 0);
-        Item emerald = new Item("emerald", Location.UP_TREE, 0, 0);
+        Item emerald = new Item("emerald", Location.NULL_LOCATION, 0, 0);
         Item jade = new Item("jade figurine", Location.BAT_ROOM, 0, 0);
         Item painting = new Item("painting", Location.GALLERY, 0, 0);
         Item pot = new Item("pot", Location.NULL_LOCATION, 0, 0);
@@ -1261,6 +1262,8 @@ public final class Game {
         Feature toolChests = new Feature("tool chests", Location.MAINTENANCE_ROOM);
         Feature shaftBasket = new Feature("basket", Location.SHAFT_ROOM);
         Feature coalMachine = new Feature("machine", Location.MACHINE_ROOM);
+
+
 
         // Feature methods
 
@@ -1362,7 +1365,11 @@ public final class Game {
         current.altLocations.add(Location.FRIGID_RIVER_5);
 
 
+
+
         // Actor methods
+
+        ActorMethod dummyActorMethod = () -> {};
 
         ActorMethod songbirdMethod = () -> {
 
@@ -1395,6 +1402,17 @@ public final class Game {
         songbird.presence = "";
         songbird.takeFail = GameStrings.SONGBIRD_NEARBY;
         songbird.examineString = GameStrings.SONGBIRD_NEARBY;
+
+
+
+        troll.setActorMethod(dummyActorMethod);
+        thief.setActorMethod(dummyActorMethod);
+        cyclops.setActorMethod(dummyActorMethod);
+        vampireBat.setActorMethod(dummyActorMethod);
+        spirits.setActorMethod(dummyActorMethod);
+        gustOfWind.setActorMethod(dummyActorMethod);
+        flood.setActorMethod(dummyActorMethod);
+        current.setActorMethod(dummyActorMethod);
 
 
 
@@ -1483,6 +1501,31 @@ public final class Game {
         state.objectList.put(pedestal.name, pedestal);
 
         state.objectList.put(houseWindow.name, houseWindow);
+        state.objectList.put(carpet.name, carpet);
+        state.objectList.put(trapDoor.name, trapDoor);
+        state.objectList.put(leafPile.name, leafPile);
+        state.objectList.put(grating.name, grating);
+        state.objectList.put(house.name, house);
+        state.objectList.put(mirror.name, mirror);
+        state.objectList.put(skeleton.name, skeleton);
+        state.objectList.put(damBolt.name, damBolt);
+        state.objectList.put(blueButton.name, blueButton);
+        state.objectList.put(yellowButton.name, yellowButton);
+        state.objectList.put(brownButton.name, brownButton);
+        state.objectList.put(redButton.name, redButton);
+        state.objectList.put(toolChests.name, toolChests);
+        state.objectList.put(shaftBasket.name, shaftBasket);
+        state.objectList.put(coalMachine.name, coalMachine);
+
+        state.objectList.put(troll.name, troll);
+        state.objectList.put(thief.name, thief);
+        state.objectList.put(cyclops.name, cyclops);
+        state.objectList.put(songbird.name, songbird);
+        state.objectList.put(vampireBat.name, vampireBat);
+        state.objectList.put(spirits.name, spirits);
+        state.objectList.put(gustOfWind.name, gustOfWind);
+        state.objectList.put(flood.name, flood);
+        state.objectList.put(current.name, current);
 
 
     }
@@ -1497,6 +1540,7 @@ public final class Game {
         check for another phrase.
 
         */
+        outputLine();
 		state.resetInput();
         state.phrase = playerText;
 
@@ -2020,7 +2064,6 @@ public final class Game {
             case IN:
             case OUT:
 			{
-                outputLine();
 				
 				if (currentRoom.exit(state, currentAction))
 				{
@@ -2113,7 +2156,6 @@ public final class Game {
                 objAct.actorTurn();
             }
         }
-
 		state.addTurn();
 
 	}
@@ -2321,12 +2363,20 @@ public final class Game {
 
 	}
 
-	public static void fillDictionary()
+	public static void fillDictionary(GameState state)
 	{
 		for (int i = 0; i < GameStrings.GAME_WORDS.length; ++i)
 		{
 			dictionary.add(GameStrings.GAME_WORDS[i]);
 		}
+
+        for (String name : state.objectList.keySet())
+        {
+            String[] words = name.split(" ");
+            for (int i = 0; i < words.length; ++i)
+                dictionary.add(words[i]);
+
+        }
 	}
 
     public static void fillCurrentObjectList(GameState state)
