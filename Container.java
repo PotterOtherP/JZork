@@ -11,14 +11,15 @@ class Container extends GameObject {
 
 
     
-    public Container(String name, Location loc, int cap, Location id)
+    public Container(String name, Location loc)
     {
         super(name, loc);
-        capacity = cap;
-        containerID = id;
+        type = ObjectType.CONTAINER;
+
+        capacity = 0;
+        containerID = Location.NULL_LOCATION;
         open = false;
         inventory = new ArrayList<Item>();
-        type = ObjectType.CONTAINER;    
     }
 
     @Override
@@ -110,5 +111,7 @@ class Container extends GameObject {
         }
 
     }
+
+    @Override
     public boolean isOpen() { return open; }
 }

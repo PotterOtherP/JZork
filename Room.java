@@ -79,18 +79,38 @@ class Room {
 
 		for (GameObject g : state.objectList.values())
 		{
-			if (g.location == roomID)
+			if (g.location == roomID && g.isVisible())
 			{
-				if ( (g.isItem() || g.isActor()) && !g.presence.isEmpty() )
+				if (g.isItem())
 				{
-					Game.output(g.presence);		
+					if (g.movedFromStart || g.initialPresenceString.isEmpty())
+					{
+						Game.output(g.presenceString);		
+					}
+
+					else
+					{
+						Game.output(g.initialPresenceString);
+					}
+				}
+
+				if (g.isActor())
+				{
+					Game.output(g.presenceString);
 				}
 
 				if (g.isContainer() && g.isOpen() && !g.inventory.isEmpty())
 				{
 					Game.output("The " + g.name + " contains: ");
 					for (GameObject it : g.inventory)
-						Game.output(it.name);
+						Game.output(it.articleName);
+				}
+
+				if (g.isSurface() && !g.inventory.isEmpty())
+				{
+					Game.output("Sitting on the " + g.name + " is: ");
+					for (GameObject it : g.inventory)
+						Game.output(it.articleName);
 				}
 			}		
 		}

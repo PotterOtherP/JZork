@@ -8,7 +8,7 @@ class GameState {
     public boolean lightActivated;
 
 	// game events
-	public boolean leafPileMoved;
+	public boolean houseWindowOpened;
 
 
 	// player attributes
@@ -94,6 +94,41 @@ class GameState {
 	// It should not be possible to alter the number of turns except by adding 1.
 	public void addTurn() { ++turns; }
 	public int getTurns() { return turns; }
+
+
+	/**
+	 * Game Score
+	 * 
+	 * Kitchen 10
+	 * Cellar 25
+	 * East-West Passage 5
+	 * 
+	 * 
+	 * 272 points from treasures.
+	 *
+	 * 10 Egg 5 in case 5
+	 * 15 Platinum bar 10 in case 5
+	 * 15 Trident 4 in case 11
+	 * 20 Torch 14 in case 6
+	 * 10 Sceptre 4 in case 6
+	 * 25 Coffin 10 in case 15
+	 * 20 Pot of gold 10 in case 10
+	 * 10 Scarab 5 in case 5
+	 * 20 Skull 10 in case 10
+	 * 10 Jade figurine 5 in case 5
+	 * 10 Sapphire bracelet 5 in case 5
+	 * 20 Diamond 10 in case 10
+	 * 15 Emerald (opening buoy) 5 in case 10
+	 * 20 Trunk of jewels 15 in case 5
+	 * 15 Bag of coins 10 in case 5
+	 * 15 Silver chalice 10 in case 5
+	 * 10 Canary 6 in case 4
+	 * 2  Bauble 1 in case 1
+	 * 10 Painting 4 in case 6
+	 * Broken canary 0 in case 1
+	 */
+
+
 
 
 

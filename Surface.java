@@ -7,13 +7,14 @@ class Surface extends GameObject {
 
     public int capacity;
     
-    public Surface(String name, Location loc, int cap, Location id)
+    public Surface(String name, Location loc)
     {
         super(name, loc);
-        capacity = cap;
-        surfaceID = id;
+        type = ObjectType.SURFACE;
+        
+        capacity = 0;
+        surfaceID = Location.NULL_LOCATION;
         inventory = new ArrayList<Item>();
-        type = ObjectType.SURFACE;    
     }
 
     @Override

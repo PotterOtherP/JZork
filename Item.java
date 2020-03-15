@@ -2,25 +2,26 @@ class Item extends GameObject{
 
 	// Items can be picked up and moved to other locations, including the player's inventory.
 
-	public final int pointValue;
-	public final int weight;
+	public int weight;
+	public int acquirePointValue;
+	public int trophyCaseValue;
+	
 
 	// For items that can be turned on and expire, like the lamp
 	public boolean activated;
 	public int lifespan;
-	public int life;
-	public boolean movedFromStart;
 
 
-	public Item(String name, Location loc, int value, int wt)
+	public Item(String name, Location loc)
 	{
 		super(name, loc);
-		pointValue = value;
-		weight = wt;
+		type = ObjectType.ITEM;
+
+		acquirePointValue = 0;
+		trophyCaseValue = 0;
+		weight = 0;
 		activated = false;
 		lifespan = 0;
-		life = 0;
-		type = ObjectType.ITEM;
 		movedFromStart = false;
 	}
 
@@ -50,19 +51,9 @@ class Item extends GameObject{
 		Game.output("Dropped.");
 	}
 
+	@Override
+	public boolean isAlive() { return lifespan > 0; }
 
-	public void setLocation(Location loc) { location = loc; }
-	public Location getLocation() { return location; }
-	public int getValue() { return pointValue; }
-	public int getWeight() { return weight; }
-	public void activateItem() { activated = true; }
-	public void deactivateItem() { activated = false; }
-	public boolean isActivated() { return activated; }
-	public void setLifespan(int n) { lifespan = n; }
-	public void lifespanTick() { --lifespan; }
-	public boolean isAlive() { return (lifespan > 0); }
-
+	public void tick() { --lifespan; }
 	
-
-
 }

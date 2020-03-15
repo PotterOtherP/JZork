@@ -633,9 +633,11 @@ public final class Game {
 
         Room torchRoom = new Room("Torch Room", GameStrings.DESC_TORCH_ROOM, Location.TORCH_ROOM);
         torchRoom.addExit(Action.SOUTH, torch_temple);
+        torchRoom.addExit(Action.DOWN, torch_temple);
 
         Room temple = new Room("Temple", GameStrings.DESC_TEMPLE, Location.TEMPLE);
         temple.addExit(Action.NORTH, torch_temple);
+        temple.addExit(Action.UP, torch_temple);
         temple.addExit(Action.EAST, temple_egypt);
         temple.addExit(Action.SOUTH, temple_altar);
 
@@ -1161,80 +1163,113 @@ public final class Game {
         // There are 19 treasure items with point values.
         // Name, location, point value, weight.
 
-        Item bar = new Item("platinum bar", Location.LOUD_ROOM, 0, 0);
-        Item bauble = new Item("bauble", Location.NULL_LOCATION, 0, 0);
-        Item chalice = new Item("silver chalice", Location.TREASURE_ROOM, 0, 0);
-        Item coffin = new Item("coffin", Location.EGYPTIAN_ROOM, 0, 0);
-        Item coins = new Item("bag of coins", Location.MAZE_5, 0, 0);
-        Item canary = new Item("golden canary", Location.NULL_LOCATION, 0, 0);
-        Item diamond = new Item("diamond", Location.NULL_LOCATION, 0, 0);
-        Item egg = new Item("egg", Location.UP_TREE, 0, 0);
-        Item emerald = new Item("emerald", Location.NULL_LOCATION, 0, 0);
-        Item jade = new Item("jade figurine", Location.BAT_ROOM, 0, 0);
-        Item painting = new Item("painting", Location.GALLERY, 0, 0);
-        Item pot = new Item("pot", Location.NULL_LOCATION, 0, 0);
-        Item sapphire = new Item("sapphire bracelet", Location.GAS_ROOM, 0, 0);
-        Item scarab = new Item("scarab", Location.NULL_LOCATION, 0, 0);
-        Item sceptre = new Item("sceptre", Location.INSIDE_COFFIN, 0, 0);
-        Item skull = new Item("skull", Location.LAND_OF_THE_DEAD, 0, 0);
-        Item torch = new Item("torch", Location.TORCH_ROOM, 0, 0);
-        Item trident = new Item("trident", Location.ATLANTIS_ROOM, 0, 0);
-        Item trunk = new Item("trunk", Location.NULL_LOCATION, 0, 0);
+        Item bar = new Item("platinum bar", Location.LOUD_ROOM);
+        bar.initialPresenceString = "On the ground is a large platinum bar.";
+        Item bauble = new Item("bauble", Location.NULL_LOCATION);
+        Item chalice = new Item("silver chalice", Location.TREASURE_ROOM);
+        Item coffin = new Item("coffin", Location.EGYPTIAN_ROOM);
+        coffin.initialPresenceString = "The solid-gold coffin used for the burial of Ramses II is here.";
+        coffin.presenceString = "The solid-gold coffin used for the burial of Ramses II is here.";
+        Item coins = new Item("bag of coins", Location.MAZE_5);
+        Item canary = new Item("golden canary", Location.NULL_LOCATION);
+        Item diamond = new Item("diamond", Location.NULL_LOCATION);
+        Item egg = new Item("egg", Location.UP_TREE);
+        egg.initialPresenceString = "In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged "
+            + "by a childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and "
+            + "mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp. "
+            + "The egg appears extremely fragile.";
+        Item emerald = new Item("emerald", Location.NULL_LOCATION);
+        Item jade = new Item("jade figurine", Location.BAT_ROOM);
+        Item painting = new Item("painting", Location.GALLERY);
+        painting.initialPresenceString = GameStrings.INIT_PAINTING;
+        Item pot = new Item("pot", Location.NULL_LOCATION);
+        Item sapphire = new Item("sapphire bracelet", Location.GAS_ROOM);
+        Item scarab = new Item("scarab", Location.NULL_LOCATION);
+        Item sceptre = new Item("sceptre", Location.INSIDE_COFFIN);
+        sceptre.initialPresenceString = "A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is "
+            + "ornamented with colored enamel, and tapers to a sharp point.";
+        sceptre.presenceString = "An ornamented sceptre, tapering to a sharp point, is here.";
+        Item skull = new Item("skull", Location.LAND_OF_THE_DEAD);
+        Item torch = new Item("torch", Location.TORCH_ROOM);
+        torch.initialPresenceString = "Sitting on the pedestal is a flaming torch, made of ivory.";
+        Item trident = new Item("trident", Location.ATLANTIS_ROOM);
+        Item trunk = new Item("trunk", Location.NULL_LOCATION);
 
         // And another 40 items that can be taken.
 
-        Item rope = new Item("rope", Location.ATTIC, 0, 0);
-        Item knife = new Item("nasty knife", Location.ATTIC, 0, 0);
-        Item lantern = new Item("lantern", Location.LIVING_ROOM, 0, 0);
-        Item sword = new Item("sword", Location.LIVING_ROOM, 0, 0);
-        Item garlic = new Item("garlic", Location.INSIDE_SACK, 0, 0);
-        Item lunch = new Item("lunch", Location.INSIDE_SACK, 0, 0);
-        Item bottle = new Item("bottle", Location.ON_KITCHEN_TABLE, 0, 0);
-        Item nest = new Item("nest", Location.UP_TREE, 0, 0);
-        Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX, 0, 0);
-        Item brokenCanary = new Item("broken canary", Location.NULL_LOCATION, 0, 0);
+        Item rope = new Item("rope", Location.ATTIC);
+        rope.initialPresenceString = "A large coil of rope is lying in the corner.";
+        Item knife = new Item("nasty knife", Location.ATTIC);
+        knife.initialPresenceString = "On the table is a nasty-looking knife.";
+        Item lantern = new Item("lantern", Location.LIVING_ROOM);
+        lantern.initialPresenceString = "A battery-powered brass lantern is on the trophy case.";
+        Item sword = new Item("sword", Location.LIVING_ROOM);
+        sword.initialPresenceString = "Above the trophy case hangs an elvish sword of great antiquity.";
+        Item sack = new Item("brown sack", Location.KITCHEN);
+        sack.initialPresenceString = "On the table is an elongated brown sack, smelling of hot peppers.";
+        Item garlic = new Item("garlic", Location.INSIDE_SACK);
+        Item lunch = new Item("lunch", Location.INSIDE_SACK);
+        Item bottle = new Item("bottle", Location.ON_KITCHEN_TABLE);
+        bottle.initialPresenceString = "A bottle is sitting on the table.";
+        Item nest = new Item("nest", Location.UP_TREE);
+        nest.initialPresenceString = "Beside you on the branch is a small bird's nest.";
+        Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX);
+        Item brokenCanary = new Item("broken canary", Location.NULL_LOCATION);
+        brokenCanary.initialPresenceString = "There is a golden clockwork canary nestled in the egg. "
+            + "It seems to have recently had a bad experience. The mountings for its jewel-like eyes "
+            + "are empty, and its silver beak is crumpled. Through a cracked crystal window below its "
+            + "left wing you can see the remains of intricate machinery. It is not clear what result "
+            + "winding it would have, as the mainspring seems sprung.";
+
+        Item brokenEgg = new Item("somewhat ruined egg", Location.NULL_LOCATION);
         
-        Item brokenEgg = new Item("broken egg", Location.NULL_LOCATION, 0, 0);
-        Item axe = new Item("axe", Location.TROLL_INVENTORY, 0, 0);
-        Item studioPaper = new Item("piece of paper", Location.STUDIO, 0, 0);
-        Item bell = new Item("brass bell", Location.TEMPLE, 0, 0);
-        Item candles = new Item("candles", Location.ALTAR, 0, 0);
-        Item blackBook = new Item("black book", Location.ALTAR, 0, 0);
-        Item deflatedBoat = new Item("pile of plastic", Location.DAM_BASE, 0, 0);
-        Item inflatedBoat = new Item("magic boat", Location.NULL_LOCATION, 0, 0);
-        Item puncturedBoat = new Item("punctured boat", Location.NULL_LOCATION, 0, 0);
-        Item matchbook = new Item("matchbook", Location.DAM_LOBBY, 0, 0);
+        Item axe = new Item("axe", Location.TROLL_INVENTORY);
+        Item studioPaper = new Item("ZORK owner's manual", Location.STUDIO);
+        studioPaper.initialPresenceString = "Loosely attached to a wall is a small piece of paper.";
+        Item bell = new Item("brass bell", Location.TEMPLE);
+        Item candles = new Item("candles", Location.ALTAR);
+        candles.initialPresenceString = "On the two ends of the altar are burning candles.";
+        Item blackBook = new Item("black book", Location.ALTAR);
+        blackBook.initialPresenceString = "On the altar is a large black book, open to page 569.";
+        Item deflatedBoat = new Item("pile of plastic", Location.DAM_BASE);
+        Item inflatedBoat = new Item("magic boat", Location.NULL_LOCATION);
+        Item puncturedBoat = new Item("punctured boat", Location.NULL_LOCATION);
+        Item matchbook = new Item("matchbook", Location.DAM_LOBBY);
 
-        Item guideBook = new Item("guidebook", Location.DAM_LOBBY, 0, 0);
-        Item tube = new Item("tube", Location.MAINTENANCE_ROOM, 0, 0);
-        Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM, 0, 0);
-        Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM, 0, 0);
-        Item shovel = new Item("shovel", Location.SANDY_BEACH, 0, 0);
-        Item pump = new Item("air pump", Location.RESERVOIR_NORTH, 0, 0);
-        Item timber = new Item("timber", Location.TIMBER_ROOM, 0, 0);
-        Item coal = new Item("pile of coal", Location.DEAD_END_COAL_MINE, 0, 0);
-        Item uselessLantern = new Item("useless lantern", Location.MAZE_5, 0, 0);
-        Item skeletonKey = new Item("skeleton key", Location.MAZE_5, 0, 0);
+        Item guideBook = new Item("guidebook", Location.DAM_LOBBY);
+        Item tube = new Item("tube", Location.MAINTENANCE_ROOM);
+        Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM);
+        Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM);
+        Item shovel = new Item("shovel", Location.SANDY_BEACH);
+        Item pump = new Item("air pump", Location.RESERVOIR_NORTH);
+        Item timber = new Item("timber", Location.TIMBER_ROOM);
+        Item coal = new Item("pile of coal", Location.DEAD_END_COAL_MINE);
+        Item uselessLantern = new Item("useless lantern", Location.MAZE_5);
+        Item skeletonKey = new Item("skeleton key", Location.MAZE_5);
 
-        Item rustyKnife = new Item("rusty knife", Location.MAZE_5, 0, 0);
-        Item stiletto = new Item("stiletto", Location.THIEF_INVENTORY, 0, 0);
-        Item buoy = new Item("buoy", Location.FRIGID_RIVER_4, 0, 0);
-        Item brownSack = new Item("sack", Location.KITCHEN, 0, 0);
+        Item rustyKnife = new Item("rusty knife", Location.MAZE_5);
+        Item stiletto = new Item("stiletto", Location.THIEF_INVENTORY);
+        Item buoy = new Item("buoy", Location.FRIGID_RIVER_4);
+        Item leafPile = new Item("pile", Location.CLEARING_NORTH);
+        leafPile.initialPresenceString = "On the ground is a pile of leaves.";
+
+        
+        
 
         
 
         // Non item containers and surfaces
 
-        Container mailbox = new Container("mailbox", Location.WEST_OF_HOUSE, 5, Location.INSIDE_MAILBOX);
-        Container basket = new Container("basket", Location.SHAFT_ROOM, 5, Location.INSIDE_BASKET);
-        Container trophyCase = new Container("trophy case", Location.LIVING_ROOM, 1000, Location.INSIDE_TROPHY_CASE);
+        Container mailbox = new Container("mailbox", Location.WEST_OF_HOUSE);
+        Container basket = new Container("basket", Location.SHAFT_ROOM);
+        Container trophyCase = new Container("trophy case", Location.LIVING_ROOM);
         
 
-        Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN, 5, Location.ON_KITCHEN_TABLE);
-        Surface atticTable = new Surface("attic table", Location.ATTIC, 5, Location.ON_ATTIC_TABLE);
-        Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM, 5, Location.ON_PEDESTAL);
+        Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN);
+        Surface atticTable = new Surface("attic table", Location.ATTIC);
+        Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM);
 
-        
+        mailbox.inventory.add(leaflet);
 
         // Features
 
@@ -1243,7 +1278,6 @@ public final class Game {
 
         Feature carpet = new Feature("carpet", Location.LIVING_ROOM);
         Feature trapDoor = new Feature("trap door", Location.LIVING_ROOM);
-        Feature leafPile = new Feature("pile", Location.CLEARING_NORTH);
         Feature grating = new Feature("grating", Location.NULL_LOCATION);
         Feature house = new Feature("house", Location.WEST_OF_HOUSE);
         house.altLocations.add(Location.NORTH_OF_HOUSE);
@@ -1317,29 +1351,7 @@ public final class Game {
 
         ActivateMethod leafPileMethod = (GameState gs, Action act) -> {
 
-            switch (act)
-            {
-                case MOVE_OBJECT:
-                {
-                    if (!gs.leafPileMoved)
-                    {
-                        gs.leafPileMoved = true;
-                        grating.location = Location.CLEARING_NORTH;
-
-
-                    }
-                    else
-                    {
-                        output("Having moved the leaf pile once, you find it impossible to move again.");
-                    }
-
-                } break;
-
-                default:
-                {
-                    output("You can't do that to the leaf pile.");
-                } break;
-            }
+            
 
 
         };
@@ -1351,6 +1363,7 @@ public final class Game {
         // Actors
 
         Actor troll = new Actor("troll", Location.TROLL_ROOM);
+        troll.initialPresenceString = "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.";
         Actor thief = new Actor("thief", Location.TREASURE_ROOM);
         Actor cyclops = new Actor("cyclops", Location.CYCLOPS_ROOM);
         Actor songbird = new Actor("songbird", Location.NULL_LOCATION);
@@ -1399,8 +1412,8 @@ public final class Game {
         };
 
         songbird.setActorMethod(songbirdMethod);
-        songbird.presence = "";
-        songbird.takeFail = GameStrings.SONGBIRD_NEARBY;
+        songbird.presenceString = "";
+        songbird.takeString = GameStrings.SONGBIRD_NEARBY;
         songbird.examineString = GameStrings.SONGBIRD_NEARBY;
 
 
@@ -1490,7 +1503,7 @@ public final class Game {
         state.objectList.put(rustyKnife.name, rustyKnife);
         state.objectList.put(stiletto.name, stiletto);
         state.objectList.put(buoy.name, buoy);
-        state.objectList.put(brownSack.name, brownSack);
+        state.objectList.put(sack.name, sack);
 
         state.objectList.put(mailbox.name, mailbox);
         state.objectList.put(basket.name, basket);
@@ -2039,7 +2052,7 @@ public final class Game {
                         ++count;
                         if (count == 1)
                             output("You are carrying: \n");
-						output(item.name);
+						output(item.capArticleName);
                     }
 
 				}
@@ -2114,7 +2127,8 @@ public final class Game {
                     }
                     ++state.darknessTurns;
                 }
-                output("Wheeeeeeee!");
+
+                output(GameStrings.getJumpSarcasm());
             } break;
 
 			case SHOUT:

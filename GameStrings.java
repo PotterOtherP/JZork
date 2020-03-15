@@ -1,3 +1,5 @@
+import java.util.Random;
+
 class GameStrings {
 	
 	
@@ -83,8 +85,7 @@ class GameStrings {
         + "narrow passage goes north, and the path you are on continues to the east.";
 	
     public static final String DESC_GALLERY = "This is an art gallery. Most of the paintings have been stolen by vandals with "
-        + "exceptional taste. The vandals left through either the north or west exits. Fortunately, there is still one chance "
-        + "for you to be a vandal, for on the far wall is a painting of unparalleled beauty.";
+        + "exceptional taste. The vandals left through either the north or west exits.";
 	
     public static final String DESC_STUDIO = "This appears to have been an artist's studio. The walls and floors are splattered "
         + "with paints of 69 different colors. Strangely enough, nothing of value is hanging here. At the south end of the room "
@@ -216,6 +217,11 @@ class GameStrings {
         + "and wide for crossing.\nThere is a path along the stream to the east or west, a steep pathway climbing southwest "
         + "along the edge of a chasm, and a path leading into a canyon to the southest.";
 
+    public static final String DESC_RESERVOIR_SOUTH_EMPTY = "You are in a long room, to the north of which was formerly a lake. "
+        + "However, with the water level lowered, there is merely a wide stream running through the center of the room.\n"
+        + "There is a path along the stream to the east or west, a steep pathway climbing southwest "
+        + "along the edge of a chasm, and a path leading into a canyon to the southeast.";
+
     public static final String DESC_STREAM_VIEW = "You are standing on a path beside a gently flowing stream. The path follows "
         + "the stream, which flows from east to west.";
 
@@ -301,6 +307,9 @@ class GameStrings {
     public static final String DESC_TREASURE_ROOM = "This is a large room, whose east wall is solid granite. A number of "
         + "discarded bags, which crumble at your touch, are scattered about on the floor. There is an exit down a staircase.";
 
+    public static final String THIEF_ARRIVES = "You hear a scream of anguish as you violate the robber's hideaway. Using "
+        + "passages unknown to you, he rushes to its defense.";
+
     public static final String DESC_MAZE_1 = "This is part of a maze of twisty little passages, all alike.";
     public static final String DESC_MAZE_2 = "This is part of a maze of twisty little passages, all alike.";
     public static final String DESC_MAZE_3 = "This is part of a maze of twisty little passages, all alike.";
@@ -321,6 +330,10 @@ class GameStrings {
     public static final String DESC_DEAD_END_MAZE_SOUTHEAST = "You have come to a dead end in the maze.";
     public static final String DESC_DEAD_END_MAZE_CENTER = "You have come to a dead end in the maze.";
     public static final String DESC_DEAD_END_MAZE_SOUTHWEST = "You have come to a dead end in the maze.";
+
+
+    public static final String INIT_PAINTING = "Fortunately, there is still one chance for you to be a vandal, "
+        + "for on the far wall is a painting of unparalleled beauty.";
 
 
 
@@ -348,8 +361,40 @@ class GameStrings {
 	public static final String FOREST_NE_FAIL_1 = "The mountains are impassable.";
 
 
-	public static final String LEAFLET_TEXT = "\nWELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore "
+	public static final String LEAFLET_TEXT = "WELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore "
 		+ "some of the most amazing territory ever seen by mortals. No computer should be without one!";
+
+    public static final String ZORK_MANUAL_TEXT = "Congratulations!\n\nYou are the privileged owner of ZORK I: The Great Underground Empire, a "
+        + "self-contained and self-maintaining universe. If used and maintained in accordance with normal operating practices for small "
+        + "universes, ZORK will provide many months of trouble-free operation.";
+
+    public static final String NATE_MANUAL_TEXT = "Congratulations!\n\n You are the privileged owner of a shoddy facsimile of ZORK I: "
+        + "The Great Underground Empire, a legendary self-contained and self-maintaining universe created in the late 1970's by some "
+        + "computer geniuses at MIT. If used and maintained in accordance with normal operating practices for small universes, this pale "
+        + "imitation of ZORK I will provide many months of troubled and bug-ridden operation, including bizarre logical errors and "
+        + "countless thrown exceptions.";   
+
+    public static final String ENGRAVINGS_TEXT = "The engravings were incised in the living rock of the cave all by an unknown hand. They depict, "
+        + "in symbolic form, the beliefs of the ancient Zorkers. Skillfully interwoven with the bas reliefs are excerpts illustrating the major "
+        + "religious tenets of that time. Unfortunately, a later age seems to have considered them blasphemous and just as skillfully excised them.";
+
+    public static final String DAM_GUIDEBOOK_TEXT = "       Flood Control Dam #3\n\n"
+        + "FCD#3 was constructed in the year 783 of the Great Underground Empire to harness the mighty Frigid River. This work was supported by "
+        + "a grant of 37 million zorkmids from your omnipotent local tyrant Lord Dimwit Flathead the Excessive. This impressive structure is "
+        + "composed of 370,000 cubic feet of concrete, is 256 feet tall at the center, and 193 feet wide at the top. The lake created behind the "
+        + "dam has a volume of 1.7 billion cubic feet, an area of 12 million square feet, and a shore line of 36 thousand feet.\n\n"
+        + "We will now point out soem of the more interesting features of FCD#3 as we conduct you on a guided tour of the facilities:\n"
+        + "        1) You start your tour here in the Dam Lobby. You will notice on your right that...\n";
+
+    public static final String BLACK_BOOK_TEXT = "Commandment #12592\n\n"
+        + "Oh ye who go about saying unto each:  \"Hello sailor\":\n"
+        + "Dost thou know the magnitude of thy sin before the gods?\n"
+        + "Yea, verily, thou shalt be ground between two stones.\n"
+        + "Shall the angry gods cast thy body into the whirlpool?\n"
+        + "Surely, thy eye shall be put out with a sharp stick!"
+        + "Even unto the ends of the earth shalt thou wander and\n"
+        + "Unto the land of the dead shalt thou be sent at last.\n"
+        + "Surely thou shalt repent of thy cunning.";
 
     public static final String CYCLOPS_ONE = "A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. "
         + "From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes people.";
@@ -359,8 +404,35 @@ class GameStrings {
 
 	public static final String OVERBURDENED = "You can't carry any more.";
 
-	public static final String PROFANITY_ONE = "There's no need for that kind of language.";
+    public static final String PROFANITY_ONE = "Such language in a high-class establishment like this!";
 	public static final String PROFANITY_TWO = "Do you have to use so many cuss words?";
+	public static final String PROFANITY_THREE = "There's no need for that kind of language.";
+
+    public static final String SAILOR = "Nothing happens here.";
+    public static final String HOLLOW_VOICE = "A hollow voice says \"Fool.\"";
+
+
+    public static final String[] SARCASM = { "What a concept!", "You can't be serious.", "A valiant attempt.", "An interesting idea..." };
+    public static final String[] SARCASM_JUMP = { "Very good. Now you can go to the second grade.", "Wheeeeeeeeee!!!!!",
+        "Do you expect me to applaud?", "Are you enjoying yourself?" };
+
+    public static String getSarcasticResponse()
+    {
+        Random rand = new Random();
+
+        int i = rand.nextInt(SARCASM.length);
+
+        return SARCASM[i];
+    }
+
+    public static String getJumpSarcasm()
+    {
+        Random rand = new Random();
+
+        int i = rand.nextInt(SARCASM_JUMP.length);
+
+        return SARCASM_JUMP[i];
+    }
 
 
 	public static final String GAME_WON = "You won the game!";

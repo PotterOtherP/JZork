@@ -8,12 +8,19 @@ interface ActivateMethod {
 abstract class GameObject {
     
     public final String name;
-    public ObjectType type;
-    public String article;  // "a" or "an"
     public Location location;
-    public String takeFail;
-    public String presence;
+
+    public ObjectType type;
+    public String articleName;
+    public String capArticleName;
+    public String takeString;
+    public boolean visible;
+    public boolean movedFromStart;
+    public String presenceString;
+    public String initialPresenceString;
     public String examineString;
+    public String readString;
+    public String boardString;
     
     public ActivateMethod method;
     public ArrayList<Item> inventory;
@@ -25,11 +32,18 @@ abstract class GameObject {
     public GameObject(String nm, Location loc)
     {
         name = nm;
-        article = vowelStart() ? "an" : "a";
         location = loc;
-        takeFail = "That's not something you can take, really.";
-        presence = "There is " + article + " " + name + " here.";
+
+        articleName = (vowelStart() ? "an " : "a ") + name;
+        capArticleName = (vowelStart() ? "An " : "A ") + name;
+        visible = true;
+        initialPresenceString = "";
+        takeString = "That's not something you can take, really.";
+        presenceString = "There is " + articleName + " here.";
         examineString = "There's nothing special about the " + name + ".";
+        readString = "You can't read that!";
+        boardString = "You have a theory on how to board " + articleName + ", perhaps?";
+
         method = (GameState state, Action act) -> {};
     }
 
@@ -94,20 +108,19 @@ abstract class GameObject {
     public void unlock(GameState state) { Game.output("You can't unlock that."); }
     public void lock(GameState state) { Game.output("You can't lock that."); }
 
-    public boolean isOpen() { return false; }
-    public boolean isAlive() { return false; }
-
-    public void take(GameState state)
-    {
-        Game.output(takeFail);
-    }
-
+    public void take(GameState state) { Game.output(takeString); }
     public void drop(GameState state) { Game.output("You can't drop that."); }
-
     public void place(GameState state, Item it) { Game.output("You can't place that."); }
     public void remove(GameState state, Item it) { Game.output("You can't do that."); }
+    public void read(GameState state) { Game.output(readString); }
+    public void board(GameState state) { Game.output(boardString); }
 
     public void examine(GameState state) { Game.output(examineString); }
+
+    public boolean isOpen() { return false; }
+    public boolean isAlive() { return false; }
+    public boolean isVisible() { return visible; }
+
 
     
 
