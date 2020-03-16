@@ -114,6 +114,7 @@ abstract class GameObject {
     public void remove(GameState state, Item it) { Game.output("You can't do that."); }
     public void read(GameState state) { Game.output(readString); }
     public void board(GameState state) { Game.output(boardString); }
+    public void tick() {}
 
     public void examine(GameState state) { Game.output(examineString); }
 

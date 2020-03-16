@@ -54,6 +54,7 @@ class Item extends GameObject{
 	@Override
 	public boolean isAlive() { return lifespan > 0; }
 
+	@Override
 	public void tick() { --lifespan; }
 	
 }

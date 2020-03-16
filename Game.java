@@ -1203,6 +1203,7 @@ public final class Game {
         knife.initialPresenceString = "On the table is a nasty-looking knife.";
         Item lantern = new Item("lantern", Location.LIVING_ROOM);
         lantern.initialPresenceString = "A battery-powered brass lantern is on the trophy case.";
+        lantern.lifespan = LANTERN_LIFESPAN;
         Item sword = new Item("sword", Location.LIVING_ROOM);
         sword.initialPresenceString = "Above the trophy case hangs an elvish sword of great antiquity.";
         Item sack = new Item("brown sack", Location.KITCHEN);
@@ -1330,17 +1331,48 @@ public final class Game {
             {
                 case LIGHT:
                 {
-                    self.activated = true;
-                    gs.lightActivated = true;
-                    output("You turn on the lantern.");
-                    self.examineString = "The lantern is on.";
+
+                    if (!self.activated && self.lifespan > 0)
+                    {
+                        self.activated = true;
+                        gs.lightActivated = true;
+                        output("You switch on the brass lantern.");
+                        Room rm = gs.worldMap.get(gs.playerLocation);
+                        if (rm.isDark()) rm.lookAround(gs);
+                        self.examineString = "The lantern is on.";
+                    }
+
+                    else if (!self.activated && self.lifespan <= 0)
+                    {
+                        output("The lantern is out of power.");
+                    }
+
+                    else
+                    {
+                        output("The lantern is already on.!");
+                    }
                 } break;
 
                 case UNLIGHT:
                 {
-                    self.activated = false;
-                    gs.lightActivated = false;
-                    output("You turn off the lantern.");
+
+                    if (self.activated)
+                    {
+                        self.activated = false;
+                        gs.lightActivated = false;
+                        output("The brass lantern is now off.");
+
+                        Room rm = gs.worldMap.get(gs.playerLocation);
+                        if (rm.isDark())
+                        {
+                            output("It is now pitch black.");
+                        }
+                    }
+
+                    else
+                    {
+                        output("The brass lantern is already off!");
+                    }
                 } break;
 
                 default:
@@ -1904,16 +1936,10 @@ public final class Game {
 
             case LIGHT:
             {
-                obj.activate(state, Action.LIGHT);
-                currentRoom.lookAround(state);
-            } break;
-
-            case UNLIGHT:
-            {
-                obj.activate(state, Action.UNLIGHT);
-                currentRoom.lookAround(state);
+                obj.activate(state, currentAction);
             } break;
             
+            case UNLIGHT:
 			case ACTIVATE:
 			case RING:
 			case PLAY:
@@ -2168,11 +2194,20 @@ public final class Game {
 		if (gameover) return;
 
         // The actors get to take their turns
-        for (GameObject objAct : state.objectList.values())
+        for (GameObject ob : state.objectList.values())
         {
-            if (objAct.isActor() && objAct.isAlive())
+            if (ob.isActor() && ob.isAlive())
             {
-                objAct.actorTurn();
+                ob.actorTurn();
+            }
+
+            if (ob.isItem())
+            {
+                Item it = (Item)(ob);
+                if(it.activated && it.lifespan > 0)
+                {
+                    it.tick();
+                }
             }
         }
 		state.addTurn();
