@@ -1214,6 +1214,7 @@ public final class Game {
         Item nest = new Item("nest", Location.UP_TREE);
         nest.initialPresenceString = "Beside you on the branch is a small bird's nest.";
         Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX);
+        leaflet.readString = GameStrings.LEAFLET_TEXT;
         Item brokenCanary = new Item("broken canary", Location.NULL_LOCATION);
         brokenCanary.initialPresenceString = "There is a golden clockwork canary nestled in the egg. "
             + "It seems to have recently had a bad experience. The mountings for its jewel-like eyes "
@@ -1224,7 +1225,8 @@ public final class Game {
         Item brokenEgg = new Item("somewhat ruined egg", Location.NULL_LOCATION);
         
         Item axe = new Item("axe", Location.TROLL_INVENTORY);
-        Item studioPaper = new Item("ZORK owner's manual", Location.STUDIO);
+        Item studioPaper = new Item("paper", Location.STUDIO);
+        studioPaper.readString = GameStrings.NATE_MANUAL_TEXT;
         studioPaper.initialPresenceString = "Loosely attached to a wall is a small piece of paper.";
         Item bell = new Item("brass bell", Location.TEMPLE);
         Item candles = new Item("candles", Location.ALTAR);
@@ -1916,7 +1918,6 @@ public final class Game {
 			case RING:
 			case PLAY:
 			case KICK:
-			case READ:
 			case TIE:
 			case ATTACK:
             case MOVE_OBJECT:
@@ -1931,6 +1932,10 @@ public final class Game {
 
 			} break;
 
+			case READ:
+            {
+                obj.read(state);
+            } break;
             
 
 

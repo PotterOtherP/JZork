@@ -368,7 +368,7 @@ class GameStrings {
         + "self-contained and self-maintaining universe. If used and maintained in accordance with normal operating practices for small "
         + "universes, ZORK will provide many months of trouble-free operation.";
 
-    public static final String NATE_MANUAL_TEXT = "Congratulations!\n\n You are the privileged owner of a shoddy facsimile of ZORK I: "
+    public static final String NATE_MANUAL_TEXT = "\nCongratulations!\n\nYou are the privileged owner of a shoddy facsimile of ZORK I: "
         + "The Great Underground Empire, a legendary self-contained and self-maintaining universe created in the late 1970's by some "
         + "computer geniuses at MIT. If used and maintained in accordance with normal operating practices for small universes, this pale "
         + "imitation of ZORK I will provide many months of troubled and bug-ridden operation, including bizarre logical errors and "
