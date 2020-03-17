@@ -39,7 +39,7 @@ class Feature extends GameObject {
 				if (!p.isOpen())
 				{
 					Game.output(GameStrings.TRAP_DOOR_OPENS);
-					r.description = GameStrings.DESC_LIVING_ROOM_TRAPDOOR_OPEN;
+					r.description = MapStrings.DESC_LIVING_ROOM_TRAPDOOR_OPEN;
 					p.open();
 				}
 				else

@@ -13,11 +13,13 @@ abstract class GameObject {
     public ObjectType type;
     public String articleName;
     public String capArticleName;
-    public String takeString;
     public boolean visible;
     public boolean movedFromStart;
-    public String presenceString;
     public String initialPresenceString;
+    public String presenceString;
+
+    // responses to player actions, mostly taking the place of the lambda methods.
+    public String takeString;
     public String examineString;
     public String readString;
     public String boardString;

@@ -231,7 +231,7 @@ public final class Game {
 		// Beginning text of the game.
         outputLine();
         output(state.worldMap.get(STARTING_LOCATION).name);
-		output(GameStrings.DESC_WEST_OF_HOUSE);
+		output(MapStrings.DESC_WEST_OF_HOUSE);
         outputLine();
 		
 	}
@@ -423,7 +423,7 @@ public final class Game {
 
 
         // Rooms: Name, description, ID
-        Room westOfHouse = new Room("West of House", GameStrings.DESC_WEST_OF_HOUSE, Location.WEST_OF_HOUSE);
+        Room westOfHouse = new Room("West of House", MapStrings.DESC_WEST_OF_HOUSE, Location.WEST_OF_HOUSE);
         westOfHouse.addExit(Action.NORTH, house_west_north);
         westOfHouse.addExit(Action.NORTHEAST, house_west_north);
         westOfHouse.addExit(Action.SOUTH, house_west_south);
@@ -432,7 +432,7 @@ public final class Game {
         westOfHouse.addExit(Action.WEST, house_west_forestW);
         westOfHouse.addFailMessage(Action.EAST, "The door is boarded and you can't remove the boards.");
 
-        Room northOfHouse = new Room("North of House", GameStrings.DESC_NORTH_OF_HOUSE, Location.NORTH_OF_HOUSE);
+        Room northOfHouse = new Room("North of House", MapStrings.DESC_NORTH_OF_HOUSE, Location.NORTH_OF_HOUSE);
         northOfHouse.addExit(Action.NORTH, house_north_forestpath);
         northOfHouse.addExit(Action.EAST, house_north_behind);
         northOfHouse.addExit(Action.SOUTHEAST, house_north_behind);
@@ -441,7 +441,7 @@ public final class Game {
         northOfHouse.addFailMessage(Action.SOUTH, "The windows are all boarded.");
 
 
-        Room behindHouse = new Room("Behind House", GameStrings.DESC_BEHIND_HOUSE, Location.BEHIND_HOUSE);
+        Room behindHouse = new Room("Behind House", MapStrings.DESC_BEHIND_HOUSE, Location.BEHIND_HOUSE);
         behindHouse.addExit(Action.NORTH, house_north_behind);
         behindHouse.addExit(Action.NORTHWEST, house_north_behind);
         behindHouse.addExit(Action.EAST, house_behind_clearingE);
@@ -451,7 +451,7 @@ public final class Game {
         behindHouse.addExit(Action.IN, house_behind_kitchen);
 
 
-        Room southOfHouse = new Room("South of House", GameStrings.DESC_SOUTH_OF_HOUSE, Location.SOUTH_OF_HOUSE);
+        Room southOfHouse = new Room("South of House", MapStrings.DESC_SOUTH_OF_HOUSE, Location.SOUTH_OF_HOUSE);
         southOfHouse.addExit(Action.EAST, house_behind_south);
         southOfHouse.addExit(Action.NORTHEAST, house_behind_south);
         southOfHouse.addExit(Action.WEST, house_west_south);
@@ -460,55 +460,55 @@ public final class Game {
         southOfHouse.addFailMessage(Action.NORTH, "The windows are all boarded.");
 
 
-        Room kitchen = new Room("Kitchen", GameStrings.DESC_KITCHEN_WINDOW_CLOSED, Location.KITCHEN);
+        Room kitchen = new Room("Kitchen", MapStrings.DESC_KITCHEN_WINDOW_CLOSED, Location.KITCHEN);
         kitchen.addExit(Action.EAST, house_behind_kitchen);
         kitchen.addExit(Action.OUT, house_behind_kitchen);
         kitchen.addExit(Action.WEST, kitchen_livingroom);
         kitchen.addExit(Action.UP, kitchen_attic);
         kitchen.addFailMessage(Action.DOWN, "Only Santa Claus climbs down chimneys.");
 
-        Room attic = new Room("Attic", GameStrings.DESC_ATTIC, Location.ATTIC);
+        Room attic = new Room("Attic", MapStrings.DESC_ATTIC, Location.ATTIC);
         attic.addExit(Action.DOWN, kitchen_attic);
         
 
-        Room livingRoom = new Room("Living Room", GameStrings.DESC_LIVING_ROOM, Location.LIVING_ROOM);
+        Room livingRoom = new Room("Living Room", MapStrings.DESC_LIVING_ROOM, Location.LIVING_ROOM);
         livingRoom.addExit(Action.EAST, kitchen_livingroom);
         livingRoom.addExit(Action.DOWN, cellar_livingroom);
         livingRoom.addExit(Action.WEST, strange_living_room);
 
-        Room forestPath = new Room("Forest Path", GameStrings.DESC_FOREST_PATH, Location.FOREST_PATH);
+        Room forestPath = new Room("Forest Path", MapStrings.DESC_FOREST_PATH, Location.FOREST_PATH);
         forestPath.addExit(Action.NORTH, forestpath_clearingN);
         forestPath.addExit(Action.EAST, forestpath_forestE);
         forestPath.addExit(Action.SOUTH, house_north_forestpath);
         forestPath.addExit(Action.WEST, forestpath_forestW);
         forestPath.addExit(Action.UP, forestpath_uptree);
 
-        Room upTree = new Room("Up a Tree", GameStrings.DESC_UP_TREE, Location.UP_TREE);
+        Room upTree = new Room("Up a Tree", MapStrings.DESC_UP_TREE, Location.UP_TREE);
         upTree.addExit(Action.DOWN, forestpath_uptree);
         upTree.addFailMessage(Action.UP, "You cannot climb any higher.");
 
-        Room forestWest = new Room("Forest", GameStrings.DESC_FOREST_WEST, Location.FOREST_WEST);
+        Room forestWest = new Room("Forest", MapStrings.DESC_FOREST_WEST, Location.FOREST_WEST);
         forestWest.addExit(Action.NORTH, clearingN_forestW);
         forestWest.addExit(Action.EAST, forestpath_forestW);
         forestWest.addExit(Action.SOUTH, forestS_forestW);
         forestWest.addFailMessage(Action.WEST, "You would need a machete to go further west.");
         forestWest.addFailMessage(Action.UP, "There is no tree here suitable for climbing.");
 
-        Room forestEast = new Room("Forest", GameStrings.DESC_FOREST_EAST, Location.FOREST_EAST);
+        Room forestEast = new Room("Forest", MapStrings.DESC_FOREST_EAST, Location.FOREST_EAST);
         forestEast.addExit(Action.EAST, forestE_forestNE);
         forestEast.addExit(Action.SOUTH, forestE_clearingE);
         forestEast.addExit(Action.WEST, forestpath_forestE);
         forestEast.addFailMessage(Action.NORTH, "The forest becomes impenetrable to the north.");
         forestEast.addFailMessage(Action.UP, "There is no tree here suitable for climbing.");
 
-        Room forestNortheast = new Room("Forest", GameStrings.DESC_FOREST_NORTHEAST, Location.FOREST_NORTHEAST);
+        Room forestNortheast = new Room("Forest", MapStrings.DESC_FOREST_NORTHEAST, Location.FOREST_NORTHEAST);
         forestNortheast.addExit(Action.NORTH, forestE_forestNE);
         forestNortheast.addExit(Action.SOUTH, forestE_forestNE);
         forestNortheast.addExit(Action.WEST, forestE_forestNE);
-        forestNortheast.addFailMessage(Action.EAST, GameStrings.FOREST_NE_FAIL_1);
-        forestNortheast.addFailMessage(Action.UP, GameStrings.FOREST_NE_FAIL_1);
+        forestNortheast.addFailMessage(Action.EAST, MapStrings.FOREST_NE_FAIL_1);
+        forestNortheast.addFailMessage(Action.UP, MapStrings.FOREST_NE_FAIL_1);
 
-        Room forestSouth = new Room("Forest", GameStrings.DESC_FOREST_SOUTH, Location.FOREST_SOUTH);
+        Room forestSouth = new Room("Forest", MapStrings.DESC_FOREST_SOUTH, Location.FOREST_SOUTH);
         forestSouth.addExit(Action.NORTH, clearingE_forestS);
         forestSouth.addExit(Action.WEST, forestS_forestW);
         forestSouth.addExit(Action.NORTHWEST, house_south_forestS);
@@ -517,7 +517,7 @@ public final class Game {
         forestSouth.addFailMessage(Action.SOUTH, "Storm-tossed trees block your way.");
 
 
-        Room clearingNorth = new Room("Clearing", GameStrings.DESC_CLEARING_NORTH, Location.CLEARING_NORTH);
+        Room clearingNorth = new Room("Clearing", MapStrings.DESC_CLEARING_NORTH, Location.CLEARING_NORTH);
         clearingNorth.addExit(Action.EAST, clearingN_forestE);
         clearingNorth.addExit(Action.SOUTH, forestpath_clearingN);
         clearingNorth.addExit(Action.WEST, clearingN_forestW);
@@ -525,7 +525,7 @@ public final class Game {
         clearingNorth.addFailMessage(Action.UP, "There is no tree here suitable for climbing.");
         clearingNorth.addFailMessage(Action.NORTH, "The forest becomes impenetrable to the north.");
 
-        Room clearingEast = new Room("Clearing", GameStrings.DESC_CLEARING_EAST, Location.CLEARING_EAST);
+        Room clearingEast = new Room("Clearing", MapStrings.DESC_CLEARING_EAST, Location.CLEARING_EAST);
         clearingEast.addExit(Action.NORTH, forestE_clearingE);
         clearingEast.addExit(Action.EAST, clearingE_canyon);
         clearingEast.addExit(Action.SOUTH, clearingE_forestS);
@@ -533,33 +533,33 @@ public final class Game {
         clearingEast.addFailMessage(Action.UP, "There is no tree here suitable for climbing.");
 
 
-        Room canyonView = new Room("Canyon View", GameStrings.DESC_CANYON_VIEW, Location.CANYON_VIEW);
+        Room canyonView = new Room("Canyon View", MapStrings.DESC_CANYON_VIEW, Location.CANYON_VIEW);
         canyonView.addExit(Action.NORTHWEST, clearingE_canyon);
         canyonView.addExit(Action.WEST, forestS_canyon);
         canyonView.addExit(Action.DOWN, canyon_ledge);
         canyonView.addExit(Action.EAST, canyon_ledge);
         canyonView.addFailMessage(Action.SOUTH, "Storm-tossed trees block your way.");
 
-        Room rockyLedge = new Room("Rocky Ledge", GameStrings.DESC_ROCKY_LEDGE, Location.ROCKY_LEDGE);
+        Room rockyLedge = new Room("Rocky Ledge", MapStrings.DESC_ROCKY_LEDGE, Location.ROCKY_LEDGE);
         rockyLedge.addExit(Action.UP, canyon_ledge);
         rockyLedge.addExit(Action.DOWN, ledge_bottom);
 
-        Room canyonBottom = new Room("Canyon Bottom", GameStrings.DESC_CANYON_BOTTOM, Location.CANYON_BOTTOM);
+        Room canyonBottom = new Room("Canyon Bottom", MapStrings.DESC_CANYON_BOTTOM, Location.CANYON_BOTTOM);
         canyonBottom.addExit(Action.UP, ledge_bottom);
         canyonBottom.addExit(Action.NORTH, canyon_bottom_rainbow);
 
-        Room endOfRainbow = new Room("End of Rainbow", GameStrings.DESC_END_OF_RAINBOW, Location.END_OF_RAINBOW);
+        Room endOfRainbow = new Room("End of Rainbow", MapStrings.DESC_END_OF_RAINBOW, Location.END_OF_RAINBOW);
         endOfRainbow.addExit(Action.SOUTHWEST, canyon_bottom_rainbow);
         endOfRainbow.addExit(Action.EAST, rainbow_end);
 
-        Room stoneBarrow = new Room("Stone Barrow", GameStrings.DESC_STONE_BARROW, Location.STONE_BARROW);
+        Room stoneBarrow = new Room("Stone Barrow", MapStrings.DESC_STONE_BARROW, Location.STONE_BARROW);
         stoneBarrow.addExit(Action.NORTHEAST, house_west_barrow);
         stoneBarrow.addExit(Action.WEST, barrowInside);
 
-        Room insideStoneBarrow = new Room("Inside Stone Barrow", GameStrings.DESC_INSIDE_STONE_BARROW, Location.INSIDE_STONE_BARROW);
+        Room insideStoneBarrow = new Room("Inside Stone Barrow", MapStrings.DESC_INSIDE_STONE_BARROW, Location.INSIDE_STONE_BARROW);
         insideStoneBarrow.addExit(Action.EAST, barrowInside);
 
-        Room cellar = new Room("Cellar", GameStrings.DESC_CELLAR, Location.CELLAR);
+        Room cellar = new Room("Cellar", MapStrings.DESC_CELLAR, Location.CELLAR);
         cellar.addExit(Action.NORTH, cellar_troll);
         cellar.addExit(Action.SOUTH, cellar_eastchasm);
         // This exit will be closed by the cyclops until he has been chased off. (in its actor method).
@@ -567,359 +567,359 @@ public final class Game {
         cellar.addFailMessage(Action.WEST, "You try to ascend the ramp, but it is impossible, and you slide back down.");
         
 
-        Room eastOfChasm = new Room("East of Chasm", GameStrings.DESC_EAST_OF_CHASM, Location.EAST_OF_CHASM);
+        Room eastOfChasm = new Room("East of Chasm", MapStrings.DESC_EAST_OF_CHASM, Location.EAST_OF_CHASM);
         eastOfChasm.addExit(Action.NORTH, cellar_eastchasm);
         eastOfChasm.addExit(Action.DOWN, cellar_eastchasm);
         eastOfChasm.addExit(Action.EAST, eastchasm_gallery);
         eastOfChasm.addFailMessage(Action.DOWN, "The chasm probably leads straight to the infernal regions.");
 
-        Room gallery = new Room("Gallery", GameStrings.DESC_GALLERY, Location.GALLERY);
+        Room gallery = new Room("Gallery", MapStrings.DESC_GALLERY, Location.GALLERY);
         gallery.addExit(Action.WEST, eastchasm_gallery);
         gallery.addExit(Action.NORTH, gallery_studio);
 
-        Room studio = new Room("Studio", GameStrings.DESC_STUDIO, Location.STUDIO);
+        Room studio = new Room("Studio", MapStrings.DESC_STUDIO, Location.STUDIO);
         studio.addExit(Action.SOUTH, gallery_studio);
         studio.addExit(Action.UP, studio_kitchen);
 
-        Room trollRoom = new Room("Troll Room", GameStrings.DESC_TROLL_ROOM, Location.TROLL_ROOM);
+        Room trollRoom = new Room("Troll Room", MapStrings.DESC_TROLL_ROOM, Location.TROLL_ROOM);
         trollRoom.addExit(Action.SOUTH, cellar_troll);
         trollRoom.addExit(Action.WEST, troll_maze);
         trollRoom.addExit(Action.EAST, troll_eastwest);
 
-        Room eastWestPassage = new Room("East-West Passage", GameStrings.DESC_EAST_WEST_PASSAGE , Location.EAST_WEST_PASSAGE);
+        Room eastWestPassage = new Room("East-West Passage", MapStrings.DESC_EAST_WEST_PASSAGE , Location.EAST_WEST_PASSAGE);
         eastWestPassage.addExit(Action.WEST, troll_eastwest);
         eastWestPassage.addExit(Action.NORTH, eastwest_chasm);
         eastWestPassage.addExit(Action.EAST, eastwest_round);
 
-        Room roundRoom = new Room("Round Room", GameStrings.DESC_ROUND_ROOM, Location.ROUND_ROOM);
+        Room roundRoom = new Room("Round Room", MapStrings.DESC_ROUND_ROOM, Location.ROUND_ROOM);
         roundRoom.addExit(Action.WEST, eastwest_round);
         roundRoom.addExit(Action.NORTH, round_northsouth);
         roundRoom.addExit(Action.EAST, round_loud);
         roundRoom.addExit(Action.SOUTH, round_narrow);
         roundRoom.addExit(Action.SOUTHEAST, round_engravings);
 
-        Room narrowPassage = new Room("Narrow Passage", GameStrings.DESC_NARROW_PASSAGE, Location.NARROW_PASSAGE);
+        Room narrowPassage = new Room("Narrow Passage", MapStrings.DESC_NARROW_PASSAGE, Location.NARROW_PASSAGE);
         narrowPassage.addExit(Action.NORTH, round_narrow);
         narrowPassage.addExit(Action.SOUTH, narrow_mirror);
 
-        Room mirrorRoomSouth = new Room("Mirror Room", GameStrings.DESC_MIRROR_ROOM_SOUTH, Location.MIRROR_ROOM_SOUTH);
+        Room mirrorRoomSouth = new Room("Mirror Room", MapStrings.DESC_MIRROR_ROOM_SOUTH, Location.MIRROR_ROOM_SOUTH);
         mirrorRoomSouth.addExit(Action.NORTH, narrow_mirror);
         mirrorRoomSouth.addExit(Action.WEST, mirror_winding);
         mirrorRoomSouth.addExit(Action.EAST, mirrorsouth_cave);
 
-        Room windingPassage = new Room("Winding Passage", GameStrings.DESC_WINDING_PASSAGE, Location.WINDING_PASSAGE);
+        Room windingPassage = new Room("Winding Passage", MapStrings.DESC_WINDING_PASSAGE, Location.WINDING_PASSAGE);
         windingPassage.addExit(Action.NORTH, mirror_winding);
         windingPassage.addExit(Action.EAST, winding_cave);
 
-        Room caveSouth = new Room("Cave", GameStrings.DESC_CAVE_SOUTH, Location.CAVE_SOUTH);
+        Room caveSouth = new Room("Cave", MapStrings.DESC_CAVE_SOUTH, Location.CAVE_SOUTH);
         caveSouth.addExit(Action.NORTH, mirrorsouth_cave);
         caveSouth.addExit(Action.WEST, winding_cave);
         caveSouth.addExit(Action.DOWN, cave_hades);
         caveSouth.addExit(Action.DOWN, cave_hades);
 
-        Room entranceToHades = new Room("Entrance to Hades", GameStrings.DESC_ENTRANCE_TO_HADES, Location.ENTRANCE_TO_HADES);
+        Room entranceToHades = new Room("Entrance to Hades", MapStrings.DESC_ENTRANCE_TO_HADES, Location.ENTRANCE_TO_HADES);
         entranceToHades.addExit(Action.UP, cave_hades);
         entranceToHades.addExit(Action.SOUTH, hades_land_dead);
 
-        Room landOfTheDead = new Room("Land of the Dead", GameStrings.DESC_LAND_OF_THE_DEAD, Location.LAND_OF_THE_DEAD);
+        Room landOfTheDead = new Room("Land of the Dead", MapStrings.DESC_LAND_OF_THE_DEAD, Location.LAND_OF_THE_DEAD);
         landOfTheDead.addExit(Action.NORTH, hades_land_dead);
 
-        Room engravingsCave = new Room("Engravings Cave", GameStrings.DESC_ENGRAVINGS_CAVE, Location.ENGRAVINGS_CAVE);
+        Room engravingsCave = new Room("Engravings Cave", MapStrings.DESC_ENGRAVINGS_CAVE, Location.ENGRAVINGS_CAVE);
         engravingsCave.addExit(Action.NORTHWEST, round_engravings);
         engravingsCave.addExit(Action.EAST, engravings_dome);
 
-        Room domeRoom = new Room("Dome Room", GameStrings.DESC_DOME_ROOM, Location.DOME_ROOM);
+        Room domeRoom = new Room("Dome Room", MapStrings.DESC_DOME_ROOM, Location.DOME_ROOM);
         domeRoom.addExit(Action.WEST, engravings_dome);
         domeRoom.addExit(Action.DOWN, dome_torch);
 
-        Room torchRoom = new Room("Torch Room", GameStrings.DESC_TORCH_ROOM, Location.TORCH_ROOM);
+        Room torchRoom = new Room("Torch Room", MapStrings.DESC_TORCH_ROOM, Location.TORCH_ROOM);
         torchRoom.addExit(Action.SOUTH, torch_temple);
         torchRoom.addExit(Action.DOWN, torch_temple);
 
-        Room temple = new Room("Temple", GameStrings.DESC_TEMPLE, Location.TEMPLE);
+        Room temple = new Room("Temple", MapStrings.DESC_TEMPLE, Location.TEMPLE);
         temple.addExit(Action.NORTH, torch_temple);
         temple.addExit(Action.UP, torch_temple);
         temple.addExit(Action.EAST, temple_egypt);
         temple.addExit(Action.SOUTH, temple_altar);
 
-        Room egyptianRoom = new Room("Egyptian Room", GameStrings.DESC_EGYPTIAN_ROOM, Location.EGYPTIAN_ROOM);
+        Room egyptianRoom = new Room("Egyptian Room", MapStrings.DESC_EGYPTIAN_ROOM, Location.EGYPTIAN_ROOM);
         egyptianRoom.addExit(Action.WEST, temple_egypt);
 
-        Room altar = new Room("Altar", GameStrings.DESC_ALTAR, Location.ALTAR);
+        Room altar = new Room("Altar", MapStrings.DESC_ALTAR, Location.ALTAR);
         altar.addExit(Action.NORTH, temple_altar);
         altar.addExit(Action.DOWN, altar_cave);
 
-        Room loudRoom = new Room("Loud Room", GameStrings.DESC_LOUD_ROOM, Location.LOUD_ROOM);
+        Room loudRoom = new Room("Loud Room", MapStrings.DESC_LOUD_ROOM, Location.LOUD_ROOM);
         loudRoom.addExit(Action.WEST, round_loud);
         loudRoom.addExit(Action.UP, loud_deep_canyon);
         loudRoom.addExit(Action.EAST, loud_damp);
 
-        Room dampCave = new Room("Damp Cave", GameStrings.DESC_DAMP_CAVE, Location.DAMP_CAVE);
+        Room dampCave = new Room("Damp Cave", MapStrings.DESC_DAMP_CAVE, Location.DAMP_CAVE);
         dampCave.addExit(Action.WEST, loud_damp);
         dampCave.addExit(Action.EAST, damp_white_north);
 
-        Room whiteCliffsBeachNorth = new Room("White Cliffs Beach North", GameStrings.DESC_WHITE_CLIFFS_BEACH_NORTH, Location.WHITE_CLIFFS_BEACH_NORTH);
+        Room whiteCliffsBeachNorth = new Room("White Cliffs Beach North", MapStrings.DESC_WHITE_CLIFFS_BEACH_NORTH, Location.WHITE_CLIFFS_BEACH_NORTH);
         whiteCliffsBeachNorth.addExit(Action.WEST, damp_white_north);
         whiteCliffsBeachNorth.addExit(Action.SOUTH, white_cliffs_north_south);
         whiteCliffsBeachNorth.addExit(Action.EAST, white_north_river);
 
-        Room whiteCliffsBeachSouth = new Room("White Cliffs Beach South", GameStrings.DESC_WHITE_CLIFFS_BEACH_SOUTH, Location.WHITE_CLIFFS_BEACH_SOUTH);
+        Room whiteCliffsBeachSouth = new Room("White Cliffs Beach South", MapStrings.DESC_WHITE_CLIFFS_BEACH_SOUTH, Location.WHITE_CLIFFS_BEACH_SOUTH);
         whiteCliffsBeachSouth.addExit(Action.NORTH, white_cliffs_north_south);
         whiteCliffsBeachSouth.addExit(Action.EAST, white_south_river);
 
-        Room frigidRiver1 = new Room("Frigid River", GameStrings.DESC_FRIGID_RIVER_1, Location.FRIGID_RIVER_1);
+        Room frigidRiver1 = new Room("Frigid River", MapStrings.DESC_FRIGID_RIVER_1, Location.FRIGID_RIVER_1);
         frigidRiver1.addExit(Action.WEST, dam_base_river);
 
-        Room frigidRiver2 = new Room("Frigid River", GameStrings.DESC_FRIGID_RIVER_2, Location.FRIGID_RIVER_2);
-        Room frigidRiver3 = new Room("Frigid River", GameStrings.DESC_FRIGID_RIVER_3, Location.FRIGID_RIVER_3);
+        Room frigidRiver2 = new Room("Frigid River", MapStrings.DESC_FRIGID_RIVER_2, Location.FRIGID_RIVER_2);
+        Room frigidRiver3 = new Room("Frigid River", MapStrings.DESC_FRIGID_RIVER_3, Location.FRIGID_RIVER_3);
         frigidRiver3.addExit(Action.WEST, white_north_river);
 
-        Room frigidRiver4 = new Room("Frigid River", GameStrings.DESC_FRIGID_RIVER_4, Location.FRIGID_RIVER_4);
+        Room frigidRiver4 = new Room("Frigid River", MapStrings.DESC_FRIGID_RIVER_4, Location.FRIGID_RIVER_4);
         frigidRiver4.addExit(Action.WEST, white_south_river);
         frigidRiver4.addExit(Action.EAST, river_sandy_beach);
 
-        Room frigidRiver5 = new Room("Frigid River", GameStrings.DESC_FRIGID_RIVER_5, Location.FRIGID_RIVER_5);
+        Room frigidRiver5 = new Room("Frigid River", MapStrings.DESC_FRIGID_RIVER_5, Location.FRIGID_RIVER_5);
         frigidRiver5.addExit(Action.EAST, river_shore);
 
-        Room sandyCave = new Room("Sandy Cave", GameStrings.DESC_SANDY_CAVE, Location.SANDY_CAVE);
+        Room sandyCave = new Room("Sandy Cave", MapStrings.DESC_SANDY_CAVE, Location.SANDY_CAVE);
         sandyCave.addExit(Action.SOUTHWEST, sandy_beach_cave);
 
-        Room sandyBeach = new Room("Sandy Beach", GameStrings.DESC_SANDY_BEACH, Location.SANDY_BEACH);
+        Room sandyBeach = new Room("Sandy Beach", MapStrings.DESC_SANDY_BEACH, Location.SANDY_BEACH);
         sandyBeach.addExit(Action.NORTHEAST, sandy_beach_cave);
         sandyBeach.addExit(Action.SOUTH, sandy_beach_shore);
         sandyBeach.addExit(Action.WEST, river_sandy_beach);
 
-        Room shore = new Room("Shore", GameStrings.DESC_SHORE, Location.SHORE);
+        Room shore = new Room("Shore", MapStrings.DESC_SHORE, Location.SHORE);
         shore.addExit(Action.NORTH, sandy_beach_shore);
         shore.addExit(Action.WEST, river_shore);
         shore.addExit(Action.SOUTH, shore_falls);
 
-        Room aragainFalls = new Room("Aragain Falls", GameStrings.DESC_ARAGAIN_FALLS, Location.ARAGAIN_FALLS);
+        Room aragainFalls = new Room("Aragain Falls", MapStrings.DESC_ARAGAIN_FALLS, Location.ARAGAIN_FALLS);
         aragainFalls.addExit(Action.NORTH, shore_falls);
         aragainFalls.addExit(Action.WEST, falls_rainbow);
 
-        Room onTheRainbow = new Room("On the Rainbow", GameStrings.DESC_ON_THE_RAINBOW, Location.ON_THE_RAINBOW);
+        Room onTheRainbow = new Room("On the Rainbow", MapStrings.DESC_ON_THE_RAINBOW, Location.ON_THE_RAINBOW);
         onTheRainbow.addExit(Action.EAST, falls_rainbow);
         onTheRainbow.addExit(Action.WEST, rainbow_end);
 
-        Room dam = new Room("Dam", GameStrings.DESC_DAM, Location.DAM);
+        Room dam = new Room("Dam", MapStrings.DESC_DAM, Location.DAM);
         dam.addExit(Action.WEST, dam_res_south);
         dam.addExit(Action.NORTH, dam_dam_lobby);
         dam.addExit(Action.SOUTH, dam_deep_canyon);
         dam.addExit(Action.EAST, dam_dam_base);
         dam.addExit(Action.DOWN, dam_dam_base);
 
-        Room damBase = new Room("Dam Base", GameStrings.DESC_DAM_BASE, Location.DAM_BASE);
+        Room damBase = new Room("Dam Base", MapStrings.DESC_DAM_BASE, Location.DAM_BASE);
         damBase.addExit(Action.NORTH, dam_dam_base);
         damBase.addExit(Action.EAST, dam_base_river);
         
-        Room damLobby = new Room("Dam Lobby", GameStrings.DESC_DAM_LOBBY, Location.DAM_LOBBY);
+        Room damLobby = new Room("Dam Lobby", MapStrings.DESC_DAM_LOBBY, Location.DAM_LOBBY);
         damLobby.addExit(Action.NORTH, dam_lobby_maintenance);
         damLobby.addExit(Action.EAST, dam_lobby_maintenance);
         damLobby.addExit(Action.SOUTH, dam_dam_lobby);
         
-        Room maintenanceRoom = new Room("Maintenance Room", GameStrings.DESC_MAINTENANCE_ROOM, Location.MAINTENANCE_ROOM);
+        Room maintenanceRoom = new Room("Maintenance Room", MapStrings.DESC_MAINTENANCE_ROOM, Location.MAINTENANCE_ROOM);
         maintenanceRoom.addExit(Action.SOUTH, dam_lobby_maintenance);
         maintenanceRoom.addExit(Action.WEST, dam_lobby_maintenance);
         
-        Room northSouthPassage = new Room("North-South Passage", GameStrings.DESC_NORTH_SOUTH_PASSAGE, Location.NORTH_SOUTH_PASSAGE);
+        Room northSouthPassage = new Room("North-South Passage", MapStrings.DESC_NORTH_SOUTH_PASSAGE, Location.NORTH_SOUTH_PASSAGE);
         northSouthPassage.addExit(Action.NORTH, northsouth_chasm);
         northSouthPassage.addExit(Action.NORTHEAST, northsouth_deep_canyon);
         northSouthPassage.addExit(Action.SOUTH, round_northsouth);
         
-        Room deepCanyon = new Room("Deep Canyon", GameStrings.DESC_DEEP_CANYON, Location.DEEP_CANYON);
+        Room deepCanyon = new Room("Deep Canyon", MapStrings.DESC_DEEP_CANYON, Location.DEEP_CANYON);
         deepCanyon.addExit(Action.EAST, dam_deep_canyon);
         deepCanyon.addExit(Action.NORTHWEST, res_south_deep);
         deepCanyon.addExit(Action.SOUTHWEST, northsouth_deep_canyon);
         deepCanyon.addExit(Action.DOWN, loud_deep_canyon);
         
-        Room chasm = new Room("Chasm", GameStrings.DESC_CHASM, Location.CHASM);
+        Room chasm = new Room("Chasm", MapStrings.DESC_CHASM, Location.CHASM);
         chasm.addExit(Action.NORTHEAST, res_south_chasm);
         chasm.addExit(Action.SOUTHWEST, eastwest_chasm);
         chasm.addExit(Action.UP, eastwest_chasm);
         chasm.addExit(Action.SOUTH, northsouth_chasm);
         
-        Room streamView = new Room("Stream View", GameStrings.DESC_STREAM_VIEW, Location.STREAM_VIEW);
+        Room streamView = new Room("Stream View", MapStrings.DESC_STREAM_VIEW, Location.STREAM_VIEW);
         streamView.addExit(Action.EAST, res_south_stream_view);
         streamView.addExit(Action.NORTH, stream_view_stream);
         
-        Room stream = new Room("Stream", GameStrings.DESC_STREAM, Location.STREAM);
+        Room stream = new Room("Stream", MapStrings.DESC_STREAM, Location.STREAM);
         stream.addExit(Action.SOUTH, stream_view_stream);
         stream.addExit(Action.EAST, reservoir_stream);
         
-        Room reservoirSouth = new Room("Reservoir South", GameStrings.DESC_RESERVOIR_SOUTH, Location.RESERVOIR_SOUTH);
+        Room reservoirSouth = new Room("Reservoir South", MapStrings.DESC_RESERVOIR_SOUTH, Location.RESERVOIR_SOUTH);
         reservoirSouth.addExit(Action.NORTH, res_south_res);
         reservoirSouth.addExit(Action.WEST, res_south_stream_view);
         reservoirSouth.addExit(Action.SOUTHEAST, res_south_deep);
         reservoirSouth.addExit(Action.SOUTHWEST, res_south_chasm);
         reservoirSouth.addExit(Action.EAST, dam_res_south);
         
-        Room reservoir = new Room("Reservoir", GameStrings.DESC_RESERVOIR, Location.RESERVOIR);
+        Room reservoir = new Room("Reservoir", MapStrings.DESC_RESERVOIR, Location.RESERVOIR);
         reservoir.addExit(Action.NORTH, res_north_res);
         reservoir.addExit(Action.SOUTH, res_south_res);
         reservoir.addExit(Action.WEST, reservoir_stream);
         
-        Room reservoirNorth = new Room("Reservoir North", GameStrings.DESC_RESERVOIR_NORTH, Location.RESERVOIR_NORTH);
+        Room reservoirNorth = new Room("Reservoir North", MapStrings.DESC_RESERVOIR_NORTH, Location.RESERVOIR_NORTH);
         reservoirNorth.addExit(Action.NORTH, res_north_atlantis);
         reservoirNorth.addExit(Action.SOUTH, res_north_res);
 
-        Room atlantisRoom = new Room("Atlantis Room", GameStrings.DESC_ATLANTIS_ROOM, Location.ATLANTIS_ROOM);
+        Room atlantisRoom = new Room("Atlantis Room", MapStrings.DESC_ATLANTIS_ROOM, Location.ATLANTIS_ROOM);
         atlantisRoom.addExit(Action.UP, atlantis_cave);
         atlantisRoom.addExit(Action.SOUTH, res_north_atlantis);
         
-        Room caveNorth = new Room("Cave", GameStrings.DESC_CAVE_NORTH, Location.CAVE_NORTH);
+        Room caveNorth = new Room("Cave", MapStrings.DESC_CAVE_NORTH, Location.CAVE_NORTH);
         // Is this exit down or south??? Both.
         caveNorth.addExit(Action.SOUTH, atlantis_cave);
         caveNorth.addExit(Action.DOWN, atlantis_cave);
         caveNorth.addExit(Action.NORTH, cave_mirrornorth);
         caveNorth.addExit(Action.WEST, cave_twisting);
         
-        Room twistingPassage = new Room("Twisting Passage", GameStrings.DESC_TWISTING_PASSAGE, Location.TWISTING_PASSAGE);
+        Room twistingPassage = new Room("Twisting Passage", MapStrings.DESC_TWISTING_PASSAGE, Location.TWISTING_PASSAGE);
         twistingPassage.addExit(Action.EAST, cave_twisting);
         twistingPassage.addExit(Action.NORTH, twisting_mirror);
         
-        Room mirrorRoomNorth = new Room("Mirror Room", GameStrings.DESC_MIRROR_ROOM_NORTH, Location.MIRROR_ROOM_NORTH);
+        Room mirrorRoomNorth = new Room("Mirror Room", MapStrings.DESC_MIRROR_ROOM_NORTH, Location.MIRROR_ROOM_NORTH);
         mirrorRoomNorth.addExit(Action.EAST, cave_mirrornorth);
         mirrorRoomNorth.addExit(Action.WEST, twisting_mirror);
         mirrorRoomNorth.addExit(Action.NORTH, mirror_cold);
         
-        Room coldPassage = new Room("Cold Passage", GameStrings.DESC_COLD_PASSAGE, Location.COLD_PASSAGE);
+        Room coldPassage = new Room("Cold Passage", MapStrings.DESC_COLD_PASSAGE, Location.COLD_PASSAGE);
         coldPassage.addExit(Action.SOUTH, mirror_cold);
         coldPassage.addExit(Action.WEST, cold_slide);
         
-        Room slideRoom = new Room("Slide Room", GameStrings.DESC_SLIDE_ROOM, Location.SLIDE_ROOM);
+        Room slideRoom = new Room("Slide Room", MapStrings.DESC_SLIDE_ROOM, Location.SLIDE_ROOM);
         slideRoom.addExit(Action.EAST, cold_slide);
         slideRoom.addExit(Action.DOWN, slide_cellar);
         slideRoom.addExit(Action.NORTH, slide_mine_entrance);
         
-        Room mineEntrance = new Room("Mine Entrance", GameStrings.DESC_MINE_ENTRANCE, Location.MINE_ENTRANCE);
+        Room mineEntrance = new Room("Mine Entrance", MapStrings.DESC_MINE_ENTRANCE, Location.MINE_ENTRANCE);
         mineEntrance.addExit(Action.SOUTH, slide_mine_entrance);
         mineEntrance.addExit(Action.WEST, mine_entrance_squeaky);
         
-        Room squeakyRoom = new Room("Squeaky Room", GameStrings.DESC_SQUEAKY_ROOM, Location.SQUEAKY_ROOM);
+        Room squeakyRoom = new Room("Squeaky Room", MapStrings.DESC_SQUEAKY_ROOM, Location.SQUEAKY_ROOM);
         squeakyRoom.addExit(Action.EAST, mine_entrance_squeaky);
         squeakyRoom.addExit(Action.NORTH, squeaky_bat);
         
-        Room batRoom = new Room("Bat Room", GameStrings.DESC_BAT_ROOM, Location.BAT_ROOM);
+        Room batRoom = new Room("Bat Room", MapStrings.DESC_BAT_ROOM, Location.BAT_ROOM);
         batRoom.addExit(Action.SOUTH, squeaky_bat);
         batRoom.addExit(Action.EAST, bat_shaft);
         
-        Room shaftRoom = new Room("Shaft Room", GameStrings.DESC_SHAFT_ROOM, Location.SHAFT_ROOM);
+        Room shaftRoom = new Room("Shaft Room", MapStrings.DESC_SHAFT_ROOM, Location.SHAFT_ROOM);
         shaftRoom.addExit(Action.WEST, bat_shaft);
         shaftRoom.addExit(Action.NORTH, shaft_smelly);
         
-        Room smellyRoom = new Room("Smelly Room", GameStrings.DESC_SMELLY_ROOM, Location.SMELLY_ROOM);
+        Room smellyRoom = new Room("Smelly Room", MapStrings.DESC_SMELLY_ROOM, Location.SMELLY_ROOM);
         smellyRoom.addExit(Action.SOUTH, shaft_smelly);
         smellyRoom.addExit(Action.DOWN, smelly_gas);
         
-        Room gasRoom = new Room("Gas Room", GameStrings.DESC_GAS_ROOM, Location.GAS_ROOM);
+        Room gasRoom = new Room("Gas Room", MapStrings.DESC_GAS_ROOM, Location.GAS_ROOM);
         gasRoom.addExit(Action.UP, smelly_gas);
         gasRoom.addExit(Action.EAST, gas_coal_1);
         
-        Room coalMine1 = new Room("Coal Mine", GameStrings.DESC_COAL_MINE_1, Location.COAL_MINE_1);
+        Room coalMine1 = new Room("Coal Mine", MapStrings.DESC_COAL_MINE_1, Location.COAL_MINE_1);
         coalMine1.addExit(Action.NORTH, gas_coal_1);
         coalMine1.addExit(Action.NORTHEAST, coal_1_coal_2);
         coalMine1.addExit(Action.EAST, coal_1_self);
         
-        Room coalMine2 = new Room("Coal Mine", GameStrings.DESC_COAL_MINE_2, Location.COAL_MINE_2);
+        Room coalMine2 = new Room("Coal Mine", MapStrings.DESC_COAL_MINE_2, Location.COAL_MINE_2);
         coalMine2.addExit(Action.SOUTH, coal_1_coal_2);
         coalMine2.addExit(Action.NORTH, coal_2_self);
         coalMine2.addExit(Action.SOUTHEAST, coal_2_coal_3);
         
-        Room coalMine3 = new Room("Coal Mine", GameStrings.DESC_COAL_MINE_3, Location.COAL_MINE_3);
+        Room coalMine3 = new Room("Coal Mine", MapStrings.DESC_COAL_MINE_3, Location.COAL_MINE_3);
         coalMine3.addExit(Action.EAST, coal_2_coal_3);
         coalMine3.addExit(Action.SOUTHWEST, coal_3_coal_4);
         coalMine3.addExit(Action.SOUTH, coal_3_self);
         
-        Room coalMine4 = new Room("Coal Mine", GameStrings.DESC_COAL_MINE_4, Location.COAL_MINE_4);
+        Room coalMine4 = new Room("Coal Mine", MapStrings.DESC_COAL_MINE_4, Location.COAL_MINE_4);
         coalMine4.addExit(Action.NORTH, coal_3_coal_4);
         coalMine4.addExit(Action.DOWN, coal_4_ladder_top);
         coalMine4.addExit(Action.WEST, coal_4_self);
         
-        Room ladderTop = new Room("Ladder Top", GameStrings.DESC_LADDER_TOP, Location.LADDER_TOP);
+        Room ladderTop = new Room("Ladder Top", MapStrings.DESC_LADDER_TOP, Location.LADDER_TOP);
         ladderTop.addExit(Action.UP, coal_4_ladder_top);
         ladderTop.addExit(Action.DOWN, ladder_top_bottom);
         
-        Room ladderBottom = new Room("Ladder Bottom", GameStrings.DESC_LADDER_BOTTOM, Location.LADDER_BOTTOM);
+        Room ladderBottom = new Room("Ladder Bottom", MapStrings.DESC_LADDER_BOTTOM, Location.LADDER_BOTTOM);
         ladderBottom.addExit(Action.UP, ladder_top_bottom);
         ladderBottom.addExit(Action.WEST, ladder_bottom_timber);
         ladderBottom.addExit(Action.SOUTH, ladder_bottom_dead_end);
         
-        Room deadEndCoalMine = new Room("Dead End", GameStrings.DESC_DEAD_END_COAL_MINE, Location.DEAD_END_COAL_MINE);
+        Room deadEndCoalMine = new Room("Dead End", MapStrings.DESC_DEAD_END_COAL_MINE, Location.DEAD_END_COAL_MINE);
         deadEndCoalMine.addExit(Action.NORTH, ladder_bottom_dead_end);
         
-        Room timberRoom = new Room("Timber Room", GameStrings.DESC_TIMBER_ROOM, Location.TIMBER_ROOM);
+        Room timberRoom = new Room("Timber Room", MapStrings.DESC_TIMBER_ROOM, Location.TIMBER_ROOM);
         timberRoom.addExit(Action.EAST, ladder_bottom_timber);
         timberRoom.addExit(Action.WEST, timber_drafty);
         
-        Room draftyRoom = new Room("Drafty Room", GameStrings.DESC_DRAFTY_ROOM, Location.DRAFTY_ROOM);
+        Room draftyRoom = new Room("Drafty Room", MapStrings.DESC_DRAFTY_ROOM, Location.DRAFTY_ROOM);
         draftyRoom.addExit(Action.EAST, timber_drafty);
         draftyRoom.addExit(Action.SOUTH, drafty_machine);
         
-        Room machineRoom = new Room("Machine Room", GameStrings.DESC_MACHINE_ROOM, Location.MACHINE_ROOM);
+        Room machineRoom = new Room("Machine Room", MapStrings.DESC_MACHINE_ROOM, Location.MACHINE_ROOM);
         machineRoom.addExit(Action.NORTH, drafty_machine);
         
-        Room gratingRoom = new Room("Grating Room", GameStrings.DESC_GRATING_ROOM, Location.GRATING_ROOM);
+        Room gratingRoom = new Room("Grating Room", MapStrings.DESC_GRATING_ROOM, Location.GRATING_ROOM);
         gratingRoom.addExit(Action.UP, grating_clearing);
         gratingRoom.addExit(Action.SOUTHWEST, maze11_grating);
         
-        Room cyclopsRoom = new Room("Cyclops Room", GameStrings.DESC_CYCLOPS_ROOM, Location.CYCLOPS_ROOM);
+        Room cyclopsRoom = new Room("Cyclops Room", MapStrings.DESC_CYCLOPS_ROOM, Location.CYCLOPS_ROOM);
         cyclopsRoom.addExit(Action.NORTHWEST, maze15_cyclops);
         cyclopsRoom.addExit(Action.EAST, cyclops_strange);
         cyclopsRoom.addExit(Action.UP, cyclops_treasure);
         
-        Room strangePassage = new Room("Strange Passage", GameStrings.DESC_STRANGE_PASSAGE, Location.STRANGE_PASSAGE);
+        Room strangePassage = new Room("Strange Passage", MapStrings.DESC_STRANGE_PASSAGE, Location.STRANGE_PASSAGE);
         strangePassage.addExit(Action.WEST, cyclops_strange);
         strangePassage.addExit(Action.EAST, strange_living_room);
         
-        Room treasureRoom = new Room("Treasure Room", GameStrings.DESC_TREASURE_ROOM, Location.TREASURE_ROOM);
+        Room treasureRoom = new Room("Treasure Room", MapStrings.DESC_TREASURE_ROOM, Location.TREASURE_ROOM);
         treasureRoom.addExit(Action.DOWN, cyclops_treasure);
         
-        Room maze1 = new Room("Maze", GameStrings.DESC_MAZE_1, Location.MAZE_1);
+        Room maze1 = new Room("Maze", MapStrings.DESC_MAZE_1, Location.MAZE_1);
         maze1.addExit(Action.EAST, troll_maze);
         maze1.addExit(Action.NORTH, maze1_self);
         maze1.addExit(Action.SOUTH, maze1_maze2);
         maze1.addExit(Action.WEST, maze1_maze4);
         
-        Room maze2 = new Room("Maze", GameStrings.DESC_MAZE_2, Location.MAZE_2);
+        Room maze2 = new Room("Maze", MapStrings.DESC_MAZE_2, Location.MAZE_2);
         maze2.addExit(Action.SOUTH, maze1_maze2);
         maze2.addExit(Action.EAST, maze2_maze3);
         maze2.addExit(Action.DOWN, maze2_maze4);
         
-        Room maze3 = new Room("Maze", GameStrings.DESC_MAZE_3, Location.MAZE_3);
+        Room maze3 = new Room("Maze", MapStrings.DESC_MAZE_3, Location.MAZE_3);
         maze3.addExit(Action.WEST, maze2_maze3);
         maze3.addExit(Action.NORTH, maze3_maze4);
         maze3.addExit(Action.UP, maze3_maze5);
         
-        Room maze4 = new Room("Maze", GameStrings.DESC_MAZE_4, Location.MAZE_4);
+        Room maze4 = new Room("Maze", MapStrings.DESC_MAZE_4, Location.MAZE_4);
         maze4.addExit(Action.WEST, maze3_maze4);
         maze4.addExit(Action.NORTH, maze1_maze4);
         maze4.addExit(Action.EAST, maze4_dead_end);
         
-        Room maze5 = new Room("Maze", GameStrings.DESC_MAZE_5, Location.MAZE_5);
+        Room maze5 = new Room("Maze", MapStrings.DESC_MAZE_5, Location.MAZE_5);
         maze5.addExit(Action.NORTH, maze3_maze5);
         maze5.addExit(Action.EAST, maze5_dead_end);
         maze5.addExit(Action.SOUTHWEST, maze5_maze6);
         
-        Room maze6 = new Room("Maze", GameStrings.DESC_MAZE_6, Location.MAZE_6);
+        Room maze6 = new Room("Maze", MapStrings.DESC_MAZE_6, Location.MAZE_6);
         maze6.addExit(Action.DOWN, maze5_maze6);
         maze6.addExit(Action.EAST, maze6_maze7);
         maze6.addExit(Action.WEST, maze6_self);
         maze6.addExit(Action.UP, maze6_maze9);
         
-        Room maze7 = new Room("Maze", GameStrings.DESC_MAZE_7, Location.MAZE_7);
+        Room maze7 = new Room("Maze", MapStrings.DESC_MAZE_7, Location.MAZE_7);
         maze7.addExit(Action.DOWN, maze7_dead_end);
         maze7.addExit(Action.WEST, maze6_maze7);
         maze7.addExit(Action.EAST, maze7_maze8);
         maze7.addExit(Action.SOUTH, maze7_maze15);
         maze7.addExit(Action.UP, maze7_maze14);
         
-        Room maze8 = new Room("Maze", GameStrings.DESC_MAZE_8, Location.MAZE_8);
+        Room maze8 = new Room("Maze", MapStrings.DESC_MAZE_8, Location.MAZE_8);
         maze8.addExit(Action.NORTHEAST, maze7_maze8);
         maze8.addExit(Action.SOUTHEAST, maze8_dead_end);
         maze8.addExit(Action.WEST, maze8_self);
         
-        Room maze9 = new Room("Maze", GameStrings.DESC_MAZE_9, Location.MAZE_9);
+        Room maze9 = new Room("Maze", MapStrings.DESC_MAZE_9, Location.MAZE_9);
         maze9.addExit(Action.NORTH, maze6_maze9);
         maze9.addExit(Action.DOWN, maze9_maze11);
         maze9.addExit(Action.EAST, maze9_maze10);
@@ -927,51 +927,51 @@ public final class Game {
         maze9.addExit(Action.WEST, maze9_maze12);
         maze9.addExit(Action.NORTHWEST, maze9_self);
         
-        Room maze10 = new Room("Maze", GameStrings.DESC_MAZE_10, Location.MAZE_10);
+        Room maze10 = new Room("Maze", MapStrings.DESC_MAZE_10, Location.MAZE_10);
         maze10.addExit(Action.EAST, maze9_maze10);
         maze10.addExit(Action.UP, maze10_maze11);
         maze10.addExit(Action.WEST, maze10_maze13);
         
-        Room maze11 = new Room("Maze", GameStrings.DESC_MAZE_11, Location.MAZE_11);
+        Room maze11 = new Room("Maze", MapStrings.DESC_MAZE_11, Location.MAZE_11);
         maze11.addExit(Action.DOWN, maze10_maze11);
         maze11.addExit(Action.SOUTHWEST, maze11_maze12);
         maze11.addExit(Action.NORTHWEST, maze11_maze13);
         maze11.addExit(Action.NORTHEAST, maze11_grating);
         
-        Room maze12 = new Room("Maze", GameStrings.DESC_MAZE_12, Location.MAZE_12);
+        Room maze12 = new Room("Maze", MapStrings.DESC_MAZE_12, Location.MAZE_12);
         maze12.addExit(Action.EAST, maze12_maze13);
         maze12.addExit(Action.UP, maze9_maze12);
         maze12.addExit(Action.NORTH, maze12_dead_end);
         maze12.addExit(Action.DOWN, maze12_maze5);
         maze12.addExit(Action.SOUTHWEST, maze11_maze12);
         
-        Room maze13 = new Room("Maze", GameStrings.DESC_MAZE_13, Location.MAZE_13);
+        Room maze13 = new Room("Maze", MapStrings.DESC_MAZE_13, Location.MAZE_13);
         maze13.addExit(Action.EAST, maze9_maze13);
         maze13.addExit(Action.DOWN, maze12_maze13);
         maze13.addExit(Action.WEST, maze11_maze13);
         maze13.addExit(Action.SOUTH, maze10_maze13);
         
-        Room maze14 = new Room("Maze", GameStrings.DESC_MAZE_14, Location.MAZE_14);
+        Room maze14 = new Room("Maze", MapStrings.DESC_MAZE_14, Location.MAZE_14);
         maze14.addExit(Action.NORTHWEST, maze14_self);
         maze14.addExit(Action.WEST, maze14_maze15);
         maze14.addExit(Action.NORTHEAST, maze7_maze14);
         maze14.addExit(Action.SOUTH, maze7_maze14);
         
-        Room maze15 = new Room("Maze", GameStrings.DESC_MAZE_15, Location.MAZE_15);
+        Room maze15 = new Room("Maze", MapStrings.DESC_MAZE_15, Location.MAZE_15);
         maze15.addExit(Action.WEST, maze14_maze15);
         maze15.addExit(Action.SOUTH, maze7_maze15);
         maze15.addExit(Action.SOUTHEAST, maze15_cyclops);
         
-        Room mazeDeadEndNorth = new Room("Dead End", GameStrings.DESC_DEAD_END_MAZE_NORTH, Location.DEAD_END_MAZE_NORTH);
+        Room mazeDeadEndNorth = new Room("Dead End", MapStrings.DESC_DEAD_END_MAZE_NORTH, Location.DEAD_END_MAZE_NORTH);
         mazeDeadEndNorth.addExit(Action.SOUTH, maze4_dead_end);
         
-        Room mazeDeadEndCenter = new Room("Dead End", GameStrings.DESC_DEAD_END_MAZE_CENTER, Location.DEAD_END_MAZE_CENTER);
+        Room mazeDeadEndCenter = new Room("Dead End", MapStrings.DESC_DEAD_END_MAZE_CENTER, Location.DEAD_END_MAZE_CENTER);
         mazeDeadEndCenter.addExit(Action.WEST, maze5_dead_end);
 
-        Room mazeDeadEndSouthEast = new Room("Dead End", GameStrings.DESC_DEAD_END_MAZE_SOUTHEAST, Location.DEAD_END_MAZE_SOUTHEAST);
+        Room mazeDeadEndSouthEast = new Room("Dead End", MapStrings.DESC_DEAD_END_MAZE_SOUTHEAST, Location.DEAD_END_MAZE_SOUTHEAST);
         mazeDeadEndSouthEast.addExit(Action.NORTH, maze8_dead_end); 
 
-        Room mazeDeadEndSouthWest = new Room("Dead End", GameStrings.DESC_DEAD_END_MAZE_SOUTHWEST, Location.DEAD_END_MAZE_SOUTHWEST);
+        Room mazeDeadEndSouthWest = new Room("Dead End", MapStrings.DESC_DEAD_END_MAZE_SOUTHWEST, Location.DEAD_END_MAZE_SOUTHWEST);
         mazeDeadEndSouthWest.addExit(Action.SOUTH, maze12_dead_end);
 
         // Dark rooms
@@ -1020,7 +1020,7 @@ public final class Game {
         cyclops_treasure.close();
 
         grating_clearing.closedFail = "The grating is closed!";
-        house_behind_kitchen.closedFail = GameStrings.KITCHEN_WINDOW_CLOSED;
+        house_behind_kitchen.closedFail = MapStrings.KITCHEN_WINDOW_CLOSED;
         strange_living_room.closedFail = "The door is nailed shut.";
         troll_eastwest.closedFail = "The troll fends you off with a menacing gesture.";
         troll_maze.closedFail = "The troll fends you off with a menacing gesture.";
@@ -1333,7 +1333,7 @@ public final class Game {
                         trap.location = Location.LIVING_ROOM;
                         output(GameStrings.MOVE_RUG);
                         Room rm = gs.worldMap.get(Location.LIVING_ROOM);
-                        rm.description = GameStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED;
+                        rm.description = MapStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED;
                         Passage p = rm.exits.get(Action.DOWN);
                         p.closedFail = "The trap door is closed.";
                     }

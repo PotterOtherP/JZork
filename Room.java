@@ -212,13 +212,13 @@ class Room {
 			case BEHIND_HOUSE:
             {
                 if (exits.get(Action.WEST).isOpen())
-                    result = GameStrings.DESC_BEHIND_HOUSE_WINDOW_OPEN;
+                    result = MapStrings.DESC_BEHIND_HOUSE_WINDOW_OPEN;
             } break;
 
             case KITCHEN:
             {
                 if (exits.get(Action.EAST).isOpen())
-                    result = GameStrings.DESC_KITCHEN_WINDOW_OPEN;
+                    result = MapStrings.DESC_KITCHEN_WINDOW_OPEN;
             } break;
 
             case LIVING_ROOM:
