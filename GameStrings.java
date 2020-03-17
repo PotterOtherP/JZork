@@ -342,9 +342,7 @@ class GameStrings {
 		+ "\n ZORK is a registered trademark of Infocom, Inc."
 		+ "\n Revision 88 / Serial number 840726";	
 
-	public static final String KITCHEN_WINDOW_CLOSED = "The kitchen window is closed.";
-	public static final String WINDOW_OPENS = "With great effort, you open the window far enough to allow entry.";
-	public static final String WINDOW_CLOSES = "The window closes (more easily than it opened).";
+	
 
 	public static final String ENTER_DARKNESS = "You have moved into a dark place.";
     public static final String DARKNESS = "It is pitch black. You are likely to be eaten by a grue.";
@@ -396,6 +394,19 @@ class GameStrings {
         + "Unto the land of the dead shalt thou be sent at last.\n"
         + "Surely thou shalt repent of thy cunning.";
 
+    public static final String KITCHEN_WINDOW_CLOSED = "The kitchen window is closed.";
+    public static final String WINDOW_OPENS = "With great effort, you open the window far enough to allow entry.";
+    public static final String WINDOW_CLOSES = "The window closes (more easily than it opened).";
+
+    public static final String MOVE_RUG = "With a great effort, the rug is moved to one side of the room, revealing the dusty cover "
+        + "of a closed trap door.";
+
+    public static final String RUG_ALREADY_MOVED = "Having moved the carpet previously, you find it impossible to move it again.";
+
+    public static final String TRAP_DOOR_OPENS = "The door reluctantly opens to reveal a rickety staircase descending into darkness.";
+
+
+
     public static final String CYCLOPS_ONE = "A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. "
         + "From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes people.";
 
@@ -416,6 +427,8 @@ class GameStrings {
     public static final String[] SARCASM_JUMP = { "Very good. Now you can go to the second grade.", "Wheeeeeeeeee!!!!!",
         "Do you expect me to applaud?", "Are you enjoying yourself?" };
 
+    public static final String[] HARD_SARCASM = { "Look around.", "Too late for that.", "Have your eyes checked." };
+
     public static String getSarcasticResponse()
     {
         Random rand = new Random();
@@ -432,6 +445,15 @@ class GameStrings {
         int i = rand.nextInt(SARCASM_JUMP.length);
 
         return SARCASM_JUMP[i];
+    }
+
+    public static String getHardSarcasm()
+    {
+        Random rand = new Random();
+
+        int i = rand.nextInt(HARD_SARCASM.length);
+
+        return HARD_SARCASM[i];
     }
 
 

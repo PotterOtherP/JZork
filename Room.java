@@ -10,6 +10,7 @@ class Room {
 
 	public boolean darkness;
 	public boolean gas;
+	public boolean height;
     public int danger;
     public int loudness;
 
@@ -49,6 +50,11 @@ class Room {
 	public void addFailMessage(Action act, String msg)
 	{
 		failMessages.put(act, msg);
+	}
+
+	public void removeFailMessage(Action act)
+	{
+		failMessages.remove(act);
 	}
 
 	public void setDark() { darkness = true; }

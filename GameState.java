@@ -9,6 +9,8 @@ class GameState {
 
 	// game events
 	public boolean houseWindowOpened;
+	public boolean carpetMoved;
+
 
 
 	// player attributes

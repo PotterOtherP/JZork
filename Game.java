@@ -471,7 +471,7 @@ public final class Game {
         attic.addExit(Action.DOWN, kitchen_attic);
         
 
-        Room livingRoom = new Room("Living Room", GameStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED, Location.LIVING_ROOM);
+        Room livingRoom = new Room("Living Room", GameStrings.DESC_LIVING_ROOM, Location.LIVING_ROOM);
         livingRoom.addExit(Action.EAST, kitchen_livingroom);
         livingRoom.addExit(Action.DOWN, cellar_livingroom);
         livingRoom.addExit(Action.WEST, strange_living_room);
@@ -565,6 +565,7 @@ public final class Game {
         // This exit will be closed by the cyclops until he has been chased off. (in its actor method).
         cellar.addExit(Action.UP, cellar_livingroom);
         cellar.addFailMessage(Action.WEST, "You try to ascend the ramp, but it is impossible, and you slide back down.");
+        
 
         Room eastOfChasm = new Room("East of Chasm", GameStrings.DESC_EAST_OF_CHASM, Location.EAST_OF_CHASM);
         eastOfChasm.addExit(Action.NORTH, cellar_eastchasm);
@@ -987,6 +988,9 @@ public final class Game {
         maze14.setDark(); maze15.setDark(); mazeDeadEndCenter.setDark(); mazeDeadEndNorth.setDark(); mazeDeadEndSouthWest.setDark();
         mazeDeadEndSouthEast.setDark(); gratingRoom.setDark(); cyclopsRoom.setDark(); strangePassage.setDark(); treasureRoom.setDark();
 
+        // Rooms with a dangerous height
+        eastOfChasm.height = true; chasm.height = true; canyonView.height = true;
+
         // Gaseous rooms
         gasRoom.setGas();
 
@@ -1018,7 +1022,6 @@ public final class Game {
         grating_clearing.closedFail = "The grating is closed!";
         house_behind_kitchen.closedFail = GameStrings.KITCHEN_WINDOW_CLOSED;
         strange_living_room.closedFail = "The door is nailed shut.";
-        cellar_livingroom.closedFail = "The trap door is closed.";
         troll_eastwest.closedFail = "The troll fends you off with a menacing gesture.";
         troll_maze.closedFail = "The troll fends you off with a menacing gesture.";
         dome_torch.closedFail = "You cannot do gown without fracturing many bones.";
@@ -1029,6 +1032,7 @@ public final class Game {
         cyclops_treasure.closedFail = "The cyclops doesn't look like he'll let you past.";
         maze2_maze4.message = "You won't be able to get back up to the tunnel you are going through "
             + "when it gets to the next room.";
+        cellar_livingroom.message = "The trap door crashes shut, and you hear someone barring it.";
 
         // Narrow passages
         studio_kitchen.weightLimit = 5;
@@ -1235,12 +1239,16 @@ public final class Game {
         Item blackBook = new Item("black book", Location.ALTAR);
         blackBook.initialPresenceString = "On the altar is a large black book, open to page 569.";
         Item deflatedBoat = new Item("pile of plastic", Location.DAM_BASE);
+        deflatedBoat.presenceString = "There is a folded pile of plastic here which has a small valve attached.";
         Item inflatedBoat = new Item("magic boat", Location.NULL_LOCATION);
         Item puncturedBoat = new Item("punctured boat", Location.NULL_LOCATION);
         Item matchbook = new Item("matchbook", Location.DAM_LOBBY);
+        matchbook.presenceString = "There is a matchbook whose cover says \"Visit Beautiful FCD#3\" here.";
 
         Item guideBook = new Item("guidebook", Location.DAM_LOBBY);
+        guideBook.initialPresenceString = "Some guidebooks entitled \"Flood Control Dam #3\" are on the reception desk.";
         Item tube = new Item("tube", Location.MAINTENANCE_ROOM);
+        tube.presenceString = "There is an object which looks like a tube of toothpaste here.";
         Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM);
         Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM);
         Item shovel = new Item("shovel", Location.SANDY_BEACH);
@@ -1280,7 +1288,8 @@ public final class Game {
         houseWindow.altLocations.add(Location.KITCHEN);
 
         Feature carpet = new Feature("carpet", Location.LIVING_ROOM);
-        Feature trapDoor = new Feature("trap door", Location.LIVING_ROOM);
+        carpet.takeString = "The rug is extremely heavy and cannot be carried.";
+        Feature trapDoor = new Feature("trap door", Location.NULL_LOCATION);
         Feature grating = new Feature("grating", Location.NULL_LOCATION);
         Feature house = new Feature("house", Location.WEST_OF_HOUSE);
         house.altLocations.add(Location.NORTH_OF_HOUSE);
@@ -1306,21 +1315,37 @@ public final class Game {
 
         ActivateMethod dummyMethod = (GameState gs, Action act) -> {};
 
-        ActivateMethod leafletMethod = (GameState gs, Action act) -> {
 
-            switch(act)
+        ActivateMethod carpetMethod = (GameState gs, Action act) -> {
+
+            switch (act)
             {
-                case READ:
+                case MOVE_OBJECT:
                 {
-                    output(GameStrings.LEAFLET_TEXT);
+                    if (!gs.carpetMoved)
+                    {
+                        gs.carpetMoved = true;
+                        GameObject trap = gs.objectList.get("trap door");
+                        trap.location = Location.LIVING_ROOM;
+                        output(GameStrings.MOVE_RUG);
+                        Room rm = gs.worldMap.get(Location.LIVING_ROOM);
+                        rm.description = GameStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED;
+                        Passage p = rm.exits.get(Action.DOWN);
+                        p.closedFail = "The trap door is closed.";
+                    }
+
+                    else
+                    {
+                        output(GameStrings.RUG_ALREADY_MOVED);
+                    }
+                    
                 } break;
 
                 default:
                 {
-                    output("You can't do that to the leaflet.");
+
                 } break;
             }
-
 
         };
         
@@ -1383,16 +1408,9 @@ public final class Game {
             }
         };
 
-        ActivateMethod leafPileMethod = (GameState gs, Action act) -> {
 
-            
-
-
-        };
-
-        leafPile.setMethod(leafPileMethod);
-        leaflet.setMethod(leafletMethod);
         lantern.setMethod(lanternMethod);
+        carpet.setMethod(carpetMethod);
         
         // Actors
 
@@ -1440,9 +1458,35 @@ public final class Game {
                 default: {} break;
             }
 
+        };
 
+        ActorMethod cyclopsMethod = () -> {
 
+            if (state.playerLocation == Location.CELLAR && state.playerPreviousLocation == Location.LIVING_ROOM)
+            {
+                Room rm = state.worldMap.get(Location.CELLAR);
+                Passage p = rm.exits.get(Action.UP);
+                p.close();
+            }
 
+        };
+
+        ActorMethod windMethod = () -> {
+
+            if (state.playerLocation == Location.CAVE_SOUTH)
+            {
+                Item it = (Item)(state.objectList.get("candles"));
+                if (it.activated)
+                {
+                    Random rand = new Random();
+                    if (rand.nextInt(100) < 50)
+                    {
+                        output("A gust of wind blows out your candles!");
+                        it.activated = false;
+                    }
+
+                }
+            }
         };
 
         songbird.setActorMethod(songbirdMethod);
@@ -1450,14 +1494,12 @@ public final class Game {
         songbird.takeString = GameStrings.SONGBIRD_NEARBY;
         songbird.examineString = GameStrings.SONGBIRD_NEARBY;
 
-
-
         troll.setActorMethod(dummyActorMethod);
         thief.setActorMethod(dummyActorMethod);
-        cyclops.setActorMethod(dummyActorMethod);
+        cyclops.setActorMethod(cyclopsMethod);
         vampireBat.setActorMethod(dummyActorMethod);
         spirits.setActorMethod(dummyActorMethod);
-        gustOfWind.setActorMethod(dummyActorMethod);
+        gustOfWind.setActorMethod(windMethod);
         flood.setActorMethod(dummyActorMethod);
         current.setActorMethod(dummyActorMethod);
 
@@ -2148,6 +2190,13 @@ public final class Game {
 
 			case JUMP:
             {
+                if (currentRoom.height)
+                {
+                    output("Not a good place to try jumping.");
+                    state.playerAlive = false;
+                    break;
+                }
+
                 if (dark)
                 {   
                     if (state.darknessTurns >= 2)
