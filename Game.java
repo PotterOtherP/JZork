@@ -1175,6 +1175,7 @@ public final class Game {
         coffin.initialPresenceString = "The solid-gold coffin used for the burial of Ramses II is here.";
         coffin.presenceString = "The solid-gold coffin used for the burial of Ramses II is here.";
         Item coins = new Item("bag of coins", Location.MAZE_5);
+        coins.presenceString = "An old leather bag, bulging with coins, is here.";
         Item canary = new Item("golden canary", Location.NULL_LOCATION);
         Item diamond = new Item("diamond", Location.NULL_LOCATION);
         Item egg = new Item("egg", Location.UP_TREE);
@@ -1197,6 +1198,7 @@ public final class Game {
         Item torch = new Item("torch", Location.TORCH_ROOM);
         torch.initialPresenceString = "Sitting on the pedestal is a flaming torch, made of ivory.";
         Item trident = new Item("trident", Location.ATLANTIS_ROOM);
+        trident.initialPresenceString = "On the shore lies Poseidon's own crystal trident.";
         Item trunk = new Item("trunk", Location.NULL_LOCATION);
 
         // And another 40 items that can be taken.
@@ -1256,9 +1258,11 @@ public final class Game {
         Item timber = new Item("timber", Location.TIMBER_ROOM);
         Item coal = new Item("pile of coal", Location.DEAD_END_COAL_MINE);
         Item uselessLantern = new Item("useless lantern", Location.MAZE_5);
+        uselessLantern.initialPresenceString = "The deceased adventurer's useless lantern is here.";
         Item skeletonKey = new Item("skeleton key", Location.MAZE_5);
 
         Item rustyKnife = new Item("rusty knife", Location.MAZE_5);
+        rustyKnife.initialPresenceString = "Beside the skeleton is a rusty knife.";
         Item stiletto = new Item("stiletto", Location.THIEF_INVENTORY);
         Item buoy = new Item("buoy", Location.FRIGID_RIVER_4);
         Item leafPile = new Item("pile", Location.CLEARING_NORTH);
