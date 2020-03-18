@@ -19,10 +19,56 @@ abstract class GameObject {
     public String presenceString;
 
     // responses to player actions, mostly taking the place of the lambda methods.
-    public String takeString;
-    public String examineString;
-    public String readString;
+
+    public String answerString;
+    public String attackString;
+    public String blowString;
     public String boardString;
+    public String breakString;
+    public String burnString;
+    public String climbString;
+    public String closeString;
+    public String countString;
+    public String crossString;
+    public String cutString;
+    public String deflateString;
+    public String digString;
+    public String drinkString;
+    public String eatString;
+    public String enterString;
+    public String examineString;
+    public String extinguishString;
+    public String fillString;
+    public String followString;
+    public String giveString;
+    public String inflateString;
+    public String kickString;
+    public String knockString;
+    public String lightString;
+    public String listenString;
+    public String lockString;
+    public String lowerString;
+    public String moveString;
+    public String openString;
+    public String pourString;
+    public String pullString;
+    public String pushString;
+    public String putString;
+    public String raiseString;
+    public String readString;
+    public String searchString;
+    public String shakeString;
+    public String smellString;    
+    public String takeString;
+    public String throwString;
+    public String tieString;
+    public String touchString;
+    public String turnString;
+    public String unlockString;
+    public String wakeString;
+    public String waveString;
+    public String wearString;
+    public String windString;
     
     public ActivateMethod method;
     public ArrayList<Item> inventory;
@@ -39,12 +85,9 @@ abstract class GameObject {
         articleName = (vowelStart() ? "an " : "a ") + name;
         capArticleName = (vowelStart() ? "An " : "A ") + name;
         visible = true;
-        initialPresenceString = "";
-        takeString = "That's not something you can take, really.";
-        presenceString = "There is " + articleName + " here.";
-        examineString = "There's nothing special about the " + name + ".";
-        readString = "You can't read that!";
-        boardString = "You have a theory on how to board " + articleName + ", perhaps?";
+
+        setStrings();
+        
 
         method = (GameState state, Action act) -> {};
     }
@@ -52,6 +95,64 @@ abstract class GameObject {
     public void setMethod(ActivateMethod am)
     {
         method = am;
+    }
+
+    public void setStrings()
+    {
+        initialPresenceString = "";
+        presenceString = "There is " + articleName + " here.";
+
+        answerString = "It is hardly likely that the " + name + " is interested.";
+        attackString = "I've known strange people, but fighting " + articleName + "?";
+        blowString = "";
+        boardString = "You have a theory on how to board " + articleName + ", perhaps?";
+        breakString = "";
+        burnString = "";
+        climbString = "You can't do that!";
+        closeString = "You must tell me how to do that to " + articleName + ".";
+        countString = "You have lost your mind.";
+        crossString = "You can't cross that!";
+        cutString = "Strange concept, cutting the " + name + "...";
+        deflateString = "Come on, now!";
+        digString = "";
+        drinkString = "I don't think that the " + name + " would agree with you.";
+        eatString = "I don't think that the " + name + " would agree with you.";
+        enterString = "You hit your head against the " + name + " as you attempt this feat.";
+        enterItemString = "That would involve quite a contortion!";
+        examineString = "There's nothing special about the " + name + ".";
+        extinguishString = "";
+        fillString = "";
+        followString = "";
+        giveString = "";
+        inflateString = "";
+        kickString = "";
+        knockString = "";
+        lightString = "";
+        listenString = "";
+        lockString = "";
+        lowerString = "";
+        moveString = "";
+        openString = "";
+        pourString = "";
+        pullString = "";
+        pushString = "";
+        putString = "";
+        raiseString = "";
+        readString = "You can't read that!";
+        searchString = "";
+        shakeString = "";
+        smellString = "";    
+        takeString = "That's not something you can take, really.";
+        throwString = "";
+        tieString = "";
+        touchString = "";
+        turnString = "";
+        unlockString = "";
+        wakeString = "";
+        waveString = "";
+        wearString = "";
+        windString = "";
+
     }
 
     public Location getLocation() { return location; }
@@ -109,6 +210,17 @@ abstract class GameObject {
     public void close(GameState state) { Game.output("You can't close that."); }
     public void unlock(GameState state) { Game.output("You can't unlock that."); }
     public void lock(GameState state) { Game.output("You can't lock that."); }
+
+    public void breakObject(GameState state)
+    {
+        Game.output("Trying to destroy " + articleName + " with "
+        + state.indirectObject.articleName + " is futile.");
+    }
+
+    public void dig(GameState state)
+    {
+        Game.output("Digging with " + state.indirectObject.articleName + " is silly.");
+    }
 
     public void take(GameState state) { Game.output(takeString); }
     public void drop(GameState state) { Game.output("You can't drop that."); }

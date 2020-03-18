@@ -2,6 +2,8 @@ class MapStrings {
     
     private MapStrings() {}
 
+    // Room descriptions: initial and alternate
+
     public static final String DESC_WEST_OF_HOUSE = "You are standing in an open field west of a white house, with a boarded front door."
         + "\nThere is a small mailbox here.";
 
@@ -326,7 +328,13 @@ class MapStrings {
     public static final String DESC_DEAD_END_MAZE_CENTER = "You have come to a dead end in the maze.";
     public static final String DESC_DEAD_END_MAZE_SOUTHWEST = "You have come to a dead end in the maze.";
 
+
+    // Directional fail messages: where a room does NOT have a passage.
+
     public static final String FOREST_NE_FAIL_1 = "The mountains are impassable.";
+
+
+    // Strings related to moving through passages
 
     public static final String KITCHEN_WINDOW_CLOSED = "The kitchen window is closed.";
 

@@ -1168,89 +1168,81 @@ public final class Game {
         // Name, location, point value, weight.
 
         Item bar = new Item("platinum bar", Location.LOUD_ROOM);
-        bar.initialPresenceString = "On the ground is a large platinum bar.";
+        bar.initialPresenceString = ObjectStrings.INIT_PLATINUM_BAR;
         Item bauble = new Item("bauble", Location.NULL_LOCATION);
         Item chalice = new Item("silver chalice", Location.TREASURE_ROOM);
         Item coffin = new Item("coffin", Location.EGYPTIAN_ROOM);
-        coffin.initialPresenceString = "The solid-gold coffin used for the burial of Ramses II is here.";
-        coffin.presenceString = "The solid-gold coffin used for the burial of Ramses II is here.";
+        coffin.initialPresenceString = ObjectStrings.INIT_COFFIN;
+        coffin.presenceString = ObjectStrings.COFFIN;
         Item coins = new Item("bag of coins", Location.MAZE_5);
-        coins.presenceString = "An old leather bag, bulging with coins, is here.";
+        coins.presenceString = ObjectStrings.INIT_COINS;
         Item canary = new Item("golden canary", Location.NULL_LOCATION);
         Item diamond = new Item("diamond", Location.NULL_LOCATION);
         Item egg = new Item("egg", Location.UP_TREE);
-        egg.initialPresenceString = "In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged "
-            + "by a childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and "
-            + "mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp. "
-            + "The egg appears extremely fragile.";
+        egg.initialPresenceString = ObjectStrings.INIT_EGG;
         Item emerald = new Item("emerald", Location.NULL_LOCATION);
         Item jade = new Item("jade figurine", Location.BAT_ROOM);
         Item painting = new Item("painting", Location.GALLERY);
-        painting.initialPresenceString = GameStrings.INIT_PAINTING;
+        painting.initialPresenceString = ObjectStrings.INIT_PAINTING;
         Item pot = new Item("pot", Location.NULL_LOCATION);
         Item sapphire = new Item("sapphire bracelet", Location.GAS_ROOM);
         Item scarab = new Item("scarab", Location.NULL_LOCATION);
         Item sceptre = new Item("sceptre", Location.INSIDE_COFFIN);
-        sceptre.initialPresenceString = "A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is "
-            + "ornamented with colored enamel, and tapers to a sharp point.";
-        sceptre.presenceString = "An ornamented sceptre, tapering to a sharp point, is here.";
+        sceptre.initialPresenceString = ObjectStrings.INIT_SCEPTRE;
+        sceptre.presenceString = ObjectStrings.SCEPTRE;
         Item skull = new Item("skull", Location.LAND_OF_THE_DEAD);
         Item torch = new Item("torch", Location.TORCH_ROOM);
-        torch.initialPresenceString = "Sitting on the pedestal is a flaming torch, made of ivory.";
+        torch.initialPresenceString = ObjectStrings.INIT_TORCH;
         Item trident = new Item("trident", Location.ATLANTIS_ROOM);
-        trident.initialPresenceString = "On the shore lies Poseidon's own crystal trident.";
+        trident.initialPresenceString = ObjectStrings.INIT_TRIDENT;
         Item trunk = new Item("trunk", Location.NULL_LOCATION);
 
         // And another 40 items that can be taken.
 
         Item rope = new Item("rope", Location.ATTIC);
-        rope.initialPresenceString = "A large coil of rope is lying in the corner.";
+        rope.initialPresenceString = ObjectStrings.INIT_ROPE;
         Item knife = new Item("nasty knife", Location.ATTIC);
-        knife.initialPresenceString = "On the table is a nasty-looking knife.";
+        knife.initialPresenceString = ObjectStrings.INIT_NASTY_KNIFE;
         Item lantern = new Item("lantern", Location.LIVING_ROOM);
-        lantern.initialPresenceString = "A battery-powered brass lantern is on the trophy case.";
+        lantern.initialPresenceString = ObjectStrings.INIT_LANTERN;
         lantern.lifespan = LANTERN_LIFESPAN;
         Item sword = new Item("sword", Location.LIVING_ROOM);
-        sword.initialPresenceString = "Above the trophy case hangs an elvish sword of great antiquity.";
+        sword.initialPresenceString = ObjectStrings.INIT_SWORD;
         Item sack = new Item("brown sack", Location.KITCHEN);
-        sack.initialPresenceString = "On the table is an elongated brown sack, smelling of hot peppers.";
+        sack.initialPresenceString = ObjectStrings.INIT_SACK;
         Item garlic = new Item("garlic", Location.INSIDE_SACK);
         Item lunch = new Item("lunch", Location.INSIDE_SACK);
         Item bottle = new Item("bottle", Location.ON_KITCHEN_TABLE);
-        bottle.initialPresenceString = "A bottle is sitting on the table.";
+        bottle.initialPresenceString = ObjectStrings.INIT_BOTTLE;
         Item nest = new Item("nest", Location.UP_TREE);
-        nest.initialPresenceString = "Beside you on the branch is a small bird's nest.";
+        nest.initialPresenceString = ObjectStrings.INIT_NEST;
         Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX);
         leaflet.readString = GameStrings.LEAFLET_TEXT;
         Item brokenCanary = new Item("broken canary", Location.NULL_LOCATION);
-        brokenCanary.initialPresenceString = "There is a golden clockwork canary nestled in the egg. "
-            + "It seems to have recently had a bad experience. The mountings for its jewel-like eyes "
-            + "are empty, and its silver beak is crumpled. Through a cracked crystal window below its "
-            + "left wing you can see the remains of intricate machinery. It is not clear what result "
-            + "winding it would have, as the mainspring seems sprung.";
+        brokenCanary.initialPresenceString = ObjectStrings.INIT_BROKEN_CANARY;
 
         Item brokenEgg = new Item("somewhat ruined egg", Location.NULL_LOCATION);
         
         Item axe = new Item("axe", Location.TROLL_INVENTORY);
         Item studioPaper = new Item("paper", Location.STUDIO);
         studioPaper.readString = GameStrings.NATE_MANUAL_TEXT;
-        studioPaper.initialPresenceString = "Loosely attached to a wall is a small piece of paper.";
+        studioPaper.initialPresenceString = ObjectStrings.INIT_ZORK_MANUAL;
         Item bell = new Item("brass bell", Location.TEMPLE);
         Item candles = new Item("candles", Location.ALTAR);
-        candles.initialPresenceString = "On the two ends of the altar are burning candles.";
+        candles.initialPresenceString = ObjectStrings.INIT_CANDLES;
         Item blackBook = new Item("black book", Location.ALTAR);
-        blackBook.initialPresenceString = "On the altar is a large black book, open to page 569.";
+        blackBook.initialPresenceString = ObjectStrings.INIT_BLACK_BOOK;
         Item deflatedBoat = new Item("pile of plastic", Location.DAM_BASE);
-        deflatedBoat.presenceString = "There is a folded pile of plastic here which has a small valve attached.";
+        deflatedBoat.presenceString = ObjectStrings.INIT_BOAT;
         Item inflatedBoat = new Item("magic boat", Location.NULL_LOCATION);
         Item puncturedBoat = new Item("punctured boat", Location.NULL_LOCATION);
         Item matchbook = new Item("matchbook", Location.DAM_LOBBY);
-        matchbook.presenceString = "There is a matchbook whose cover says \"Visit Beautiful FCD#3\" here.";
+        matchbook.presenceString = ObjectStrings.INIT_MATCHBOOK;
 
         Item guideBook = new Item("guidebook", Location.DAM_LOBBY);
-        guideBook.initialPresenceString = "Some guidebooks entitled \"Flood Control Dam #3\" are on the reception desk.";
+        guideBook.initialPresenceString = ObjectStrings.INIT_GUIDEBOOK;
         Item tube = new Item("tube", Location.MAINTENANCE_ROOM);
-        tube.presenceString = "There is an object which looks like a tube of toothpaste here.";
+        tube.presenceString = ObjectStrings.TUBE;
         Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM);
         Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM);
         Item shovel = new Item("shovel", Location.SANDY_BEACH);
@@ -1258,15 +1250,15 @@ public final class Game {
         Item timber = new Item("timber", Location.TIMBER_ROOM);
         Item coal = new Item("pile of coal", Location.DEAD_END_COAL_MINE);
         Item uselessLantern = new Item("useless lantern", Location.MAZE_5);
-        uselessLantern.initialPresenceString = "The deceased adventurer's useless lantern is here.";
+        uselessLantern.initialPresenceString = ObjectStrings.INIT_USELESS;
         Item skeletonKey = new Item("skeleton key", Location.MAZE_5);
 
         Item rustyKnife = new Item("rusty knife", Location.MAZE_5);
-        rustyKnife.initialPresenceString = "Beside the skeleton is a rusty knife.";
+        rustyKnife.initialPresenceString = ObjectStrings.INIT_RUSTY_KNIFE;
         Item stiletto = new Item("stiletto", Location.THIEF_INVENTORY);
         Item buoy = new Item("buoy", Location.FRIGID_RIVER_4);
         Item leafPile = new Item("pile", Location.CLEARING_NORTH);
-        leafPile.initialPresenceString = "On the ground is a pile of leaves.";
+        leafPile.initialPresenceString = ObjectStrings.INIT_LEAF_PILE;
 
         
         
