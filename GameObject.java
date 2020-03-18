@@ -36,6 +36,7 @@ abstract class GameObject {
     public String drinkString;
     public String eatString;
     public String enterString;
+    public String enterItemString;
     public String examineString;
     public String extinguishString;
     public String fillString;
@@ -228,6 +229,7 @@ abstract class GameObject {
     public void remove(GameState state, Item it) { Game.output("You can't do that."); }
     public void read(GameState state) { Game.output(readString); }
     public void board(GameState state) { Game.output(boardString); }
+    public void move(GameState state) { Game.output(moveString); }
     public void tick() {}
 
     public void examine(GameState state) { Game.output(examineString); }

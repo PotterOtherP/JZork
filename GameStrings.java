@@ -103,7 +103,8 @@ class GameStrings {
 
 
     public static final String[] SARCASM = { "What a concept!", "You can't be serious.", "A valiant attempt.", "An interesting idea..." };
-    public static final String[] SARCASM_JUMP = { "Very good. Now you can go to the second grade.", "Wheeeeeeeeee!!!!!",
+
+    public static final String[] JUMP_SARCASM = { "Very good. Now you can go to the second grade.", "Wheeeeeeeeee!!!!!",
         "Do you expect me to applaud?", "Are you enjoying yourself?" };
 
     public static final String[] HARD_SARCASM = { "Look around.", "Too late for that.", "Have your eyes checked." };
@@ -121,9 +122,9 @@ class GameStrings {
     {
         Random rand = new Random();
 
-        int i = rand.nextInt(SARCASM_JUMP.length);
+        int i = rand.nextInt(JUMP_SARCASM.length);
 
-        return SARCASM_JUMP[i];
+        return JUMP_SARCASM[i];
     }
 
     public static String getHardSarcasm()

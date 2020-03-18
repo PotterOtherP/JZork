@@ -1311,39 +1311,6 @@ public final class Game {
 
         ActivateMethod dummyMethod = (GameState gs, Action act) -> {};
 
-
-        ActivateMethod carpetMethod = (GameState gs, Action act) -> {
-
-            switch (act)
-            {
-                case MOVE_OBJECT:
-                {
-                    if (!gs.carpetMoved)
-                    {
-                        gs.carpetMoved = true;
-                        GameObject trap = gs.objectList.get("trap door");
-                        trap.location = Location.LIVING_ROOM;
-                        output(GameStrings.MOVE_RUG);
-                        Room rm = gs.worldMap.get(Location.LIVING_ROOM);
-                        rm.description = MapStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED;
-                        Passage p = rm.exits.get(Action.DOWN);
-                        p.closedFail = "The trap door is closed.";
-                    }
-
-                    else
-                    {
-                        output(GameStrings.RUG_ALREADY_MOVED);
-                    }
-                    
-                } break;
-
-                default:
-                {
-
-                } break;
-            }
-
-        };
         
         ActivateMethod lanternMethod = (GameState gs, Action act) -> {
 
@@ -1406,7 +1373,6 @@ public final class Game {
 
 
         lantern.setMethod(lanternMethod);
-        carpet.setMethod(carpetMethod);
         
         // Actors
 
@@ -1976,6 +1942,11 @@ public final class Game {
             {
                 obj.activate(state, currentAction);
             } break;
+
+            case MOVE_OBJECT:
+            {
+                obj.move(state);
+            } break;
             
             case UNLIGHT:
 			case ACTIVATE:
@@ -1984,7 +1955,6 @@ public final class Game {
 			case KICK:
 			case TIE:
 			case ATTACK:
-            case MOVE_OBJECT:
 			{
                 if (dark)
                 {

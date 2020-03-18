@@ -15,7 +15,7 @@ class Feature extends GameObject {
 	@Override
 	public void open(GameState state)
 	{
-		switch(name)
+		switch (name)
 		{
 			case "window":
 			case "house window":
@@ -59,7 +59,7 @@ class Feature extends GameObject {
 	@Override
 	public void close(GameState state)
 	{
-		switch(name)
+		switch (name)
 		{
 			case "window":
 			case "house window":
@@ -79,6 +79,43 @@ class Feature extends GameObject {
 			default:
 			{
 				Game.output("That's not something you can close.");
+			} break;
+		}
+	}
+
+	@Override
+	public void move(GameState state)
+	{
+		switch (name)
+		{
+			case "carpet":
+			{
+				if (!state.carpetMoved)
+                {
+                    state.carpetMoved = true;
+                    GameObject trap = state.objectList.get("trap door");
+                    trap.location = Location.LIVING_ROOM;
+                    Game.output(GameStrings.MOVE_RUG);
+                    Room rm = state.worldMap.get(Location.LIVING_ROOM);
+                    rm.description = MapStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED;
+                    Passage p = rm.exits.get(Action.DOWN);
+                    p.closedFail = "The trap door is closed.";
+                }
+
+                else
+                {
+                    Game.output(GameStrings.RUG_ALREADY_MOVED);
+                }
+			} break;
+
+			case "pile":
+			{
+
+			} break;
+
+			default:
+			{
+				Game.output(moveString);
 			} break;
 		}
 	}
