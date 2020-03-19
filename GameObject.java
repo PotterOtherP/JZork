@@ -21,16 +21,13 @@ abstract class GameObject {
     // responses to player actions, mostly taking the place of the lambda methods.
 
     public String answerString;
-    public String attackString;
+   
     public String blowString;
     public String boardString;
-    public String breakString;
-    public String burnString;
     public String climbString;
     public String closeString;
     public String countString;
     public String crossString;
-    public String cutString;
     public String deflateString;
     public String drinkString;
     public String eatString;
@@ -38,15 +35,11 @@ abstract class GameObject {
     public String enterItemString;
     public String examineString;
     public String extinguishString;
-    public String fillString;
     public String followString;
-    public String giveString;
-    public String inflateString;
     public String kickString;
     public String knockString;
     public String lightString;
     public String listenString;
-    public String lockString;
     public String lowerString;
     public String moveString;
     public String moveItemString;
@@ -54,7 +47,6 @@ abstract class GameObject {
     public String pourString;
     public String pullString;
     public String pushString;
-    public String putString;
     public String raiseString;
     public String readString;
     public String searchString;
@@ -62,10 +54,7 @@ abstract class GameObject {
     public String smellString;    
     public String takeString;
     public String throwString;
-    public String tieString;
     public String touchString;
-    public String turnString;
-    public String unlockString;
     public String wakeString;
     public String waveString;
     public String wearString;
@@ -76,10 +65,21 @@ abstract class GameObject {
     public String noEffect3 = " isn't notably helpful.";
     
     // Indirect actions
-
+    public String attackString;
+    public String breakString;
+    public String burnString;
+    public String cutString;
+    public String cutStringInd;
     public String digString;
     public String digStringInd;
-
+    public String fillString;
+    public String giveString;
+    public String inflateString;
+    public String lockString;
+    public String putString;
+    public String tieString;
+    public String turnString;
+    public String unlockString;
 
     public ActivateMethod method;
     public ArrayList<Item> inventory;
@@ -121,7 +121,6 @@ abstract class GameObject {
         closeString = "You must tell me how to do that to " + articleName + ".";
         countString = "You have lost your mind.";
         crossString = "You can't cross that!";
-        cutString = "Strange concept, cutting the " + name + "...";
         deflateString = "Come on, now!";
         drinkString = "I don't think that the " + name + " would agree with you.";
         eatString = "I don't think that the " + name + " would agree with you.";
@@ -141,6 +140,7 @@ abstract class GameObject {
         shakeString = "Shaken.";
         smellString = "It smells like " + articleName + ".";    
         takeString = "That's not something you can take, really.";
+        touchString = "";
         wakeString = "The " + name + " isn't sleeping.";
         wearString = "You can't wear the " + name;
         windString = "You cannot wind up " + articleName;
@@ -160,6 +160,8 @@ abstract class GameObject {
         // indirect action objects
         breakString = "";
         burnString = "";
+        cutString = "Strange concept, cutting the " + name + "...";
+        cutStringInd = "The \"cutting edge\" of " + articleName + " is hardly adequate.";
         digString = "";
         digStringInd = "Digging with " + articleName + " is silly.";
         fillString = "";

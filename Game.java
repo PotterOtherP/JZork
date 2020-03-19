@@ -76,12 +76,15 @@ enum Action {
     NORTH, SOUTH, EAST,	WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
 	UP,	DOWN, IN, OUT, LAUNCH,
 
-    ANSWER, ATTACK, BLOW, BREAK, BURN, CLIMB, CLOSE, COUNT, CROSS, CUT,
-    DEFLATE, DIG, DRINK, DROP, EAT, ENTER, EXAMINE, EXIT, EXTINGUISH,
-    FILL, FOLLOW, GIVE, INFLATE, JUMP, KICK, KNOCK, LIGHT, LISTEN,
-    LOCK, LOOK, LOWER, MOVE, OPEN, POUR, PRAY, PULL, PUSH, PUT, RAISE,
-    READ, SAY, SEARCH, SHAKE, SLIDE, SMELL, STAY, STRIKE, SWIM, TAKE,
-    TELL, THROW, TIE, TOUCH, TURN, UNLOCK, WAKE, WALK, WAVE, WEAR, WIND,
+    ANSWER, BLOW, CLIMB, CLOSE, COUNT, CROSS,
+    DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXIT, EXTINGUISH,
+    FOLLOW, JUMP, KICK, KNOCK, LIGHT, LISTEN,
+    LOOK, LOWER, MOVE, OPEN, POUR, PRAY, PULL, PUSH, RAISE,
+    READ, SAY, SEARCH, SHAKE, SLIDE, SMELL, STAY, SWIM, TAKE,
+    THROW, TOUCH, WAKE, WALK, WAVE, WEAR, WIND,
+
+    ATTACK, BREAK, BURN, CUT, DIG, FILL, GIVE, INFLATE, LOCK, PUT, STRIKE,
+    TELL, TIE, TURN, UNLOCK,
 
 
 	STORE, PLACE,
@@ -1934,56 +1937,58 @@ public final class Game {
 		switch (currentAction)
 		{
 
+            case ANSWER: { obj.answer(state); } break;
+            case BLOW: { obj.blow(state); } break;
+            case CLIMB: {obj.climb(state); } break;
+            case COUNT: { obj.count(state); } break;
+            case CROSS: { obj.cross(state); } break;
+            case DEFLATE: { obj.deflate(state); } break;
+            case DRINK: { obj.drink(state); } break;
+            case EAT: { obj.eat(state); } break;
+            case ENTER: { obj.enter(state); } break;
+            case EXAMINE: { obj.examine(state); } break;
+            case EXTINGUISH: { obj.extinguish(state); } break;
+            case FOLLOW: { obj.follow(state); } break;
+            case KICK: { obj.kick(state); } break;
+            case KNOCK: { obj.knock(state); } break;
+            case LIGHT: { obj.light(state); } break;
+            case LISTEN: { obj.listen(state); } break;
+            case LOWER: { obj.lower(state); } break;
+            case POUR: { obj.pour(state); } break;
+            case PULL: { obj.pull(state); } break;
+            case PUSH: { obj.push(state); } break;
+            case RAISE: { obj.raise(state); } break;
+            case READ: { obj.read(state); } break;
+            case SEARCH: { obj.search(state); } break;
+            case SHAKE: { obj.shake(state); } break;
+            case SMELL: { obj.smell(state); } break;
+            case TOUCH: { obj.touch(state); } break;
+            case TURN: { obj.turn(state); } break;
+            case WAKE: { obj.wake(state); } break;
+            case WAVE: { obj.wave(state); } break;
+            case WEAR: { obj.wear(state); } break;
+            case WIND: { obj.wind(state); } break;
 
 
 
 
-            case LIGHT:
-            {
-                obj.activate(state, currentAction);
-            } break;
+
+
 
             case MOVE_OBJECT:
             {
                 obj.move(state);
             } break;
             
-            case UNLIGHT:
-			case ACTIVATE:
-			case RING:
-			case PLAY:
-			case KICK:
-			case TIE:
-			case ATTACK:
-			{
-                if (dark)
-                {
-                    output(GameStrings.TOO_DARK);
-                    break;
-                }
+   
 
-                obj.activate(state, currentAction);
 
-			} break;
-
-			case READ:
-            {
-                obj.read(state);
-            } break;
             
 
 
             // Specific actions involving an object.
 
-            case EXAMINE:
-            {
-                if (dark)
-                {
-                    output(GameStrings.TOO_DARK);
-                    break;
-                }
-                obj.examine(state);
-            } break;
+    
 
             case OPEN:
             {
@@ -2366,7 +2371,6 @@ public final class Game {
         actions.put("examine", Action.EXAMINE);
         actions.put("look at", Action.EXAMINE);
         actions.put("l at", Action.EXAMINE);
-        actions.put("exit", Action.EXIT);
         actions.put("extinguish", Action. EXTINGUISH);
         actions.put("follow", Action.FOLLOW);
         actions.put("kick", Action.KICK);
@@ -2374,6 +2378,7 @@ public final class Game {
         actions.put("light", Action.LIGHT);
         actions.put("listen", Action.LISTEN);
         actions.put("lower", Action.LOWER);
+        actions.put("move", Action.MOVE_OBJECT);
         actions.put("open", Action.OPEN);
         actions.put("pour", Action.POUR);
         actions.put("pull", Action.PULL);
@@ -2390,8 +2395,6 @@ public final class Game {
         actions.put("pick up", Action.TAKE);
         actions.put("get", Action.TAKE);
         actions.put("acquire", Action.TAKE);
-        actions.put("tell", Action.TELL);
-        actions.put("throw", Action.THROW);
         actions.put("touch", Action.TOUCH);
         actions.put("turn", Action.TURN);
         actions.put("wake", Action.WAKE);
@@ -2413,12 +2416,13 @@ public final class Game {
         actions.put("inflate", Action.INFLATE);
         actions.put("put", Action.PUT);
 
-        actions.put("move", Action.MOVE_OBJECT);
         actions.put("unlock", Action.UNLOCK);
         actions.put("lock", Action.LOCK);
         actions.put("put", Action.PLACE);
         actions.put("place", Action.PLACE);
         actions.put("strike", Action.STRIKE);
+        actions.put("tell", Action.TELL);
+        actions.put("throw", Action.THROW);
         actions.put("tie", Action.TIE);
 
 
@@ -2463,7 +2467,7 @@ public final class Game {
         actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
         actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
         actionTypes.put(Action.EXIT, ActionType.DIRECT);
-        actionTypes.put(Action. EXTINGUISH, ActionType.DIRECT);
+        actionTypes.put(Action.EXTINGUISH, ActionType.DIRECT);
         actionTypes.put(Action.FOLLOW, ActionType.DIRECT);
         actionTypes.put(Action.KICK, ActionType.DIRECT);
         actionTypes.put(Action.KNOCK, ActionType.DIRECT);
@@ -2486,8 +2490,6 @@ public final class Game {
         actionTypes.put(Action.TAKE, ActionType.DIRECT);
         actionTypes.put(Action.TAKE, ActionType.DIRECT);
         actionTypes.put(Action.TAKE, ActionType.DIRECT);
-        actionTypes.put(Action.TELL, ActionType.DIRECT);
-        actionTypes.put(Action.THROW, ActionType.DIRECT);
         actionTypes.put(Action.TOUCH, ActionType.DIRECT);
         actionTypes.put(Action.TURN, ActionType.DIRECT);
         actionTypes.put(Action.WAKE, ActionType.DIRECT);
@@ -2505,13 +2507,14 @@ public final class Game {
         actionTypes.put(Action.GIVE, ActionType.INDIRECT);
         actionTypes.put(Action.INFLATE, ActionType.INDIRECT);
         actionTypes.put(Action.PUT, ActionType.INDIRECT);
-
         actionTypes.put(Action.MOVE_OBJECT, ActionType.INDIRECT);
         actionTypes.put(Action.UNLOCK, ActionType.INDIRECT);
         actionTypes.put(Action.LOCK, ActionType.INDIRECT);
         actionTypes.put(Action.PLACE, ActionType.INDIRECT);
         actionTypes.put(Action.PLACE, ActionType.INDIRECT);
         actionTypes.put(Action.STRIKE, ActionType.INDIRECT);
+        actionTypes.put(Action.TELL, ActionType.INDIRECT);
+        actionTypes.put(Action.THROW, ActionType.INDIRECT);
         actionTypes.put(Action.TIE, ActionType.INDIRECT);
 
         
