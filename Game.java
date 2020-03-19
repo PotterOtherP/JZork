@@ -1936,7 +1936,7 @@ public final class Game {
 
 
 
-            // These actions will activate the object's lambda method.
+
 
             case LIGHT:
             {
@@ -2329,17 +2329,15 @@ public final class Game {
         actions.put("inside", Action.IN);
         actions.put("go in", Action.IN);
         actions.put("out", Action.OUT);
+        actions.put("slide", Action.SLIDE);
 
-        // Simple actions: no interaction with game objects
+        // Reflexive actions: no interaction with game objects
 		actions.put("quit",  Action.QUIT);
 		actions.put("q",     Action.QUIT);
 		actions.put("jump",  Action.JUMP);
 		actions.put("look around",  Action.LOOK);
 		actions.put("look",  Action.LOOK);
 		actions.put("l",     Action.LOOK);
-        actions.put("examine", Action.EXAMINE);
-        actions.put("look at", Action.EXAMINE);
-        actions.put("l at", Action.EXAMINE);
 		actions.put("inventory", Action.INVENTORY);
 		actions.put("i",         Action.INVENTORY);
 		actions.put("fuck",  Action.PROFANITY);
@@ -2349,39 +2347,80 @@ public final class Game {
 		actions.put("scream",  Action.SHOUT);
 		actions.put("wait", Action.WAIT);
         actions.put("author", Action.AUTHOR);
+        actions.put("pray", Action.PRAY);
 
 
-        // General object interaction actions
+        // Direct object interaction actions
+        
+        actions.put("answer", Action.ANSWER);
+        actions.put("blow", Action.BLOW);
+        actions.put("climb", Action.CLIMB);
+        actions.put("close", Action.CLOSE);
+        actions.put("count", Action.COUNT);
+        actions.put("cross", Action.CROSS);
+        actions.put("deflate", Action.DEFLATE);
+        actions.put("drink", Action.DRINK);
+        actions.put("drop", Action.DROP);
+        actions.put("eat", Action.EAT);
+        actions.put("enter", Action.ENTER);
+        actions.put("examine", Action.EXAMINE);
+        actions.put("look at", Action.EXAMINE);
+        actions.put("l at", Action.EXAMINE);
+        actions.put("exit", Action.EXIT);
+        actions.put("extinguish", Action. EXTINGUISH);
+        actions.put("follow", Action.FOLLOW);
+        actions.put("kick", Action.KICK);
+        actions.put("knock", Action.KNOCK);
+        actions.put("light", Action.LIGHT);
+        actions.put("listen", Action.LISTEN);
+        actions.put("lower", Action.LOWER);
+        actions.put("open", Action.OPEN);
+        actions.put("pour", Action.POUR);
+        actions.put("pull", Action.PULL);
+        actions.put("push", Action.PUSH);
+        actions.put("raise", Action.RAISE);
+        actions.put("read", Action.READ);
+        actions.put("say", Action.SAY);
+        actions.put("search", Action.SEARCH);
+        actions.put("shake", Action.SHAKE);
+        actions.put("smell", Action.SMELL);
+        actions.put("stay", Action.STAY);
+        actions.put("swim", Action.SWIM);
         actions.put("take", Action.TAKE);
         actions.put("pick up", Action.TAKE);
         actions.put("get", Action.TAKE);
         actions.put("acquire", Action.TAKE);
-        actions.put("drop", Action.DROP);
-        actions.put("open", Action.OPEN);
-        actions.put("close", Action.CLOSE);
-        actions.put("lock", Action.LOCK);
-        actions.put("read", Action.READ);
+        actions.put("tell", Action.TELL);
+        actions.put("throw", Action.THROW);
+        actions.put("touch", Action.TOUCH);
+        actions.put("turn", Action.TURN);
+        actions.put("wake", Action.WAKE);
+        actions.put("walk", Action.WALK);
+        actions.put("wave", Action.WAVE);
+        actions.put("wear", Action.WEAR);
+        actions.put("wind", Action.WIND);
+
+
+
+        // Indirect actions
+        actions.put("attack", Action.ATTACK);
+        actions.put("break", Action.BREAK);
+        actions.put("burn", Action.BURN);
+        actions.put("cut", Action.CUT);
+        actions.put("dig", Action.DIG);
+        actions.put("fill", Action.FILL);
+        actions.put("give", Action.GIVE);
+        actions.put("inflate", Action.INFLATE);
+        actions.put("put", Action.PUT);
+
+        actions.put("move", Action.MOVE_OBJECT);
         actions.put("unlock", Action.UNLOCK);
         actions.put("lock", Action.LOCK);
         actions.put("put", Action.PLACE);
         actions.put("place", Action.PLACE);
+        actions.put("strike", Action.STRIKE);
+        actions.put("tie", Action.TIE);
 
-        // Combat actions
-        actions.put("kick", Action.KICK);
-        actions.put("hit", Action.ATTACK);
-        actions.put("attack", Action.ATTACK);
-        actions.put("punch", Action.ATTACK);
-
-
-        // Special actions
-        actions.put("move", Action.MOVE_OBJECT);
-		actions.put("say", Action.SPEAK);
-        actions.put("play", Action.PLAY);
-		actions.put("ring", Action.RING);
-        actions.put("light", Action.LIGHT);
-        actions.put("turn on", Action.LIGHT);
-        actions.put("turn off", Action.UNLIGHT);
-		actions.put("tie", Action.TIE);
 
 
         // Assigning action types
@@ -2394,6 +2433,7 @@ public final class Game {
         actionTypes.put(Action.PROFANITY, ActionType.REFLEXIVE);
         actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
         actionTypes.put(Action.AUTHOR, ActionType.REFLEXIVE);
+        actionTypes.put(Action.PRAY, ActionType.REFLEXIVE);
 
         actionTypes.put(Action.NORTH, ActionType.EXIT);
         actionTypes.put(Action.SOUTH, ActionType.EXIT);
@@ -2408,27 +2448,73 @@ public final class Game {
         actionTypes.put(Action.IN, ActionType.EXIT);
         actionTypes.put(Action.OUT, ActionType.EXIT);
 
-        actionTypes.put(Action.TAKE, ActionType.DIRECT);
-        actionTypes.put(Action.MOVE_OBJECT, ActionType.DIRECT);
+        actionTypes.put(Action.ANSWER, ActionType.DIRECT);
+        actionTypes.put(Action.BLOW, ActionType.DIRECT);
+        actionTypes.put(Action.CLIMB, ActionType.DIRECT);
+        actionTypes.put(Action.CLOSE, ActionType.DIRECT);
+        actionTypes.put(Action.COUNT, ActionType.DIRECT);
+        actionTypes.put(Action.CROSS, ActionType.DIRECT);
+        actionTypes.put(Action.DEFLATE, ActionType.DIRECT);
+        actionTypes.put(Action.DRINK, ActionType.DIRECT);
         actionTypes.put(Action.DROP, ActionType.DIRECT);
-        actionTypes.put(Action.STORE, ActionType.DIRECT);
-        actionTypes.put(Action.LIGHT, ActionType.DIRECT);
-        actionTypes.put(Action.UNLIGHT, ActionType.DIRECT);
-        actionTypes.put(Action.PLACE, ActionType.PLACE_REMOVE);
-
-        actionTypes.put(Action.OPEN, ActionType.OPEN_CLOSE);
-        actionTypes.put(Action.CLOSE, ActionType.OPEN_CLOSE);
-
+        actionTypes.put(Action.EAT, ActionType.DIRECT);
+        actionTypes.put(Action.ENTER, ActionType.DIRECT);
         actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
-        actionTypes.put(Action.READ, ActionType.DIRECT);
+        actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
+        actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
+        actionTypes.put(Action.EXIT, ActionType.DIRECT);
+        actionTypes.put(Action. EXTINGUISH, ActionType.DIRECT);
+        actionTypes.put(Action.FOLLOW, ActionType.DIRECT);
         actionTypes.put(Action.KICK, ActionType.DIRECT);
-        actionTypes.put(Action.PLAY, ActionType.DIRECT);
-        actionTypes.put(Action.RING, ActionType.DIRECT);
-        actionTypes.put(Action.TIE, ActionType.DIRECT);
+        actionTypes.put(Action.KNOCK, ActionType.DIRECT);
+        actionTypes.put(Action.LIGHT, ActionType.DIRECT);
+        actionTypes.put(Action.LISTEN, ActionType.DIRECT);
+        actionTypes.put(Action.LOWER, ActionType.DIRECT);
+        actionTypes.put(Action.OPEN, ActionType.DIRECT);
+        actionTypes.put(Action.POUR, ActionType.DIRECT);
+        actionTypes.put(Action.PULL, ActionType.DIRECT);
+        actionTypes.put(Action.PUSH, ActionType.DIRECT);
+        actionTypes.put(Action.RAISE, ActionType.DIRECT);
+        actionTypes.put(Action.READ, ActionType.DIRECT);
+        actionTypes.put(Action.SAY, ActionType.DIRECT);
+        actionTypes.put(Action.SEARCH, ActionType.DIRECT);
+        actionTypes.put(Action.SHAKE, ActionType.DIRECT);
+        actionTypes.put(Action.SMELL, ActionType.DIRECT);
+        actionTypes.put(Action.STAY, ActionType.DIRECT);
+        actionTypes.put(Action.SWIM, ActionType.DIRECT);
+        actionTypes.put(Action.TAKE, ActionType.DIRECT);
+        actionTypes.put(Action.TAKE, ActionType.DIRECT);
+        actionTypes.put(Action.TAKE, ActionType.DIRECT);
+        actionTypes.put(Action.TAKE, ActionType.DIRECT);
+        actionTypes.put(Action.TELL, ActionType.DIRECT);
+        actionTypes.put(Action.THROW, ActionType.DIRECT);
+        actionTypes.put(Action.TOUCH, ActionType.DIRECT);
+        actionTypes.put(Action.TURN, ActionType.DIRECT);
+        actionTypes.put(Action.WAKE, ActionType.DIRECT);
+        actionTypes.put(Action.WALK, ActionType.DIRECT);
+        actionTypes.put(Action.WAVE, ActionType.DIRECT);
+        actionTypes.put(Action.WEAR, ActionType.DIRECT);
+        actionTypes.put(Action.WIND, ActionType.DIRECT);
 
+        actionTypes.put(Action.ATTACK, ActionType.INDIRECT);
+        actionTypes.put(Action.BREAK, ActionType.INDIRECT);
+        actionTypes.put(Action.BURN, ActionType.INDIRECT);
+        actionTypes.put(Action.CUT, ActionType.INDIRECT);
+        actionTypes.put(Action.DIG, ActionType.INDIRECT);
+        actionTypes.put(Action.FILL, ActionType.INDIRECT);
+        actionTypes.put(Action.GIVE, ActionType.INDIRECT);
+        actionTypes.put(Action.INFLATE, ActionType.INDIRECT);
+        actionTypes.put(Action.PUT, ActionType.INDIRECT);
+
+        actionTypes.put(Action.MOVE_OBJECT, ActionType.INDIRECT);
         actionTypes.put(Action.UNLOCK, ActionType.INDIRECT);
         actionTypes.put(Action.LOCK, ActionType.INDIRECT);
-        actionTypes.put(Action.ATTACK, ActionType.INDIRECT);
+        actionTypes.put(Action.PLACE, ActionType.INDIRECT);
+        actionTypes.put(Action.PLACE, ActionType.INDIRECT);
+        actionTypes.put(Action.STRIKE, ActionType.INDIRECT);
+        actionTypes.put(Action.TIE, ActionType.INDIRECT);
+
+        
 
 	}
 
@@ -2445,6 +2531,13 @@ public final class Game {
             for (int i = 0; i < words.length; ++i)
                 dictionary.add(words[i]);
 
+        }
+
+        for (String str : actions.keySet())
+        {
+            String[] words = str.split(" ");
+            for (int i = 0; i < words.length; ++i)
+                dictionary.add(words[i]);
         }
 	}
 
