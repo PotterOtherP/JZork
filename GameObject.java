@@ -1,9 +1,7 @@
 import java.util.ArrayList;
+import java.util.Random;
 
-interface ActivateMethod {
 
-    public void run(GameState state, Action act);
-}
 
 abstract class GameObject {
     
@@ -63,6 +61,8 @@ abstract class GameObject {
     public String noEffect1 = " doesn't seem to work.";
     public String noEffect2 = " has no effect.";
     public String noEffect3 = " isn't notably helpful.";
+
+    public String[] noEffect = { noEffect1, noEffect2, noEffect3 };
     
     // Indirect actions
     public String attackString;
@@ -81,7 +81,6 @@ abstract class GameObject {
     public String turnString;
     public String unlockString;
 
-    public ActivateMethod method;
     public ArrayList<Item> inventory;
     public ArrayList<Location> altLocations;
     public ArrayList<String> altNames;
@@ -98,15 +97,9 @@ abstract class GameObject {
         visible = true;
 
         setStrings();
-        
-
-        method = (GameState state, Action act) -> {};
+    
     }
 
-    public void setMethod(ActivateMethod am)
-    {
-        method = am;
-    }
 
     public void setStrings()
     {
@@ -142,8 +135,8 @@ abstract class GameObject {
         takeString = "That's not something you can take, really.";
         touchString = "";
         wakeString = "The " + name + " isn't sleeping.";
-        wearString = "You can't wear the " + name;
-        windString = "You cannot wind up " + articleName;
+        wearString = "You can't wear the " + name + ".";
+        windString = "You cannot wind up " + articleName + ".";
 
         // These strings are used for items in the player's inventory.
         enterItemString = "That would involve quite a contortion!";
@@ -179,11 +172,6 @@ abstract class GameObject {
     }
 
     public Location getLocation() { return location; }
-
-    public void activate(GameState state, Action act)
-    {
-        method.run(state, act);
-    }
 
     public void actorTurn() {}
 
@@ -241,30 +229,34 @@ abstract class GameObject {
     public void deflate(GameState state) { Game.output(deflateString); }
     public void drink(GameState state) { Game.output(drinkString); }
     public void eat(GameState state) { Game.output(eatString); }
-    public void enter(GameState state) { Game.output(enterString); }
-    public void enterItem(GameState state) { Game.output(enterItemString); }
+    public void enter(GameState state)
+    {
+        if (isItem())
+            Game.output(enterItemString);
+        else 
+            Game.output(enterString);
+    }
     public void examine(GameState state) { Game.output(examineString); }
     public void extinguish(GameState state) { Game.output(extinguishString); }   
     public void follow(GameState state) { Game.output(followString); }  
-    public void kick(GameState state) { Game.output(kickString); }
+    public void kick(GameState state) { Game.output(kickString + randPhrase()); }
     public void knock(GameState state) { Game.output(knockString); }
     public void light(GameState state) { Game.output(lightString); }
     public void listen(GameState state) { Game.output(listenString); }
-    public void lower(GameState state) { Game.output(lowerString); }
+    public void lower(GameState state) { Game.output(lowerString + randPhrase()); }
     public void move(GameState state) { Game.output(moveString); }
     public void moveItem(GameState state) { Game.output(moveItemString); }
     public void pour(GameState state) { Game.output(pourString); }
     public void pull(GameState state) { Game.output(pullString); }
-    public void push(GameState state) { Game.output(pushString); }    
-    public void raise(GameState state) { Game.output(raiseString); }
+    public void push(GameState state) { Game.output(pushString + randPhrase()); }    
+    public void raise(GameState state) { Game.output(raiseString + randPhrase()); }
     public void read(GameState state) { Game.output(readString); }
     public void search(GameState state) { Game.output(searchString); }
     public void shake(GameState state) { Game.output(shakeString); }
     public void smell(GameState state) { Game.output(smellString); }   
-    public void touch(GameState state) { Game.output(touchString); }
-    public void turn(GameState state) { Game.output(turnString); }
+    public void touch(GameState state) { Game.output(touchString + randPhrase()); }
     public void wake(GameState state) { Game.output(wakeString); }
-    public void wave(GameState state) { Game.output(waveString); }
+    public void wave(GameState state) { Game.output(waveString + randPhrase()); }
     public void wear(GameState state) { Game.output(wearString); }
     public void wind(GameState state) { Game.output(windString); }
 
@@ -292,9 +284,21 @@ abstract class GameObject {
     public void remove(GameState state, Item it) {}
     public void throwObject(GameState state) { Game.output(throwString); }
     public void tie(GameState state) { Game.output(tieString); }
+    public void turn(GameState state) { Game.output(turnString); }
     public void unlock(GameState state) { Game.output("You can't unlock that."); }
     public void take(GameState state) { Game.output(takeString); }
     public void drop(GameState state) { Game.output("You can't drop that."); }
+
+    public String randPhrase()
+    {
+        Random rand = new Random();
+
+        int i = rand.nextInt(noEffect.length);
+
+        return noEffect[i];
+
+
+    }
 
 
 

@@ -49,6 +49,12 @@ class ObjectStrings {
     public static final String TUBE = "There is an object which looks like a tube of toothpaste here.";
 
 
+    public static final String LANTERN_DIM = "The lantern appears a bit dimmer.";
+    public static final String LANTERN_DIMMER = "The lantern is definitely dimmer now.";
+    public static final String LANTERN_DIMMEST = "The lamp is nearly out.";
+    public static final String LANTERN_EXPIRED = "You'd better have more light than from the brass lantern.";
+
+
 
 
 

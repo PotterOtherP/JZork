@@ -137,6 +137,7 @@ public final class Game {
      * Update object class definitions
      * Object creation
      * Carry weight
+     * UpdateGame needs to check for light at the end. (multiple light sources)
      * Implement all objects, one by one
      * All text responses - sarcasm, random selection, etc
      * Player death - less harsh than original? Unlimited lives, auto-restore
@@ -183,6 +184,11 @@ public final class Game {
         {
             TESTING = true;
             output("Testing");
+        }
+
+        if (args.length > 0 && args[0].equals("godmode"))
+        {
+            godmode = true;
         }
 
 
@@ -1310,72 +1316,7 @@ public final class Game {
 
 
 
-        // Feature methods
-
-        ActivateMethod dummyMethod = (GameState gs, Action act) -> {};
-
-        
-        ActivateMethod lanternMethod = (GameState gs, Action act) -> {
-
-            Item self = (Item)(gs.objectList.get("lantern"));
-            switch (act)
-            {
-                case LIGHT:
-                {
-
-                    if (!self.activated && self.lifespan > 0)
-                    {
-                        self.activated = true;
-                        gs.lightActivated = true;
-                        output("You switch on the brass lantern.");
-                        Room rm = gs.worldMap.get(gs.playerLocation);
-                        if (rm.isDark()) rm.lookAround(gs);
-                        self.examineString = "The lantern is on.";
-                    }
-
-                    else if (!self.activated && self.lifespan <= 0)
-                    {
-                        output("The lantern is out of power.");
-                    }
-
-                    else
-                    {
-                        output("The lantern is already on.!");
-                    }
-                } break;
-
-                case UNLIGHT:
-                {
-
-                    if (self.activated)
-                    {
-                        self.activated = false;
-                        gs.lightActivated = false;
-                        output("The brass lantern is now off.");
-
-                        Room rm = gs.worldMap.get(gs.playerLocation);
-                        if (rm.isDark())
-                        {
-                            output("It is now pitch black.");
-                        }
-                    }
-
-                    else
-                    {
-                        output("The brass lantern is already off!");
-                    }
-                } break;
-
-                default:
-                {
-                    output("You can't do that to the lantern.");
-
-                } break;
-            }
-        };
-
-
-        lantern.setMethod(lanternMethod);
+ 
         
         // Actors
 
@@ -1602,24 +1543,57 @@ public final class Game {
         // Method fails if any word the player typed is not known by the game.
 		String[] words = playerText.split(" ");
 
-        if (words[0].equals("teleport"))
+        // Before regular parsing, handle the godmode cases.
+
+        if (godmode)
         {
-            String dest = playerText.substring(words[0].length() + 1);
-            for (Room r : state.worldMap.values())
+            switch (words[0])
             {
-                String name = r.name.toLowerCase();
-                if (dest.equals(name))
+                case "teleport":
                 {
-                    outputLine();
-                    output(r.name);
-                    state.playerLocation = r.roomID;
-                    r.lookAround(state);
+                    String dest = playerText.substring(words[0].length() + 1);
+                    boolean teleported = false;
+                    for (Room r : state.worldMap.values())
+                    {
+                        String name = r.name.toLowerCase();
+                        if (dest.equals(name))
+                        {
+                            outputLine();
+                            output(r.name);
+                            state.playerLocation = r.roomID;
+                            teleported  = true;
+                            r.lookAround(state);
+                            break;
+                        }
+                    }
+
+                    if (!teleported) output("Room not found.");
                     return false;
                 }
-            }
 
-            output("Room not found.");
-            return false;
+                case "accio":
+                {
+                    String name = playerText.substring(words[0].length() + 1);
+                    Item it = (Item)(state.objectList.get(name));
+
+                    try
+                    {
+                        it.location = Location.PLAYER_INVENTORY;
+                        output("You now have the " + name + ".");
+                    }
+                    catch (NullPointerException e)
+                    {
+                        output("That item not found.");
+                    }
+
+                    return false;
+                }
+
+                default:
+                {
+
+                } break;
+            }          
         }
 
 		for (int i = 0; i < words.length; ++i)
@@ -1927,6 +1901,21 @@ public final class Game {
          * that don't really make sense.
          */
 
+        state.lightActivated = false;
+
+        Item lightsrc = (Item)(state.objectList.get("lantern"));
+        if (lightsrc.location == Location.PLAYER_INVENTORY && lightsrc.activated)
+            state.lightActivated = true;
+        
+        lightsrc = (Item)(state.objectList.get("torch"));
+        if (lightsrc.location == Location.PLAYER_INVENTORY && lightsrc.activated)
+            state.lightActivated = true;
+        
+        lightsrc = (Item)(state.objectList.get("candles"));
+        if (lightsrc.location == Location.PLAYER_INVENTORY && lightsrc.activated)
+            state.lightActivated = true;
+
+
         boolean dark = (currentRoom.isDark() && !state.lightActivated);
 
         if (!dark) state.darknessTurns = 0;
@@ -2227,9 +2216,12 @@ public final class Game {
                 if(it.activated && it.lifespan > 0)
                 {
                     it.tick();
+                    if (it.lifespan <= 0)
+                        it.activated = false;
                 }
             }
         }
+
 		state.addTurn();
 
 	}

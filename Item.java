@@ -52,6 +52,78 @@ class Item extends GameObject{
 	}
 
 	@Override
+	public void light(GameState state)
+	{
+		switch (name)
+		{
+			case "lantern":
+			{
+				if (!activated && lifespan > 0)
+                {
+                    activated = true;
+                    state.lightActivated = true;
+                    Game.output("The brass lantern is now on.");
+                    Room rm = state.worldMap.get(state.playerLocation);
+                    if (rm.isDark()) rm.lookAround(state);
+                    examineString = "The lamp is on.";
+                }
+
+                else if (!activated && lifespan <= 0)
+                {
+                    Game.output("A burned-out lamp won't light.");
+                }
+
+                else
+                {
+                    Game.output("It is already on.");
+                }
+
+			} break;
+
+			default:
+			{
+				Game.output(lightString);
+			} break;
+		}
+	}
+
+
+	@Override
+	public void extinguish(GameState state)
+	{
+		switch (name)
+		{
+			case "lantern":
+			{
+				if (activated)
+                {
+                    activated = false;
+                    Game.output("The brass lantern is now off.");
+
+                    Room rm = state.worldMap.get(state.playerLocation);
+                    if (rm.isDark())
+                    {
+                        Game.output("It is now pitch black.");
+                    }
+                }
+
+                else
+                {
+                    Game.output("It is already off.");
+                }
+			} break;
+
+			default:
+			{
+				Game.output(extinguishString);
+			} break;
+		}
+	}
+
+
+
+
+	@Override
 	public boolean isAlive() { return lifespan > 0; }
 
 	@Override
