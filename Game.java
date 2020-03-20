@@ -80,7 +80,7 @@ enum Action {
     DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXIT, EXTINGUISH,
     FOLLOW, JUMP, KICK, KNOCK, LIGHT, LISTEN,
     LOOK, LOWER, MOVE, OPEN, POUR, PRAY, PULL, PUSH, RAISE,
-    READ, SAY, SEARCH, SHAKE, SLIDE, SMELL, STAY, SWIM, TAKE,
+    READ, SAY, SEARCH, SHAKE, SLIDE, SMELL, STAY, SWIM, TAKE, TALK,
     THROW, TOUCH, WAKE, WALK, WAVE, WEAR, WIND,
 
     ATTACK, BREAK, BURN, CUT, DIG, FILL, GIVE, INFLATE, LOCK, PUT, STRIKE,
@@ -1321,7 +1321,10 @@ public final class Game {
         // Actors
 
         Actor troll = new Actor("troll", Location.TROLL_ROOM);
-        troll.initialPresenceString = "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.";
+        troll.presenceString = "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.";
+        troll.takeString = "The troll spits in your face, grunting \"Better luck next time\" in a rather barbarous accent.";
+        troll.talkString = "The troll isn't much of a conversationalist.";
+
         Actor thief = new Actor("thief", Location.TREASURE_ROOM);
         Actor cyclops = new Actor("cyclops", Location.CYCLOPS_ROOM);
         Actor songbird = new Actor("songbird", Location.NULL_LOCATION);
@@ -1951,6 +1954,7 @@ public final class Game {
             case SEARCH: { obj.search(state); } break;
             case SHAKE: { obj.shake(state); } break;
             case SMELL: { obj.smell(state); } break;
+            case TALK: { obj.talk(state); } break;
             case TOUCH: { obj.touch(state); } break;
             case TURN: { obj.turn(state); } break;
             case WAKE: { obj.wake(state); } break;
@@ -2387,6 +2391,7 @@ public final class Game {
         actions.put("pick up", Action.TAKE);
         actions.put("get", Action.TAKE);
         actions.put("acquire", Action.TAKE);
+        actions.put("talk to", Action.TAKE);
         actions.put("touch", Action.TOUCH);
         actions.put("turn", Action.TURN);
         actions.put("wake", Action.WAKE);
@@ -2479,9 +2484,7 @@ public final class Game {
         actionTypes.put(Action.STAY, ActionType.DIRECT);
         actionTypes.put(Action.SWIM, ActionType.DIRECT);
         actionTypes.put(Action.TAKE, ActionType.DIRECT);
-        actionTypes.put(Action.TAKE, ActionType.DIRECT);
-        actionTypes.put(Action.TAKE, ActionType.DIRECT);
-        actionTypes.put(Action.TAKE, ActionType.DIRECT);
+        actionTypes.put(Action.TALK, ActionType.DIRECT);
         actionTypes.put(Action.TOUCH, ActionType.DIRECT);
         actionTypes.put(Action.TURN, ActionType.DIRECT);
         actionTypes.put(Action.WAKE, ActionType.DIRECT);

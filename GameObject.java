@@ -51,6 +51,7 @@ abstract class GameObject {
     public String shakeString;
     public String smellString;    
     public String takeString;
+    public String talkString;
     public String throwString;
     public String touchString;
     public String wakeString;
@@ -133,6 +134,7 @@ abstract class GameObject {
         shakeString = "Shaken.";
         smellString = "It smells like " + articleName + ".";    
         takeString = "That's not something you can take, really.";
+        talkString = "You can't talk to the " + name + "!";
         touchString = "";
         wakeString = "The " + name + " isn't sleeping.";
         wearString = "You can't wear the " + name + ".";
@@ -254,6 +256,7 @@ abstract class GameObject {
     public void search(GameState state) { Game.output(searchString); }
     public void shake(GameState state) { Game.output(shakeString); }
     public void smell(GameState state) { Game.output(smellString); }   
+    public void talk(GameState state) { Game.output(talkString); }   
     public void touch(GameState state) { Game.output(touchString + randPhrase()); }
     public void wake(GameState state) { Game.output(wakeString); }
     public void wave(GameState state) { Game.output(waveString + randPhrase()); }
