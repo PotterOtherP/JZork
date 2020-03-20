@@ -107,9 +107,8 @@ enum ActionType {
 	REFLEXIVE,
 	DIRECT,
 	INDIRECT,
+    INDIRECT_INVERSE,
     EXIT,
-    PLACE_REMOVE,
-    OPEN_CLOSE
 }
 
 enum ObjectType {
@@ -155,7 +154,7 @@ public final class Game {
     // Global variables
 	public static boolean gameover = true;
 	public static boolean godmode = false;
-    public static boolean TESTING = false;
+    public static boolean debug = false;
 
 
     // Lists and hashmaps
@@ -180,9 +179,9 @@ public final class Game {
 
 		GameState gameState = new GameState();
 
-        if (args.length > 0 && args[0].equals("test"))
+        if (args.length > 0 && args[0].equals("debug"))
         {
-            TESTING = true;
+            debug = true;
             output("Testing");
         }
 
@@ -206,6 +205,14 @@ public final class Game {
             {
                 if (validateAction(gameState))
                     updateGame(gameState);
+            }
+
+            if (debug)
+            {
+                output("Parse player text results: ");
+                output("First phrase is: " + gameState.first);
+                output("Second phrase is: " + gameState.second);
+                output("Third phrase is: " + gameState.third);
             }
 
             outputLine();
@@ -1554,7 +1561,9 @@ public final class Game {
             {
                 case "teleport":
                 {
-                    String dest = playerText.substring(words[0].length() + 1);
+                    String dest = "";
+                    try { dest = playerText.substring(words[0].length() + 1); }
+                    catch (StringIndexOutOfBoundsException e) { dest = "noRoom"; }
                     boolean teleported = false;
                     for (Room r : state.worldMap.values())
                     {
@@ -1576,12 +1585,21 @@ public final class Game {
 
                 case "accio":
                 {
-                    String name = playerText.substring(words[0].length() + 1);
+                    String name = "";
+
+                    try { name = playerText.substring(words[0].length() + 1); }
+                    catch (StringIndexOutOfBoundsException e) { name = "noItem"; }
                     Item it = (Item)(state.objectList.get(name));
 
                     try
                     {
                         it.location = Location.PLAYER_INVENTORY;
+                        for (GameObject g : state.objectList.values())
+                        {
+                            if (g.inventory != null)
+                                if (g.inventory.contains(it))
+                                    g.inventory.remove(it);
+                        }
                         output("You now have the " + name + ".");
                     }
                     catch (NullPointerException e)
@@ -1706,8 +1724,8 @@ public final class Game {
         // Need to address ambiguous words here - the same key can't occur twice in a hashmap.
         fillCurrentObjectList(state);
 
-        /* TESTING */
-        if (TESTING)
+        /* debug */
+        if (false)
         {
             output("Parse player text results: ");
             output("First phrase is: " + state.first);
@@ -1747,7 +1765,6 @@ public final class Game {
             } break;
 
             case DIRECT:
-            case OPEN_CLOSE:
             {
                 // If player entered just "action" with no object
                 if (second.isEmpty())
@@ -1794,7 +1811,6 @@ public final class Game {
 
 
 			case DIRECT:
-            case OPEN_CLOSE:
             {
                 
                 if (currentObjects.containsKey(second))
@@ -1818,7 +1834,6 @@ public final class Game {
             
 
 			case INDIRECT:
-            case PLACE_REMOVE:
 			{
 
 				if (currentObjects.containsKey(second))
@@ -1885,10 +1900,11 @@ public final class Game {
 
 		GameObject indObj = state.indirectObject;
 
-        /* TESTING */
-		if (TESTING)
+        /* debug */
+		if (debug)
 		{
-			output("Selected action is " + currentAction);
+            output("Current action is " + currentAction);
+			output("Action type is " + state.actionType);
 			output("Direct object is " + obj.name);
 			output("Indirect object is " + indObj.name);
 		}
@@ -2409,19 +2425,19 @@ public final class Game {
         actions.put("cut", Action.CUT);
         actions.put("dig", Action.DIG);
         actions.put("fill", Action.FILL);
-        actions.put("give", Action.GIVE);
         actions.put("inflate", Action.INFLATE);
-        actions.put("put", Action.PUT);
 
         actions.put("unlock", Action.UNLOCK);
         actions.put("lock", Action.LOCK);
-        actions.put("put", Action.PLACE);
-        actions.put("place", Action.PLACE);
         actions.put("strike", Action.STRIKE);
         actions.put("tell", Action.TELL);
+
+        actions.put("give", Action.GIVE);
+        actions.put("place", Action.PLACE);
+        actions.put("put", Action.PLACE);
+        actions.put("put", Action.PUT);
         actions.put("throw", Action.THROW);
         actions.put("tie", Action.TIE);
-
 
 
         // Assigning action types
@@ -2499,19 +2515,19 @@ public final class Game {
         actionTypes.put(Action.CUT, ActionType.INDIRECT);
         actionTypes.put(Action.DIG, ActionType.INDIRECT);
         actionTypes.put(Action.FILL, ActionType.INDIRECT);
-        actionTypes.put(Action.GIVE, ActionType.INDIRECT);
         actionTypes.put(Action.INFLATE, ActionType.INDIRECT);
-        actionTypes.put(Action.PUT, ActionType.INDIRECT);
         actionTypes.put(Action.MOVE_OBJECT, ActionType.INDIRECT);
         actionTypes.put(Action.UNLOCK, ActionType.INDIRECT);
         actionTypes.put(Action.LOCK, ActionType.INDIRECT);
-        actionTypes.put(Action.PLACE, ActionType.INDIRECT);
-        actionTypes.put(Action.PLACE, ActionType.INDIRECT);
         actionTypes.put(Action.STRIKE, ActionType.INDIRECT);
         actionTypes.put(Action.TELL, ActionType.INDIRECT);
-        actionTypes.put(Action.THROW, ActionType.INDIRECT);
-        actionTypes.put(Action.TIE, ActionType.INDIRECT);
 
+        actionTypes.put(Action.GIVE, ActionType.INDIRECT_INVERSE);
+        actionTypes.put(Action.PLACE, ActionType.INDIRECT_INVERSE);
+        actionTypes.put(Action.PLACE, ActionType.INDIRECT_INVERSE);
+        actionTypes.put(Action.PUT, ActionType.INDIRECT_INVERSE);
+        actionTypes.put(Action.THROW, ActionType.INDIRECT_INVERSE);
+        actionTypes.put(Action.TIE, ActionType.INDIRECT_INVERSE);
         
 
 	}
