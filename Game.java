@@ -1,8 +1,4 @@
 import java.util.Scanner;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Random;
-import java.lang.Integer;
 
 /**
  * This program is my attempt to recreate Zork I as well as possible.
@@ -11,39 +7,10 @@ import java.lang.Integer;
  */
 public final class Game {
 
-    /* TODO (After break)
-     *
-     * Item/container/inventory issue
-     * Update object class definitions
-     * Object creation
-     * Carry weight
-     * UpdateGame needs to check for light at the end. (multiple light sources)
-     * Implement all objects, one by one
-     * All text responses - sarcasm, random selection, etc
-     * Player death - less harsh than original? Unlimited lives, auto-restore
-     * Score and winning
-     * Ambiguity
-     * Acting on multiple objects, "all except", etc
-     * Easter eggs and trivia
-     * Save files
-     * Transcripts
-     * Web/Javascript version
-     * AI program... ???
-     *
-     */
-
     // Global variables
 	public static boolean gameover = true;
 	public static boolean godmode = true;
     public static boolean debug = false;
-
-
-    // Lists and hashmaps
-    public static HashMap<String, Action> actions = new HashMap<String, Action>();
-	public static HashMap<Action, ActionType> actionTypes = new HashMap<Action, ActionType>();
-    public static HashMap<String, ObjectType> currentObjects = new HashMap<String, ObjectType>();
-	public static ArrayList<String> dictionary = new ArrayList<String>();
-
 
 
     // Constants
@@ -235,7 +202,7 @@ public final class Game {
 
 
         // See if the player text starts with an action.
-		for (String token : actions.keySet())
+		for (String token : GameState.actions.keySet())
 		{
 			
 			if (startsWith(token, playerText))
@@ -331,8 +298,8 @@ public final class Game {
 		String second = state.second;
 		String third = state.third;
 
-        state.playerAction = actions.get(first);
-        state.actionType = actionTypes.get(state.playerAction);
+        state.playerAction = GameState.actions.get(first);
+        state.actionType = GameState.actionTypes.get(state.playerAction);
 
 
         if (state.playerAction == Action.QUIT)
@@ -406,7 +373,7 @@ public final class Game {
 			case DIRECT:
             {
                 
-                if (currentObjects.containsKey(second))
+                if (GameState.currentObjects.containsKey(second))
                 {
                     state.directObject = state.objectList.get(second);
                 }
@@ -429,7 +396,7 @@ public final class Game {
 			case INDIRECT:
 			{
 
-				if (currentObjects.containsKey(second))
+				if (GameState.currentObjects.containsKey(second))
                 {
                     state.directObject = state.objectList.get(second);
                 }
@@ -440,7 +407,7 @@ public final class Game {
                     return false;
                 }
 
-                if (currentObjects.containsKey(third))
+                if (GameState.currentObjects.containsKey(third))
                 {
                     state.indirectObject = state.objectList.get(third);
                 }
@@ -844,26 +811,26 @@ public final class Game {
 
 	public static void fillCurrentObjectList(GameState state)
     {
-        currentObjects.clear();
+        GameState.currentObjects.clear();
 
         for (GameObject g : state.objectList.values())
         {
             if (g.location == state.playerLocation ||
                 g.location == Location.PLAYER_INVENTORY)
-                currentObjects.put(g.name, g.type);
+                GameState.currentObjects.put(g.name, g.type);
 
             // Items in an open container that is present in the room
             if (g.location == state.playerLocation && g.isContainer() && g.isOpen())
             {
                 for (Item it : g.inventory)
-                    currentObjects.put(it.name, it.type);
+                    GameState.currentObjects.put(it.name, it.type);
             }
 
             // Features that can exist in multiple locations (e.g. the house)
             if (g.isFeature())
             {
                 if (g.altLocations.contains(state.playerLocation))
-                    currentObjects.put(g.name, g.type);
+                    GameState.currentObjects.put(g.name, g.type);
             }
         }
 
@@ -933,7 +900,7 @@ public final class Game {
 
 	public static boolean isGameWord(String str)
 	{
-		return (dictionary.contains(str));
+		return (GameState.dictionary.contains(str));
 	}
 
 	public static boolean verifyQuit()

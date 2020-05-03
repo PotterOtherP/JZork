@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 class GameState {
@@ -39,6 +40,11 @@ class GameState {
 	// lists of game objects
 	public HashMap<Location, Room> worldMap;
 	public HashMap<String, GameObject> objectList;
+	public static ArrayList<String> dictionary = new ArrayList<String>();
+	public static HashMap<String, ObjectType> currentObjects = new HashMap<String, ObjectType>();
+	public static HashMap<Action, ActionType> actionTypes = new HashMap<Action, ActionType>();
+	// Lists and hashmaps
+	public static HashMap<String, Action> actions = new HashMap<String, Action>();
 
 
 

@@ -1,5 +1,3 @@
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -137,7 +135,8 @@ class GameSetup {
 
     private GameSetup() {}
 
-    public static void createWorldMap(GameState state)
+    @SuppressWarnings("unused")
+	public static void createWorldMap(GameState state)
     {
         // Overworld passages
         Passage house_west_north = new Passage(Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE);
@@ -1060,7 +1059,6 @@ class GameSetup {
         // end world map creation
     }
 
-
     public static void createGameObjects(GameState state)
     {
         /* Items */
@@ -1424,302 +1422,302 @@ class GameSetup {
 	{
 		for (int i = 0; i < GameStrings.GAME_WORDS.length; ++i)
 		{
-			Game.dictionary.add(GameStrings.GAME_WORDS[i]);
+			GameState.dictionary.add(GameStrings.GAME_WORDS[i]);
 		}
 
         for (String name : state.objectList.keySet())
         {
             String[] words = name.split(" ");
             for (int i = 0; i < words.length; ++i)
-                Game.dictionary.add(words[i]);
+                GameState.dictionary.add(words[i]);
 
         }
 
-        for (String str : Game.actions.keySet())
+        for (String str : GameState.actions.keySet())
         {
             String[] words = str.split(" ");
             for (int i = 0; i < words.length; ++i)
-                Game.dictionary.add(words[i]);
+                GameState.dictionary.add(words[i]);
         }
 	}
 
 	public static void createActions()
 	{
 	    // Movement actions
-		Game.actions.put("north",       Action.NORTH);
-		Game.actions.put("go north",    Action.NORTH);
-		Game.actions.put("walk north",  Action.NORTH);
-		Game.actions.put("exit north",  Action.NORTH);
-		Game.actions.put("n",           Action.NORTH);
-		Game.actions.put("go n",        Action.NORTH);
-		Game.actions.put("walk n",      Action.NORTH);
-		Game.actions.put("exit n",      Action.NORTH);
+		GameState.actions.put("north",       Action.NORTH);
+		GameState.actions.put("go north",    Action.NORTH);
+		GameState.actions.put("walk north",  Action.NORTH);
+		GameState.actions.put("exit north",  Action.NORTH);
+		GameState.actions.put("n",           Action.NORTH);
+		GameState.actions.put("go n",        Action.NORTH);
+		GameState.actions.put("walk n",      Action.NORTH);
+		GameState.actions.put("exit n",      Action.NORTH);
 	
-		Game.actions.put("south",       Action.SOUTH);
-		Game.actions.put("go south",    Action.SOUTH);
-		Game.actions.put("walk south",  Action.SOUTH);
-		Game.actions.put("exit south",  Action.SOUTH);
-		Game.actions.put("s",           Action.SOUTH);
-		Game.actions.put("go s",        Action.SOUTH);
-		Game.actions.put("walk s",      Action.SOUTH);
-		Game.actions.put("exit s",      Action.SOUTH);
+		GameState.actions.put("south",       Action.SOUTH);
+		GameState.actions.put("go south",    Action.SOUTH);
+		GameState.actions.put("walk south",  Action.SOUTH);
+		GameState.actions.put("exit south",  Action.SOUTH);
+		GameState.actions.put("s",           Action.SOUTH);
+		GameState.actions.put("go s",        Action.SOUTH);
+		GameState.actions.put("walk s",      Action.SOUTH);
+		GameState.actions.put("exit s",      Action.SOUTH);
 	
-		Game.actions.put("east",        Action.EAST);
-		Game.actions.put("e",           Action.EAST);
-		Game.actions.put("go east",     Action.EAST);
-		Game.actions.put("walk east",   Action.EAST);
-		Game.actions.put("exit east",   Action.EAST);
-		Game.actions.put("go e",        Action.EAST);
-		Game.actions.put("walk e",      Action.EAST);
-		Game.actions.put("exit e",      Action.EAST);
+		GameState.actions.put("east",        Action.EAST);
+		GameState.actions.put("e",           Action.EAST);
+		GameState.actions.put("go east",     Action.EAST);
+		GameState.actions.put("walk east",   Action.EAST);
+		GameState.actions.put("exit east",   Action.EAST);
+		GameState.actions.put("go e",        Action.EAST);
+		GameState.actions.put("walk e",      Action.EAST);
+		GameState.actions.put("exit e",      Action.EAST);
 	
-		Game.actions.put("west",        Action.WEST);
-		Game.actions.put("go west",     Action.WEST);
-		Game.actions.put("walk west",   Action.WEST);
-		Game.actions.put("exit west",   Action.WEST);
-		Game.actions.put("w",           Action.WEST);
-		Game.actions.put("go w",        Action.WEST);
-		Game.actions.put("walk w",      Action.WEST);
-		Game.actions.put("exit w",      Action.WEST);
+		GameState.actions.put("west",        Action.WEST);
+		GameState.actions.put("go west",     Action.WEST);
+		GameState.actions.put("walk west",   Action.WEST);
+		GameState.actions.put("exit west",   Action.WEST);
+		GameState.actions.put("w",           Action.WEST);
+		GameState.actions.put("go w",        Action.WEST);
+		GameState.actions.put("walk w",      Action.WEST);
+		GameState.actions.put("exit w",      Action.WEST);
 	
-	    Game.actions.put("northeast",        Action.NORTHEAST);
-	    Game.actions.put("go northeast",     Action.NORTHEAST);
-	    Game.actions.put("walk northeast",   Action.NORTHEAST);
-	    Game.actions.put("exit northeast",   Action.NORTHEAST);
-	    Game.actions.put("ne",               Action.NORTHEAST);
-	    Game.actions.put("go ne",            Action.NORTHEAST);
-	    Game.actions.put("walk ne",          Action.NORTHEAST);
-	    Game.actions.put("exit ne",          Action.NORTHEAST);
+	    GameState.actions.put("northeast",        Action.NORTHEAST);
+	    GameState.actions.put("go northeast",     Action.NORTHEAST);
+	    GameState.actions.put("walk northeast",   Action.NORTHEAST);
+	    GameState.actions.put("exit northeast",   Action.NORTHEAST);
+	    GameState.actions.put("ne",               Action.NORTHEAST);
+	    GameState.actions.put("go ne",            Action.NORTHEAST);
+	    GameState.actions.put("walk ne",          Action.NORTHEAST);
+	    GameState.actions.put("exit ne",          Action.NORTHEAST);
 	
-	    Game.actions.put("northwest",        Action.NORTHWEST);
-	    Game.actions.put("go northwest",     Action.NORTHWEST);
-	    Game.actions.put("walk northwest",   Action.NORTHWEST);
-	    Game.actions.put("exit northwest",   Action.NORTHWEST);
-	    Game.actions.put("nw",               Action.NORTHWEST);
-	    Game.actions.put("go nw",            Action.NORTHWEST);
-	    Game.actions.put("walk nw",          Action.NORTHWEST);
-	    Game.actions.put("exit nw",          Action.NORTHWEST);
+	    GameState.actions.put("northwest",        Action.NORTHWEST);
+	    GameState.actions.put("go northwest",     Action.NORTHWEST);
+	    GameState.actions.put("walk northwest",   Action.NORTHWEST);
+	    GameState.actions.put("exit northwest",   Action.NORTHWEST);
+	    GameState.actions.put("nw",               Action.NORTHWEST);
+	    GameState.actions.put("go nw",            Action.NORTHWEST);
+	    GameState.actions.put("walk nw",          Action.NORTHWEST);
+	    GameState.actions.put("exit nw",          Action.NORTHWEST);
 	
-	    Game.actions.put("southeast",        Action.SOUTHEAST);
-	    Game.actions.put("go southeast",     Action.SOUTHEAST);
-	    Game.actions.put("walk southeast",   Action.SOUTHEAST);
-	    Game.actions.put("exit southeast",   Action.SOUTHEAST);
-	    Game.actions.put("se",               Action.SOUTHEAST);
-	    Game.actions.put("go se",            Action.SOUTHEAST);
-	    Game.actions.put("walk se",          Action.SOUTHEAST);
-	    Game.actions.put("exit se",          Action.SOUTHEAST);
+	    GameState.actions.put("southeast",        Action.SOUTHEAST);
+	    GameState.actions.put("go southeast",     Action.SOUTHEAST);
+	    GameState.actions.put("walk southeast",   Action.SOUTHEAST);
+	    GameState.actions.put("exit southeast",   Action.SOUTHEAST);
+	    GameState.actions.put("se",               Action.SOUTHEAST);
+	    GameState.actions.put("go se",            Action.SOUTHEAST);
+	    GameState.actions.put("walk se",          Action.SOUTHEAST);
+	    GameState.actions.put("exit se",          Action.SOUTHEAST);
 	
-	    Game.actions.put("southwest",        Action.SOUTHWEST);
-	    Game.actions.put("go southwest",     Action.SOUTHWEST);
-	    Game.actions.put("walk southwest",   Action.SOUTHWEST);
-	    Game.actions.put("exit southwest",   Action.SOUTHWEST);
-	    Game.actions.put("sw",               Action.SOUTHWEST);
-	    Game.actions.put("go sw",            Action.SOUTHWEST);
-	    Game.actions.put("walk sw",          Action.SOUTHWEST);
-	    Game.actions.put("exit sw",          Action.SOUTHWEST);
+	    GameState.actions.put("southwest",        Action.SOUTHWEST);
+	    GameState.actions.put("go southwest",     Action.SOUTHWEST);
+	    GameState.actions.put("walk southwest",   Action.SOUTHWEST);
+	    GameState.actions.put("exit southwest",   Action.SOUTHWEST);
+	    GameState.actions.put("sw",               Action.SOUTHWEST);
+	    GameState.actions.put("go sw",            Action.SOUTHWEST);
+	    GameState.actions.put("walk sw",          Action.SOUTHWEST);
+	    GameState.actions.put("exit sw",          Action.SOUTHWEST);
 	
-		Game.actions.put("up",	     Action.UP);
-	    Game.actions.put("go up",         Action.UP);
-		Game.actions.put("walk up",	     Action.UP);
-		Game.actions.put("exit up",	 Action.UP);
-		Game.actions.put("u",	         Action.UP);
-	    Game.actions.put("go u",      Action.UP);
-		Game.actions.put("walk u",	     Action.UP);
-		Game.actions.put("exit u",	 Action.UP);
+		GameState.actions.put("up",	     Action.UP);
+	    GameState.actions.put("go up",         Action.UP);
+		GameState.actions.put("walk up",	     Action.UP);
+		GameState.actions.put("exit up",	 Action.UP);
+		GameState.actions.put("u",	         Action.UP);
+	    GameState.actions.put("go u",      Action.UP);
+		GameState.actions.put("walk u",	     Action.UP);
+		GameState.actions.put("exit u",	 Action.UP);
 	
-		Game.actions.put("down",       Action.DOWN);
-	    Game.actions.put("go down",    Action.DOWN);
-		Game.actions.put("walk down",    Action.DOWN);
-		Game.actions.put("exit down",  Action.DOWN);
-		Game.actions.put("d",          Action.DOWN);
-	    Game.actions.put("go d",       Action.DOWN);
-		Game.actions.put("walk d",       Action.DOWN);
-		Game.actions.put("exit d",     Action.DOWN);
+		GameState.actions.put("down",       Action.DOWN);
+	    GameState.actions.put("go down",    Action.DOWN);
+		GameState.actions.put("walk down",    Action.DOWN);
+		GameState.actions.put("exit down",  Action.DOWN);
+		GameState.actions.put("d",          Action.DOWN);
+	    GameState.actions.put("go d",       Action.DOWN);
+		GameState.actions.put("walk d",       Action.DOWN);
+		GameState.actions.put("exit d",     Action.DOWN);
 	
-	    Game.actions.put("in", Action.IN);
-	    Game.actions.put("inside", Action.IN);
-	    Game.actions.put("go in", Action.IN);
-	    Game.actions.put("out", Action.OUT);
-	    Game.actions.put("slide", Action.SLIDE);
+	    GameState.actions.put("in", Action.IN);
+	    GameState.actions.put("inside", Action.IN);
+	    GameState.actions.put("go in", Action.IN);
+	    GameState.actions.put("out", Action.OUT);
+	    GameState.actions.put("slide", Action.SLIDE);
 	
 	    // Reflexive actions: no interaction with game objects
-		Game.actions.put("quit",  Action.QUIT);
-		Game.actions.put("q",     Action.QUIT);
-		Game.actions.put("jump",  Action.JUMP);
-		Game.actions.put("look around",  Action.LOOK);
-		Game.actions.put("look",  Action.LOOK);
-		Game.actions.put("l",     Action.LOOK);
-		Game.actions.put("inventory", Action.INVENTORY);
-		Game.actions.put("i",         Action.INVENTORY);
-		Game.actions.put("fuck",  Action.PROFANITY);
-		Game.actions.put("shit",  Action.PROFANITY);
-		Game.actions.put("shout", Action.SHOUT);
-		Game.actions.put("yell",  Action.SHOUT);
-		Game.actions.put("scream",  Action.SHOUT);
-		Game.actions.put("wait", Action.WAIT);
-	    Game.actions.put("author", Action.AUTHOR);
-	    Game.actions.put("pray", Action.PRAY);
+		GameState.actions.put("quit",  Action.QUIT);
+		GameState.actions.put("q",     Action.QUIT);
+		GameState.actions.put("jump",  Action.JUMP);
+		GameState.actions.put("look around",  Action.LOOK);
+		GameState.actions.put("look",  Action.LOOK);
+		GameState.actions.put("l",     Action.LOOK);
+		GameState.actions.put("inventory", Action.INVENTORY);
+		GameState.actions.put("i",         Action.INVENTORY);
+		GameState.actions.put("fuck",  Action.PROFANITY);
+		GameState.actions.put("shit",  Action.PROFANITY);
+		GameState.actions.put("shout", Action.SHOUT);
+		GameState.actions.put("yell",  Action.SHOUT);
+		GameState.actions.put("scream",  Action.SHOUT);
+		GameState.actions.put("wait", Action.WAIT);
+	    GameState.actions.put("author", Action.AUTHOR);
+	    GameState.actions.put("pray", Action.PRAY);
 	
 	
 	    // Direct object interaction actions
 	    
-	    Game.actions.put("answer", Action.ANSWER);
-	    Game.actions.put("blow", Action.BLOW);
-	    Game.actions.put("climb", Action.CLIMB);
-	    Game.actions.put("close", Action.CLOSE);
-	    Game.actions.put("count", Action.COUNT);
-	    Game.actions.put("cross", Action.CROSS);
-	    Game.actions.put("deflate", Action.DEFLATE);
-	    Game.actions.put("drink", Action.DRINK);
-	    Game.actions.put("drop", Action.DROP);
-	    Game.actions.put("eat", Action.EAT);
-	    Game.actions.put("enter", Action.ENTER);
-	    Game.actions.put("examine", Action.EXAMINE);
-	    Game.actions.put("look at", Action.EXAMINE);
-	    Game.actions.put("l at", Action.EXAMINE);
-	    Game.actions.put("extinguish", Action. EXTINGUISH);
-	    Game.actions.put("follow", Action.FOLLOW);
-	    Game.actions.put("kick", Action.KICK);
-	    Game.actions.put("knock", Action.KNOCK);
-	    Game.actions.put("light", Action.LIGHT);
-	    Game.actions.put("listen", Action.LISTEN);
-	    Game.actions.put("lower", Action.LOWER);
-	    Game.actions.put("move", Action.MOVE_OBJECT);
-	    Game.actions.put("open", Action.OPEN);
-	    Game.actions.put("pour", Action.POUR);
-	    Game.actions.put("pull", Action.PULL);
-	    Game.actions.put("push", Action.PUSH);
-	    Game.actions.put("raise", Action.RAISE);
-	    Game.actions.put("read", Action.READ);
-	    Game.actions.put("say", Action.SPEAK);
-	    Game.actions.put("search", Action.SEARCH);
-	    Game.actions.put("shake", Action.SHAKE);
-	    Game.actions.put("smell", Action.SMELL);
-	    Game.actions.put("stay", Action.STAY);
-	    Game.actions.put("swim", Action.SWIM);
-	    Game.actions.put("take", Action.TAKE);
-	    Game.actions.put("pick up", Action.TAKE);
-	    Game.actions.put("get", Action.TAKE);
-	    Game.actions.put("acquire", Action.TAKE);
-	    Game.actions.put("talk to", Action.TAKE);
-	    Game.actions.put("touch", Action.TOUCH);
-	    Game.actions.put("turn", Action.TURN);
-	    Game.actions.put("wake", Action.WAKE);
-	    Game.actions.put("walk", Action.WALK);
-	    Game.actions.put("wave", Action.WAVE);
-	    Game.actions.put("wear", Action.WEAR);
-	    Game.actions.put("wind", Action.WIND);
+	    GameState.actions.put("answer", Action.ANSWER);
+	    GameState.actions.put("blow", Action.BLOW);
+	    GameState.actions.put("climb", Action.CLIMB);
+	    GameState.actions.put("close", Action.CLOSE);
+	    GameState.actions.put("count", Action.COUNT);
+	    GameState.actions.put("cross", Action.CROSS);
+	    GameState.actions.put("deflate", Action.DEFLATE);
+	    GameState.actions.put("drink", Action.DRINK);
+	    GameState.actions.put("drop", Action.DROP);
+	    GameState.actions.put("eat", Action.EAT);
+	    GameState.actions.put("enter", Action.ENTER);
+	    GameState.actions.put("examine", Action.EXAMINE);
+	    GameState.actions.put("look at", Action.EXAMINE);
+	    GameState.actions.put("l at", Action.EXAMINE);
+	    GameState.actions.put("extinguish", Action. EXTINGUISH);
+	    GameState.actions.put("follow", Action.FOLLOW);
+	    GameState.actions.put("kick", Action.KICK);
+	    GameState.actions.put("knock", Action.KNOCK);
+	    GameState.actions.put("light", Action.LIGHT);
+	    GameState.actions.put("listen", Action.LISTEN);
+	    GameState.actions.put("lower", Action.LOWER);
+	    GameState.actions.put("move", Action.MOVE_OBJECT);
+	    GameState.actions.put("open", Action.OPEN);
+	    GameState.actions.put("pour", Action.POUR);
+	    GameState.actions.put("pull", Action.PULL);
+	    GameState.actions.put("push", Action.PUSH);
+	    GameState.actions.put("raise", Action.RAISE);
+	    GameState.actions.put("read", Action.READ);
+	    GameState.actions.put("say", Action.SPEAK);
+	    GameState.actions.put("search", Action.SEARCH);
+	    GameState.actions.put("shake", Action.SHAKE);
+	    GameState.actions.put("smell", Action.SMELL);
+	    GameState.actions.put("stay", Action.STAY);
+	    GameState.actions.put("swim", Action.SWIM);
+	    GameState.actions.put("take", Action.TAKE);
+	    GameState.actions.put("pick up", Action.TAKE);
+	    GameState.actions.put("get", Action.TAKE);
+	    GameState.actions.put("acquire", Action.TAKE);
+	    GameState.actions.put("talk to", Action.TAKE);
+	    GameState.actions.put("touch", Action.TOUCH);
+	    GameState.actions.put("turn", Action.TURN);
+	    GameState.actions.put("wake", Action.WAKE);
+	    GameState.actions.put("walk", Action.WALK);
+	    GameState.actions.put("wave", Action.WAVE);
+	    GameState.actions.put("wear", Action.WEAR);
+	    GameState.actions.put("wind", Action.WIND);
 	
 	
 	
 	    // Indirect actions
-	    Game.actions.put("attack", Action.ATTACK);
-	    Game.actions.put("break", Action.BREAK);
-	    Game.actions.put("burn", Action.BURN);
-	    Game.actions.put("cut", Action.CUT);
-	    Game.actions.put("dig", Action.DIG);
-	    Game.actions.put("fill", Action.FILL);
-	    Game.actions.put("inflate", Action.INFLATE);
+	    GameState.actions.put("attack", Action.ATTACK);
+	    GameState.actions.put("break", Action.BREAK);
+	    GameState.actions.put("burn", Action.BURN);
+	    GameState.actions.put("cut", Action.CUT);
+	    GameState.actions.put("dig", Action.DIG);
+	    GameState.actions.put("fill", Action.FILL);
+	    GameState.actions.put("inflate", Action.INFLATE);
 	
-	    Game.actions.put("unlock", Action.UNLOCK);
-	    Game.actions.put("lock", Action.LOCK);
-	    Game.actions.put("strike", Action.STRIKE);
+	    GameState.actions.put("unlock", Action.UNLOCK);
+	    GameState.actions.put("lock", Action.LOCK);
+	    GameState.actions.put("strike", Action.STRIKE);
 	
-	    Game.actions.put("give", Action.GIVE);
-	    Game.actions.put("place", Action.PLACE);
-	    Game.actions.put("put", Action.PLACE);
-	    Game.actions.put("put", Action.PUT);
-	    Game.actions.put("throw", Action.THROW);
-	    Game.actions.put("tie", Action.TIE);
+	    GameState.actions.put("give", Action.GIVE);
+	    GameState.actions.put("place", Action.PLACE);
+	    GameState.actions.put("put", Action.PLACE);
+	    GameState.actions.put("put", Action.PUT);
+	    GameState.actions.put("throw", Action.THROW);
+	    GameState.actions.put("tie", Action.TIE);
 	
 	
 	    // Assigning action types
 	
-	    Game.actionTypes.put(Action.QUIT, ActionType.REFLEXIVE);
-	    Game.actionTypes.put(Action.LOOK, ActionType.REFLEXIVE);
-	    Game.actionTypes.put(Action.INVENTORY, ActionType.REFLEXIVE);
-	    Game.actionTypes.put(Action.SHOUT, ActionType.REFLEXIVE);
-	    Game.actionTypes.put(Action.WAIT, ActionType.REFLEXIVE);
-	    Game.actionTypes.put(Action.PROFANITY, ActionType.REFLEXIVE);
-	    Game.actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
-	    Game.actionTypes.put(Action.AUTHOR, ActionType.REFLEXIVE);
-	    Game.actionTypes.put(Action.PRAY, ActionType.REFLEXIVE);
+	    GameState.actionTypes.put(Action.QUIT, ActionType.REFLEXIVE);
+	    GameState.actionTypes.put(Action.LOOK, ActionType.REFLEXIVE);
+	    GameState.actionTypes.put(Action.INVENTORY, ActionType.REFLEXIVE);
+	    GameState.actionTypes.put(Action.SHOUT, ActionType.REFLEXIVE);
+	    GameState.actionTypes.put(Action.WAIT, ActionType.REFLEXIVE);
+	    GameState.actionTypes.put(Action.PROFANITY, ActionType.REFLEXIVE);
+	    GameState.actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
+	    GameState.actionTypes.put(Action.AUTHOR, ActionType.REFLEXIVE);
+	    GameState.actionTypes.put(Action.PRAY, ActionType.REFLEXIVE);
 	
-	    Game.actionTypes.put(Action.NORTH, ActionType.EXIT);
-	    Game.actionTypes.put(Action.SOUTH, ActionType.EXIT);
-	    Game.actionTypes.put(Action.EAST, ActionType.EXIT);
-	    Game.actionTypes.put(Action.WEST, ActionType.EXIT);
-	    Game.actionTypes.put(Action.NORTHEAST, ActionType.EXIT);
-	    Game.actionTypes.put(Action.NORTHWEST, ActionType.EXIT);
-	    Game.actionTypes.put(Action.SOUTHEAST, ActionType.EXIT);
-	    Game.actionTypes.put(Action.SOUTHWEST, ActionType.EXIT);
-	    Game.actionTypes.put(Action.UP, ActionType.EXIT);
-	    Game.actionTypes.put(Action.DOWN, ActionType.EXIT);
-	    Game.actionTypes.put(Action.IN, ActionType.EXIT);
-	    Game.actionTypes.put(Action.OUT, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.NORTH, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.SOUTH, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.EAST, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.WEST, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.NORTHEAST, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.NORTHWEST, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.SOUTHEAST, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.SOUTHWEST, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.UP, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.DOWN, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.IN, ActionType.EXIT);
+	    GameState.actionTypes.put(Action.OUT, ActionType.EXIT);
 	
-	    Game.actionTypes.put(Action.ANSWER, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.BLOW, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.CLIMB, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.CLOSE, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.COUNT, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.CROSS, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.DEFLATE, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.DRINK, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.DROP, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.EAT, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.ENTER, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.EXIT, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.EXTINGUISH, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.FOLLOW, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.KICK, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.KNOCK, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.LIGHT, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.LISTEN, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.LOWER, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.OPEN, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.POUR, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.PULL, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.PUSH, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.RAISE, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.READ, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.SPEAK, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.SEARCH, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.SHAKE, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.SMELL, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.STAY, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.SWIM, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.TAKE, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.TALK_TO, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.TOUCH, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.TURN, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.WAKE, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.WALK, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.WAVE, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.WEAR, ActionType.DIRECT);
-	    Game.actionTypes.put(Action.WIND, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.ANSWER, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.BLOW, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.CLIMB, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.CLOSE, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.COUNT, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.CROSS, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.DEFLATE, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.DRINK, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.DROP, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.EAT, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.ENTER, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.EXIT, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.EXTINGUISH, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.FOLLOW, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.KICK, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.KNOCK, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.LIGHT, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.LISTEN, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.LOWER, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.OPEN, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.POUR, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.PULL, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.PUSH, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.RAISE, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.READ, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.SPEAK, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.SEARCH, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.SHAKE, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.SMELL, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.STAY, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.SWIM, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.TAKE, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.TALK_TO, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.TOUCH, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.TURN, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.WAKE, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.WALK, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.WAVE, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.WEAR, ActionType.DIRECT);
+	    GameState.actionTypes.put(Action.WIND, ActionType.DIRECT);
 	
-	    Game.actionTypes.put(Action.ATTACK, ActionType.INDIRECT);
-	    Game.actionTypes.put(Action.BREAK, ActionType.INDIRECT);
-	    Game.actionTypes.put(Action.BURN, ActionType.INDIRECT);
-	    Game.actionTypes.put(Action.CUT, ActionType.INDIRECT);
-	    Game.actionTypes.put(Action.DIG, ActionType.INDIRECT);
-	    Game.actionTypes.put(Action.FILL, ActionType.INDIRECT);
-	    Game.actionTypes.put(Action.INFLATE, ActionType.INDIRECT);
-	    Game.actionTypes.put(Action.MOVE_OBJECT, ActionType.INDIRECT);
-	    Game.actionTypes.put(Action.UNLOCK, ActionType.INDIRECT);
-	    Game.actionTypes.put(Action.LOCK, ActionType.INDIRECT);
-	    Game.actionTypes.put(Action.STRIKE, ActionType.INDIRECT);
+	    GameState.actionTypes.put(Action.ATTACK, ActionType.INDIRECT);
+	    GameState.actionTypes.put(Action.BREAK, ActionType.INDIRECT);
+	    GameState.actionTypes.put(Action.BURN, ActionType.INDIRECT);
+	    GameState.actionTypes.put(Action.CUT, ActionType.INDIRECT);
+	    GameState.actionTypes.put(Action.DIG, ActionType.INDIRECT);
+	    GameState.actionTypes.put(Action.FILL, ActionType.INDIRECT);
+	    GameState.actionTypes.put(Action.INFLATE, ActionType.INDIRECT);
+	    GameState.actionTypes.put(Action.MOVE_OBJECT, ActionType.INDIRECT);
+	    GameState.actionTypes.put(Action.UNLOCK, ActionType.INDIRECT);
+	    GameState.actionTypes.put(Action.LOCK, ActionType.INDIRECT);
+	    GameState.actionTypes.put(Action.STRIKE, ActionType.INDIRECT);
 	
-	    Game.actionTypes.put(Action.GIVE, ActionType.INDIRECT_INVERSE);
-	    Game.actionTypes.put(Action.PLACE, ActionType.INDIRECT_INVERSE);
-	    Game.actionTypes.put(Action.PLACE, ActionType.INDIRECT_INVERSE);
-	    Game.actionTypes.put(Action.PUT, ActionType.INDIRECT_INVERSE);
-	    Game.actionTypes.put(Action.THROW, ActionType.INDIRECT_INVERSE);
-	    Game.actionTypes.put(Action.TIE, ActionType.INDIRECT_INVERSE);
+	    GameState.actionTypes.put(Action.GIVE, ActionType.INDIRECT_INVERSE);
+	    GameState.actionTypes.put(Action.PLACE, ActionType.INDIRECT_INVERSE);
+	    GameState.actionTypes.put(Action.PLACE, ActionType.INDIRECT_INVERSE);
+	    GameState.actionTypes.put(Action.PUT, ActionType.INDIRECT_INVERSE);
+	    GameState.actionTypes.put(Action.THROW, ActionType.INDIRECT_INVERSE);
+	    GameState.actionTypes.put(Action.TIE, ActionType.INDIRECT_INVERSE);
 	    
 	
 	}
