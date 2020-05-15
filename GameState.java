@@ -12,8 +12,6 @@ class GameState {
 	public boolean houseWindowOpened;
 	public boolean carpetMoved;
 
-
-
 	// player attributes
 	public Location playerLocation;
 	public Location playerPreviousLocation;
@@ -23,15 +21,12 @@ class GameState {
 	public int playerMaxCarryWeight;
 	public boolean playerAlive;
 
-
 	// player action
 	public String phrase;
 	public String first;
 	public String second;
 	public String third;
 	public ActionType actionType;
-
-
 	public Action playerAction;
 	public GameObject directObject;
 	public GameObject indirectObject;
@@ -40,11 +35,10 @@ class GameState {
 	// lists of game objects
 	public HashMap<Location, Room> worldMap;
 	public HashMap<String, GameObject> objectList;
-	public static ArrayList<String> dictionary = new ArrayList<String>();
-	public static HashMap<String, ObjectType> currentObjects = new HashMap<String, ObjectType>();
-	public static HashMap<Action, ActionType> actionTypes = new HashMap<Action, ActionType>();
-	// Lists and hashmaps
-	public static HashMap<String, Action> actions = new HashMap<String, Action>();
+	public HashMap<String, ObjectType> currentObjects;
+	public HashMap<String, Action> actions;
+	public HashMap<Action, ActionType> actionTypes;
+	public ArrayList<String> dictionary;
 
 
 
@@ -67,7 +61,11 @@ class GameState {
 		
 
 		worldMap = new HashMap<Location, Room>();
+		dictionary = new ArrayList<String>();
 		objectList = new HashMap<String, GameObject>();
+		currentObjects = new HashMap<String, ObjectType>();
+		actions = new HashMap<String, Action>();
+		actionTypes = new HashMap<Action, ActionType>();
 	}
 
 

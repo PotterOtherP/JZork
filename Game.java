@@ -25,8 +25,6 @@ public final class Game {
 	public static void main(String[] args)
 	{
 
-		GameState gameState = new GameState();
-
         if (args.length > 0 && args[0].equals("debug"))
         {
             debug = true;
@@ -39,6 +37,10 @@ public final class Game {
         }
 
 
+		GameState gameState = new GameState();
+        InputParser parser = new InputParser(gameState);
+
+        Scanner inputScanner = new Scanner(System.in);
 		String playerText = "";
 	
 		initGame(gameState);
@@ -47,7 +49,7 @@ public final class Game {
 
 		while (!gameover)
 		{	
-			playerText = getPlayerText();
+			playerText = getPlayerText(inputScanner);
 
 			if (parsePlayerInput(gameState, playerText))
             {
@@ -55,18 +57,12 @@ public final class Game {
                     updateGame(gameState);
             }
 
-            if (debug)
-            {
-                output("Parse player text results: ");
-                output("First phrase is: " + gameState.first);
-                output("Second phrase is: " + gameState.second);
-                output("Third phrase is: " + gameState.third);
-            }
-
+            if (debug) output(parser.inputTestResults(playerText));
+            
             outputLine();
 		}
 
-
+		inputScanner.close();
 		endGame(gameState);
 		
 	}
@@ -76,10 +72,7 @@ public final class Game {
 
 	public static void initGame(GameState state)
 	{	
-		GameSetup.createActions();      
-        GameSetup.createWorldMap(state);
-        GameSetup.createGameObjects(state);
-		GameSetup.fillDictionary(state);
+		new GameSetup(state);
 
 		// Put the player in the starting location
 		state.setPlayerLocation(Location.WEST_OF_HOUSE);
@@ -202,7 +195,7 @@ public final class Game {
 
 
         // See if the player text starts with an action.
-		for (String token : GameState.actions.keySet())
+		for (String token : state.actions.keySet())
 		{
 			
 			if (startsWith(token, playerText))
@@ -298,8 +291,8 @@ public final class Game {
 		String second = state.second;
 		String third = state.third;
 
-        state.playerAction = GameState.actions.get(first);
-        state.actionType = GameState.actionTypes.get(state.playerAction);
+        state.playerAction = state.actions.get(first);
+        state.actionType = state.actionTypes.get(state.playerAction);
 
 
         if (state.playerAction == Action.QUIT)
@@ -330,7 +323,10 @@ public final class Game {
                 if (second.isEmpty())
                 {
                     output("What do you want to " + first + "?");
-                    second = getPlayerText();
+                    
+                    Scanner scan = new Scanner(System.in);
+                    second = getPlayerText(scan);
+                    scan.close();
 
                     // Player is starting over with a new phrase.
                     if (second.split(" ").length > 1)
@@ -373,7 +369,7 @@ public final class Game {
 			case DIRECT:
             {
                 
-                if (GameState.currentObjects.containsKey(second))
+                if (state.currentObjects.containsKey(second))
                 {
                     state.directObject = state.objectList.get(second);
                 }
@@ -396,7 +392,7 @@ public final class Game {
 			case INDIRECT:
 			{
 
-				if (GameState.currentObjects.containsKey(second))
+				if (state.currentObjects.containsKey(second))
                 {
                     state.directObject = state.objectList.get(second);
                 }
@@ -407,7 +403,7 @@ public final class Game {
                     return false;
                 }
 
-                if (GameState.currentObjects.containsKey(third))
+                if (state.currentObjects.containsKey(third))
                 {
                     state.indirectObject = state.objectList.get(third);
                 }
@@ -811,26 +807,26 @@ public final class Game {
 
 	public static void fillCurrentObjectList(GameState state)
     {
-        GameState.currentObjects.clear();
+        state.currentObjects.clear();
 
         for (GameObject g : state.objectList.values())
         {
             if (g.location == state.playerLocation ||
                 g.location == Location.PLAYER_INVENTORY)
-                GameState.currentObjects.put(g.name, g.type);
+                state.currentObjects.put(g.name, g.type);
 
             // Items in an open container that is present in the room
             if (g.location == state.playerLocation && g.isContainer() && g.isOpen())
             {
                 for (Item it : g.inventory)
-                    GameState.currentObjects.put(it.name, it.type);
+                    state.currentObjects.put(it.name, it.type);
             }
 
             // Features that can exist in multiple locations (e.g. the house)
             if (g.isFeature())
             {
                 if (g.altLocations.contains(state.playerLocation))
-                    GameState.currentObjects.put(g.name, g.type);
+                    state.currentObjects.put(g.name, g.type);
             }
         }
 
@@ -839,6 +835,7 @@ public final class Game {
 	public static void prompt() { System.out.print(">> "); }
 	public static void outputLine() { System.out.println(); }
 	public static void output() { System.out.println(); }
+	
 	public static void output(String s)
     {
         String[] words = s.split(" ");
@@ -860,9 +857,8 @@ public final class Game {
         System.out.print("\n");
     }
 
-	public static String getPlayerText()
+	public static String getPlayerText(Scanner scn)
 	{
-		Scanner scn = new Scanner(System.in);
 		String result = "";
 		prompt();
 
@@ -872,7 +868,7 @@ public final class Game {
 
 			if (result.isEmpty())
 			{
-				output("\nWhat?\n");
+				output("\nI beg your pardon?\n");
 				prompt();
 			}
 		}
@@ -900,7 +896,7 @@ public final class Game {
 
 	public static boolean isGameWord(String str)
 	{
-		return (GameState.dictionary.contains(str));
+		return true;
 	}
 
 	public static boolean verifyQuit()
@@ -911,7 +907,9 @@ public final class Game {
 		String input = scn.nextLine().toLowerCase();
 		if (input.equals("y")) result = true;
 		if (input.equals("yes")) result = true;
-
+		
+		scn.close();
+		
 		return result;
 	}
 
