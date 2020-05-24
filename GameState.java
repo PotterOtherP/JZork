@@ -22,11 +22,11 @@ class GameState {
 	public boolean playerAlive;
 
 	// player action
-	public String phrase;
-	public String first;
-	public String second;
-	public String third;
-	public ActionType actionType;
+	public String completePlayerInput;
+	public String firstInputPhrase;
+	public String secondInputPhrase;
+	public String thirdInputPhrase;
+	public ActionType playerActionType;
 	public Action playerAction;
 	public GameObject directObject;
 	public GameObject indirectObject;
@@ -83,13 +83,13 @@ class GameState {
 
 	public void resetInput()
 	{
-		first = "";
-		second = "";
-		third = "";
-		phrase = "";
+		firstInputPhrase = "";
+		secondInputPhrase = "";
+		thirdInputPhrase = "";
+		completePlayerInput = "";
 
 		playerAction = Action.NULL_ACTION;
-		actionType = ActionType.NULL_TYPE;
+		playerActionType = ActionType.NULL_TYPE;
 		directObject = dummyObject;
 		indirectObject = dummyObject;
 	}

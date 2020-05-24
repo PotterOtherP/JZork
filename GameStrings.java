@@ -172,6 +172,13 @@ class GameStrings {
 	"yell"
 	};
 
+    public static final String[] GODMODE_WORDS = {
+
+    "accio",
+    "teleport"
+
+    };
+
     public static final String[] PROFANITY = {
 
     "fuck", "shit"

@@ -310,6 +310,7 @@ abstract class GameObject {
     public boolean isAlive() { return false; }
     public boolean isVisible() { return visible; }
     public void tick() {}
+    public String toString() { return name; }
 
 
     

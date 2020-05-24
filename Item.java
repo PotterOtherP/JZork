@@ -128,5 +128,7 @@ class Item extends GameObject{
 
 	@Override
 	public void tick() { --lifespan; }
+
+	public String toString() { return name; }
 	
 }

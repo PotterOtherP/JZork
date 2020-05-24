@@ -78,6 +78,7 @@ enum Location {
  * Reflexive
  * Direct
  * Indirect
+ * Godmode
  */
 enum Action {
 
@@ -105,9 +106,12 @@ enum Action {
     STORE, PLACE,
 
     ACTIVATE, RING, PLAY,
-    
 
+    ACCIO,
+    TELEPORT,
+    
     NULL_ACTION
+
     }
 
 enum ActionType {
@@ -134,10 +138,14 @@ enum ObjectType {
 class GameSetup {
 
     private GameState state;
+    private boolean godmode;
+    private boolean debug;
 
-    public GameSetup(GameState st)
+    public GameSetup(GameState state, boolean godmode, boolean debug)
     {
-        state = st;
+        this.state = state;
+        this.godmode = godmode;
+        this.debug = debug;
 
         createWorldMap();
         createGameObjects();
@@ -1449,6 +1457,14 @@ class GameSetup {
             for (int i = 0; i < words.length; ++i)
                 state.dictionary.add(words[i]);
         }
+
+        if (godmode)
+        {
+            for (int i = 0; i < GameStrings.GODMODE_WORDS.length; ++i)
+            {
+                state.dictionary.add(GameStrings.GODMODE_WORDS[i]);
+            }
+        }
 	}
 
 	public void createActions()
@@ -1613,7 +1629,6 @@ class GameSetup {
 	    state.actions.put("touch", Action.TOUCH);
 	    state.actions.put("turn", Action.TURN);
 	    state.actions.put("wake", Action.WAKE);
-	    state.actions.put("walk", Action.WALK);
 	    state.actions.put("wave", Action.WAVE);
 	    state.actions.put("wear", Action.WEAR);
 	    state.actions.put("wind", Action.WIND);
@@ -1639,6 +1654,10 @@ class GameSetup {
 	    state.actions.put("put", Action.PUT);
 	    state.actions.put("throw", Action.THROW);
 	    state.actions.put("tie", Action.TIE);
+
+        // Godmode actions
+        state.actions.put("accio", Action.ACCIO);
+        state.actions.put("teleport", Action.TELEPORT);
 	
 	
 	    // Assigning action types
@@ -1705,7 +1724,6 @@ class GameSetup {
 	    state.actionTypes.put(Action.TOUCH, ActionType.DIRECT);
 	    state.actionTypes.put(Action.TURN, ActionType.DIRECT);
 	    state.actionTypes.put(Action.WAKE, ActionType.DIRECT);
-	    state.actionTypes.put(Action.WALK, ActionType.DIRECT);
 	    state.actionTypes.put(Action.WAVE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.WEAR, ActionType.DIRECT);
 	    state.actionTypes.put(Action.WIND, ActionType.DIRECT);

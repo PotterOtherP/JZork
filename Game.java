@@ -40,7 +40,6 @@ public final class Game {
 		GameState gameState = new GameState();
         InputParser parser = new InputParser(gameState);
 
-        Scanner inputScanner = new Scanner(System.in);
 		String playerText = "";
 	
 		initGame(gameState);
@@ -49,7 +48,9 @@ public final class Game {
 
 		while (!gameover)
 		{	
-			playerText = getPlayerText(inputScanner);
+            outputLine();
+            gameState.resetInput();
+			gameState.completePlayerInput = getPlayerText();
 
 			if (parsePlayerInput(gameState, playerText))
             {
@@ -57,12 +58,11 @@ public final class Game {
                     updateGame(gameState);
             }
 
-            if (debug) output(parser.inputTestResults(playerText));
+            if (debug) parser.inputTest();
             
             outputLine();
 		}
 
-		inputScanner.close();
 		endGame(gameState);
 		
 	}
@@ -72,7 +72,7 @@ public final class Game {
 
 	public static void initGame(GameState state)
 	{	
-		new GameSetup(state);
+		new GameSetup(state, godmode, debug);
 
 		// Put the player in the starting location
 		state.setPlayerLocation(Location.WEST_OF_HOUSE);
@@ -98,9 +98,6 @@ public final class Game {
         check for another phrase.
 
         */
-        outputLine();
-		state.resetInput();
-        state.phrase = playerText;
 
 		
         // Method fails if any word the player typed is not known by the game.
@@ -200,14 +197,14 @@ public final class Game {
 			
 			if (startsWith(token, playerText))
 			{
-                state.first = token;
+                state.firstInputPhrase = token;
                 
 			}
 		}
 
 
         // If not, exit		
-		if (state.first.isEmpty())
+		if (state.firstInputPhrase.isEmpty())
 		{
 			output("Sentence did not start with an action.");
             return false;
@@ -216,19 +213,19 @@ public final class Game {
 		
         // Remove the first phrase and check if there is more text.
         // The next token should be an object.
-		playerText = playerText.substring(state.first.length()).trim();
+		playerText = playerText.substring(state.firstInputPhrase.length()).trim();
 		if (playerText.isEmpty()) return true;
 
         for (String token : state.objectList.keySet())
         {
             if (startsWith(token, playerText))
             {
-                state.second = token;
+                state.secondInputPhrase = token;
             }
         }
 
         // If the user entered something known by the game but is not a valid object.
-        if (state.second.isEmpty())
+        if (state.secondInputPhrase.isEmpty())
         {
             output("Second phrase was not an object.");
             return false;
@@ -236,19 +233,19 @@ public final class Game {
 
         // Remove the second phrase and check if there is more text.
         // The next token should also be an ojbect.
-        playerText = playerText.substring(state.second.length()).trim();
+        playerText = playerText.substring(state.secondInputPhrase.length()).trim();
         if (playerText.isEmpty()) return true;
 
         for (String token : state.objectList.keySet())
         {
             if (startsWith(token, playerText))
             {
-                state.third = token;
+                state.thirdInputPhrase = token;
             }
         }
 
         // If the user entered something known by the game but is not a valid object.
-        if (state.third.isEmpty())
+        if (state.thirdInputPhrase.isEmpty())
         {
             output("Third phrase was not an object.");
             return false;
@@ -277,22 +274,15 @@ public final class Game {
         // Need to address ambiguous words here - the same key can't occur twice in a hashmap.
         fillCurrentObjectList(state);
 
-        /* debug */
-        if (debug)
-        {
-            output("Parse player text results: ");
-            output("First phrase is: " + state.first);
-            output("Second phrase is: " + state.second);
-            output("Third phrase is: " + state.third);
-        }
 
 
-		String first = state.first;
-		String second = state.second;
-		String third = state.third;
+
+		String first = state.firstInputPhrase;
+		String second = state.secondInputPhrase;
+		String third = state.thirdInputPhrase;
 
         state.playerAction = state.actions.get(first);
-        state.actionType = state.actionTypes.get(state.playerAction);
+        state.playerActionType = state.actionTypes.get(state.playerAction);
 
 
         if (state.playerAction == Action.QUIT)
@@ -304,7 +294,7 @@ public final class Game {
         // If the player entered an incomplete phrase, we probably want to
         // prompt them to complete it before doing any further validation.
 
-        switch(state.actionType)
+        switch(state.playerActionType)
         {
             // Handling the case where the player types stuff after a one-word action.
             // Special cases can go here too.
@@ -312,7 +302,7 @@ public final class Game {
             {
                 if (!second.isEmpty())
                 {
-                    output("I don't understand what \"" + state.phrase + "\" means.");
+                    output("I don't understand what \"" + state.completePlayerInput + "\" means.");
                     return false;
                 }
             } break;
@@ -325,7 +315,7 @@ public final class Game {
                     output("What do you want to " + first + "?");
                     
                     Scanner scan = new Scanner(System.in);
-                    second = getPlayerText(scan);
+                    second = getPlayerText();
                     scan.close();
 
                     // Player is starting over with a new phrase.
@@ -357,7 +347,7 @@ public final class Game {
 
         // SECOND SWITCH
         // At this point we either have a complete phrase or the method has returned.
-		switch(state.actionType)
+		switch(state.playerActionType)
 		{
 
 			case REFLEXIVE:
@@ -460,7 +450,7 @@ public final class Game {
 		if (debug)
 		{
             output("Current action is " + currentAction);
-			output("Action type is " + state.actionType);
+			output("Action type is " + state.playerActionType);
 			output("Direct object is " + obj.name);
 			output("Indirect object is " + indObj.name);
 		}
@@ -857,8 +847,9 @@ public final class Game {
         System.out.print("\n");
     }
 
-	public static String getPlayerText(Scanner scn)
+	public static String getPlayerText()
 	{
+        Scanner scn = new Scanner(System.in);
 		String result = "";
 		prompt();
 

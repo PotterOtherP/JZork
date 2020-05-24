@@ -1,7 +1,13 @@
+# Zork resources
+*.jpg
+*.gif
+*.png
+
 # Compiled class file
 *.class
 
 # Eclipse files
+.settings/
 *.classpath
 *.project
 

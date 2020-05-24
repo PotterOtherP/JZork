@@ -39,4 +39,5 @@ class Actor extends GameObject {
 	@Override
 	public boolean isAlive() { return alive; }
 
+
 }
