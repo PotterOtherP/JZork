@@ -20,9 +20,13 @@ public class InputParser {
 	/**
 	 * Returns true if the player inputs a phrase which is fully recognized by the game.
 	 * If not, player is re-prompted and no turn is taken.
+	 * TODO: handle input re-starts.
 	 */
 	public boolean parsePlayerInput()
 	{
+
+		if (profanityCheck())
+			return false;
 		
 		for (int i = 0; i < inputWords.length; ++i)
 		{
@@ -77,9 +81,24 @@ public class InputParser {
 			case INDIRECT:
 			{
 
+				// If empty, prompt for direct object.
+				if (input.isEmpty())
+				{
+					Game.output("What do you want to " + state.firstInputPhrase + "?");
+					input = Game.getPlayerText();
+				}
+
 				parseDirectString = input;
 				if (!parseDirectObject())
 					return false;
+
+				// If empty, prompt for indirect object.
+				// Might need to individualize this.
+				if (input.isEmpty())
+				{
+					Game.output("Enter an indirect object: ");
+					input = Game.getPlayerText();
+				}
 
 				parseIndirectString = input;
 				if (!parseIndirectObject())
@@ -95,6 +114,38 @@ public class InputParser {
 
 			case INDIRECT_INVERSE:
 			{
+				// If empty, prompt for indirect object.
+				if (input.isEmpty())
+				{
+					Game.output("What do you want to " + state.firstInputPhrase + "?");
+					input = Game.getPlayerText();
+				}
+
+
+				parseIndirectString = input;
+				if (!parseIndirectObject())
+					return false;
+
+
+				// If empty, prompt for direct object.
+				// Might need to individualize this.
+
+				if (input.isEmpty())
+				{
+					Game.output("Enter a direct object.");
+					input = Game.getPlayerText();
+				}
+
+				parseDirectString = input;
+				if (!parseDirectObject())
+					return false;
+
+				if (!input.isEmpty())
+				{
+					Game.output("That sentence isn't one I recognize.");
+					return false;
+				}
+
 
 			} break;
 
@@ -194,9 +245,26 @@ public class InputParser {
 		
 		return true;
 	}
+
+	public boolean processGodmode()
+	{
+		return true;
+	}
+
+	public boolean reprompt(ActionType actType)
+	{
+		
+		return false;
+	}
+
+	public boolean profanityCheck()
+	{
+		return false;
+	}
 	
 	public void inputTest()
 	{
+		Game.outputLine();
 		Game.output("Complete player input: " + state.completePlayerInput);
 		// Game.output("Input words: ");
 		// for (int i = 0; i < inputWords.length; ++i)

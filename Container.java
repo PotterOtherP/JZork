@@ -114,4 +114,6 @@ class Container extends GameObject {
 
     @Override
     public boolean isOpen() { return open; }
+
+    public String toString() { return name; }
 }

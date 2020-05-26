@@ -3,6 +3,16 @@ import java.util.Scanner;
 /**
  * This program is my attempt to recreate Zork I as well as possible.
  *
+ * TODO
+ * - Input parsing: reprompting, prepositions, godmode
+ * - Finalize actions and action types
+ * - Actions on multiple objects
+ * - Full and alternate names for objects
+ * - Game object functionality one-by-one
+ * - Score
+ * - Death
+ * - Saving, file processing
+ *
  * @author Nathan Tryon January 2020 - 
  */
 public final class Game {
@@ -24,21 +34,10 @@ public final class Game {
 
 	public static void main(String[] args)
 	{
-
-        if (args.length > 0 && args[0].equals("debug"))
-        {
-            debug = true;
-            output("Testing");
-        }
-
-        if (args.length > 0 && args[0].equals("godmode"))
-        {
-            godmode = true;
-        }
-
+        setMode(args);      
 
 		GameState gameState = new GameState();
-        InputParser parser = new InputParser(gameState);
+        InputParser parser = null;
 
 		String playerText = "";
 	
@@ -48,11 +47,13 @@ public final class Game {
 
 		while (!gameover)
 		{	
-            outputLine();
             gameState.resetInput();
 			gameState.completePlayerInput = getPlayerText();
+            outputLine();
 
-			if (parsePlayerInput(gameState, playerText))
+            parser = new InputParser(gameState);
+
+			if (parser.parsePlayerInput())
             {
                 if (validateAction(gameState))
                     updateGame(gameState);
@@ -86,175 +87,6 @@ public final class Game {
 		
 	}
 
-    
-
-
-	public static boolean parsePlayerInput(GameState state, String playerText)
-	{
-        /* ACTION OBJECT OBJECT.
-
-        Not assigning direct or indirect objects in this method, or validating anything else.
-        Just checking for 1 to 3 game-recognized phrases. Look for one, remove it, if there is more in the string,
-        check for another phrase.
-
-        */
-
-		
-        // Method fails if any word the player typed is not known by the game.
-		String[] words = playerText.split(" ");
-
-        // Before regular parsing, handle the godmode cases.
-
-        if (godmode)
-        {
-            switch (words[0])
-            {
-                case "teleport":
-                {
-                    String dest = "";
-                    try { dest = playerText.substring(words[0].length() + 1); }
-                    catch (StringIndexOutOfBoundsException e) { dest = "noRoom"; }
-                    boolean teleported = false;
-                    for (Room r : state.worldMap.values())
-                    {
-                        String name = r.name.toLowerCase();
-                        if (dest.equals(name))
-                        {
-                            outputLine();
-                            output(r.name);
-                            state.playerLocation = r.roomID;
-                            teleported  = true;
-                            r.lookAround(state);
-                            break;
-                        }
-                    }
-
-                    if (!teleported) output("Room not found.");
-                    return false;
-                }
-
-                case "accio":
-                {
-                    String name = "";
-
-                    try { name = playerText.substring(words[0].length() + 1); }
-                    catch (StringIndexOutOfBoundsException e) { name = "noItem"; }
-                    Item it = (Item)(state.objectList.get(name));
-
-                    try
-                    {
-                        it.location = Location.PLAYER_INVENTORY;
-                        for (GameObject g : state.objectList.values())
-                        {
-                            if (g.inventory != null)
-                                if (g.inventory.contains(it))
-                                    g.inventory.remove(it);
-                        }
-                        output("You now have the " + name + ".");
-                    }
-                    catch (NullPointerException e)
-                    {
-                        output("That item not found.");
-                    }
-
-                    return false;
-                }
-
-                default:
-                {
-
-                } break;
-            }          
-        }
-
-		for (int i = 0; i < words.length; ++i)
-		{
-			if (!isGameWord(words[i]))
-			{
-				output("I don't know what \"" + words[i] + "\" means.");
-				return false;
-			}
-		}
-
-		// Make sure we're deleting the words, not portions of other words...
-        playerText = " " + playerText + " ";
-		playerText = playerText.replaceAll(" the ", " ");
-		playerText = playerText.replaceAll(" to ", " ");
-		playerText = playerText.replaceAll(" with ", " ");
-        playerText = playerText.trim();
-
-		// get rid of extra spaces
-		while (playerText.contains("  "))
-		{
-			playerText = playerText.replaceAll("  ", " ");		
-		}
-
-
-
-        // See if the player text starts with an action.
-		for (String token : state.actions.keySet())
-		{
-			
-			if (startsWith(token, playerText))
-			{
-                state.firstInputPhrase = token;
-                
-			}
-		}
-
-
-        // If not, exit		
-		if (state.firstInputPhrase.isEmpty())
-		{
-			output("Sentence did not start with an action.");
-            return false;
-		}
-
-		
-        // Remove the first phrase and check if there is more text.
-        // The next token should be an object.
-		playerText = playerText.substring(state.firstInputPhrase.length()).trim();
-		if (playerText.isEmpty()) return true;
-
-        for (String token : state.objectList.keySet())
-        {
-            if (startsWith(token, playerText))
-            {
-                state.secondInputPhrase = token;
-            }
-        }
-
-        // If the user entered something known by the game but is not a valid object.
-        if (state.secondInputPhrase.isEmpty())
-        {
-            output("Second phrase was not an object.");
-            return false;
-        }
-
-        // Remove the second phrase and check if there is more text.
-        // The next token should also be an ojbect.
-        playerText = playerText.substring(state.secondInputPhrase.length()).trim();
-        if (playerText.isEmpty()) return true;
-
-        for (String token : state.objectList.keySet())
-        {
-            if (startsWith(token, playerText))
-            {
-                state.thirdInputPhrase = token;
-            }
-        }
-
-        // If the user entered something known by the game but is not a valid object.
-        if (state.thirdInputPhrase.isEmpty())
-        {
-            output("Third phrase was not an object.");
-            return false;
-        }
-
-
-		return true;
-
-	}
 
 	public static boolean validateAction(GameState state)
 	{
@@ -321,7 +153,7 @@ public final class Game {
                     // Player is starting over with a new phrase.
                     if (second.split(" ").length > 1)
                     {
-                        if (parsePlayerInput(state, second))
+                      //  if (parsePlayerInput(state, second))
                             return validateAction(state);
                     }
 
@@ -436,7 +268,6 @@ public final class Game {
 
 	public static void updateGame(GameState state)
 	{
-		
 		Location currentLocation = state.playerLocation;
 		Room currentRoom = state.worldMap.get(currentLocation);
 
@@ -445,15 +276,6 @@ public final class Game {
         GameObject obj = state.directObject;
 
 		GameObject indObj = state.indirectObject;
-
-        /* debug */
-		if (debug)
-		{
-            output("Current action is " + currentAction);
-			output("Action type is " + state.playerActionType);
-			output("Direct object is " + obj.name);
-			output("Indirect object is " + indObj.name);
-		}
 		
         /* If the room is dark, you can't do anything except:
          * Drop items
@@ -822,6 +644,21 @@ public final class Game {
 
     }
 
+    public static void setMode(String[] args)
+    {
+        if (args.length > 0 && args[0].equals("debug"))
+        {
+            debug = true;
+            output("Testing mode on.");
+        }
+
+        if (args.length > 0 && args[0].equals("godmode"))
+        {
+            output("God mode enabled.");
+            godmode = true;
+        }
+    }
+
 	public static void prompt() { System.out.print(">> "); }
 	public static void outputLine() { System.out.println(); }
 	public static void output() { System.out.println(); }
@@ -867,28 +704,8 @@ public final class Game {
 		return result.trim().toLowerCase();
 	}
 
-	// Checks if "input" starts with "token"
-	public static boolean startsWith(String tok, String inp)
-	{
-		String[] token = tok.split(" ");
-		String[] input  = inp.split(" ");
 
-		if (input.length < token.length)
-			return false;
 
-		for (int i = 0; i < token.length; ++i)
-		{
-			if (!token[i].equals(input[i]))
-				return false;
-		}
-
-		return true;
-	}
-
-	public static boolean isGameWord(String str)
-	{
-		return true;
-	}
 
 	public static boolean verifyQuit()
 	{
@@ -908,7 +725,7 @@ public final class Game {
 
 	public static void endGame(GameState state)
 	{
-		// Save the gamestate
+		// Save the game state
 
 		output("Game has ended.");
 		output("Total turns: " + state.turns);

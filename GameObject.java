@@ -8,6 +8,10 @@ abstract class GameObject {
     public final String name;
     public Location location;
 
+    public ArrayList<Item> inventory;
+    public ArrayList<Location> altLocations;
+    public ArrayList<String> altNames;
+
     public ObjectType type;
     public String articleName;
     public String capArticleName;
@@ -82,9 +86,7 @@ abstract class GameObject {
     public String turnString;
     public String unlockString;
 
-    public ArrayList<Item> inventory;
-    public ArrayList<Location> altLocations;
-    public ArrayList<String> altNames;
+    
 
 
     // Constructors
@@ -159,7 +161,7 @@ abstract class GameObject {
         cutStringInd = "The \"cutting edge\" of " + articleName + " is hardly adequate.";
         digString = "";
         digStringInd = "Digging with " + articleName + " is silly.";
-        fillString = "";
+        fillString = "You may know how to do that, but I don't.";
         giveString = "";
         inflateString = "";
         lockString = "";

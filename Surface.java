@@ -49,4 +49,6 @@ class Surface extends GameObject {
         
     }
 
+    public String toString() { return name; }
+
 }

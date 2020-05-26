@@ -78,38 +78,36 @@ enum Location {
  * Reflexive
  * Direct
  * Indirect
+ * Indirect Inverse
  * Godmode
  */
 enum Action {
 
 
     NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
-    UP, DOWN, IN, OUT, LAUNCH, SWIM,
+    UP, DOWN, IN, OUT, WALK,
 
-    SHOUT, INVENTORY, WAIT,
-    BRIEF, SUPERBRIEF, VERBOSE, PROFANITY, AGAIN,
+    SHOUT, INVENTORY, WAIT, JUMP, LOOK,
+    BRIEF, SUPERBRIEF, VERBOSE, PROFANITY, 
     DIAGNOSE, SCORE, SAVE, RESTART, RESTORE, QUIT,
-    GODMODE_TOGGLE, AUTHOR, DEFEND, PRAY, STAY, SPEAK,
-
-    
-    ANSWER, BLOW, CLIMB, CLOSE, COUNT, CROSS,
+    AUTHOR, DEFEND, PRAY, STAY, SAY, SWIM,
+  
+    ACTIVATE, ANSWER, BLOW, CLIMB, CLOSE, COUNT, CROSS,
     DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXIT, EXTINGUISH,
-    FOLLOW, JUMP, KICK, KNOCK, LIGHT, LISTEN,
-    LOOK, LOWER, MOVE_OBJECT, OPEN, POUR, PULL, PUSH, RAISE,
-    READ, SEARCH, SHAKE, SLIDE, SMELL, TAKE, TALK_TO,
-    THROW, TOUCH, WAKE, WALK, WAVE, WEAR, WIND,
+    FOLLOW, KICK, KNOCK, LAUNCH, LIGHT, LISTEN,
+    LOWER, MOVE_OBJECT, OPEN, PLAY, POUR, PULL, PUSH, RAISE,
+    READ, RING, SEARCH, SHAKE, SLIDE, SMELL, TAKE, TALK,
+    THROW, TOUCH, WAKE, WAVE, WEAR, WIND,
 
-    ATTACK, BREAK, BURN, CUT, DIG, FILL, GIVE, INFLATE, LOCK, PUT, STRIKE,
-    TIE, TURN, UNLOCK,
+    ATTACK, BREAK, BURN, CUT, DIG, FILL, INFLATE, LOCK, STRIKE,
+    TURN, UNLOCK,
 
-
-    STORE, PLACE,
-
-    ACTIVATE, RING, PLAY,
+    GIVE, PUT, TIE, 
 
     ACCIO,
     TELEPORT,
     
+    AGAIN,
     NULL_ACTION
 
     }
@@ -121,7 +119,7 @@ enum ActionType {
     DIRECT,
     INDIRECT,
     INDIRECT_INVERSE,
-    EXIT,
+    EXIT
     }
 
 enum ObjectType {
@@ -1436,36 +1434,7 @@ class GameSetup {
 
     }
 
-    public void fillDictionary()
-	{
-		for (int i = 0; i < GameStrings.GAME_WORDS.length; ++i)
-		{
-			state.dictionary.add(GameStrings.GAME_WORDS[i]);
-		}
-
-        for (String name : state.objectList.keySet())
-        {
-            String[] words = name.split(" ");
-            for (int i = 0; i < words.length; ++i)
-                state.dictionary.add(words[i]);
-
-        }
-
-        for (String str : state.actions.keySet())
-        {
-            String[] words = str.split(" ");
-            for (int i = 0; i < words.length; ++i)
-                state.dictionary.add(words[i]);
-        }
-
-        if (godmode)
-        {
-            for (int i = 0; i < GameStrings.GODMODE_WORDS.length; ++i)
-            {
-                state.dictionary.add(GameStrings.GODMODE_WORDS[i]);
-            }
-        }
-	}
+    
 
 	public void createActions()
 	{
@@ -1749,4 +1718,36 @@ class GameSetup {
 	    
 	
 	}
+
+    public void fillDictionary()
+    {
+        for (int i = 0; i < GameStrings.GAME_WORDS.length; ++i)
+        {
+            state.dictionary.add(GameStrings.GAME_WORDS[i]);
+        }
+
+        for (String name : state.objectList.keySet())
+        {
+            String[] words = name.split(" ");
+            for (int i = 0; i < words.length; ++i)
+                state.dictionary.add(words[i]);
+
+        }
+
+        for (String str : state.actions.keySet())
+        {
+            String[] words = str.split(" ");
+            for (int i = 0; i < words.length; ++i)
+                state.dictionary.add(words[i]);
+        }
+
+        if (godmode)
+        {
+            for (int i = 0; i < GameStrings.GODMODE_WORDS.length; ++i)
+            {
+                state.dictionary.add(GameStrings.GODMODE_WORDS[i]);
+            }
+        }
+    }
+
 }
