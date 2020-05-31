@@ -24,10 +24,18 @@ public class InputParser {
 	 */
 	public boolean parsePlayerInput()
 	{
+		// Get previous input if player typed "again"
+		if (input.equals("again") || input.equals("g"))
+		{
+			input = state.playerPreviousInput;
+			return parsePlayerInput();
+		}
 
+		// Check for profanity
 		if (profanityCheck())
 			return false;
 		
+		// All words must be known by the game
 		for (int i = 0; i < inputWords.length; ++i)
 		{
 			if (!isGameWord(inputWords[i]))
@@ -37,8 +45,10 @@ public class InputParser {
 			}
 		}
 
+		// Get player action
 		if (!parseInputAction())
 			return false;
+
 
 		switch (state.playerActionType)
 		{
@@ -189,13 +199,15 @@ public class InputParser {
 	{
 		boolean check = false;
 
-		for (String token : state.objectList.keySet())
+		Game.fillCurrentObjectList(state);
+
+		for (String token : state.currentObjects.keySet())
 		{
 			if (startsWith(token, input))
 			{
 				check = true;
 				state.secondInputPhrase = token;
-				state.directObject = state.objectList.get(token);
+				state.directObject = state.currentObjects.get(token);
 				input = input.substring(token.length()).trim();
 				break;
 			}

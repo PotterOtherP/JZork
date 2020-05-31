@@ -28,7 +28,7 @@ public final class Game {
 	public static final Location STARTING_LOCATION = Location.WEST_OF_HOUSE;
     public static final int LANTERN_LIFESPAN = 100;
     public static final int CARRY_WEIGHT_LIMIT = 20;
-    public static final int SONGBIRD_CHIRP_PERCENT = 31;
+    public static final int SONGBIRD_CHIRP_PERCENT = 15;
 
 
 
@@ -193,7 +193,7 @@ public final class Game {
                 
                 if (state.currentObjects.containsKey(second))
                 {
-                    state.directObject = state.objectList.get(second);
+                    // state.directObject = state.objectList.get(second);
                 }
 
                 else
@@ -439,7 +439,7 @@ public final class Game {
 				obj.drop(state);
 			} break;
 
-            case PLACE:
+            case PUT:
             {
                 if (dark)
                 {
@@ -624,22 +624,27 @@ public final class Game {
         for (GameObject g : state.objectList.values())
         {
             if (g.location == state.playerLocation ||
+                g.altLocations.contains(state.playerLocation) ||
                 g.location == Location.PLAYER_INVENTORY)
-                state.currentObjects.put(g.name, g.type);
+            {
+                state.currentObjects.put(g.name, g);
+                if (g.altNames != null)
+                {
+                    for (String str : g.altNames)
+                    {
+                        state.currentObjects.put(str, g);
+                    }
+                }               
+            }
 
             // Items in an open container that is present in the room
             if (g.location == state.playerLocation && g.isContainer() && g.isOpen())
             {
                 for (Item it : g.inventory)
-                    state.currentObjects.put(it.name, it.type);
+                    state.currentObjects.put(it.name, it);
             }
 
-            // Features that can exist in multiple locations (e.g. the house)
-            if (g.isFeature())
-            {
-                if (g.altLocations.contains(state.playerLocation))
-                    state.currentObjects.put(g.name, g.type);
-            }
+            
         }
 
     }

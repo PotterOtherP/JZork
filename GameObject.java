@@ -100,6 +100,9 @@ abstract class GameObject {
         visible = true;
 
         setStrings();
+
+        altLocations = new ArrayList<Location>();
+        altNames = new ArrayList<String>();
     
     }
 
@@ -135,7 +138,7 @@ abstract class GameObject {
         searchString = "You find nothing unusual.";
         shakeString = "Shaken.";
         smellString = "It smells like " + articleName + ".";    
-        takeString = "That's not something you can take, really.";
+        takeString = "";
         talkString = "You can't talk to the " + name + "!";
         touchString = "";
         wakeString = "The " + name + " isn't sleeping.";
@@ -172,6 +175,21 @@ abstract class GameObject {
         unlockString = "";
 
 
+        // Modifications
+
+        switch (name)
+        {
+            case "small mailbox":
+            case "house":
+            {
+                readString = "How does one read " + articleName + "?";
+            } break;
+
+            default:
+            {
+
+            } break;
+        }
 
     }
 
@@ -258,6 +276,13 @@ abstract class GameObject {
     public void search(GameState state) { Game.output(searchString); }
     public void shake(GameState state) { Game.output(shakeString); }
     public void smell(GameState state) { Game.output(smellString); }   
+    public void take(GameState state)
+    {
+        if (takeString.isEmpty())
+            Game.output(GameStrings.getSarcasticResponse());
+        else
+            Game.output(takeString);
+    }
     public void talk(GameState state) { Game.output(talkString); }   
     public void touch(GameState state) { Game.output(touchString + randPhrase()); }
     public void wake(GameState state) { Game.output(wakeString); }
@@ -291,7 +316,6 @@ abstract class GameObject {
     public void tie(GameState state) { Game.output(tieString); }
     public void turn(GameState state) { Game.output(turnString); }
     public void unlock(GameState state) { Game.output("You can't unlock that."); }
-    public void take(GameState state) { Game.output(takeString); }
     public void drop(GameState state) { Game.output("You can't drop that."); }
 
     public String randPhrase()

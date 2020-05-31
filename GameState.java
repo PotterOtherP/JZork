@@ -23,6 +23,7 @@ class GameState {
 
 	// player action
 	public String completePlayerInput;
+	public String playerPreviousInput;
 	public String firstInputPhrase;
 	public String secondInputPhrase;
 	public String thirdInputPhrase;
@@ -35,7 +36,7 @@ class GameState {
 	// lists of game objects
 	public HashMap<Location, Room> worldMap;
 	public HashMap<String, GameObject> objectList;
-	public HashMap<String, ObjectType> currentObjects;
+	public HashMap<String, GameObject> currentObjects;
 	public HashMap<String, Action> actions;
 	public HashMap<Action, ActionType> actionTypes;
 	public ArrayList<String> dictionary;
@@ -47,7 +48,6 @@ class GameState {
 	public GameState()
 	{
 		dummyObject = new Feature("dummy_feature", Location.NULL_LOCATION);
-		resetInput();
 
 		turns = 0;
 		playerLocation = Location.NULL_LOCATION;
@@ -57,13 +57,16 @@ class GameState {
 		playerCarryWeight = 0;
 		playerScore = 0;
 		playerMaxCarryWeight = Game.CARRY_WEIGHT_LIMIT;
+		completePlayerInput = "";
+		playerPreviousInput = "";
 
 		
+		resetInput();
 
 		worldMap = new HashMap<Location, Room>();
 		dictionary = new ArrayList<String>();
 		objectList = new HashMap<String, GameObject>();
-		currentObjects = new HashMap<String, ObjectType>();
+		currentObjects = new HashMap<String, GameObject>();
 		actions = new HashMap<String, Action>();
 		actionTypes = new HashMap<Action, ActionType>();
 	}
@@ -83,6 +86,11 @@ class GameState {
 
 	public void resetInput()
 	{
+		if (!completePlayerInput.equals("again") && !completePlayerInput.equals("g"))
+		{
+			playerPreviousInput = completePlayerInput;
+		}
+
 		firstInputPhrase = "";
 		secondInputPhrase = "";
 		thirdInputPhrase = "";

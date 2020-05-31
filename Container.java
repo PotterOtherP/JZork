@@ -29,11 +29,11 @@ class Container extends GameObject {
         {
             inventory.add(it);
             it.location = containerID;
-            Game.output("You put the " + it.name + " in the " + name + ".");
+            Game.output("Done.");
         }
         else
         {
-            Game.output("The " + name + " is closed.");
+            Game.output("The " + name + " isn't open.");
         }
     }
 
@@ -110,6 +110,31 @@ class Container extends GameObject {
             Game.output("It is already closed.");
         }
 
+    }
+
+    @Override
+    public void examine(GameState state)
+    {
+        if (open)
+        {
+            if (inventory.size() == 0)
+                Game.output("The " + name + " is empty.");
+            else
+            {
+                Game.output("The " + name + " contains:");
+
+                for (int i = 0; i < inventory.size(); ++i)
+                {
+                    Item it = inventory.get(i);
+                    Game.output("  " + it.capArticleName);
+                }
+            }
+        }
+
+        else
+        {
+            Game.output("The " + name + " is closed.");
+        }
     }
 
     @Override

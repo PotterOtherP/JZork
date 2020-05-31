@@ -147,7 +147,7 @@ class GameStrings {
 	public static final String[] GAME_WORDS = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
 	"k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
 	"u", "v", "w", "x", "y", "z", "ne", "nw", "se", "sw",
-	"an", "around", "at", "attach", "attack", "author",
+	"again", "an", "around", "at", "attach", "attack", "author",
 	"bar", "bell", "bird", "bottle", "box",
 	"carpet", "case", "close",
 	"door", "down", "drop",

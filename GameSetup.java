@@ -85,24 +85,23 @@ enum Action {
 
 
     NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
-    UP, DOWN, IN, OUT, WALK,
-
-    SHOUT, INVENTORY, WAIT, JUMP, LOOK,
-    BRIEF, SUPERBRIEF, VERBOSE, PROFANITY, 
-    DIAGNOSE, SCORE, SAVE, RESTART, RESTORE, QUIT,
-    AUTHOR, DEFEND, PRAY, STAY, SAY, SWIM,
+    UP, DOWN, IN, OUT, WALK, GO, SLIDE, SWIM, EXIT, CROSS,
+   
+    AUTHOR, BRIEF, DEFEND, DIAGNOSE, INVENTORY, JUMP, LOOK, PRAY,
+    PROFANITY, QUIT, RESTART, RESTORE, SAVE, SAY, SCORE, SHOUT,
+    STAY, SUPERBRIEF, VERBOSE, WAIT,
   
-    ACTIVATE, ANSWER, BLOW, CLIMB, CLOSE, COUNT, CROSS,
-    DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXIT, EXTINGUISH,
+    ACTIVATE, ANSWER, BLOW, CLIMB, CLOSE, COUNT,
+    DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXTINGUISH,
     FOLLOW, KICK, KNOCK, LAUNCH, LIGHT, LISTEN,
     LOWER, MOVE_OBJECT, OPEN, PLAY, POUR, PULL, PUSH, RAISE,
-    READ, RING, SEARCH, SHAKE, SLIDE, SMELL, TAKE, TALK,
-    THROW, TOUCH, WAKE, WAVE, WEAR, WIND,
+    READ, RING, SEARCH, SHAKE, SMELL, STRIKE, TAKE, TALK_TO,
+    TOUCH, WAKE, WAVE, WEAR, WIND,
 
-    ATTACK, BREAK, BURN, CUT, DIG, FILL, INFLATE, LOCK, STRIKE,
+    ATTACK, BREAK, BURN, CUT, DIG, FILL, INFLATE, LOCK,
     TURN, UNLOCK,
 
-    GIVE, PUT, TIE, 
+    GIVE, PUT, TIE, THROW, 
 
     ACCIO,
     TELEPORT,
@@ -1182,7 +1181,12 @@ class GameSetup {
 
         // Non item containers and surfaces
 
-        Container mailbox = new Container("mailbox", Location.WEST_OF_HOUSE);
+        Container mailbox = new Container("small mailbox", Location.WEST_OF_HOUSE);
+        mailbox.altNames.add("mailbox");
+        mailbox.altNames.add("box");
+        mailbox.takeString = "It is securely anchored.";
+        mailbox.moveString = "You can't move the small mailbox.";
+
         Container basket = new Container("basket", Location.SHAFT_ROOM);
         Container trophyCase = new Container("trophy case", Location.LIVING_ROOM);
         
@@ -1193,19 +1197,40 @@ class GameSetup {
 
         mailbox.inventory.add(leaflet);
 
-        // Features
+        // Features and passive objects
 
-        Feature houseWindow = new Feature("window", Location.BEHIND_HOUSE);
+        Feature houseWindow = new Feature("kitchen window", Location.BEHIND_HOUSE);
+        houseWindow.altNames.add("window");
         houseWindow.altLocations.add(Location.KITCHEN);
 
         Feature carpet = new Feature("carpet", Location.LIVING_ROOM);
         carpet.takeString = "The rug is extremely heavy and cannot be carried.";
         Feature trapDoor = new Feature("trap door", Location.NULL_LOCATION);
         Feature grating = new Feature("grating", Location.NULL_LOCATION);
-        Feature house = new Feature("house", Location.WEST_OF_HOUSE);
+        Feature house = new Feature("white house", Location.WEST_OF_HOUSE);
+        house.altNames.add("house");
         house.altLocations.add(Location.NORTH_OF_HOUSE);
         house.altLocations.add(Location.BEHIND_HOUSE);
         house.altLocations.add(Location.SOUTH_OF_HOUSE);
+        house.altLocations.add(Location.KITCHEN);
+        house.altLocations.add(Location.LIVING_ROOM);
+        house.altLocations.add(Location.ATTIC);
+
+        Feature forest = new Feature("forest", Location.FOREST_PATH);
+        forest.altNames.add("woods");
+        forest.altNames.add("trees");
+        forest.altLocations.add(Location.FOREST_WEST);
+        forest.altLocations.add(Location.FOREST_EAST);
+        forest.altLocations.add(Location.FOREST_NORTHEAST);
+        forest.altLocations.add(Location.FOREST_SOUTH);
+        forest.altLocations.add(Location.CLEARING_NORTH);
+        forest.altLocations.add(Location.CLEARING_EAST);
+        forest.altLocations.add(Location.UP_TREE);
+        forest.listenString = "The pines and the hemlocks seem to be murmuring.";
+
+        Feature mountains = new Feature("mountains", Location.FOREST_NORTHEAST);
+        mountains.altNames.add("mountain");
+        mountains.climbString = "Don't you believe me? The mountains are impassable!";
 
         Feature mirror = new Feature("mirror", Location.MIRROR_ROOM_SOUTH);
         mirror.altLocations.add(Location.MIRROR_ROOM_NORTH);
@@ -1410,6 +1435,8 @@ class GameSetup {
         state.objectList.put(leafPile.name, leafPile);
         state.objectList.put(grating.name, grating);
         state.objectList.put(house.name, house);
+        state.objectList.put(forest.name, forest);
+        state.objectList.put(mountains.name, mountains);
         state.objectList.put(mirror.name, mirror);
         state.objectList.put(skeleton.name, skeleton);
         state.objectList.put(damBolt.name, damBolt);
@@ -1532,8 +1559,14 @@ class GameSetup {
 	    state.actions.put("in", Action.IN);
 	    state.actions.put("inside", Action.IN);
 	    state.actions.put("go in", Action.IN);
+        state.actions.put("go inside", Action.IN);
 	    state.actions.put("out", Action.OUT);
+        state.actions.put("go out", Action.OUT);
+        state.actions.put("go outside", Action.OUT);
+        state.actions.put("outside", Action.OUT);
+        state.actions.put("exit", Action.OUT);
 	    state.actions.put("slide", Action.SLIDE);
+	    state.actions.put("swim", Action.SWIM);
 	
 	    // Reflexive actions: no interaction with game objects
 		state.actions.put("quit",  Action.QUIT);
@@ -1584,17 +1617,16 @@ class GameSetup {
 	    state.actions.put("push", Action.PUSH);
 	    state.actions.put("raise", Action.RAISE);
 	    state.actions.put("read", Action.READ);
-	    state.actions.put("say", Action.SPEAK);
+	    state.actions.put("say", Action.TALK_TO);
 	    state.actions.put("search", Action.SEARCH);
 	    state.actions.put("shake", Action.SHAKE);
 	    state.actions.put("smell", Action.SMELL);
 	    state.actions.put("stay", Action.STAY);
-	    state.actions.put("swim", Action.SWIM);
 	    state.actions.put("take", Action.TAKE);
 	    state.actions.put("pick up", Action.TAKE);
 	    state.actions.put("get", Action.TAKE);
 	    state.actions.put("acquire", Action.TAKE);
-	    state.actions.put("talk to", Action.TAKE);
+	    state.actions.put("talk to", Action.TALK_TO);
 	    state.actions.put("touch", Action.TOUCH);
 	    state.actions.put("turn", Action.TURN);
 	    state.actions.put("wake", Action.WAKE);
@@ -1618,8 +1650,7 @@ class GameSetup {
 	    state.actions.put("strike", Action.STRIKE);
 	
 	    state.actions.put("give", Action.GIVE);
-	    state.actions.put("place", Action.PLACE);
-	    state.actions.put("put", Action.PLACE);
+	    state.actions.put("place", Action.PUT);
 	    state.actions.put("put", Action.PUT);
 	    state.actions.put("throw", Action.THROW);
 	    state.actions.put("tie", Action.TIE);
@@ -1640,6 +1671,7 @@ class GameSetup {
 	    state.actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
 	    state.actionTypes.put(Action.AUTHOR, ActionType.REFLEXIVE);
 	    state.actionTypes.put(Action.PRAY, ActionType.REFLEXIVE);
+	    state.actionTypes.put(Action.SWIM, ActionType.REFLEXIVE);
 	
 	    state.actionTypes.put(Action.NORTH, ActionType.EXIT);
 	    state.actionTypes.put(Action.SOUTH, ActionType.EXIT);
@@ -1653,6 +1685,7 @@ class GameSetup {
 	    state.actionTypes.put(Action.DOWN, ActionType.EXIT);
 	    state.actionTypes.put(Action.IN, ActionType.EXIT);
 	    state.actionTypes.put(Action.OUT, ActionType.EXIT);
+	    state.actionTypes.put(Action.EXIT, ActionType.EXIT);
 	
 	    state.actionTypes.put(Action.ANSWER, ActionType.DIRECT);
 	    state.actionTypes.put(Action.BLOW, ActionType.DIRECT);
@@ -1666,9 +1699,6 @@ class GameSetup {
 	    state.actionTypes.put(Action.EAT, ActionType.DIRECT);
 	    state.actionTypes.put(Action.ENTER, ActionType.DIRECT);
 	    state.actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
-	    state.actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
-	    state.actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
-	    state.actionTypes.put(Action.EXIT, ActionType.DIRECT);
 	    state.actionTypes.put(Action.EXTINGUISH, ActionType.DIRECT);
 	    state.actionTypes.put(Action.FOLLOW, ActionType.DIRECT);
 	    state.actionTypes.put(Action.KICK, ActionType.DIRECT);
@@ -1682,12 +1712,11 @@ class GameSetup {
 	    state.actionTypes.put(Action.PUSH, ActionType.DIRECT);
 	    state.actionTypes.put(Action.RAISE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.READ, ActionType.DIRECT);
-	    state.actionTypes.put(Action.SPEAK, ActionType.DIRECT);
+	    state.actionTypes.put(Action.TALK_TO, ActionType.DIRECT);
 	    state.actionTypes.put(Action.SEARCH, ActionType.DIRECT);
 	    state.actionTypes.put(Action.SHAKE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.SMELL, ActionType.DIRECT);
 	    state.actionTypes.put(Action.STAY, ActionType.DIRECT);
-	    state.actionTypes.put(Action.SWIM, ActionType.DIRECT);
 	    state.actionTypes.put(Action.TAKE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.TALK_TO, ActionType.DIRECT);
 	    state.actionTypes.put(Action.TOUCH, ActionType.DIRECT);
@@ -1710,8 +1739,6 @@ class GameSetup {
 	    state.actionTypes.put(Action.STRIKE, ActionType.INDIRECT);
 	
 	    state.actionTypes.put(Action.GIVE, ActionType.INDIRECT_INVERSE);
-	    state.actionTypes.put(Action.PLACE, ActionType.INDIRECT_INVERSE);
-	    state.actionTypes.put(Action.PLACE, ActionType.INDIRECT_INVERSE);
 	    state.actionTypes.put(Action.PUT, ActionType.INDIRECT_INVERSE);
 	    state.actionTypes.put(Action.THROW, ActionType.INDIRECT_INVERSE);
 	    state.actionTypes.put(Action.TIE, ActionType.INDIRECT_INVERSE);
@@ -1732,6 +1759,12 @@ class GameSetup {
             for (int i = 0; i < words.length; ++i)
                 state.dictionary.add(words[i]);
 
+        }
+
+        for (GameObject g : state.objectList.values())
+        {
+            for (String str : g.altNames)
+                state.dictionary.add(str);
         }
 
         for (String str : state.actions.keySet())

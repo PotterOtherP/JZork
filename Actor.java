@@ -20,8 +20,6 @@ class Actor extends GameObject {
 
 		alive = true;
 
-		altLocations = new ArrayList<Location>();
-		altLocations.add(loc);
 	}
 
 

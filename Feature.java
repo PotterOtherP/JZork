@@ -8,8 +8,7 @@ class Feature extends GameObject {
 		super(name, loc);
 		type = ObjectType.FEATURE;
 
-		altLocations = new ArrayList<Location>();
-		altLocations.add(loc);
+		
 	}
 
 	@Override
