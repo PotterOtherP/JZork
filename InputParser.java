@@ -206,17 +206,23 @@ public class InputParser {
 			if (startsWith(token, input))
 			{
 				check = true;
-				state.secondInputPhrase = token;
 				state.directObject = state.currentObjects.get(token);
+				state.secondInputPhrase = token;
 				input = input.substring(token.length()).trim();
 				break;
 			}
 		}
 
+		if (!check && state.objectList.containsValue(state.directObject))
+		{
+			Game.output("You can't see any " + state.secondInputPhrase + " here!");
+			return check;
+		}
+
 		// If the user enters a valid action, but an invalid object.
 		if (!check)
 		{
-			Game.output("You used the phrase \"" + input
+			Game.output("You used the phrase \"" + state.firstInputPhrase
 				+ "\" in a way I don't understand.");
 		}
 

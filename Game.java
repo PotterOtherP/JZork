@@ -628,13 +628,9 @@ public final class Game {
                 g.location == Location.PLAYER_INVENTORY)
             {
                 state.currentObjects.put(g.name, g);
-                if (g.altNames != null)
-                {
-                    for (String str : g.altNames)
-                    {
-                        state.currentObjects.put(str, g);
-                    }
-                }               
+                
+                for (String str : g.altNames)
+                    state.currentObjects.put(str, g);              
             }
 
             // Items in an open container that is present in the room

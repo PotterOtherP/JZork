@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.HashMap;
 
 
 /**
@@ -1346,20 +1347,7 @@ class GameSetup {
 
 
 
-        // Fill the inventories of the containers
-        for (GameObject cont : state.objectList.values())
-        {
-            if (cont.isContainer())
-            {
-                Container c = (Container)(cont);
-
-                for (GameObject it : state.objectList.values())
-                {
-                    if (it.location == c.containerID)
-                        c.inventory.add((Item)it);
-                }
-            }
-        }
+        
 
         // Add all objects to the gamestate list
 
@@ -1457,6 +1445,36 @@ class GameSetup {
         state.objectList.put(gustOfWind.name, gustOfWind);
         state.objectList.put(flood.name, flood);
         state.objectList.put(current.name, current);
+
+        // Fill the inventories of the containers
+        for (GameObject cont : state.objectList.values())
+        {
+            if (cont.isContainer())
+            {
+                Container c = (Container)(cont);
+
+                for (GameObject it : state.objectList.values())
+                {
+                    if (it.location == c.containerID && it.isItem())
+                        c.inventory.add((Item)(it));
+                }
+            }
+        }
+
+
+        // Add alternate names
+
+        HashMap<String, GameObject> tempObjs = new HashMap<String, GameObject>();
+        for (GameObject g : state.objectList.values())
+        {
+            for (String str : g.altNames)
+                tempObjs.put(str, g);
+        }
+
+        for (String str : tempObjs.keySet())
+        {
+            state.objectList.put(str, tempObjs.get(str));
+        }
 
 
     }
