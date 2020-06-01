@@ -37,9 +37,7 @@ public final class Game {
         setMode(args);      
 
 		GameState gameState = new GameState();
-        InputParser parser = null;
-
-		String playerText = "";
+        InputParser parser = new InputParser(gameState);
 	
 		initGame(gameState);
 
@@ -51,7 +49,7 @@ public final class Game {
 			gameState.completePlayerInput = getPlayerText();
             outputLine();
 
-            parser = new InputParser(gameState);
+            parser.reset();
 
 			if (parser.parsePlayerInput())
             {

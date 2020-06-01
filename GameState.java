@@ -40,6 +40,7 @@ class GameState {
 	public HashMap<String, Action> actions;
 	public HashMap<Action, ActionType> actionTypes;
 	public ArrayList<String> dictionary;
+	public ArrayList<String> gameNouns;
 
 
 
@@ -65,6 +66,7 @@ class GameState {
 
 		worldMap = new HashMap<Location, Room>();
 		dictionary = new ArrayList<String>();
+		gameNouns = new ArrayList<String>();
 		objectList = new HashMap<String, GameObject>();
 		currentObjects = new HashMap<String, GameObject>();
 		actions = new HashMap<String, Action>();

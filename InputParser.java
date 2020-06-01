@@ -6,15 +6,19 @@ public class InputParser {
 	private String parseActionString;
 	private String parseDirectString;
 	private String parseIndirectString;
+
+
 	
 	public InputParser (GameState st)
 	{
 		state = st;
+
 		input = state.completePlayerInput;
 		inputWords = input.split(" ");
 		parseActionString = "";
 		parseDirectString = "";
 		parseIndirectString = "";
+
 	}
 
 	/**
@@ -213,18 +217,21 @@ public class InputParser {
 			}
 		}
 
-		if (!check && state.objectList.containsValue(state.directObject))
-		{
-			Game.output("You can't see any " + state.secondInputPhrase + " here!");
-			return check;
-		}
-
-		// If the user enters a valid action, but an invalid object.
 		if (!check)
 		{
+			for (String token : state.gameNouns)
+			{
+				if (startsWith(token, input))
+				{
+					Game.output("You can't see any " + token + " here!");
+					return check;
+				}
+			}
+
 			Game.output("You used the phrase \"" + state.firstInputPhrase
 				+ "\" in a way I don't understand.");
 		}
+
 
 		return check;
 	}
@@ -326,6 +333,15 @@ public class InputParser {
 
 		return check;
 
+	}
+
+	public void reset()
+	{
+		input = state.completePlayerInput;
+		inputWords = input.split(" ");
+		parseActionString = "";
+		parseDirectString = "";
+		parseIndirectString = "";
 	}
 	
 }

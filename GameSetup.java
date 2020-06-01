@@ -1479,8 +1479,6 @@ class GameSetup {
 
     }
 
-    
-
 	public void createActions()
 	{
 	    // Movement actions
@@ -1775,14 +1773,21 @@ class GameSetup {
         {
             String[] words = name.split(" ");
             for (int i = 0; i < words.length; ++i)
+            {
                 state.dictionary.add(words[i]);
+                state.gameNouns.add(name);
+                
+            }
 
         }
 
         for (GameObject g : state.objectList.values())
         {
             for (String str : g.altNames)
+            {
                 state.dictionary.add(str);
+                state.gameNouns.add(str);
+            }
         }
 
         for (String str : state.actions.keySet())
