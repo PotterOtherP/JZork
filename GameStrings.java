@@ -73,6 +73,18 @@ class GameStrings {
         + "Unto the land of the dead shalt thou be sent at last.\n"
         + "Surely thou shalt repent of thy cunning.";
 
+    public static final String BOAT_LABEL_TEXT = "         !!!!  FROBOZZ MAGIC BOAT COMPANY  !!!!\n\n"
+        + "Hello, Sailor!\n\n"
+        + "Instructions for use:\n\n"
+        + "   To get into a body of water, say \"Launch\".\n"
+        + "   To get to shore, say \"Land\" or the direction in which you want to maneuver the boat.\n\n"
+        + "Warranty:\n\n"
+        + "  This boat is guaranteed against all defects for a period of 76 milliseconds from date of "
+        + "purchase or until first used, whichever comes first.\n\n"
+        + "Warning:\n"
+        + "   This boat is made of thin plastic.\n"
+        + "   Good Luck!";
+
     
     public static final String WINDOW_OPENS = "With great effort, you open the window far enough to allow entry.";
     public static final String WINDOW_CLOSES = "The window closes (more easily than it opened).";
@@ -181,7 +193,11 @@ class GameStrings {
 
     public static final String[] PROFANITY = {
 
-    "fuck", "shit"
+    " fuck ", " shit "
+
+    };
+
+    public static final String[] SLURS = {
 
     };
 

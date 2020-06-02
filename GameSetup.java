@@ -1083,97 +1083,252 @@ class GameSetup {
         // Name, location, point value, weight.
 
         Item bar = new Item("platinum bar", Location.LOUD_ROOM);
-        bar.initialPresenceString = ObjectStrings.INIT_PLATINUM_BAR;
-        Item bauble = new Item("bauble", Location.NULL_LOCATION);
+        bar.altNames.add("bar");
+        bar.altNames.add("platinum");
+        bar.presenceString = ObjectStrings.PLATINUM_BAR;
+
+        Item bauble = new Item("brass bauble", Location.NULL_LOCATION);
+        bauble.altNames.add("brass");
+        bauble.altNames.add("bauble");
+        
         Item chalice = new Item("silver chalice", Location.TREASURE_ROOM);
-        Item coffin = new Item("coffin", Location.EGYPTIAN_ROOM);
-        coffin.initialPresenceString = ObjectStrings.INIT_COFFIN;
+        chalice.altNames.add("silver");
+        chalice.altNames.add("chalice");
+        
+        Item coffin = new Item("gold coffin", Location.EGYPTIAN_ROOM);
+        coffin.altNames.add("coffin");
         coffin.presenceString = ObjectStrings.COFFIN;
+        
         Item coins = new Item("bag of coins", Location.MAZE_5);
+        coins.altNames.add("bag");
+        coins.altNames.add("coins");
         coins.presenceString = ObjectStrings.INIT_COINS;
+        
         Item canary = new Item("golden canary", Location.NULL_LOCATION);
-        Item diamond = new Item("diamond", Location.NULL_LOCATION);
-        Item egg = new Item("egg", Location.UP_TREE);
+        canary.altNames.add("golden clockwork canary");
+        canary.altNames.add("golden clockwork");
+        canary.altNames.add("clockwork canary");
+        canary.altNames.add("clockwork");
+        canary.altNames.add("canary");
+        
+        Item diamond = new Item("huge diamond", Location.NULL_LOCATION);
+        diamond.altNames.add("diamond");
+        diamond.presenceString = ObjectStrings.DIAMOND;
+
+        Item egg = new Item("jewel-encrusted egg", Location.UP_TREE);
+        egg.altNames.add("egg");
         egg.initialPresenceString = ObjectStrings.INIT_EGG;
-        Item emerald = new Item("emerald", Location.NULL_LOCATION);
+
+        Item emerald = new Item("large emerald", Location.NULL_LOCATION);
+        emerald.altNames.add("emerald");
+        
         Item jade = new Item("jade figurine", Location.BAT_ROOM);
+        jade.altNames.add("jade");
+        jade.altNames.add("figurine");
+        jade.presenceString = ObjectStrings.JADE;
+
+        
         Item painting = new Item("painting", Location.GALLERY);
         painting.initialPresenceString = ObjectStrings.INIT_PAINTING;
-        Item pot = new Item("pot", Location.NULL_LOCATION);
-        Item sapphire = new Item("sapphire bracelet", Location.GAS_ROOM);
-        Item scarab = new Item("scarab", Location.NULL_LOCATION);
+        painting.presenceString = ObjectStrings.PAINTING;
+        
+        Item pot = new Item("pot of gold", Location.NULL_LOCATION);
+        pot.altNames.add("pot");
+        pot.altNames.add("gold");
+        pot.presenceString = ObjectStrings.POT;
+        
+        Item sapphire = new Item("sapphire-encrusted bracelet", Location.GAS_ROOM);
+        sapphire.altNames.add("sapphire");
+        sapphire.altNames.add("bracelet");
+        sapphire.altNames.add("sapphire bracelet");
+        
+        Item scarab = new Item("beautiful jeweled scarab", Location.NULL_LOCATION);
+        scarab.altNames.add("jeweled scarab");
+        scarab.altNames.add("scarab");
+        
         Item sceptre = new Item("sceptre", Location.INSIDE_COFFIN);
+        sceptre.altNames.add("scepter");
         sceptre.initialPresenceString = ObjectStrings.INIT_SCEPTRE;
         sceptre.presenceString = ObjectStrings.SCEPTRE;
-        Item skull = new Item("skull", Location.LAND_OF_THE_DEAD);
+        
+        Item skull = new Item("crystal skull", Location.LAND_OF_THE_DEAD);
+        skull.altNames.add("skull");
+        skull.altNames.add("crystal");
+        skull.initialPresenceString = ObjectStrings.INIT_SKULL;
+        
         Item torch = new Item("torch", Location.TORCH_ROOM);
+        torch.altNames.add("ivory");
+        torch.altNames.add("ivory torch");
         torch.initialPresenceString = ObjectStrings.INIT_TORCH;
-        Item trident = new Item("trident", Location.ATLANTIS_ROOM);
+        
+        Item trident = new Item("crystal trident", Location.ATLANTIS_ROOM);
+        trident.altNames.add("trident");
+        trident.altNames.add("crystal");
         trident.initialPresenceString = ObjectStrings.INIT_TRIDENT;
-        Item trunk = new Item("trunk", Location.NULL_LOCATION);
+        
+        Item trunk = new Item("trunk of jewels", Location.NULL_LOCATION);
+        trunk.altNames.add("trunk");
+        trunk.altNames.add("jewels");
+
+        
 
         // And another 40 items that can be taken.
 
-        Item rope = new Item("rope", Location.ATTIC);
-        rope.initialPresenceString = ObjectStrings.INIT_ROPE;
-        Item knife = new Item("nasty knife", Location.ATTIC);
-        knife.initialPresenceString = ObjectStrings.INIT_NASTY_KNIFE;
-        Item lantern = new Item("lantern", Location.LIVING_ROOM);
-        lantern.initialPresenceString = ObjectStrings.INIT_LANTERN;
-        lantern.lifespan = Game.LANTERN_LIFESPAN;
-        Item sword = new Item("sword", Location.LIVING_ROOM);
-        sword.initialPresenceString = ObjectStrings.INIT_SWORD;
-        Item sack = new Item("brown sack", Location.KITCHEN);
-        sack.initialPresenceString = ObjectStrings.INIT_SACK;
-        Item garlic = new Item("garlic", Location.INSIDE_SACK);
-        Item lunch = new Item("lunch", Location.INSIDE_SACK);
-        Item bottle = new Item("bottle", Location.ON_KITCHEN_TABLE);
+        Item axe = new Item("bloody axe", Location.TROLL_INVENTORY);
+        axe.altNames.add("axe");
+        axe.altNames.add("ax");
+        
+        Item bell = new Item("brass bell", Location.TEMPLE);
+        bell.altNames.add("bell");
+
+        Item blackBook = new Item("black book", Location.ALTAR);
+        blackBook.altNames.add("book");
+        blackBook.initialPresenceString = ObjectStrings.INIT_BLACK_BOOK;
+
+        Item boatLabel = new Item("tan label", Location.NULL_LOCATION);
+        boatLabel.altNames.add("label");
+        boatLabel.readString = GameStrings.BOAT_LABEL_TEXT;
+        
+        Item bottle = new Item("glass bottle", Location.ON_KITCHEN_TABLE);
+        bottle.altNames.add("bottle");
+        bottle.altNames.add("glass");
         bottle.initialPresenceString = ObjectStrings.INIT_BOTTLE;
-        Item nest = new Item("nest", Location.UP_TREE);
-        nest.initialPresenceString = ObjectStrings.INIT_NEST;
-        Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX);
-        leaflet.readString = GameStrings.LEAFLET_TEXT;
-        Item brokenCanary = new Item("broken canary", Location.NULL_LOCATION);
+
+        Item brokenCanary = new Item("broken clockwork canary", Location.NULL_LOCATION);
+        brokenCanary.altNames.add("broken canary");
+        brokenCanary.altNames.add("canary");
+        brokenCanary.altNames.add("broken clockwork");
+        brokenCanary.altNames.add("clockwork");
         brokenCanary.initialPresenceString = ObjectStrings.INIT_BROKEN_CANARY;
 
-        Item brokenEgg = new Item("somewhat ruined egg", Location.NULL_LOCATION);
-        
-        Item axe = new Item("axe", Location.TROLL_INVENTORY);
-        Item studioPaper = new Item("paper", Location.STUDIO);
-        studioPaper.readString = GameStrings.NATE_MANUAL_TEXT;
-        studioPaper.initialPresenceString = ObjectStrings.INIT_ZORK_MANUAL;
-        Item bell = new Item("brass bell", Location.TEMPLE);
-        Item candles = new Item("candles", Location.ALTAR);
+        Item brokenEgg = new Item("broken jewel-encrusted egg", Location.NULL_LOCATION);
+        brokenEgg.presenceString = "There is a somewhat ruined egg here.";
+        brokenEgg.altNames.add("broken egg");
+        brokenEgg.altNames.add("egg");
+
+        Item buoy = new Item("red buoy", Location.FRIGID_RIVER_4);
+        buoy.altNames.add("buoy");
+
+        Item candles = new Item("pair of candles", Location.ALTAR);
+        candles.altNames.add("candles");
+        candles.altNames.add("candle");
+        candles.altNames.add("pair");
         candles.initialPresenceString = ObjectStrings.INIT_CANDLES;
-        Item blackBook = new Item("black book", Location.ALTAR);
-        blackBook.initialPresenceString = ObjectStrings.INIT_BLACK_BOOK;
+
+        Item coal = new Item("small pile of coal", Location.DEAD_END_COAL_MINE);
+        coal.altNames.add("coal");
+        coal.altNames.add("pile");
+        coal.altNames.add("coal pile");
+        coal.altNames.add("pile of coal");
+        coal.altNames.add("small pile");
+
         Item deflatedBoat = new Item("pile of plastic", Location.DAM_BASE);
+        deflatedBoat.altNames.add("boat");
+        deflatedBoat.altNames.add("raft");
+        deflatedBoat.altNames.add("pile");
+        deflatedBoat.altNames.add("plastic");
         deflatedBoat.presenceString = ObjectStrings.INIT_BOAT;
-        Item inflatedBoat = new Item("magic boat", Location.NULL_LOCATION);
-        Item puncturedBoat = new Item("punctured boat", Location.NULL_LOCATION);
-        Item matchbook = new Item("matchbook", Location.DAM_LOBBY);
-        matchbook.presenceString = ObjectStrings.INIT_MATCHBOOK;
+        
+        Item garlic = new Item("clove of garlic", Location.INSIDE_SACK);
+        garlic.altNames.add("clove");
+        garlic.altNames.add("garlic");
 
         Item guideBook = new Item("guidebook", Location.DAM_LOBBY);
+        guideBook.altNames.add("book");
         guideBook.initialPresenceString = ObjectStrings.INIT_GUIDEBOOK;
-        Item tube = new Item("tube", Location.MAINTENANCE_ROOM);
-        tube.presenceString = ObjectStrings.TUBE;
-        Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM);
-        Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM);
-        Item shovel = new Item("shovel", Location.SANDY_BEACH);
-        Item pump = new Item("air pump", Location.RESERVOIR_NORTH);
-        Item timber = new Item("timber", Location.TIMBER_ROOM);
-        Item coal = new Item("pile of coal", Location.DEAD_END_COAL_MINE);
-        Item uselessLantern = new Item("useless lantern", Location.MAZE_5);
-        uselessLantern.initialPresenceString = ObjectStrings.INIT_USELESS;
-        Item skeletonKey = new Item("skeleton key", Location.MAZE_5);
 
+        Item gunk = new Item("viscous material", Location.NULL_LOCATION);
+        gunk.altNames.add("gunk");
+        gunk.altNames.add("material");
+        
+        Item inflatedBoat = new Item("magic boat", Location.NULL_LOCATION);
+        inflatedBoat.altNames.add("boat");
+        inflatedBoat.altNames.add("raft");
+        
+        Item knife = new Item("nasty knife", Location.ATTIC);
+        knife.altNames.add("knife");
+        knife.initialPresenceString = ObjectStrings.INIT_NASTY_KNIFE;
+        
+        Item lantern = new Item("brass lantern", Location.LIVING_ROOM);
+        lantern.initialPresenceString = ObjectStrings.INIT_LANTERN;
+        lantern.altNames.add("lamp");
+        lantern.altNames.add("lantern");
+        lantern.altNames.add("brass lamp");
+        lantern.lifespan = Game.LANTERN_LIFESPAN;
+
+        Item nest = new Item("bird's nest", Location.UP_TREE);
+        nest.altNames.add("nest");
+        nest.initialPresenceString = ObjectStrings.INIT_NEST;
+        
+        Item leafPile = new Item("pile of leaves", Location.CLEARING_NORTH);
+        leafPile.altNames.add("pile");
+        leafPile.altNames.add("leaves");
+        leafPile.initialPresenceString = ObjectStrings.INIT_LEAF_PILE;
+
+        Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX);
+        leaflet.readString = GameStrings.LEAFLET_TEXT;
+
+        Item lunch = new Item("lunch", Location.INSIDE_SACK);
+        lunch.altNames.add("peppers");
+        lunch.altNames.add("hot peppers");
+        lunch.altNames.add("hot lunch");
+
+        Item matchbook = new Item("matchbook", Location.DAM_LOBBY);
+        matchbook.altNames.add("matches");
+        matchbook.presenceString = ObjectStrings.INIT_MATCHBOOK;
+
+        Item pump = new Item("hand-held air pump", Location.RESERVOIR_NORTH);
+        pump.altNames.add("air pump");
+        pump.altNames.add("pump");
+
+        Item puncturedBoat = new Item("punctured boat", Location.NULL_LOCATION);
+        puncturedBoat.altNames.add("boat");
+        puncturedBoat.altNames.add("ruined boat");
+
+        Item rope = new Item("rope", Location.ATTIC);
+        rope.initialPresenceString = ObjectStrings.INIT_ROPE;
+        
         Item rustyKnife = new Item("rusty knife", Location.MAZE_5);
         rustyKnife.initialPresenceString = ObjectStrings.INIT_RUSTY_KNIFE;
+
+        Item sack = new Item("brown sack", Location.KITCHEN);
+        sack.altNames.add("sack");
+        sack.altNames.add("bag");
+        sack.altNames.add("brown bag");
+        sack.initialPresenceString = ObjectStrings.INIT_SACK;
+        
+        Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM);
+        screwdriver.altNames.add("driver");
+
+        Item shovel = new Item("shovel", Location.SANDY_BEACH);
+
+        Item skeletonKey = new Item("skeleton key", Location.MAZE_5);
+        skeletonKey.altNames.add("key");
+
         Item stiletto = new Item("stiletto", Location.THIEF_INVENTORY);
-        Item buoy = new Item("buoy", Location.FRIGID_RIVER_4);
-        Item leafPile = new Item("pile", Location.CLEARING_NORTH);
-        leafPile.initialPresenceString = ObjectStrings.INIT_LEAF_PILE;
+
+        Item studioPaper = new Item("ZORK owner's manual", Location.STUDIO);
+        studioPaper.altNames.add("paper");
+        studioPaper.altNames.add("manual");
+        studioPaper.readString = GameStrings.NATE_MANUAL_TEXT;
+        studioPaper.initialPresenceString = ObjectStrings.INIT_ZORK_MANUAL;
+        
+        Item sword = new Item("elvish sword", Location.LIVING_ROOM);
+        sword.initialPresenceString = ObjectStrings.INIT_SWORD;
+        sword.altNames.add("sword");
+        
+        Item timber = new Item("broken timber", Location.TIMBER_ROOM);
+        timber.altNames.add("timber");
+   
+        Item tube = new Item("tube", Location.MAINTENANCE_ROOM);
+        tube.presenceString = ObjectStrings.TUBE;
+        tube.examineString = ObjectStrings.DESC_TUBE;
+        
+        Item uselessLantern = new Item("useless lantern", Location.MAZE_5);
+        uselessLantern.altNames.add("lantern");
+        uselessLantern.initialPresenceString = ObjectStrings.INIT_USELESS;
+
+        Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM);
 
         
         
@@ -1187,27 +1342,23 @@ class GameSetup {
         mailbox.altNames.add("box");
         mailbox.takeString = "It is securely anchored.";
         mailbox.moveString = "You can't move the small mailbox.";
+        mailbox.inventory.add(leaflet);
 
         Container basket = new Container("basket", Location.SHAFT_ROOM);
+        basket.altNames.add("cage");
+        basket.takeString = "The cage is securely fastened to the iron chain.";
+
         Container trophyCase = new Container("trophy case", Location.LIVING_ROOM);
+        trophyCase.altNames.add("case");
         
 
         Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN);
         Surface atticTable = new Surface("attic table", Location.ATTIC);
         Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM);
 
-        mailbox.inventory.add(leaflet);
 
         // Features and passive objects
 
-        Feature houseWindow = new Feature("kitchen window", Location.BEHIND_HOUSE);
-        houseWindow.altNames.add("window");
-        houseWindow.altLocations.add(Location.KITCHEN);
-
-        Feature carpet = new Feature("carpet", Location.LIVING_ROOM);
-        carpet.takeString = "The rug is extremely heavy and cannot be carried.";
-        Feature trapDoor = new Feature("trap door", Location.NULL_LOCATION);
-        Feature grating = new Feature("grating", Location.NULL_LOCATION);
         Feature house = new Feature("white house", Location.WEST_OF_HOUSE);
         house.altNames.add("house");
         house.altLocations.add(Location.NORTH_OF_HOUSE);
@@ -1216,6 +1367,24 @@ class GameSetup {
         house.altLocations.add(Location.KITCHEN);
         house.altLocations.add(Location.LIVING_ROOM);
         house.altLocations.add(Location.ATTIC);
+
+        Feature houseWindow = new Feature("kitchen window", Location.BEHIND_HOUSE);
+        houseWindow.altNames.add("window");
+        houseWindow.altLocations.add(Location.KITCHEN);
+
+        Feature carpet = new Feature("oriental rug", Location.LIVING_ROOM);
+        carpet.takeString = "The rug is extremely heavy and cannot be carried.";
+        carpet.altNames.add("carpet");
+        carpet.altNames.add("oriental carpet");
+        carpet.altNames.add("rug");
+
+        Feature chain = new Feature("chain", Location.SHAFT_ROOM);
+        chain.lowerString = "Perhaps you should do that to the basket.";
+        chain.raiseString = "Perhaps you should do that to the basket.";
+
+        Feature trapDoor = new Feature("trap door", Location.NULL_LOCATION);
+        trapDoor.altNames.add("trap");
+        trapDoor.altNames.add("door");
 
         Feature forest = new Feature("forest", Location.FOREST_PATH);
         forest.altNames.add("woods");
@@ -1233,19 +1402,34 @@ class GameSetup {
         mountains.altNames.add("mountain");
         mountains.climbString = "Don't you believe me? The mountains are impassable!";
 
+        Feature grating = new Feature("grating", Location.NULL_LOCATION);
+
         Feature mirror = new Feature("mirror", Location.MIRROR_ROOM_SOUTH);
         mirror.altLocations.add(Location.MIRROR_ROOM_NORTH);
 
-        Feature skeleton = new Feature("skeleton", Location.MAZE_5);
         Feature damBolt = new Feature("bolt", Location.DAM);
-        Feature blueButton = new Feature("blue button", Location.MAINTENANCE_ROOM);
-        Feature yellowButton = new Feature("yellow button", Location.MAINTENANCE_ROOM);
-        Feature brownButton = new Feature("brown button", Location.MAINTENANCE_ROOM);
-        Feature redButton = new Feature("red button", Location.MAINTENANCE_ROOM);
-        Feature toolChests = new Feature("tool chests", Location.MAINTENANCE_ROOM);
-        Feature shaftBasket = new Feature("basket", Location.SHAFT_ROOM);
-        Feature coalMachine = new Feature("machine", Location.MACHINE_ROOM);
 
+        Feature blueButton = new Feature("blue button", Location.MAINTENANCE_ROOM);
+        blueButton.altNames.add("blue");
+
+        Feature brownButton = new Feature("brown button", Location.MAINTENANCE_ROOM);
+        brownButton.altNames.add("brown");
+
+        Feature redButton = new Feature("red button", Location.MAINTENANCE_ROOM);
+        redButton.altNames.add("red");
+
+        Feature yellowButton = new Feature("yellow button", Location.MAINTENANCE_ROOM);
+        yellowButton.altNames.add("yellow");
+
+        Feature toolChests = new Feature("tool chests", Location.MAINTENANCE_ROOM);
+        toolChests.initialPresenceString = ObjectStrings.INIT_TOOL_CHESTS;
+        toolChests.takeString = "The chests are so rusty and corroded that they crumble when you touch them.";
+        toolChests.examineString = "The chests are all empty.";
+
+        Feature coalMachine = new Feature("machine", Location.MACHINE_ROOM);
+        Feature shaftBasket = new Feature("basket", Location.SHAFT_ROOM);
+
+        Feature skeleton = new Feature("skeleton", Location.MAZE_5);
 
 
  
@@ -1462,19 +1646,6 @@ class GameSetup {
         }
 
 
-        // Add alternate names
-
-        HashMap<String, GameObject> tempObjs = new HashMap<String, GameObject>();
-        for (GameObject g : state.objectList.values())
-        {
-            for (String str : g.altNames)
-                tempObjs.put(str, g);
-        }
-
-        for (String str : tempObjs.keySet())
-        {
-            state.objectList.put(str, tempObjs.get(str));
-        }
 
 
     }
@@ -1722,6 +1893,7 @@ class GameSetup {
 	    state.actionTypes.put(Action.LIGHT, ActionType.DIRECT);
 	    state.actionTypes.put(Action.LISTEN, ActionType.DIRECT);
 	    state.actionTypes.put(Action.LOWER, ActionType.DIRECT);
+	    state.actionTypes.put(Action.MOVE_OBJECT, ActionType.DIRECT);
 	    state.actionTypes.put(Action.OPEN, ActionType.DIRECT);
 	    state.actionTypes.put(Action.POUR, ActionType.DIRECT);
 	    state.actionTypes.put(Action.PULL, ActionType.DIRECT);
@@ -1749,7 +1921,6 @@ class GameSetup {
 	    state.actionTypes.put(Action.DIG, ActionType.INDIRECT);
 	    state.actionTypes.put(Action.FILL, ActionType.INDIRECT);
 	    state.actionTypes.put(Action.INFLATE, ActionType.INDIRECT);
-	    state.actionTypes.put(Action.MOVE_OBJECT, ActionType.INDIRECT);
 	    state.actionTypes.put(Action.UNLOCK, ActionType.INDIRECT);
 	    state.actionTypes.put(Action.LOCK, ActionType.INDIRECT);
 	    state.actionTypes.put(Action.STRIKE, ActionType.INDIRECT);

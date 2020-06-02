@@ -35,8 +35,8 @@ public class InputParser {
 			return parsePlayerInput();
 		}
 
-		// Check for profanity
-		if (profanityCheck())
+		// Inside jokes, special cases, profanity, etc
+		if (specialInputCheck())
 			return false;
 		
 		// All words must be known by the game
@@ -282,11 +282,57 @@ public class InputParser {
 		return false;
 	}
 
-	public boolean profanityCheck()
+	public boolean specialInputCheck()
 	{
-		return false;
+		boolean result = false;
+
+		// Instantly quit the game if a racial slur is used
+		for (int i = 0; i < GameStrings.SLURS.length; ++i)
+		{
+			if (input.contains(GameStrings.SLURS[i]))
+			{
+				Game.gameover = true;
+				return true;
+			}
+		}
+
+		// Mild profanity will be tolerated
+		for (int i = 0; i < GameStrings.PROFANITY.length; ++i)
+		{
+			if (input.contains(GameStrings.PROFANITY[i]))
+			{
+				Game.output("Such language in a high-class establishment like this!");
+				return true;
+			}
+		}
+
+		// Old ZORK inside jokes
+		if (input.equals("xyzzy") || input.equals("plugh"))
+		{
+			Game.output("A hollow voice says 'Fool.'");
+			return true;
+		}
+
+		if (input.equals("hello sailor")   ||
+			input.equals("hello, sailor!") ||
+			input.equals("hello sailor!")  ||
+			input.equals("hello, sailor") )
+		{
+			Game.output("Nothing happens here.");
+			return true;
+		}
+
+		if (input.equals("zork"))
+		{
+			Game.output("At your service!");
+			return true;
+		}
+
+
+		return result;
 	}
-	
+
+
 	public void inputTest()
 	{
 		Game.outputLine();

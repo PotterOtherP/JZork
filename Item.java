@@ -56,7 +56,7 @@ class Item extends GameObject{
 	{
 		switch (name)
 		{
-			case "lantern":
+			case "brass lantern":
 			{
 				if (!activated && lifespan > 0)
                 {
