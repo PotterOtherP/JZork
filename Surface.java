@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 class Surface extends GameObject {
     
-    public final Location surfaceID;
 
 
     public int capacity;
@@ -13,7 +12,6 @@ class Surface extends GameObject {
         type = ObjectType.SURFACE;
         
         capacity = 0;
-        surfaceID = Location.NULL_LOCATION;
         inventory = new ArrayList<Item>();
     }
 
@@ -22,7 +20,7 @@ class Surface extends GameObject {
     {
         if (inventory.size() < capacity)
         {
-            it.location = surfaceID;
+            it.location = containerID;
         }
 
         else

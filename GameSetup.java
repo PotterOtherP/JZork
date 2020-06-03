@@ -60,6 +60,8 @@ enum Location {
     INSIDE_BOAT,
     INSIDE_BASKET,
     INSIDE_BOTTLE,
+    INSIDE_TUBE,
+    INSIDE_COAL_MACHINE,
 
     ON_KITCHEN_TABLE,
     ON_ATTIC_TABLE,
@@ -1102,6 +1104,7 @@ class GameSetup {
         Item coffin = new Item("gold coffin", Location.EGYPTIAN_ROOM);
         coffin.altNames.add("coffin");
         coffin.presenceString = ObjectStrings.COFFIN;
+        coffin.containerID = Location.INSIDE_COFFIN;
         
         Item coins = new Item("bag of coins", Location.MAZE_5);
         coins.altNames.add("bag");
@@ -1131,7 +1134,6 @@ class GameSetup {
         jade.altNames.add("figurine");
         jade.presenceString = ObjectStrings.JADE;
 
-        
         Item painting = new Item("painting", Location.GALLERY);
         painting.initialPresenceString = ObjectStrings.INIT_PAINTING;
         painting.presenceString = ObjectStrings.PAINTING;
@@ -1197,6 +1199,7 @@ class GameSetup {
         bottle.altNames.add("bottle");
         bottle.altNames.add("glass");
         bottle.initialPresenceString = ObjectStrings.INIT_BOTTLE;
+        bottle.containerID = Location.INSIDE_BOTTLE;
 
         Item brokenCanary = new Item("broken clockwork canary", Location.NULL_LOCATION);
         brokenCanary.altNames.add("broken canary");
@@ -1212,6 +1215,7 @@ class GameSetup {
 
         Item buoy = new Item("red buoy", Location.FRIGID_RIVER_4);
         buoy.altNames.add("buoy");
+        buoy.containerID = Location.INSIDE_BUOY;
 
         Item candles = new Item("pair of candles", Location.ALTAR);
         candles.altNames.add("candles");
@@ -1248,6 +1252,7 @@ class GameSetup {
         Item inflatedBoat = new Item("magic boat", Location.NULL_LOCATION);
         inflatedBoat.altNames.add("boat");
         inflatedBoat.altNames.add("raft");
+        inflatedBoat.containerID = Location.INSIDE_BOAT;
         
         Item knife = new Item("nasty knife", Location.ATTIC);
         knife.altNames.add("knife");
@@ -1263,6 +1268,7 @@ class GameSetup {
         Item nest = new Item("bird's nest", Location.UP_TREE);
         nest.altNames.add("nest");
         nest.initialPresenceString = ObjectStrings.INIT_NEST;
+        nest.containerID = Location.INSIDE_BIRDS_NEST;
         
         Item leafPile = new Item("pile of leaves", Location.CLEARING_NORTH);
         leafPile.altNames.add("pile");
@@ -1300,6 +1306,7 @@ class GameSetup {
         sack.altNames.add("bag");
         sack.altNames.add("brown bag");
         sack.initialPresenceString = ObjectStrings.INIT_SACK;
+        sack.containerID = Location.INSIDE_SACK;
         
         Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM);
         screwdriver.altNames.add("driver");
@@ -1327,6 +1334,7 @@ class GameSetup {
         Item tube = new Item("tube", Location.MAINTENANCE_ROOM);
         tube.presenceString = ObjectStrings.TUBE;
         tube.examineString = ObjectStrings.DESC_TUBE;
+        tube.containerID = Location.INSIDE_TUBE;
         
         Item uselessLantern = new Item("useless lantern", Location.MAZE_5);
         uselessLantern.altNames.add("lantern");
@@ -1337,10 +1345,12 @@ class GameSetup {
 
         // Features, containers and surfaces
         Surface atticTable = new Surface("attic table", Location.ATTIC);
+        atticTable.containerID = Location.ON_ATTIC_TABLE;
         
         Container basket = new Container("basket", Location.SHAFT_ROOM);
         basket.altNames.add("cage");
         basket.takeString = "The cage is securely fastened to the iron chain.";
+        basket.containerID = Location.INSIDE_BASKET;
         
         Feature buttonBlue = new Feature("blue button", Location.MAINTENANCE_ROOM);
         buttonBlue.altNames.add("blue");
@@ -1365,6 +1375,7 @@ class GameSetup {
         chain.raiseString = "Perhaps you should do that to the basket.";
         
         Feature coalMachine = new Feature("machine", Location.MACHINE_ROOM);
+        coalMachine.containerID = Location.INSIDE_COAL_MACHINE;
         
         Feature damBolt = new Feature("bolt", Location.DAM);
         
@@ -1396,6 +1407,7 @@ class GameSetup {
         houseWindow.altLocations.add(Location.KITCHEN);
 
         Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN);
+        kitchenTable.containerID = Location.ON_KITCHEN_TABLE;
         
         Container mailbox = new Container("small mailbox", Location.WEST_OF_HOUSE);
         mailbox.altNames.add("mailbox");
@@ -1403,6 +1415,7 @@ class GameSetup {
         mailbox.takeString = "It is securely anchored.";
         mailbox.moveString = "You can't move the small mailbox.";
         mailbox.inventory.add(leaflet);
+        mailbox.containerID = Location.INSIDE_MAILBOX;
         
         Feature mirror = new Feature("mirror", Location.MIRROR_ROOM_SOUTH);
         mirror.altLocations.add(Location.MIRROR_ROOM_NORTH);
@@ -1412,8 +1425,7 @@ class GameSetup {
         mountains.climbString = "Don't you believe me? The mountains are impassable!";
         
         Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM);
-        
-        Feature shaftBasket = new Feature("basket", Location.SHAFT_ROOM);
+        pedestal.containerID = Location.ON_PEDESTAL;
         
         Feature skeleton = new Feature("skeleton", Location.MAZE_5);
         
@@ -1428,6 +1440,7 @@ class GameSetup {
         
         Container trophyCase = new Container("trophy case", Location.LIVING_ROOM);
         trophyCase.altNames.add("case");
+        trophyCase.containerID = Location.INSIDE_TROPHY_CASE;
 
         
         // Actors
@@ -1448,11 +1461,13 @@ class GameSetup {
         Actor spirits = new Actor("spirits", Location.ENTRANCE_TO_HADES);
         
         Actor thief = new Actor("thief", Location.TREASURE_ROOM);
+        thief.containerID = Location.THIEF_INVENTORY;
         
         Actor troll = new Actor("troll", Location.TROLL_ROOM);
         troll.presenceString = "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.";
         troll.takeString = "The troll spits in your face, grunting \"Better luck next time\" in a rather barbarous accent.";
         troll.talkString = "The troll isn't much of a conversationalist.";
+        troll.containerID = Location.TROLL_INVENTORY;
         
         Actor vampireBat = new Actor("vampire bat", Location.BAT_ROOM);
 
@@ -1613,7 +1628,6 @@ class GameSetup {
         state.objectList.put(mirror.name, mirror);
         state.objectList.put(mountains.name, mountains);
         state.objectList.put(pedestal.name, pedestal);
-        state.objectList.put(shaftBasket.name, shaftBasket);
         state.objectList.put(skeleton.name, skeleton);
         state.objectList.put(trapDoor.name, trapDoor);
         state.objectList.put(trophyCase.name, trophyCase);

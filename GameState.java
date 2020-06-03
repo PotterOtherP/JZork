@@ -117,6 +117,7 @@ class GameState {
 				if (item.isItem() && item.location == container.containerID)
 				{
 					Item it = (Item)(item);
+					System.out.println("Container: " + container.name + " Item: " + item.name);
 					container.inventory.add(it);
 				}
 			}
