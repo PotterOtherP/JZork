@@ -105,6 +105,27 @@ class GameState {
 	}
 
 
+	public void refreshInventories()
+	{
+		for (GameObject container : objectList.values())
+		{
+			if (container.inventory != null)
+				container.inventory.clear();
+
+			for (GameObject item : objectList.values())
+			{
+				if (item.isItem() && item.location == container.containerID)
+				{
+					Item it = (Item)(item);
+					container.inventory.add(it);
+				}
+			}
+
+
+		}
+	}
+
+
 
 
 	// It should not be possible to alter the number of turns except by adding 1.

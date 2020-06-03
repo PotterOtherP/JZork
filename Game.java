@@ -6,6 +6,7 @@ import java.util.Scanner;
  * TODO
  * - Input parsing: reprompting, prepositions, godmode
  * - Finalize actions and action types
+ * - Object locations and inventories
  * - Actions on multiple objects
  * - Full and alternate names for objects
  * - Game object functionality one-by-one
@@ -266,6 +267,7 @@ public final class Game {
 
 	public static void updateGame(GameState state)
 	{
+        state.refreshInventories();
 		Location currentLocation = state.playerLocation;
 		Room currentRoom = state.worldMap.get(currentLocation);
 

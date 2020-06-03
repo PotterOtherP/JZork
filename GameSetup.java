@@ -59,6 +59,7 @@ enum Location {
     INSIDE_SACK,
     INSIDE_BOAT,
     INSIDE_BASKET,
+    INSIDE_BOTTLE,
 
     ON_KITCHEN_TABLE,
     ON_ATTIC_TABLE,
@@ -68,6 +69,9 @@ enum Location {
     PLAYER_INVENTORY,
     THIEF_INVENTORY,
     TROLL_INVENTORY,
+    CYCLOPS_INVENTORY,
+
+    NULL_INVENTORY,
     NULL_LOCATION
 
     }
@@ -1330,35 +1334,54 @@ class GameSetup {
 
         Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM);
 
+
+        // Features, containers and surfaces
+        Surface atticTable = new Surface("attic table", Location.ATTIC);
         
-        
-
-        
-
-        // Non item containers and surfaces
-
-        Container mailbox = new Container("small mailbox", Location.WEST_OF_HOUSE);
-        mailbox.altNames.add("mailbox");
-        mailbox.altNames.add("box");
-        mailbox.takeString = "It is securely anchored.";
-        mailbox.moveString = "You can't move the small mailbox.";
-        mailbox.inventory.add(leaflet);
-
         Container basket = new Container("basket", Location.SHAFT_ROOM);
         basket.altNames.add("cage");
         basket.takeString = "The cage is securely fastened to the iron chain.";
-
-        Container trophyCase = new Container("trophy case", Location.LIVING_ROOM);
-        trophyCase.altNames.add("case");
         
+        Feature buttonBlue = new Feature("blue button", Location.MAINTENANCE_ROOM);
+        buttonBlue.altNames.add("blue");
 
-        Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN);
-        Surface atticTable = new Surface("attic table", Location.ATTIC);
-        Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM);
+        Feature buttonBrown = new Feature("brown button", Location.MAINTENANCE_ROOM);
+        buttonBrown.altNames.add("brown");
+        
+        Feature buttonRed = new Feature("red button", Location.MAINTENANCE_ROOM);
+        buttonRed.altNames.add("red");
+        
+        Feature buttonYellow = new Feature("yellow button", Location.MAINTENANCE_ROOM);
+        buttonYellow.altNames.add("yellow");
+        
+        Feature carpet = new Feature("oriental rug", Location.LIVING_ROOM);
+        carpet.takeString = "The rug is extremely heavy and cannot be carried.";
+        carpet.altNames.add("carpet");
+        carpet.altNames.add("oriental carpet");
+        carpet.altNames.add("rug");
 
-
-        // Features and passive objects
-
+        Feature chain = new Feature("chain", Location.SHAFT_ROOM);
+        chain.lowerString = "Perhaps you should do that to the basket.";
+        chain.raiseString = "Perhaps you should do that to the basket.";
+        
+        Feature coalMachine = new Feature("machine", Location.MACHINE_ROOM);
+        
+        Feature damBolt = new Feature("bolt", Location.DAM);
+        
+        Feature forest = new Feature("forest", Location.FOREST_PATH);
+        forest.altNames.add("woods");
+        forest.altNames.add("trees");
+        forest.altLocations.add(Location.FOREST_WEST);
+        forest.altLocations.add(Location.FOREST_EAST);
+        forest.altLocations.add(Location.FOREST_NORTHEAST);
+        forest.altLocations.add(Location.FOREST_SOUTH);
+        forest.altLocations.add(Location.CLEARING_NORTH);
+        forest.altLocations.add(Location.CLEARING_EAST);
+        forest.altLocations.add(Location.UP_TREE);
+        forest.listenString = "The pines and the hemlocks seem to be murmuring.";
+        
+        Feature grating = new Feature("grating", Location.NULL_LOCATION);
+        
         Feature house = new Feature("white house", Location.WEST_OF_HOUSE);
         house.altNames.add("house");
         house.altLocations.add(Location.NORTH_OF_HOUSE);
@@ -1372,87 +1395,66 @@ class GameSetup {
         houseWindow.altNames.add("window");
         houseWindow.altLocations.add(Location.KITCHEN);
 
-        Feature carpet = new Feature("oriental rug", Location.LIVING_ROOM);
-        carpet.takeString = "The rug is extremely heavy and cannot be carried.";
-        carpet.altNames.add("carpet");
-        carpet.altNames.add("oriental carpet");
-        carpet.altNames.add("rug");
-
-        Feature chain = new Feature("chain", Location.SHAFT_ROOM);
-        chain.lowerString = "Perhaps you should do that to the basket.";
-        chain.raiseString = "Perhaps you should do that to the basket.";
-
-        Feature trapDoor = new Feature("trap door", Location.NULL_LOCATION);
-        trapDoor.altNames.add("trap");
-        trapDoor.altNames.add("door");
-
-        Feature forest = new Feature("forest", Location.FOREST_PATH);
-        forest.altNames.add("woods");
-        forest.altNames.add("trees");
-        forest.altLocations.add(Location.FOREST_WEST);
-        forest.altLocations.add(Location.FOREST_EAST);
-        forest.altLocations.add(Location.FOREST_NORTHEAST);
-        forest.altLocations.add(Location.FOREST_SOUTH);
-        forest.altLocations.add(Location.CLEARING_NORTH);
-        forest.altLocations.add(Location.CLEARING_EAST);
-        forest.altLocations.add(Location.UP_TREE);
-        forest.listenString = "The pines and the hemlocks seem to be murmuring.";
-
+        Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN);
+        
+        Container mailbox = new Container("small mailbox", Location.WEST_OF_HOUSE);
+        mailbox.altNames.add("mailbox");
+        mailbox.altNames.add("box");
+        mailbox.takeString = "It is securely anchored.";
+        mailbox.moveString = "You can't move the small mailbox.";
+        mailbox.inventory.add(leaflet);
+        
+        Feature mirror = new Feature("mirror", Location.MIRROR_ROOM_SOUTH);
+        mirror.altLocations.add(Location.MIRROR_ROOM_NORTH);
+        
         Feature mountains = new Feature("mountains", Location.FOREST_NORTHEAST);
         mountains.altNames.add("mountain");
         mountains.climbString = "Don't you believe me? The mountains are impassable!";
-
-        Feature grating = new Feature("grating", Location.NULL_LOCATION);
-
-        Feature mirror = new Feature("mirror", Location.MIRROR_ROOM_SOUTH);
-        mirror.altLocations.add(Location.MIRROR_ROOM_NORTH);
-
-        Feature damBolt = new Feature("bolt", Location.DAM);
-
-        Feature blueButton = new Feature("blue button", Location.MAINTENANCE_ROOM);
-        blueButton.altNames.add("blue");
-
-        Feature brownButton = new Feature("brown button", Location.MAINTENANCE_ROOM);
-        brownButton.altNames.add("brown");
-
-        Feature redButton = new Feature("red button", Location.MAINTENANCE_ROOM);
-        redButton.altNames.add("red");
-
-        Feature yellowButton = new Feature("yellow button", Location.MAINTENANCE_ROOM);
-        yellowButton.altNames.add("yellow");
-
+        
+        Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM);
+        
+        Feature shaftBasket = new Feature("basket", Location.SHAFT_ROOM);
+        
+        Feature skeleton = new Feature("skeleton", Location.MAZE_5);
+        
         Feature toolChests = new Feature("tool chests", Location.MAINTENANCE_ROOM);
         toolChests.initialPresenceString = ObjectStrings.INIT_TOOL_CHESTS;
         toolChests.takeString = "The chests are so rusty and corroded that they crumble when you touch them.";
         toolChests.examineString = "The chests are all empty.";
+        
+        Feature trapDoor = new Feature("trap door", Location.NULL_LOCATION);
+        trapDoor.altNames.add("trap");
+        trapDoor.altNames.add("door");
+        
+        Container trophyCase = new Container("trophy case", Location.LIVING_ROOM);
+        trophyCase.altNames.add("case");
 
-        Feature coalMachine = new Feature("machine", Location.MACHINE_ROOM);
-        Feature shaftBasket = new Feature("basket", Location.SHAFT_ROOM);
-
-        Feature skeleton = new Feature("skeleton", Location.MAZE_5);
-
-
- 
         
         // Actors
-
-        Actor troll = new Actor("troll", Location.TROLL_ROOM);
-        troll.presenceString = "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.";
-        troll.takeString = "The troll spits in your face, grunting \"Better luck next time\" in a rather barbarous accent.";
-        troll.talkString = "The troll isn't much of a conversationalist.";
-
-        Actor thief = new Actor("thief", Location.TREASURE_ROOM);
-        Actor cyclops = new Actor("cyclops", Location.CYCLOPS_ROOM);
-        Actor songbird = new Actor("songbird", Location.NULL_LOCATION);
-        Actor vampireBat = new Actor("vampire bat", Location.BAT_ROOM);
-        Actor spirits = new Actor("spirits", Location.ENTRANCE_TO_HADES);
-        Actor gustOfWind = new Actor("gust of wind", Location.CAVE_SOUTH);
-        Actor flood = new Actor("flood", Location.MAINTENANCE_ROOM);
         Actor current = new Actor("current", Location.FRIGID_RIVER_1);
         current.altLocations.add(Location.FRIGID_RIVER_2);
         current.altLocations.add(Location.FRIGID_RIVER_3);
         current.altLocations.add(Location.FRIGID_RIVER_4);
         current.altLocations.add(Location.FRIGID_RIVER_5);
+
+        Actor cyclops = new Actor("cyclops", Location.CYCLOPS_ROOM);
+        
+        Actor flood = new Actor("flood", Location.MAINTENANCE_ROOM);
+        
+        Actor gustOfWind = new Actor("gust of wind", Location.CAVE_SOUTH);
+        
+        Actor songbird = new Actor("songbird", Location.NULL_LOCATION);
+        
+        Actor spirits = new Actor("spirits", Location.ENTRANCE_TO_HADES);
+        
+        Actor thief = new Actor("thief", Location.TREASURE_ROOM);
+        
+        Actor troll = new Actor("troll", Location.TROLL_ROOM);
+        troll.presenceString = "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.";
+        troll.takeString = "The troll spits in your face, grunting \"Better luck next time\" in a rather barbarous accent.";
+        troll.talkString = "The troll isn't much of a conversationalist.";
+        
+        Actor vampireBat = new Actor("vampire bat", Location.BAT_ROOM);
 
 
 
@@ -1555,80 +1557,77 @@ class GameSetup {
         state.objectList.put(trident.name, trident);
         state.objectList.put(trunk.name, trunk);
 
-        state.objectList.put(rope.name, rope);
-        state.objectList.put(knife.name, knife);
-        state.objectList.put(lantern.name, lantern);
-        state.objectList.put(sword.name, sword);
-        state.objectList.put(garlic.name, garlic);
-        state.objectList.put(lunch.name, lunch);
-        state.objectList.put(bottle.name, bottle);
-        state.objectList.put(nest.name, nest);
-        state.objectList.put(leaflet.name, leaflet);
-        state.objectList.put(brokenCanary.name, brokenCanary);
-
-        state.objectList.put(brokenEgg.name, brokenEgg);
         state.objectList.put(axe.name, axe);
-        state.objectList.put(studioPaper.name, studioPaper);
         state.objectList.put(bell.name, bell);
-        state.objectList.put(candles.name, candles);
         state.objectList.put(blackBook.name, blackBook);
-        state.objectList.put(deflatedBoat.name, deflatedBoat);
-        state.objectList.put(inflatedBoat.name, inflatedBoat);
-        state.objectList.put(puncturedBoat.name, puncturedBoat);
-        state.objectList.put(matchbook.name, matchbook);
-
-        state.objectList.put(guideBook.name, guideBook);
-        state.objectList.put(tube.name, tube);
-        state.objectList.put(screwdriver.name, screwdriver);
-        state.objectList.put(wrench.name, wrench);
-        state.objectList.put(shovel.name, shovel);
-        state.objectList.put(pump.name, pump);
-        state.objectList.put(timber.name, timber);
-        state.objectList.put(coal.name, coal);
-        state.objectList.put(uselessLantern.name, uselessLantern);
-        state.objectList.put(skeletonKey.name, skeletonKey);
-
-        state.objectList.put(rustyKnife.name, rustyKnife);
-        state.objectList.put(stiletto.name, stiletto);
+        state.objectList.put(bottle.name, bottle);
+        state.objectList.put(brokenCanary.name, brokenCanary);
+        state.objectList.put(brokenEgg.name, brokenEgg);
         state.objectList.put(buoy.name, buoy);
-        state.objectList.put(sack.name, sack);
-
-        state.objectList.put(mailbox.name, mailbox);
-        state.objectList.put(basket.name, basket);
-        state.objectList.put(trophyCase.name, trophyCase);
-
-        state.objectList.put(kitchenTable.name, kitchenTable);
-        state.objectList.put(atticTable.name, atticTable);
-        state.objectList.put(pedestal.name, pedestal);
-
-        state.objectList.put(houseWindow.name, houseWindow);
-        state.objectList.put(carpet.name, carpet);
-        state.objectList.put(trapDoor.name, trapDoor);
+        state.objectList.put(candles.name, candles);
+        state.objectList.put(coal.name, coal);
+        state.objectList.put(deflatedBoat.name, deflatedBoat);
+        state.objectList.put(garlic.name, garlic);
+        state.objectList.put(guideBook.name, guideBook);
+        state.objectList.put(gunk.name, gunk);
+        state.objectList.put(inflatedBoat.name, inflatedBoat);
+        state.objectList.put(lantern.name, lantern);
+        state.objectList.put(leaflet.name, leaflet);
         state.objectList.put(leafPile.name, leafPile);
+        state.objectList.put(lunch.name, lunch);
+        state.objectList.put(knife.name, knife);
+        state.objectList.put(matchbook.name, matchbook);
+        state.objectList.put(nest.name, nest);
+        state.objectList.put(pump.name, pump);
+        state.objectList.put(puncturedBoat.name, puncturedBoat);
+        state.objectList.put(rope.name, rope);
+        state.objectList.put(rustyKnife.name, rustyKnife);
+        state.objectList.put(sack.name, sack);
+        state.objectList.put(screwdriver.name, screwdriver);
+        state.objectList.put(shovel.name, shovel);
+        state.objectList.put(skeletonKey.name, skeletonKey);
+        state.objectList.put(stiletto.name, stiletto);
+        state.objectList.put(studioPaper.name, studioPaper);
+        state.objectList.put(sword.name, sword);
+        state.objectList.put(timber.name, timber);
+        state.objectList.put(tube.name, tube);
+        state.objectList.put(uselessLantern.name, uselessLantern);
+        state.objectList.put(wrench.name, wrench);
+
+        state.objectList.put(atticTable.name, atticTable);
+        state.objectList.put(basket.name, basket);
+        state.objectList.put(buttonBlue.name, buttonBlue);
+        state.objectList.put(buttonYellow.name, buttonYellow);
+        state.objectList.put(buttonBrown.name, buttonBrown);
+        state.objectList.put(buttonRed.name, buttonRed);
+        state.objectList.put(carpet.name, carpet);
+        state.objectList.put(chain.name, chain);
+        state.objectList.put(coalMachine.name, coalMachine);
+        state.objectList.put(damBolt.name, damBolt);
+        state.objectList.put(forest.name, forest);
         state.objectList.put(grating.name, grating);
         state.objectList.put(house.name, house);
-        state.objectList.put(forest.name, forest);
-        state.objectList.put(mountains.name, mountains);
+        state.objectList.put(houseWindow.name, houseWindow);
+        state.objectList.put(kitchenTable.name, kitchenTable);
+        state.objectList.put(mailbox.name, mailbox);
         state.objectList.put(mirror.name, mirror);
-        state.objectList.put(skeleton.name, skeleton);
-        state.objectList.put(damBolt.name, damBolt);
-        state.objectList.put(blueButton.name, blueButton);
-        state.objectList.put(yellowButton.name, yellowButton);
-        state.objectList.put(brownButton.name, brownButton);
-        state.objectList.put(redButton.name, redButton);
-        state.objectList.put(toolChests.name, toolChests);
+        state.objectList.put(mountains.name, mountains);
+        state.objectList.put(pedestal.name, pedestal);
         state.objectList.put(shaftBasket.name, shaftBasket);
-        state.objectList.put(coalMachine.name, coalMachine);
+        state.objectList.put(skeleton.name, skeleton);
+        state.objectList.put(trapDoor.name, trapDoor);
+        state.objectList.put(trophyCase.name, trophyCase);
+        state.objectList.put(toolChests.name, toolChests);
 
-        state.objectList.put(troll.name, troll);
-        state.objectList.put(thief.name, thief);
-        state.objectList.put(cyclops.name, cyclops);
-        state.objectList.put(songbird.name, songbird);
-        state.objectList.put(vampireBat.name, vampireBat);
-        state.objectList.put(spirits.name, spirits);
-        state.objectList.put(gustOfWind.name, gustOfWind);
-        state.objectList.put(flood.name, flood);
         state.objectList.put(current.name, current);
+        state.objectList.put(cyclops.name, cyclops);
+        state.objectList.put(flood.name, flood);
+        state.objectList.put(gustOfWind.name, gustOfWind);
+        state.objectList.put(songbird.name, songbird);
+        state.objectList.put(spirits.name, spirits);
+        state.objectList.put(thief.name, thief);
+        state.objectList.put(troll.name, troll);
+        state.objectList.put(vampireBat.name, vampireBat);
 
         // Fill the inventories of the containers
         for (GameObject cont : state.objectList.values())

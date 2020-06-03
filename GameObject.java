@@ -7,6 +7,7 @@ abstract class GameObject {
     
     public final String name;
     public Location location;
+    public Location containerID;
 
     public ArrayList<Item> inventory;
     public ArrayList<Location> altLocations;
@@ -103,6 +104,7 @@ abstract class GameObject {
 
         altLocations = new ArrayList<Location>();
         altNames = new ArrayList<String>();
+        containerID = Location.NULL_INVENTORY;
     
     }
 

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 class Container extends GameObject {
 
-    public final Location containerID;
+    
 
 
     public int capacity;
