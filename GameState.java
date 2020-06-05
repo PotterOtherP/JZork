@@ -109,13 +109,13 @@ class GameState {
 	{
 		for (GameObject container : objectList.values())
 		{
-			if (container.inventory != null)
+			if (container.inventoryID != Location.NULL_INVENTORY)
 			{
 				container.inventory.clear();
 
 				for (GameObject item : objectList.values())
 				{
-					if (item.isItem() && item.location == container.containerID)
+					if (item.isItem() && item.location == container.inventoryID)
 					{
 						Item it = (Item)(item);
 						container.inventory.add(it);

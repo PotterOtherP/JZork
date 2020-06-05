@@ -17,9 +17,8 @@ class Container extends GameObject {
         type = ObjectType.CONTAINER;
 
         capacity = 0;
-        containerID = Location.NULL_LOCATION;
         open = false;
-        inventory = new ArrayList<Item>();
+        
     }
 
     @Override
@@ -28,7 +27,7 @@ class Container extends GameObject {
         if (open)
         {
             inventory.add(it);
-            it.location = containerID;
+            it.location = inventoryID;
             Game.output("Done.");
         }
         else

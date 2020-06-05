@@ -12,7 +12,6 @@ class Surface extends GameObject {
         type = ObjectType.SURFACE;
         
         capacity = 0;
-        inventory = new ArrayList<Item>();
     }
 
     @Override
@@ -20,7 +19,7 @@ class Surface extends GameObject {
     {
         if (inventory.size() < capacity)
         {
-            it.location = containerID;
+            it.location = inventoryID;
         }
 
         else
