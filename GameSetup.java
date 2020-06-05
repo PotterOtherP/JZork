@@ -1122,11 +1122,11 @@ class GameSetup {
         diamond.altNames.add("diamond");
         diamond.presenceString = ObjectStrings.DIAMOND;
 
-        Item egg = new Item("jewel-encrusted egg", Location.UP_TREE);
+        Item egg = new Item("jewel-encrusted egg", Location.INSIDE_BIRDS_NEST);
         egg.altNames.add("egg");
         egg.initialPresenceString = ObjectStrings.INIT_EGG;
 
-        Item emerald = new Item("large emerald", Location.NULL_LOCATION);
+        Item emerald = new Item("large emerald", Location.INSIDE_BUOY);
         emerald.altNames.add("emerald");
         
         Item jade = new Item("jade figurine", Location.BAT_ROOM);

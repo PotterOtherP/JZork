@@ -110,19 +110,18 @@ class GameState {
 		for (GameObject container : objectList.values())
 		{
 			if (container.inventory != null)
+			{
 				container.inventory.clear();
 
-			for (GameObject item : objectList.values())
-			{
-				if (item.isItem() && item.location == container.containerID)
+				for (GameObject item : objectList.values())
 				{
-					Item it = (Item)(item);
-					System.out.println("Container: " + container.name + " Item: " + item.name);
-					container.inventory.add(it);
+					if (item.isItem() && item.location == container.containerID)
+					{
+						Item it = (Item)(item);
+						container.inventory.add(it);
+					}
 				}
 			}
-
-
 		}
 	}
 
