@@ -74,6 +74,7 @@ class Room {
 	public void lookAround(GameState state)
 	{
 		Game.outputLine();
+		state.refreshInventories();
 
         if (darkness && !state.lightActivated)
         {
@@ -99,32 +100,58 @@ class Room {
 				Game.output(it.getItemDescription());
 			}
 
-			if (g.isContainer() && g.isOpen() && !g.inventory.isEmpty())
+			if (g.isSurface())
 			{
-				if (!g.inventory.get(0).movedFromStart && !g.inventory.get(0).initialPresenceString.isEmpty())
+				if (!g.inventory.isEmpty())
 				{
-					for (GameObject it : g.inventory)
+					boolean check = false;
+
+					for (Item it : g.inventory)
 					{
-						if (!it.initialPresenceString.isEmpty())
+						if (!it.initialPresenceString.isEmpty() && !it.movedFromStart)
+						{
 							Game.output(it.initialPresenceString);
+							check = true;
+						}
+					}
+
+					if (!check)
+					{
+						Game.output("Sitting on the " + g.name + " is:");
+						for (Item it : g.inventory)
+							Game.output(it.capArticleName);
 					}
 
 				}
+			}
 
-				else
+			if (g.isContainer() && g.isOpen())
+			{
+				if (!g.inventory.isEmpty())
 				{
-					Game.output("The " + g.name + " contains: ");
-					for (GameObject it : g.inventory)
-						Game.output(it.articleName);
+					boolean check = false;
+
+					for (Item it : g.inventory)
+					{
+						if (!it.initialPresenceString.isEmpty() && !it.movedFromStart)
+						{
+							Game.output(it.initialPresenceString);
+							check = true;
+						}
+					}
+
+					if (!check)
+					{
+						Game.output("The " + g.name + " contains:");
+						for (Item it : g.inventory)
+							Game.output(it.capArticleName);
+					}
+
 				}
 			}
 
-			if (g.isSurface() && !g.inventory.isEmpty())
-			{
-				Game.output("Sitting on the " + g.name + " is: ");
-				for (GameObject it : g.inventory)
-					Game.output(it.articleName);
-			}
+			// An annoying exception: the glass bottle, in which the water can be seen
+			// even though it's closed.
 				
 		}
 
@@ -143,9 +170,6 @@ class Room {
 		{
 			psg = exits.get(act);
 		}
-
-
-
 
 		else
 		{
@@ -166,7 +190,6 @@ class Room {
 		}
 
 		// Check here for baggage limit passages.
-
 		if (state.playerCarryWeight > psg.weightLimit)
 		{
 			Game.output(psg.weightFail);

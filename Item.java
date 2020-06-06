@@ -83,7 +83,7 @@ class Item extends GameObject{
                 Game.output("Opened.");
             else
             {
-                String str = "Opening the " + name + " reveals";
+                String str = "Opening the " + name + " reveals ";
 
                 for (int i = 0; i < inventory.size(); ++i)
                 {

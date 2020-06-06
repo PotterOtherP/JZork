@@ -166,7 +166,7 @@ class GameState {
 	{
 		for (GameObject container : objectList.values())
 		{
-			if (container.isContainer() || container.isSurface())
+			if (container.inventoryID != Location.NULL_INVENTORY)
 			{
 				container.inventory.clear();
 

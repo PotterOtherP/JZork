@@ -7,6 +7,7 @@ import java.util.Scanner;
  * - Input parsing: reprompting, prepositions, godmode
  * - Finalize actions and action types
  * - Object locations and inventories
+ * - Glass bottle exception
  * - Actions on multiple objects
  * - Full and alternate names for objects
  * - Game object functionality one-by-one
@@ -418,21 +419,7 @@ public final class Game {
                     return;
                 }
 
-                // If the item is in an open container, remove it from the container.
-
-                boolean taken = false;
-                for (GameObject cont : state.objectList.values())
-                {
-                    if (cont.isOpen() && cont.inventory.contains(obj))
-                    {
-                        cont.remove(state, (Item)obj);
-                        taken = true;
-                    }
-                }
-
-                // Otherwise, it is in the player's location and we just take it.
-                if (!taken)
-                    obj.take(state);
+                obj.take(state);
                 	
 			} break;
 
@@ -476,6 +463,31 @@ public final class Game {
                         if (count == 1)
                             output("You are carrying: \n");
 						output(item.capArticleName);
+                    }
+
+                    if (item.isContainer() && item.isOpen())
+                    {
+                        if (!item.inventory.isEmpty())
+                        {
+                            boolean check = false;
+
+                            for (Item it : item.inventory)
+                            {
+                                if (!it.initialPresenceString.isEmpty() && !it.movedFromStart)
+                                {
+                                    Game.output(it.initialPresenceString);
+                                    check = true;
+                                }
+                            }
+
+                            if (!check)
+                            {
+                                Game.output("The " + item.name + " contains:");
+                                for (Item it : item.inventory)
+                                    Game.output(it.capArticleName);
+                            }
+
+                        }
                     }
 
 				}

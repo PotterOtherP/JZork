@@ -41,7 +41,7 @@ class MapStrings {
     public static final String DESC_FOREST_PATH = "This is a path winding through a dimly lit forest. The path leads north-south here. "
         + "One particularly large tree with some low branches stands at the edge of the path.";
 
-    public static final String DESC_UP_TREE = "You are about 10 feat above the ground nestled among some large branches. "
+    public static final String DESC_UP_TREE = "You are about 10 feet above the ground nestled among some large branches. "
         + "The nearest branch above you is above your reach.";
 
     public static final String DESC_FOREST_WEST = "This is a forest, with trees in all directions. To the east, there appears to be sunlight.";
