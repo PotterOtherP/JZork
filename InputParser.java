@@ -203,10 +203,9 @@ public class InputParser {
 	{
 		boolean check = false;
 
-		Game.fillCurrentObjectList(state);
-
 		for (String token : state.currentObjects.keySet())
 		{
+
 			if (startsWith(token, input))
 			{
 				check = true;

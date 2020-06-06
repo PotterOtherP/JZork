@@ -104,18 +104,75 @@ class GameState {
 		indirectObject = dummyObject;
 	}
 
+	public void fillCurrentObjectList()
+    {
+        currentObjects.clear();
+
+        for (GameObject g : objectList.values())
+        {
+            if (g.location == playerLocation ||
+                g.altLocations.contains(playerLocation) ||
+                g.playerHasObject())
+            {
+                currentObjects.put(g.name, g);
+                
+                for (String str : g.altNames)
+                    currentObjects.put(str, g);              
+            }
+
+            // Items in an open container that is present in the room
+            if ( (g.location == playerLocation || g.playerHasObject())
+                 && g.isContainer() && g.isOpen())
+            {
+                for (Item it : g.inventory)
+                {
+                    currentObjects.put(it.name, it);
+
+                    for (String str : it.altNames)
+                        currentObjects.put(str, it);
+                }
+            }
+
+            // Items on a surface
+
+            if (g.location == playerLocation && g.isSurface())
+            {
+                for (Item it : g.inventory)
+                {
+                    currentObjects.put(it.name, it);
+
+                    for (String str : it.altNames)
+                        currentObjects.put(str, it);
+                }
+            }
+
+            
+        }
+
+        if (Game.debug)
+        {
+            Game.output("Current object list:\n");
+
+            for (String str : currentObjects.keySet())
+                Game.output(str);
+
+            Game.output("---------------");
+        }
+
+    }
+
 
 	public void refreshInventories()
 	{
 		for (GameObject container : objectList.values())
 		{
-			if (container.inventoryID != Location.NULL_INVENTORY)
+			if (container.isContainer() || container.isSurface())
 			{
 				container.inventory.clear();
 
 				for (GameObject item : objectList.values())
 				{
-					if (item.isItem() && item.location == container.inventoryID)
+					if (item.location == container.inventoryID)
 					{
 						Item it = (Item)(item);
 						container.inventory.add(it);

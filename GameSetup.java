@@ -1269,6 +1269,7 @@ class GameSetup {
         nest.altNames.add("nest");
         nest.initialPresenceString = ObjectStrings.INIT_NEST;
         nest.inventoryID = Location.INSIDE_BIRDS_NEST;
+        nest.open = true;
         
         Item leafPile = new Item("pile of leaves", Location.CLEARING_NORTH);
         leafPile.altNames.add("pile");
@@ -1301,7 +1302,7 @@ class GameSetup {
         Item rustyKnife = new Item("rusty knife", Location.MAZE_5);
         rustyKnife.initialPresenceString = ObjectStrings.INIT_RUSTY_KNIFE;
 
-        Item sack = new Item("brown sack", Location.KITCHEN);
+        Item sack = new Item("brown sack", Location.ON_KITCHEN_TABLE);
         sack.altNames.add("sack");
         sack.altNames.add("bag");
         sack.altNames.add("brown bag");
@@ -1412,6 +1413,7 @@ class GameSetup {
         houseWindow.altLocations.add(Location.KITCHEN);
 
         Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN);
+        kitchenTable.altNames.add("table");
         kitchenTable.inventoryID = Location.ON_KITCHEN_TABLE;
         
         Container mailbox = new Container("small mailbox", Location.WEST_OF_HOUSE);
@@ -1612,6 +1614,7 @@ class GameSetup {
         state.objectList.put(timber.name, timber);
         state.objectList.put(tube.name, tube);
         state.objectList.put(uselessLantern.name, uselessLantern);
+        state.objectList.put(water.name, water);
         state.objectList.put(wrench.name, wrench);
 
         state.objectList.put(atticTable.name, atticTable);
@@ -1648,24 +1651,7 @@ class GameSetup {
         state.objectList.put(troll.name, troll);
         state.objectList.put(vampireBat.name, vampireBat);
 
-        // Fill the inventories of the containers
-        for (GameObject cont : state.objectList.values())
-        {
-            if (cont.isContainer())
-            {
-                Container c = (Container)(cont);
-
-                for (GameObject it : state.objectList.values())
-                {
-                    if (it.location == c.inventoryID && it.isItem())
-                        c.inventory.add((Item)(it));
-                }
-            }
-        }
-
-
-
-
+        state.refreshInventories();
     }
 
 	public void createActions()

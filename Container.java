@@ -22,6 +22,9 @@ class Container extends GameObject {
     }
 
     @Override
+    public boolean isContainer() { return true; }
+
+    @Override
     public void place(GameState state, Item it)
     {
         if (open)

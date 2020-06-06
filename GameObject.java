@@ -16,7 +16,6 @@ abstract class GameObject {
     public ObjectType type;
     public String articleName;
     public String capArticleName;
-    public boolean visible;
     public boolean movedFromStart;
     public String initialPresenceString;
     public String presenceString;
@@ -98,7 +97,6 @@ abstract class GameObject {
 
         articleName = (vowelStart() ? "an " : "a ") + name;
         capArticleName = (vowelStart() ? "An " : "A ") + name;
-        visible = true;
 
         setStrings();
 
@@ -234,7 +232,7 @@ abstract class GameObject {
     }
 
     public boolean isActor() { return type == ObjectType.ACTOR; }
-    public boolean isContainer() { return type == ObjectType.CONTAINER; }
+    public boolean isContainer() { return false; }
     public boolean isItem() { return type == ObjectType.ITEM; }
     public boolean isFeature() { return type == ObjectType.FEATURE; }
     public boolean isSurface() { return type == ObjectType.SURFACE; }
@@ -271,6 +269,7 @@ abstract class GameObject {
     public void lower(GameState state) { Game.output(lowerString + randPhrase()); }
     public void move(GameState state) { Game.output(moveString); }
     public void moveItem(GameState state) { Game.output(moveItemString); }
+    public void open(GameState state) { Game.output("You can't open that."); }
     public void pour(GameState state) { Game.output(pourString); }
     public void pull(GameState state) { Game.output(pullString); }
     public void push(GameState state) { Game.output(pushString + randPhrase()); }    
@@ -311,7 +310,6 @@ abstract class GameObject {
     public void give(GameState state) { Game.output(giveString); }
     public void inflate(GameState state) { Game.output(inflateString); }
     public void lock(GameState state) { Game.output("You can't lock that."); }
-    public void open(GameState state) { Game.output("You can't open that."); }
     public void place(GameState state, Item it) {}
     public void put(GameState state) { Game.output(putString); }
     public void remove(GameState state, Item it) {}
@@ -337,7 +335,6 @@ abstract class GameObject {
 
     public boolean isOpen() { return false; }
     public boolean isAlive() { return false; }
-    public boolean isVisible() { return visible; }
     public void tick() {}
     public String toString() { return name; }
 

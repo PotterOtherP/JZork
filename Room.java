@@ -83,42 +83,49 @@ class Room {
 
 		Game.output(getDescription(state));
 
+
 		for (GameObject g : state.objectList.values())
 		{
-			if (g.location == roomID && g.isVisible())
+			if (g.location != roomID) continue;
+			
+			if (g.isActor())
 			{
-				if (g.isItem())
+				Game.output(g.presenceString);
+			}
+
+			if (g.isItem())
+			{
+				Item it = (Item)(g);
+				Game.output(it.getItemDescription());
+			}
+
+			if (g.isContainer() && g.isOpen() && !g.inventory.isEmpty())
+			{
+				if (!g.inventory.get(0).movedFromStart && !g.inventory.get(0).initialPresenceString.isEmpty())
 				{
-					if (g.movedFromStart || g.initialPresenceString.isEmpty())
+					for (GameObject it : g.inventory)
 					{
-						Game.output(g.presenceString);		
+						if (!it.initialPresenceString.isEmpty())
+							Game.output(it.initialPresenceString);
 					}
 
-					else
-					{
-						Game.output(g.initialPresenceString);
-					}
 				}
 
-				if (g.isActor())
-				{
-					Game.output(g.presenceString);
-				}
-
-				if (g.isContainer() && g.isOpen() && !g.inventory.isEmpty())
+				else
 				{
 					Game.output("The " + g.name + " contains: ");
 					for (GameObject it : g.inventory)
 						Game.output(it.articleName);
 				}
+			}
 
-				if (g.isSurface() && !g.inventory.isEmpty())
-				{
-					Game.output("Sitting on the " + g.name + " is: ");
-					for (GameObject it : g.inventory)
-						Game.output(it.articleName);
-				}
-			}		
+			if (g.isSurface() && !g.inventory.isEmpty())
+			{
+				Game.output("Sitting on the " + g.name + " is: ");
+				for (GameObject it : g.inventory)
+					Game.output(it.articleName);
+			}
+				
 		}
 
 	}

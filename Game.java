@@ -20,7 +20,7 @@ public final class Game {
 
     // Global variables
 	public static boolean gameover = true;
-	public static boolean godmode = true;
+	public static boolean godmode = false;
     public static boolean debug = false;
 
 
@@ -51,6 +51,9 @@ public final class Game {
             outputLine();
 
             parser.reset();
+            gameState.refreshInventories();
+            gameState.fillCurrentObjectList();
+
 
 			if (parser.parsePlayerInput())
             {
@@ -103,7 +106,6 @@ public final class Game {
 		boolean result = true;
 
         // Need to address ambiguous words here - the same key can't occur twice in a hashmap.
-        fillCurrentObjectList(state);
 
 
 
@@ -615,35 +617,8 @@ public final class Game {
 	}
 
 
-	// Utility methods used by the other methods in Game.java
 
-	public static void fillCurrentObjectList(GameState state)
-    {
-        state.currentObjects.clear();
 
-        for (GameObject g : state.objectList.values())
-        {
-            if (g.location == state.playerLocation ||
-                g.altLocations.contains(state.playerLocation) ||
-                g.location == Location.PLAYER_INVENTORY)
-            {
-                state.currentObjects.put(g.name, g);
-                
-                for (String str : g.altNames)
-                    state.currentObjects.put(str, g);              
-            }
-
-            // Items in an open container that is present in the room
-            if (g.location == state.playerLocation && g.isContainer() && g.isOpen())
-            {
-                for (Item it : g.inventory)
-                    state.currentObjects.put(it.name, it);
-            }
-
-            
-        }
-
-    }
 
     public static void setMode(String[] args)
     {

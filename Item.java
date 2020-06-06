@@ -5,6 +5,10 @@ class Item extends GameObject{
 	public int weight;
 	public int acquirePointValue;
 	public int trophyCaseValue;
+
+	public int capacity;
+    public boolean open;
+    public boolean locked;
 	
 
 	// For items that can be turned on and expire, like the lamp
@@ -23,7 +27,14 @@ class Item extends GameObject{
 		activated = false;
 		lifespan = 0;
 		movedFromStart = false;
+
+		capacity = 0;
+		open = false;
+		locked = false;
 	}
+
+	@Override
+	public boolean isContainer() { return inventoryID != Location.NULL_INVENTORY; }
 
 	@Override
 	public void take(GameState state)
@@ -50,6 +61,156 @@ class Item extends GameObject{
 		location = state.playerLocation;
 		Game.output("Dropped.");
 	}
+
+	@Override
+    public void open(GameState state)
+    {
+    	if (!isContainer())
+    	{
+    		Game.output(openString);
+    		return;
+    	}
+
+        if (open)
+        {
+            Game.output("It is already open.");
+        }
+
+        else
+        {
+            open = true;
+            if (inventory.isEmpty())
+                Game.output("Opened.");
+            else
+            {
+                String str = "Opening the " + name + " reveals";
+
+                for (int i = 0; i < inventory.size(); ++i)
+                {
+                    Item it = inventory.get(i);
+
+                    if (inventory.size() > 1 && i == inventory.size() - 1) str  += " and ";
+                    str += it.articleName;
+                    if (inventory.size() > 2 && i < inventory.size() - 1)
+                        str += ",";
+                }
+                
+                str += ".";
+
+                Game.output(str);
+            }
+        }
+    }
+
+    @Override
+    public void close(GameState state)
+    {
+    	if (!isContainer())
+    	{
+    		Game.output(closeString);
+    		return;
+    	} 
+
+        if (open)
+        {
+            open = false; 
+            Game.output("Closed.");
+        }
+        else
+        {
+            Game.output("It is already closed.");
+        }
+
+    }
+
+
+    @Override
+    public void place(GameState state, Item it)
+    {
+
+    	if (!isContainer())
+    	{
+    		Game.output(putString);
+    		return;
+    	}
+
+        if (open)
+        {
+            inventory.add(it);
+            it.location = inventoryID;
+            Game.output("Done.");
+        }
+        else
+        {
+            Game.output("The " + name + " isn't open.");
+        }
+    }
+
+    @Override
+    public void remove(GameState state, Item it)
+    {
+
+    	if (!isContainer())
+    	{
+    		Game.output("You can't remove that from the " + name);
+    		return;
+    	}
+
+        if (open)
+        {
+            if (inventory.contains(it))
+            {
+                inventory.remove(it);
+                it.location = Location.PLAYER_INVENTORY;
+                Game.output("Taken.");
+            }
+
+            else
+            {
+                Game.output("There's no " + it.name + " in the " + name);
+            }
+        }
+
+        else
+        {
+            Game.output("The " + name + " is closed.");
+        }
+        
+    }
+
+    @Override
+    public void examine(GameState state)
+    {
+    	if (!isContainer())
+    	{
+    		Game.output(examineString);
+    		return;
+    	}
+
+        if (open)
+        {
+            if (inventory.size() == 0)
+                Game.output("The " + name + " is empty.");
+            else
+            {
+                Game.output("The " + name + " contains:");
+
+                for (int i = 0; i < inventory.size(); ++i)
+                {
+                    Item it = inventory.get(i);
+                    Game.output("  " + it.capArticleName);
+                }
+            }
+        }
+
+        else
+        {
+            Game.output("The " + name + " is closed.");
+        }
+    }
+
+    @Override
+    public boolean isOpen() { return open; }
 
 	@Override
 	public void light(GameState state)
@@ -121,6 +282,18 @@ class Item extends GameObject{
 	}
 
 
+    public String getItemDescription()
+    {
+        if (movedFromStart || initialPresenceString.isEmpty())
+        {
+            return presenceString;
+        }
+
+        else
+        {
+            return initialPresenceString;
+        }
+    }
 
 
 	@Override
