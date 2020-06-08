@@ -42,6 +42,9 @@ abstract class GameObject {
     public String knockString;
     public String lightString;
     public String listenString;
+    public String lookInString;
+    public String lookOutString;
+    public String lookUnderString;
     public String lowerString;
     public String moveString;
     public String moveItemString;
@@ -131,6 +134,9 @@ abstract class GameObject {
         knockString = "Why knock on " + articleName + "?";
         lightString = "You can't turn that on.";
         listenString = "The " + name + " makes no sound.";
+        lookInString = "You can't look inside " + articleName + ".";
+        lookOutString = "You can't look out of " + articleName + ".";
+        lookUnderString = "There is nothing but dust there.";
         moveString = "Moving the " + name + " reveals nothing.";
         openString = "You must tell me how to do that to " + articleName + ".";
         pourString = "";    // game treats this as "drop"
@@ -266,6 +272,9 @@ abstract class GameObject {
     public void knock(GameState state) { Game.output(knockString); }
     public void light(GameState state) { Game.output(lightString); }
     public void listen(GameState state) { Game.output(listenString); }
+    public void lookIn(GameState state) { Game.output(lookInString); }
+    public void lookOut(GameState state) { Game.output(lookOutString); }
+    public void lookUnder(GameState state) { Game.output(lookUnderString); }
     public void lower(GameState state) { Game.output(lowerString + randPhrase()); }
     public void move(GameState state) { Game.output(moveString); }
     public void moveItem(GameState state) { Game.output(moveItemString); }

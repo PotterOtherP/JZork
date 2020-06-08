@@ -11,6 +11,7 @@ class GameState {
 	// game events
 	public boolean houseWindowOpened;
 	public boolean carpetMoved;
+	public boolean leafPileMoved;
 
 	// player attributes
 	public Location playerLocation;
@@ -51,6 +52,7 @@ class GameState {
 		dummyObject = new Feature("dummy_feature", Location.NULL_LOCATION);
 
 		turns = 0;
+		darknessTurns = 0;
 		playerLocation = Location.NULL_LOCATION;
 		playerPreviousLocation = Location.NULL_LOCATION;
 		lightActivated = false;
@@ -60,6 +62,10 @@ class GameState {
 		playerMaxCarryWeight = Game.CARRY_WEIGHT_LIMIT;
 		completePlayerInput = "";
 		playerPreviousInput = "";
+
+		houseWindowOpened = false;
+		carpetMoved = false;
+		leafPileMoved = false;
 
 		
 		resetInput();

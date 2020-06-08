@@ -68,96 +68,6 @@ class Room {
 		description = s;
 	}
 
-
-
-
-	public void lookAround(GameState state)
-	{
-		Game.outputLine();
-		state.refreshInventories();
-
-        if (darkness && !state.lightActivated)
-        {
-            Game.output(GameStrings.DARKNESS);
-            return;
-        }
-
-		Game.output(getDescription(state));
-
-
-		for (GameObject g : state.objectList.values())
-		{
-			if (g.location != roomID) continue;
-			
-			if (g.isActor())
-			{
-				Game.output(g.presenceString);
-			}
-
-			if (g.isItem())
-			{
-				Item it = (Item)(g);
-				Game.output(it.getItemDescription());
-			}
-
-			if (g.isSurface())
-			{
-				if (!g.inventory.isEmpty())
-				{
-					boolean check = false;
-
-					for (Item it : g.inventory)
-					{
-						if (!it.initialPresenceString.isEmpty() && !it.movedFromStart)
-						{
-							Game.output(it.initialPresenceString);
-							check = true;
-						}
-					}
-
-					if (!check)
-					{
-						Game.output("Sitting on the " + g.name + " is:");
-						for (Item it : g.inventory)
-							Game.output(it.capArticleName);
-					}
-
-				}
-			}
-
-			if (g.isContainer() && g.isOpen())
-			{
-				if (!g.inventory.isEmpty())
-				{
-					boolean check = false;
-
-					for (Item it : g.inventory)
-					{
-						if (!it.initialPresenceString.isEmpty() && !it.movedFromStart)
-						{
-							Game.output(it.initialPresenceString);
-							check = true;
-						}
-					}
-
-					if (!check)
-					{
-						Game.output("The " + g.name + " contains:");
-						for (Item it : g.inventory)
-							Game.output(it.capArticleName);
-					}
-
-				}
-			}
-
-			// An annoying exception: the glass bottle, in which the water can be seen
-			// even though it's closed.
-				
-		}
-
-	}
-
-
 	public boolean exit(GameState state, Action act)
 	{
 		Passage psg = null;
@@ -264,6 +174,92 @@ class Room {
 		}
 
 		return result;
+	}
+
+	public void lookAround(GameState state)
+	{
+		Game.outputLine();
+		state.refreshInventories();
+
+        if (darkness && !state.lightActivated)
+        {
+            Game.output(GameStrings.DARKNESS);
+            return;
+        }
+
+		Game.output(getDescription(state));
+
+
+		for (GameObject g : state.objectList.values())
+		{
+			if (g.location != roomID) continue;
+			
+			if (g.isActor())
+			{
+				Game.output(g.presenceString);
+			}
+
+			if (g.isItem())
+			{
+				Item it = (Item)(g);
+				Game.output(it.getItemDescription());
+			}
+
+			if (g.isSurface())
+			{
+				if (!g.inventory.isEmpty())
+				{
+					boolean check = false;
+
+					for (Item it : g.inventory)
+					{
+						if (!it.initialPresenceString.isEmpty() && !it.movedFromStart)
+						{
+							Game.output(it.initialPresenceString);
+							check = true;
+						}
+					}
+
+					if (!check)
+					{
+						Game.output("Sitting on the " + g.name + " is:");
+						for (Item it : g.inventory)
+							Game.output(it.capArticleName);
+					}
+
+				}
+			}
+
+			if (g.isContainer() && g.isOpen())
+			{
+				if (!g.inventory.isEmpty())
+				{
+					boolean check = false;
+
+					for (Item it : g.inventory)
+					{
+						if (!it.initialPresenceString.isEmpty() && !it.movedFromStart)
+						{
+							Game.output(it.initialPresenceString);
+							check = true;
+						}
+					}
+
+					if (!check)
+					{
+						Game.output("The " + g.name + " contains:");
+						for (Item it : g.inventory)
+							Game.output(it.capArticleName);
+					}
+
+				}
+			}
+
+			// An annoying exception: the glass bottle, in which the water can be seen
+			// even though it's closed.
+				
+		}
+
 	}
 
 }

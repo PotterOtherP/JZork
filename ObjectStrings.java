@@ -47,6 +47,7 @@ class ObjectStrings {
     public static final String COFFIN = "The solid-gold coffin used for the burial of Ramses II is here.";
     public static final String DIAMOND = "There is an enormous diamond (perfectly cut) here.";
     public static final String JADE = "There is an exquisite jade figurine here.";
+    public static final String LEAF_PILE = "On the ground is a pile of leaves.";
     public static final String PAINTING = "A painting by a neglected genius is here.";
     public static final String PLATINUM_BAR = "On the ground is a large platinum bar.";
     public static final String POT = "At the end of the rainbow is a pot of gold.";
@@ -63,6 +64,18 @@ class ObjectStrings {
     public static final String MACHINE_FAIL = "The machine doesn't seem to want to do anything.";
     public static final String MACHINE_SUCCESS = "The machine comes to life (figuratively) with a dazzing display of "
             + "colored lights and bizarre noises. After a few moments, the excitement abates.";
+
+    public static final String CARPET_SIT_1 = "As you sit, you notice an irregularity underneath it. Rather than be "
+            + "uncomfortable, you stand up again.";
+    public static final String CARPET_SIT_2 = "I suppose you think it's a magic carpet?";
+    public static final String CARPET_LOOK_UNDER = "Underneath the rug is a closed trap door. As you drop the corner "
+            + "of the rug, the trap door is once again concealed from view.";
+
+    public static final String WINDOW_EXAMINE_AJAR = "The window is slightly ajar, but not enough to allow entry.";
+    public static final String WINDOW_EXAMINE_OPEN = "The kitchen window is open, but I can't tell what's beyond it.";
+    public static final String WINDOW_EXAMINE_CLOSED = "The kitchen window is closed.";
+    public static final String WINDOW_LOOK_IN = "You can see what appears to be a kitchen.";
+    public static final String WINDOW_LOOK_OUT = "You can see a clear area leading towards a forest.";
 
 
 

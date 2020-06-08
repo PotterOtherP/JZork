@@ -266,6 +266,45 @@ public class InputParser {
 	
 	public boolean validateAction()
 	{
+		GameObject dirOjb = state.directObject;
+		GameObject indOjb = state.indirectObject;
+		Action act = state.playerAction;
+
+		switch(state.playerActionType)
+		{
+			case DIRECT:
+			{
+				if (dirOjb.isItem() && !dirOjb.playerHasObject())
+				{
+					switch (act)
+					{
+						case TAKE:
+						case MOVE_OBJECT:
+						{
+
+						} break;
+						default:
+						{
+							Game.output("You're not carrying the " + dirOjb.name + ".");
+							return false;
+						}
+					}
+				}
+
+			} break;
+
+			case INDIRECT:
+			case INDIRECT_INVERSE:
+			{
+				if (indOjb.isItem() && !indOjb.playerHasObject())
+				{
+					Game.output("You're not carrying the " + indOjb.name + ".");
+					return false;
+				}
+			} break;
+
+			default: {} break;
+		}
 		
 		return true;
 	}

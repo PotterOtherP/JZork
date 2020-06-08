@@ -26,7 +26,7 @@ public final class Game {
 
 
     // Constants
-    public static final int LINE_LENGTH = 50;
+    public static final int LINE_LENGTH = 72;
 	public static final Location STARTING_LOCATION = Location.WEST_OF_HOUSE;
     public static final int LANTERN_LIFESPAN = 100;
     public static final int CARRY_WEIGHT_LIMIT = 20;
@@ -56,11 +56,19 @@ public final class Game {
             gameState.fillCurrentObjectList();
 
 
-			if (parser.parsePlayerInput())
+            if (!parser.parsePlayerInput())
             {
-                if (validateAction(gameState))
-                    updateGame(gameState);
+                outputLine();
+                continue;
             }
+
+            if (!parser.validateAction())
+            {
+                outputLine();
+                continue;
+            }
+
+            updateGame(gameState);
 
             if (debug) parser.inputTest();
             
@@ -91,183 +99,6 @@ public final class Game {
 	}
 
 
-	public static boolean validateAction(GameState state)
-	{
-		/* 
-            Create a list of actionable objects at the beginning of each turn.
-            Use the objects in the player's location, inventory, and any containers in the same location.
-
-            Recognize the selected action from the first phrase.
-
-            Based on action type, recognize the direct and indirect objects if warranted.
-            Find the objects in the actionable object list.
-
-		*/
-
-		boolean result = true;
-
-        // Need to address ambiguous words here - the same key can't occur twice in a hashmap.
-
-
-
-
-		String first = state.firstInputPhrase;
-		String second = state.secondInputPhrase;
-		String third = state.thirdInputPhrase;
-
-        state.playerAction = state.actions.get(first);
-        state.playerActionType = state.actionTypes.get(state.playerAction);
-
-
-        if (state.playerAction == Action.QUIT)
-        {
-            return true;
-        }
-
-        // FIRST SWITCH
-        // If the player entered an incomplete phrase, we probably want to
-        // prompt them to complete it before doing any further validation.
-
-        switch(state.playerActionType)
-        {
-            // Handling the case where the player types stuff after a one-word action.
-            // Special cases can go here too.
-            case REFLEXIVE:
-            {
-                if (!second.isEmpty())
-                {
-                    output("I don't understand what \"" + state.completePlayerInput + "\" means.");
-                    return false;
-                }
-            } break;
-
-            case DIRECT:
-            {
-                // If player entered just "action" with no object
-                if (second.isEmpty())
-                {
-                    output("What do you want to " + first + "?");
-                    
-                    Scanner scan = new Scanner(System.in);
-                    second = getPlayerText();
-                    scan.close();
-
-                    // Player is starting over with a new phrase.
-                    if (second.split(" ").length > 1)
-                    {
-                      //  if (parsePlayerInput(state, second))
-                            return validateAction(state);
-                    }
-
-                    if (!state.objectList.containsKey(second))
-                    {
-                        output("You used the word \"" + second + "\" in a way I don't understand.");
-                        return false;
-                    }
-                }
-            } break;
-
-            case INDIRECT:
-            {
-
-            } break;
-
-            default:
-            {
-
-            } break;
-
-        }
-
-        // SECOND SWITCH
-        // At this point we either have a complete phrase or the method has returned.
-		switch(state.playerActionType)
-		{
-
-			case REFLEXIVE:
-			{
-
-			} break;
-
-
-			case DIRECT:
-            {
-                
-                if (state.currentObjects.containsKey(second))
-                {
-                    // state.directObject = state.objectList.get(second);
-                }
-
-                else
-                {
-                    output("There's no " + second + " here!");
-                    return false;
-                }
-
-                if (state.directObject.isItem() && !state.directObject.playerHasObject() && state.playerAction != Action.TAKE)
-                {
-                    output("You're not carrying the " + state.directObject.name + ".");
-                    return false;
-                }
-            } break;
-
-            
-
-			case INDIRECT:
-			{
-
-				if (state.currentObjects.containsKey(second))
-                {
-                    state.directObject = state.objectList.get(second);
-                }
-
-                else
-                {
-                    output("There's no " + second + " here!");
-                    return false;
-                }
-
-                if (state.currentObjects.containsKey(third))
-                {
-                    state.indirectObject = state.objectList.get(third);
-                }
-
-                else
-                {
-                    output("There's no " + third + " here!");
-                    return false;
-                }
-
-                if (state.directObject.isItem() && !state.directObject.playerHasObject())
-                {
-                    output("You're not carrying the " + state.directObject.name + ".");
-                    return false;
-                }
-
-                if (state.indirectObject.isItem() && !state.indirectObject.playerHasObject())
-                {
-                    output("You're not carrying the " + state.indirectObject.name + ".");
-                    return false;
-                }
-				
-			
-			} break;
-
-
-			default:
-			{
-				// we should never be here
-			} break;
-		}
-
-
-		return result;
-
-	}
-
-
-
-
 	public static void updateGame(GameState state)
 	{
         state.refreshInventories();
@@ -275,9 +106,7 @@ public final class Game {
 		Room currentRoom = state.worldMap.get(currentLocation);
 
 		Action currentAction = state.playerAction;
-
         GameObject obj = state.directObject;
-
 		GameObject indObj = state.indirectObject;
 		
         /* If the room is dark, you can't do anything except:
@@ -332,6 +161,9 @@ public final class Game {
             case KNOCK: { obj.knock(state); } break;
             case LIGHT: { obj.light(state); } break;
             case LISTEN: { obj.listen(state); } break;
+            case LOOK_IN: {obj.lookIn(state); } break;
+            case LOOK_OUT: {obj.lookOut(state); } break;
+            case LOOK_UNDER: {obj.lookUnder(state); } break;
             case LOWER: { obj.lower(state); } break;
             case POUR: { obj.pour(state); } break;
             case PULL: { obj.pull(state); } break;
@@ -465,7 +297,7 @@ public final class Game {
 						output(item.capArticleName);
                     }
 
-                    if (item.isContainer() && item.isOpen())
+                    if (item.playerHasObject() && item.isContainer() && item.isOpen())
                     {
                         if (!item.inventory.isEmpty())
                         {
@@ -666,7 +498,7 @@ public final class Game {
             }
 
             System.out.print(words[i] + " ");
-            count += words[i].length();
+            count += words[i].length() + 1;
         }
 
         System.out.print("\n");

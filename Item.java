@@ -33,74 +33,6 @@ class Item extends GameObject{
 		locked = false;
 	}
 
-	@Override
-	public boolean isContainer() { return inventoryID != Location.NULL_INVENTORY; }
-
-	@Override
-	public void take(GameState state)
-	{
-
-		if ((state.playerCarryWeight + weight) >= state.playerMaxCarryWeight)
-        {
-            Game.output(GameStrings.OVERBURDENED);
-            return;
-        }
-
-		state.playerCarryWeight += weight;
-		location = Location.PLAYER_INVENTORY;
-		Game.output("Taken.");
-
-		movedFromStart = true;
-
-	}
-
-	@Override
-	public void drop(GameState state)
-	{
-		state.playerCarryWeight -= weight;
-		location = state.playerLocation;
-		Game.output("Dropped.");
-	}
-
-	@Override
-    public void open(GameState state)
-    {
-    	if (!isContainer())
-    	{
-    		Game.output(openString);
-    		return;
-    	}
-
-        if (open)
-        {
-            Game.output("It is already open.");
-        }
-
-        else
-        {
-            open = true;
-            if (inventory.isEmpty())
-                Game.output("Opened.");
-            else
-            {
-                String str = "Opening the " + name + " reveals ";
-
-                for (int i = 0; i < inventory.size(); ++i)
-                {
-                    Item it = inventory.get(i);
-
-                    if (inventory.size() > 1 && i == inventory.size() - 1) str  += " and ";
-                    str += it.articleName;
-                    if (inventory.size() > 2 && i < inventory.size() - 1)
-                        str += ",";
-                }
-                
-                str += ".";
-
-                Game.output(str);
-            }
-        }
-    }
 
     @Override
     public void close(GameState state)
@@ -123,58 +55,55 @@ class Item extends GameObject{
 
     }
 
-
     @Override
-    public void place(GameState state, Item it)
+    public void drop(GameState state)
     {
+        Location loc = state.playerLocation;
 
-    	if (!isContainer())
-    	{
-    		Game.output(putString);
-    		return;
-    	}
-
-        if (open)
+        if (loc == Location.UP_TREE)
         {
-            inventory.add(it);
-            it.location = inventoryID;
-            Game.output("Done.");
-        }
-        else
-        {
-            Game.output("The " + name + " isn't open.");
-        }
-    }
+            state.playerCarryWeight -= weight;
 
-    @Override
-    public void remove(GameState state, Item it)
-    {
-
-    	if (!isContainer())
-    	{
-    		Game.output("You can't remove that from the " + name);
-    		return;
-    	}
-
-        if (open)
-        {
-            if (inventory.contains(it))
+            if (name.equals("jewel-encrusted egg"))
             {
-                inventory.remove(it);
-                it.location = Location.PLAYER_INVENTORY;
-                Game.output("Taken.");
+                Game.output("The egg falls to the ground and springs open, seriously damaged.");
+                breakEgg(state);
+                Item badEgg = (Item)(state.objectList.get("broken jewel-encrusted egg"));
+                badEgg.location = Location.FOREST_PATH;
+            }
+
+            else if (name.equals("bird's nest"))
+            {
+                Item goodEgg = (Item)(state.objectList.get("jewel-encrusted egg"));
+                if (goodEgg.location == Location.INSIDE_BIRDS_NEST)
+                {
+                    Game.output("The nest falls to the ground, and the egg spills out of it, seriously damaged.");
+                    breakEgg(state);
+                    Item badEgg = (Item)(state.objectList.get("broken jewel-encrusted egg"));
+                    badEgg.location = Location.FOREST_PATH;
+                }
+
+                else
+                    Game.output("The bird's nest falls to the ground.");
+
+                location = Location.FOREST_PATH;
             }
 
             else
             {
-                Game.output("There's no " + it.name + " in the " + name);
+                Game.output("The " + name + " falls to the ground.");
+                location = Location.FOREST_PATH;
             }
         }
 
+
         else
         {
-            Game.output("The " + name + " is closed.");
+            state.playerCarryWeight -= weight;
+            location = state.playerLocation;
+            Game.output("Dropped.");
         }
+
         
     }
 
@@ -210,7 +139,36 @@ class Item extends GameObject{
     }
 
     @Override
-    public boolean isOpen() { return open; }
+    public void extinguish(GameState state)
+    {
+        switch (name)
+        {
+            case "lantern":
+            {
+                if (activated)
+                {
+                    activated = false;
+                    Game.output("The brass lantern is now off.");
+
+                    Room rm = state.worldMap.get(state.playerLocation);
+                    if (rm.isDark())
+                    {
+                        Game.output("It is now pitch black.");
+                    }
+                }
+
+                else
+                {
+                    Game.output("It is already off.");
+                }
+            } break;
+
+            default:
+            {
+                Game.output(extinguishString);
+            } break;
+        }
+    }
 
 	@Override
 	public void light(GameState state)
@@ -248,38 +206,146 @@ class Item extends GameObject{
 		}
 	}
 
-
-	@Override
-	public void extinguish(GameState state)
-	{
-		switch (name)
-		{
-			case "lantern":
-			{
-				if (activated)
+    @Override
+    public void move(GameState state)
+    {
+        switch (name)
+        {
+            case "pile of leaves":
+            {
+                Game.output("Done.");
+                if (!state.leafPileMoved)
                 {
-                    activated = false;
-                    Game.output("The brass lantern is now off.");
-
-                    Room rm = state.worldMap.get(state.playerLocation);
-                    if (rm.isDark())
-                    {
-                        Game.output("It is now pitch black.");
-                    }
+                    revealGrating(state);
                 }
-
                 else
                 {
-                    Game.output("It is already off.");
+                    Game.output("Moving the pile of leaves reveals nothing.");
                 }
-			} break;
+            } break;
 
-			default:
-			{
-				Game.output(extinguishString);
-			} break;
-		}
-	}
+            default:
+            {
+                super.move(state);
+            } break;
+        }
+    }
+
+    @Override
+    public void open(GameState state)
+    {
+        if (!isContainer())
+        {
+            Game.output(openString);
+            return;
+        }
+
+        if (open)
+        {
+            Game.output("It is already open.");
+        }
+
+        else
+        {
+            open = true;
+            if (inventory.isEmpty())
+                Game.output("Opened.");
+            else
+            {
+                String str = "Opening the " + name + " reveals ";
+
+                for (int i = 0; i < inventory.size(); ++i)
+                {
+                    Item it = inventory.get(i);
+
+                    if (inventory.size() > 1 && i == inventory.size() - 1) str  += " and ";
+                    str += it.articleName;
+                    if (inventory.size() > 2 && i < inventory.size() - 1)
+                        str += ",";
+                }
+                
+                str += ".";
+
+                Game.output(str);
+            }
+        }
+    }
+
+    @Override
+    public void place(GameState state, Item it)
+    {
+
+        if (!isContainer())
+        {
+            Game.output(putString);
+            return;
+        }
+
+        if (open)
+        {
+            inventory.add(it);
+            it.location = inventoryID;
+            Game.output("Done.");
+        }
+        else
+        {
+            Game.output("The " + name + " isn't open.");
+        }
+    }
+
+    @Override
+    public void remove(GameState state, Item it)
+    {
+
+        if (!isContainer())
+        {
+            Game.output("You can't remove that from the " + name);
+            return;
+        }
+
+        if (open)
+        {
+            if (inventory.contains(it))
+            {
+                inventory.remove(it);
+                it.location = Location.PLAYER_INVENTORY;
+                Game.output("Taken.");
+            }
+
+            else
+            {
+                Game.output("There's no " + it.name + " in the " + name);
+            }
+        }
+
+        else
+        {
+            Game.output("The " + name + " is closed.");
+        }
+        
+    }
+
+    @Override
+    public void take(GameState state)
+    {
+        if (name.equals("pile of leaves") && !state.leafPileMoved)
+        {
+            revealGrating(state);       
+        }
+
+        if ((state.playerCarryWeight + weight) >= state.playerMaxCarryWeight)
+        {
+            Game.output(GameStrings.OVERBURDENED);
+            return;
+        }
+
+        state.playerCarryWeight += weight;
+        location = Location.PLAYER_INVENTORY;
+        Game.output("Taken.");
+
+        movedFromStart = true;
+
+    }
 
 
     public String getItemDescription()
@@ -299,9 +365,44 @@ class Item extends GameObject{
 	@Override
 	public boolean isAlive() { return lifespan > 0; }
 
+    @Override
+    public boolean isContainer() { return inventoryID != Location.NULL_INVENTORY; }
+
+    @Override
+    public boolean isOpen() { return open; }
+
 	@Override
 	public void tick() { --lifespan; }
 
 	public String toString() { return name; }
+
+    private void breakEgg(GameState state)
+    {
+        Item goodEgg = (Item)(state.objectList.get("jewel-encrusted egg"));
+        Item badEgg = (Item)(state.objectList.get("broken jewel-encrusted egg"));
+        Item badCanary = (Item)(state.objectList.get("broken clockwork canary"));
+
+        goodEgg.location = Location.NULL_LOCATION;
+        badCanary.location = Location.INSIDE_BROKEN_EGG;
+        badEgg.location = state.playerLocation;
+        badEgg.open = true;
+
+        Game.output(ObjectStrings.INIT_BROKEN_CANARY);
+    }
+
+    private void revealGrating(GameState state)
+    {
+        state.leafPileMoved = true;
+        Feature grate = (Feature)state.objectList.get("grating");
+        grate.altLocations.add(Location.CLEARING_NORTH);
+        Game.output("In disturbing the pile of leaves, a grating is revealed.");
+
+        Room rm = state.worldMap.get(Location.CLEARING_NORTH);
+        rm.description = MapStrings.DESC_CLEARING_NORTH_GRATING;
+        Passage psg = new Passage(Location.GRATING_ROOM, Location.CLEARING_NORTH);
+        psg.close();
+        psg.closedFail = "The grating is closed!";
+        rm.addExit(Action.DOWN, psg);
+    }
 	
 }

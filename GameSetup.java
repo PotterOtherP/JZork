@@ -52,6 +52,7 @@ enum Location {
 
 
     INSIDE_BIRDS_NEST,
+    INSIDE_BROKEN_EGG,
     INSIDE_BUOY,
     INSIDE_COFFIN,
     INSIDE_MAILBOX,
@@ -98,9 +99,9 @@ enum Action {
     PROFANITY, QUIT, RESTART, RESTORE, SAVE, SAY, SCORE, SHOUT,
     STAY, SUPERBRIEF, VERBOSE, WAIT,
   
-    ACTIVATE, ANSWER, BLOW, CLIMB, CLOSE, COUNT,
+    ACTIVATE, ANSWER, BLOW, BOARD, CLIMB, CLOSE, COUNT,
     DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXTINGUISH,
-    FOLLOW, KICK, KNOCK, LAUNCH, LIGHT, LISTEN,
+    FOLLOW, KICK, KNOCK, LAUNCH, LIGHT, LISTEN, LOOK_IN, LOOK_OUT, LOOK_UNDER,
     LOWER, MOVE_OBJECT, OPEN, PLAY, POUR, PULL, PUSH, RAISE,
     READ, RING, SEARCH, SHAKE, SMELL, STRIKE, TAKE, TALK_TO,
     TOUCH, WAKE, WAVE, WEAR, WIND,
@@ -442,7 +443,6 @@ class GameSetup {
         clearingNorth.addExit(Action.EAST, clearingN_forestE);
         clearingNorth.addExit(Action.SOUTH, forestpath_clearingN);
         clearingNorth.addExit(Action.WEST, clearingN_forestW);
-        clearingNorth.addExit(Action.DOWN, grating_clearing);
         clearingNorth.addFailMessage(Action.UP, "There is no tree here suitable for climbing.");
         clearingNorth.addFailMessage(Action.NORTH, "The forest becomes impenetrable to the north.");
 
@@ -1211,7 +1211,9 @@ class GameSetup {
         Item brokenEgg = new Item("broken jewel-encrusted egg", Location.NULL_LOCATION);
         brokenEgg.presenceString = "There is a somewhat ruined egg here.";
         brokenEgg.altNames.add("broken egg");
+        brokenEgg.altNames.add("jewel-encrusted egg");
         brokenEgg.altNames.add("egg");
+        brokenEgg.inventoryID = Location.INSIDE_BROKEN_EGG;
 
         Item buoy = new Item("red buoy", Location.FRIGID_RIVER_4);
         buoy.altNames.add("buoy");
@@ -1274,7 +1276,9 @@ class GameSetup {
         Item leafPile = new Item("pile of leaves", Location.CLEARING_NORTH);
         leafPile.altNames.add("pile");
         leafPile.altNames.add("leaves");
-        leafPile.initialPresenceString = ObjectStrings.INIT_LEAF_PILE;
+        leafPile.countString = "There are 69,105 leaves here.";
+        leafPile.initialPresenceString =  ObjectStrings.LEAF_PILE;
+        leafPile.presenceString =  ObjectStrings.LEAF_PILE;
 
         Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX);
         leaflet.readString = GameStrings.LEAFLET_TEXT;
@@ -1375,6 +1379,8 @@ class GameSetup {
         carpet.altNames.add("oriental carpet");
         carpet.altNames.add("rug");
         carpet.altNames.add("oriental rug");
+        carpet.boardString = ObjectStrings.CARPET_SIT_1;
+        carpet.lookUnderString = ObjectStrings.CARPET_LOOK_UNDER;
 
         Feature chain = new Feature("chain", Location.SHAFT_ROOM);
         chain.lowerString = "Perhaps you should do that to the basket.";
@@ -1397,8 +1403,9 @@ class GameSetup {
         forest.altLocations.add(Location.UP_TREE);
         forest.listenString = "The pines and the hemlocks seem to be murmuring.";
         
-        Feature grating = new Feature("grating", Location.NULL_LOCATION);
-        
+        Feature grating = new Feature("grating", Location.GRATING_ROOM);
+        grating.altNames.add("grate");
+
         Feature house = new Feature("white house", Location.WEST_OF_HOUSE);
         house.altNames.add("house");
         house.altLocations.add(Location.NORTH_OF_HOUSE);
@@ -1411,6 +1418,8 @@ class GameSetup {
         Feature houseWindow = new Feature("kitchen window", Location.BEHIND_HOUSE);
         houseWindow.altNames.add("window");
         houseWindow.altLocations.add(Location.KITCHEN);
+        houseWindow.examineString = ObjectStrings.WINDOW_EXAMINE_AJAR;
+        houseWindow.lookInString = ObjectStrings.WINDOW_LOOK_IN;
 
         Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN);
         kitchenTable.altNames.add("table");
@@ -1782,6 +1791,10 @@ class GameSetup {
 	    
 	    state.actions.put("answer", Action.ANSWER);
 	    state.actions.put("blow", Action.BLOW);
+        state.actions.put("board", Action.BOARD);
+        state.actions.put("get on", Action.BOARD);
+        state.actions.put("get in", Action.BOARD);
+        state.actions.put("sit on", Action.BOARD);
 	    state.actions.put("climb", Action.CLIMB);
 	    state.actions.put("close", Action.CLOSE);
 	    state.actions.put("count", Action.COUNT);
@@ -1800,6 +1813,12 @@ class GameSetup {
 	    state.actions.put("knock", Action.KNOCK);
 	    state.actions.put("light", Action.LIGHT);
 	    state.actions.put("listen", Action.LISTEN);
+        state.actions.put("look in", Action.LOOK_IN);
+        state.actions.put("l in", Action.LOOK_IN);
+        state.actions.put("look out", Action.LOOK_OUT);
+        state.actions.put("l out", Action.LOOK_OUT);
+        state.actions.put("look under", Action.LOOK_UNDER);
+        state.actions.put("l under", Action.LOOK_UNDER);
 	    state.actions.put("lower", Action.LOWER);
 	    state.actions.put("move", Action.MOVE_OBJECT);
 	    state.actions.put("open", Action.OPEN);
@@ -1880,6 +1899,7 @@ class GameSetup {
 	
 	    state.actionTypes.put(Action.ANSWER, ActionType.DIRECT);
 	    state.actionTypes.put(Action.BLOW, ActionType.DIRECT);
+        state.actionTypes.put(Action.BOARD, ActionType.DIRECT);
 	    state.actionTypes.put(Action.CLIMB, ActionType.DIRECT);
 	    state.actionTypes.put(Action.CLOSE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.COUNT, ActionType.DIRECT);
@@ -1896,6 +1916,9 @@ class GameSetup {
 	    state.actionTypes.put(Action.KNOCK, ActionType.DIRECT);
 	    state.actionTypes.put(Action.LIGHT, ActionType.DIRECT);
 	    state.actionTypes.put(Action.LISTEN, ActionType.DIRECT);
+        state.actionTypes.put(Action.LOOK_IN, ActionType.DIRECT);
+        state.actionTypes.put(Action.LOOK_OUT, ActionType.DIRECT);
+        state.actionTypes.put(Action.LOOK_UNDER, ActionType.DIRECT);
 	    state.actionTypes.put(Action.LOWER, ActionType.DIRECT);
 	    state.actionTypes.put(Action.MOVE_OBJECT, ActionType.DIRECT);
 	    state.actionTypes.put(Action.OPEN, ActionType.DIRECT);
@@ -1904,7 +1927,6 @@ class GameSetup {
 	    state.actionTypes.put(Action.PUSH, ActionType.DIRECT);
 	    state.actionTypes.put(Action.RAISE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.READ, ActionType.DIRECT);
-	    state.actionTypes.put(Action.TALK_TO, ActionType.DIRECT);
 	    state.actionTypes.put(Action.SEARCH, ActionType.DIRECT);
 	    state.actionTypes.put(Action.SHAKE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.SMELL, ActionType.DIRECT);
