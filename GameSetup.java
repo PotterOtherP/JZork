@@ -1414,6 +1414,26 @@ class GameSetup {
         house.altLocations.add(Location.KITCHEN);
         house.altLocations.add(Location.LIVING_ROOM);
         house.altLocations.add(Location.ATTIC);
+        house.examineString = ObjectStrings.HOUSE_EXAMINE;
+
+        Feature houseBoards = new Feature("wooden boards", Location.WEST_OF_HOUSE);
+        houseBoards.altNames.add("boards");
+        houseBoards.altNames.add("board");
+        houseBoards.altNames.add("wood");
+        houseBoards.altLocations.add(Location.SOUTH_OF_HOUSE);
+        houseBoards.altLocations.add(Location.NORTH_OF_HOUSE);
+        houseBoards.takeString = "The boards are securely fastened.";
+
+        Feature houseExteriorDoor = new Feature("door", Location.WEST_OF_HOUSE);
+        houseExteriorDoor.altNames.add("wooden door");
+        houseExteriorDoor.openString = "The door cannot be opened.";
+
+        Feature houseExteriorWindow = new Feature("boarded window", Location.NORTH_OF_HOUSE);
+        houseExteriorWindow.altNames.add("windows");
+        houseExteriorWindow.altNames.add("window");
+        houseExteriorWindow.altLocations.add(Location.SOUTH_OF_HOUSE);
+        houseExteriorWindow.breakString = "You can't break the windows open.";
+        houseExteriorWindow.openString = "The windows are boarded and can't be opened.";
 
         Feature houseWindow = new Feature("kitchen window", Location.BEHIND_HOUSE);
         houseWindow.altNames.add("window");
@@ -1639,6 +1659,9 @@ class GameSetup {
         state.objectList.put(forest.name, forest);
         state.objectList.put(grating.name, grating);
         state.objectList.put(house.name, house);
+        state.objectList.put(houseBoards.name, houseBoards);
+        state.objectList.put(houseExteriorDoor.name, houseExteriorDoor);
+        state.objectList.put(houseExteriorWindow.name, houseExteriorWindow);
         state.objectList.put(houseWindow.name, houseWindow);
         state.objectList.put(kitchenTable.name, kitchenTable);
         state.objectList.put(mailbox.name, mailbox);
