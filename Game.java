@@ -123,15 +123,15 @@ public final class Game {
         state.lightActivated = false;
 
         Item lightsrc = (Item)(state.objectList.get("brass lantern"));
-        if (lightsrc.location == Location.PLAYER_INVENTORY && lightsrc.activated)
+        if ((lightsrc.location == Location.PLAYER_INVENTORY || lightsrc.location == state.playerLocation) && lightsrc.activated)
             state.lightActivated = true;
         
         lightsrc = (Item)(state.objectList.get("torch"));
-        if (lightsrc.location == Location.PLAYER_INVENTORY && lightsrc.activated)
+        if ((lightsrc.location == Location.PLAYER_INVENTORY || lightsrc.location == state.playerLocation) && lightsrc.activated)
             state.lightActivated = true;
         
         lightsrc = (Item)(state.objectList.get("pair of candles"));
-        if (lightsrc.location == Location.PLAYER_INVENTORY && lightsrc.activated)
+        if ((lightsrc.location == Location.PLAYER_INVENTORY || lightsrc.location == state.playerLocation) && lightsrc.activated)
             state.lightActivated = true;
 
 

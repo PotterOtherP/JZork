@@ -28,6 +28,10 @@ public class InputParser {
 	 */
 	public boolean parsePlayerInput()
 	{
+		// Godmode check
+		if (Game.godmode && processGodmode())
+			return false;
+
 		// Get previous input if player typed "again"
 		if (input.equals("again") || input.equals("g"))
 		{
@@ -311,7 +315,32 @@ public class InputParser {
 
 	public boolean processGodmode()
 	{
-		return true;
+		String teleport = "teleport";
+		if (startsWith(teleport, input))
+		{
+			input = input.substring(teleport.length()).trim();
+
+			boolean teleportCheck = false;
+
+			for (Room rm : state.worldMap.values())
+			{
+				String roomName = rm.name.toLowerCase();
+				if (roomName.equals(input))
+				{
+					state.playerLocation = rm.roomID;
+					Game.output(rm.name);
+					rm.lookAround(state);
+					teleportCheck = true;
+				}
+			}
+
+			if (!teleportCheck)
+				Game.output("Room not found.");
+			
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean reprompt(ActionType actType)

@@ -1478,6 +1478,14 @@ class GameSetup {
         trophyCase.altNames.add("case");
         trophyCase.inventoryID = Location.INSIDE_TROPHY_CASE;
 
+        Feature woodenDoor = new Feature("wooden door", Location.LIVING_ROOM);
+        woodenDoor.altNames.add("door");
+        woodenDoor.altNames.add("letters");
+        woodenDoor.altNames.add("lettering");
+        woodenDoor.openString = "The door cannot be opened.";
+        woodenDoor.readString = ObjectStrings.WOODEN_DOOR;
+        woodenDoor.examineString = ObjectStrings.WOODEN_DOOR;
+
         
         // Actors
         Actor current = new Actor("current", Location.FRIGID_RIVER_1);
@@ -1672,6 +1680,7 @@ class GameSetup {
         state.objectList.put(trapDoor.name, trapDoor);
         state.objectList.put(trophyCase.name, trophyCase);
         state.objectList.put(toolChests.name, toolChests);
+        state.objectList.put(woodenDoor.name, woodenDoor);
 
         state.objectList.put(current.name, current);
         state.objectList.put(cyclops.name, cyclops);

@@ -74,6 +74,8 @@ class ObjectStrings {
     public static final String HOUSE_EXAMINE = "The house is a beautiful colonial house which is painted white. It is clear "
             + "that the owners must have been extremely wealthy.";
 
+    public static final String WOODEN_DOOR = "The engravings translate to \"This space intentionally left blank.\"";
+
     public static final String WINDOW_EXAMINE_AJAR = "The window is slightly ajar, but not enough to allow entry.";
     public static final String WINDOW_EXAMINE_OPEN = "The kitchen window is open, but I can't tell what's beyond it.";
     public static final String WINDOW_EXAMINE_CLOSED = "The kitchen window is closed.";

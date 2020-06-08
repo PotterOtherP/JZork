@@ -124,7 +124,11 @@ class Room {
 		// If the Passage is open... success
 		if (psg.isOpen())
 		{
-			if (!psg.message.isEmpty()) Game.output(psg.message);
+			if (!psg.message.isEmpty())
+			{
+				Game.output(psg.message);
+				Game.outputLine();
+			}
 
 			state.playerPreviousLocation = state.playerLocation;
 			state.playerLocation = dest;
