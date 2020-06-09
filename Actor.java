@@ -6,7 +6,7 @@ interface ActorMethod {
 	public void actorUpdate();
 }
 
-class Actor extends GameObject {
+public class Actor extends GameObject {
 
 	public ActorMethod actorMethod;
 	

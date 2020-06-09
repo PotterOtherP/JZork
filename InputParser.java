@@ -39,6 +39,40 @@ public class InputParser {
 			return parsePlayerInput();
 		}
 
+		if (input.equals("godmode"))
+		{
+			if (!Game.godmode)
+			{
+				Game.godmode = true;
+				Game.output("God mode enabled.");
+			}
+
+			else
+			{
+				Game.godmode = false;
+				Game.output("God mode disabled.");
+			}
+			
+			return false;
+		}
+
+		if (input.equals("debug"))
+		{
+			if (!Game.debug)
+			{
+				Game.debug = true;
+				Game.output("Debug mode enabled.");				
+			}
+
+			else
+			{
+				Game.debug = false;
+				Game.output("Debug mode disabled.");
+			}
+
+			return false;
+		}
+
 		// Inside jokes, special cases, profanity, etc
 		if (specialInputCheck())
 			return false;
@@ -316,6 +350,7 @@ public class InputParser {
 	public boolean processGodmode()
 	{
 		String teleport = "teleport";
+		String accio = "accio";
 		if (startsWith(teleport, input))
 		{
 			input = input.substring(teleport.length()).trim();
@@ -337,6 +372,31 @@ public class InputParser {
 			if (!teleportCheck)
 				Game.output("Room not found.");
 			
+			return true;
+		}
+
+		if (startsWith(accio, input))
+		{
+			input = input.substring(accio.length()).trim();
+
+			boolean accioCheck = false;
+
+			for (GameObject g : state.objectList.values())
+			{
+				if (g.isItem())
+				{
+					if (g.name.equals(input) || g.altNames.contains(input))
+					{
+						Game.output("You now have the " + input + ".");
+						g.location = Location.PLAYER_INVENTORY;
+						accioCheck = true;
+					}
+				}
+			}
+
+			if (!accioCheck)
+				Game.output("Item not found.");
+
 			return true;
 		}
 

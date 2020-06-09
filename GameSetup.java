@@ -1896,10 +1896,6 @@ class GameSetup {
 	    state.actions.put("put", Action.PUT);
 	    state.actions.put("throw", Action.THROW);
 	    state.actions.put("tie", Action.TIE);
-
-        // Godmode actions
-        state.actions.put("accio", Action.ACCIO);
-        state.actions.put("teleport", Action.TELEPORT);
 	
 	
 	    // Assigning action types
