@@ -432,9 +432,11 @@ public final class Game {
 
 		// The player's action could end the game before anything else happens.
 
-        if (!state.playerAlive) gameover = true;
-
-		if (gameover) return;
+        if (!state.playerAlive)
+        {
+            gameover = true;
+            return;
+        }
 
         // The actors get to take their turns
         for (GameObject ob : state.objectList.values())
