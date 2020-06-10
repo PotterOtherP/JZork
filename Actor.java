@@ -31,7 +31,7 @@ public class Actor extends GameObject {
 
 	public void floodTurn(GameState state)
     {
-    	
+    	if (!alive) return;
     }
 
     public void gustOfWindTurn(GameState state)
@@ -58,17 +58,44 @@ public class Actor extends GameObject {
 
 	public void spiritsTurn(GameState state)
     {
-
+        if (!alive) return;
     }
 
     public void thiefTurn(GameState state)
     {
-
+        if (!alive) return;
     }
 
     public void trollTurn(GameState state)
     {
+        if (!alive) return;
 
+        Room trollrm = state.worldMap.get(Location.TROLL_ROOM);
+        Passage p1 = trollrm.exits.get(Action.WEST);
+        Passage p2 = trollrm.exits.get(Action.EAST);
+
+        p1.close();
+        p2.close();
+        p1.closedFail = GameStrings.TROLL_FEND;
+        p2.closedFail = GameStrings.TROLL_FEND;
+
+        if (location == state.playerLocation)
+        {
+            Game.output("The troll attacks you.");
+        }
+    }
+
+    public void trollDies(GameState state)
+    {
+        alive = false;
+        Game.output("The troll dies.");
+
+        Room trollrm = state.worldMap.get(Location.TROLL_ROOM);
+        Passage p1 = trollrm.exits.get(Action.WEST);
+        Passage p2 = trollrm.exits.get(Action.EAST);
+
+        p1.open();
+        p2.open();
     }
 
     public void vampireBatTurn(GameState state)

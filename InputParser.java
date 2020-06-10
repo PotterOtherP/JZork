@@ -366,6 +366,7 @@ public class InputParser {
 					Game.output(rm.name);
 					rm.lookAround(state);
 					teleportCheck = true;
+					return true;
 				}
 			}
 
@@ -391,6 +392,7 @@ public class InputParser {
 						g.location = Location.PLAYER_INVENTORY;
 						g.movedFromStart = true;
 						accioCheck = true;
+						return true;
 					}
 				}
 			}
@@ -398,6 +400,22 @@ public class InputParser {
 			if (!accioCheck)
 				Game.output("Item not found.");
 
+			return true;
+		}
+
+
+		if (input.equals("terminate troll"))
+		{
+			Actor troll = (Actor)state.objectList.get("troll");
+			troll.trollDies(state);
+			return true;
+		}
+
+		if (input.equals("terminate thief"))
+		{
+			Game.output("The thief is now dead.");
+			Actor thief = (Actor)state.objectList.get("thief");
+			thief.alive = false;
 			return true;
 		}
 

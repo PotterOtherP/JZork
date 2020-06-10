@@ -921,8 +921,6 @@ class GameSetup {
         grating_clearing.close();
         house_behind_kitchen.close();
         cellar_livingroom.close();
-        troll_maze.close();
-        troll_eastwest.close();
         strange_living_room.close();
         house_west_barrow.close();
         rainbow_end.close();
@@ -943,8 +941,6 @@ class GameSetup {
         grating_clearing.closedFail = "The grating is closed!";
         house_behind_kitchen.closedFail = MapStrings.KITCHEN_WINDOW_CLOSED;
         strange_living_room.closedFail = "The door is nailed shut.";
-        troll_eastwest.closedFail = "The troll fends you off with a menacing gesture.";
-        troll_maze.closedFail = "The troll fends you off with a menacing gesture.";
         dome_torch.closedFail = "You cannot do gown without fracturing many bones.";
         hades_land_dead.closedFail = "Some invisible force prevents you from passing through the gate.";
         res_south_res.closedFail = "You would drown.";
