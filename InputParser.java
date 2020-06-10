@@ -389,6 +389,7 @@ public class InputParser {
 					{
 						Game.output("You now have the " + input + ".");
 						g.location = Location.PLAYER_INVENTORY;
+						g.movedFromStart = true;
 						accioCheck = true;
 					}
 				}

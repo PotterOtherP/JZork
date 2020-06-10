@@ -30,7 +30,6 @@ public final class Game {
 	public static final Location STARTING_LOCATION = Location.WEST_OF_HOUSE;
     public static final int LANTERN_LIFESPAN = 100;
     public static final int CARRY_WEIGHT_LIMIT = 20;
-    public static final int SONGBIRD_CHIRP_PERCENT = 15;
 
 
 
@@ -441,10 +440,6 @@ public final class Game {
         // The actors get to take their turns
         for (GameObject ob : state.objectList.values())
         {
-            if (ob.isActor() && ob.isAlive())
-            {
-                ob.actorTurn();
-            }
 
             if (ob.isItem())
             {
@@ -457,6 +452,25 @@ public final class Game {
                 }
             }
         }
+
+        Actor cyclops = (Actor)(state.objectList.get("cyclops"));
+        Actor flood = (Actor)(state.objectList.get("flood"));
+        Actor gustOfWind = (Actor)(state.objectList.get("gust of wind"));
+        Actor riverCurrent = (Actor)(state.objectList.get("current"));
+        Actor songbird = (Actor)(state.objectList.get("songbird"));
+        Actor spirits = (Actor)(state.objectList.get("spirits"));
+        Actor thief = (Actor)(state.objectList.get("thief"));
+        Actor troll = (Actor)(state.objectList.get("troll"));
+        Actor vampireBat = (Actor)(state.objectList.get("vampire bat"));
+        cyclops.cyclopsTurn(state);
+        flood.floodTurn(state);
+        gustOfWind.gustOfWindTurn(state);
+        riverCurrent.riverCurrentTurn(state);
+        songbird.songbirdTurn(state);
+        spirits.spiritsTurn(state);
+        thief.thiefTurn(state);
+        troll.trollTurn(state);
+        vampireBat.vampireBatTurn(state);
 
 		state.addTurn();
 

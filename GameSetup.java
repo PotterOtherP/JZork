@@ -1488,19 +1488,28 @@ class GameSetup {
 
         
         // Actors
-        Actor current = new Actor("current", Location.FRIGID_RIVER_1);
-        current.altLocations.add(Location.FRIGID_RIVER_2);
-        current.altLocations.add(Location.FRIGID_RIVER_3);
-        current.altLocations.add(Location.FRIGID_RIVER_4);
-        current.altLocations.add(Location.FRIGID_RIVER_5);
-
+        
         Actor cyclops = new Actor("cyclops", Location.CYCLOPS_ROOM);
         
         Actor flood = new Actor("flood", Location.MAINTENANCE_ROOM);
         
         Actor gustOfWind = new Actor("gust of wind", Location.CAVE_SOUTH);
+
+        Actor riverCurrent = new Actor("current", Location.FRIGID_RIVER_1);
+        riverCurrent.altLocations.add(Location.FRIGID_RIVER_2);
+        riverCurrent.altLocations.add(Location.FRIGID_RIVER_3);
+        riverCurrent.altLocations.add(Location.FRIGID_RIVER_4);
+        riverCurrent.altLocations.add(Location.FRIGID_RIVER_5);
+
         
-        Actor songbird = new Actor("songbird", Location.NULL_LOCATION);
+        Actor songbird = new Actor("songbird", forest.location);
+        for (Location l : forest.altLocations)
+            songbird.altLocations.add(l);
+        songbird.altNames.add("song bird");
+        songbird.altNames.add("bird");
+        songbird.presenceString = "";
+        songbird.takeString = GameStrings.SONGBIRD_NEARBY;
+        songbird.examineString = GameStrings.SONGBIRD_NEARBY;
         
         Actor spirits = new Actor("spirits", Location.ENTRANCE_TO_HADES);
         
@@ -1514,85 +1523,6 @@ class GameSetup {
         troll.inventoryID = Location.TROLL_INVENTORY;
         
         Actor vampireBat = new Actor("vampire bat", Location.BAT_ROOM);
-
-
-
-
-        // Actor methods
-
-        ActorMethod dummyActorMethod = () -> {};
-
-        ActorMethod songbirdMethod = () -> {
-
-            switch (state.playerLocation)
-            {
-                case FOREST_PATH:
-                case FOREST_SOUTH:
-                case FOREST_EAST:
-                case FOREST_NORTHEAST:
-                case FOREST_WEST:
-                case CLEARING_NORTH:
-                case CLEARING_EAST:
-                case UP_TREE:
-                {
-                    songbird.location = state.playerLocation;
-                    Random rand = new Random();
-                    if (rand.nextInt(100) < Game.SONGBIRD_CHIRP_PERCENT)
-                        Game.output(GameStrings.SONGBIRD);
-                } break;
-
-                default: {} break;
-            }
-
-        };
-
-        ActorMethod cyclopsMethod = () -> {
-
-            if (state.playerLocation == Location.CELLAR && state.playerPreviousLocation == Location.LIVING_ROOM)
-            {
-                Room rm = state.worldMap.get(Location.CELLAR);
-                Passage p = rm.exits.get(Action.UP);
-                p.close();
-            }
-
-        };
-
-        ActorMethod windMethod = () -> {
-
-            if (state.playerLocation == Location.CAVE_SOUTH)
-            {
-                Item it = (Item)(state.objectList.get("candles"));
-                if (it.activated)
-                {
-                    Random rand = new Random();
-                    if (rand.nextInt(100) < 50)
-                    {
-                        Game.output("A gust of wind blows out your candles!");
-                        it.activated = false;
-                    }
-
-                }
-            }
-        };
-
-        songbird.setActorMethod(songbirdMethod);
-        songbird.presenceString = "";
-        songbird.takeString = GameStrings.SONGBIRD_NEARBY;
-        songbird.examineString = GameStrings.SONGBIRD_NEARBY;
-
-        troll.setActorMethod(dummyActorMethod);
-        thief.setActorMethod(dummyActorMethod);
-        cyclops.setActorMethod(cyclopsMethod);
-        vampireBat.setActorMethod(dummyActorMethod);
-        spirits.setActorMethod(dummyActorMethod);
-        gustOfWind.setActorMethod(windMethod);
-        flood.setActorMethod(dummyActorMethod);
-        current.setActorMethod(dummyActorMethod);
-
-
-
-
-        
 
         // Add all objects to the gamestate list
 
@@ -1682,10 +1612,10 @@ class GameSetup {
         state.objectList.put(toolChests.name, toolChests);
         state.objectList.put(woodenDoor.name, woodenDoor);
 
-        state.objectList.put(current.name, current);
         state.objectList.put(cyclops.name, cyclops);
         state.objectList.put(flood.name, flood);
         state.objectList.put(gustOfWind.name, gustOfWind);
+        state.objectList.put(riverCurrent.name, riverCurrent);
         state.objectList.put(songbird.name, songbird);
         state.objectList.put(spirits.name, spirits);
         state.objectList.put(thief.name, thief);

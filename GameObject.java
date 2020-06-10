@@ -104,6 +104,7 @@ abstract class GameObject {
         setStrings();
 
         altLocations = new ArrayList<Location>();
+        altLocations.add(location);
         altNames = new ArrayList<String>();
         inventoryID = Location.NULL_INVENTORY;
         inventory = new ArrayList<Item>();

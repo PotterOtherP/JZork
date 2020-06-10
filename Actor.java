@@ -1,16 +1,12 @@
 import java.util.ArrayList;
+import java.util.Random;
 
-// Method for an actor's "turn"
-interface ActorMethod {
-
-	public void actorUpdate();
-}
 
 public class Actor extends GameObject {
-
-	public ActorMethod actorMethod;
 	
 	public boolean alive;
+
+	public static final int SONGBIRD_CHIRP_PERCENT = 15;
 
 
 	public Actor(String name, Location loc)
@@ -21,18 +17,64 @@ public class Actor extends GameObject {
 		alive = true;
 
 	}
+    
 
-
-	public void actorTurn()
+	public void cyclopsTurn(GameState state)
 	{
-		actorMethod.actorUpdate();
+		if (state.playerLocation == Location.CELLAR && state.playerPreviousLocation == Location.LIVING_ROOM)
+        {
+            Room rm = state.worldMap.get(Location.CELLAR);
+            Passage p = rm.exits.get(Action.UP);
+            p.close();
+        }
 	}
 
+	public void floodTurn(GameState state)
+    {
+    	
+    }
 
-	public void setActorMethod(ActorMethod am)
+    public void gustOfWindTurn(GameState state)
+    {
+    	
+    }
+
+    public void riverCurrentTurn(GameState state)
+    {
+
+    }
+
+	public void songbirdTurn(GameState state)
 	{
-		actorMethod = am;
+		if (altLocations.contains(state.playerLocation))
+		{
+			Random rand = new Random();
+			if (rand.nextInt(100) < SONGBIRD_CHIRP_PERCENT)
+				Game.output(GameStrings.SONGBIRD);
+		}
+
+		
 	}
+
+	public void spiritsTurn(GameState state)
+    {
+
+    }
+
+    public void thiefTurn(GameState state)
+    {
+
+    }
+
+    public void trollTurn(GameState state)
+    {
+
+    }
+
+    public void vampireBatTurn(GameState state)
+    {
+
+    }
 
 	@Override
 	public boolean isAlive() { return alive; }
