@@ -312,7 +312,7 @@ public class InputParser {
 		{
 			case DIRECT:
 			{
-				if (dirOjb.isItem() && !dirOjb.playerHasObject())
+				if (dirOjb.isItem() && !(state.currentObjects.containsValue(dirOjb)))
 				{
 					switch (act)
 					{

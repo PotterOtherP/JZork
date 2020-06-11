@@ -296,7 +296,7 @@ public final class Game {
 						output(item.capArticleName);
                     }
 
-                    if (item.playerHasObject() && item.isContainer() && item.isOpen())
+                    if (item.playerHasObject() && item.isContainer() && (item.isOpen() || item.name.equals("glass bottle")) )
                     {
                         if (!item.inventory.isEmpty())
                         {

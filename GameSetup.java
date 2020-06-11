@@ -1343,6 +1343,7 @@ class GameSetup {
 
         Item water = new Item("quantity of water", Location.INSIDE_BOTTLE);
         water.altNames.add("water");
+        water.takeString = "The water slips through your fingers.";
 
         Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM);
 

@@ -234,7 +234,7 @@ class Room {
 				}
 			}
 
-			if (g.isContainer() && g.isOpen())
+			if (g.isContainer() && (g.isOpen() || g.name.equals("glass bottle")) )
 			{
 				if (!g.inventory.isEmpty())
 				{

@@ -56,6 +56,24 @@ class Item extends GameObject{
     }
 
     @Override
+    public void drink(GameState state)
+    {
+        if (name.equals("quantity of water"))
+        {
+            Item bottle = (Item)(state.objectList.get("glass bottle"));
+
+            
+
+            Game.output("Thank you very much. I was rather thirsty (from all this talking, probably.");
+            location = Location.NULL_LOCATION;
+            return;
+        }
+
+        else
+            super.drink(state);
+    }
+
+    @Override
     public void drop(GameState state)
     {
         Location loc = state.playerLocation;
@@ -331,6 +349,13 @@ class Item extends GameObject{
         if (name.equals("pile of leaves") && !state.leafPileMoved)
         {
             revealGrating(state);       
+        }
+
+        if (name.equals("quantity of water"))
+        {
+            Game.output("The water slips through your fingers.");
+            location = Location.NULL_LOCATION;
+            return;
         }
 
         if ((state.playerCarryWeight + weight) >= state.playerMaxCarryWeight)
