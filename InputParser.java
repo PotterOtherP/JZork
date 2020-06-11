@@ -278,12 +278,12 @@ public class InputParser {
 	{
 		boolean check = false;
 
-		for (String token : state.objectList.keySet())
+		for (String token : state.currentObjects.keySet())
 		{
 			if (startsWith(token, input))
 			{
 				check = true;
-				state.indirectObject = state.objectList.get(token);
+				state.indirectObject = state.currentObjects.get(token);
 				input = input.substring(token.length()).trim();
 				break;
 			}

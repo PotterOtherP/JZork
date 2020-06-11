@@ -290,7 +290,7 @@ class Item extends GameObject{
     }
 
     @Override
-    public void place(GameState state, Item it)
+    public void put(GameState state)
     {
 
         if (!isContainer())
@@ -301,6 +301,7 @@ class Item extends GameObject{
 
         if (open)
         {
+            Item it = (Item)(state.indirectObject);
             inventory.add(it);
             it.location = inventoryID;
             Game.output("Done.");

@@ -176,7 +176,7 @@ abstract class GameObject {
         giveString = "";
         inflateString = "";
         lockString = "";
-        putString = "";
+        putString = "There's no good surface on the " + name + ".";
         throwString = "";
         tieString = "";
         turnString = "";
@@ -321,7 +321,9 @@ abstract class GameObject {
     public void inflate(GameState state) { Game.output(inflateString); }
     public void lock(GameState state) { Game.output("You can't lock that."); }
     public void place(GameState state, Item it) {}
+
     public void put(GameState state) { Game.output(putString); }
+
     public void remove(GameState state, Item it) {}
     public void throwObject(GameState state) { Game.output(throwString); }
     public void tie(GameState state) { Game.output(tieString); }

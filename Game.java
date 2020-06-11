@@ -267,8 +267,7 @@ public final class Game {
                     break;
                 }
 
-                if (obj.isItem())
-                    indObj.place(state, (Item)obj);
+                obj.put(state);
 
             } break;
 

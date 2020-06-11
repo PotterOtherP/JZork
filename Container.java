@@ -25,10 +25,11 @@ class Container extends GameObject {
     public boolean isContainer() { return true; }
 
     @Override
-    public void place(GameState state, Item it)
+    public void put(GameState state)
     {
         if (open)
         {
+            Item it = (Item)(state.indirectObject);
             inventory.add(it);
             it.location = inventoryID;
             Game.output("Done.");
