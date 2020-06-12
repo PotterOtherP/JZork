@@ -1440,6 +1440,7 @@ class GameSetup {
 
         Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN);
         kitchenTable.altNames.add("table");
+        kitchenTable.capacity = 4;
         kitchenTable.inventoryID = Location.ON_KITCHEN_TABLE;
         
         Container mailbox = new Container("small mailbox", Location.WEST_OF_HOUSE);

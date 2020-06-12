@@ -313,9 +313,9 @@ class Item extends GameObject{
     }
 
     @Override
-    public void remove(GameState state, Item it)
+    public void remove(GameState state)
     {
-
+        Item it = (Item)(state.indirectObject);
         if (!isContainer())
         {
             Game.output("You can't remove that from the " + name);

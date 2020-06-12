@@ -41,8 +41,9 @@ class Container extends GameObject {
     }
 
     @Override
-    public void remove(GameState state, Item it)
+    public void remove(GameState state)
     {
+        Item it = (Item)(state.indirectObject);
         if (open)
         {
             if (inventory.contains(it))

@@ -250,7 +250,6 @@ abstract class GameObject {
     
     // Direct actions
     public void answer(GameState state) { Game.output(answerString); }
-    public void attack(GameState state) { Game.output(attackString); }
     public void blow(GameState state) { Game.output(blowString); }
     public void board(GameState state) { Game.output(boardString); }
     public void climb(GameState state) { Game.output(climbString); }
@@ -304,6 +303,7 @@ abstract class GameObject {
 
 
     // Indirect actions
+    public void attack(GameState state) { Game.output(attackString); }
     public void breakObject(GameState state)
     {
         Game.output("Trying to destroy " + articleName + " with "
@@ -324,7 +324,7 @@ abstract class GameObject {
 
     public void put(GameState state) { Game.output(putString); }
 
-    public void remove(GameState state, Item it) {}
+    public void remove(GameState state) {}
     public void throwObject(GameState state) { Game.output(throwString); }
     public void tie(GameState state) { Game.output(tieString); }
     public void turn(GameState state) { Game.output(turnString); }
