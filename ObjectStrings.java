@@ -28,6 +28,7 @@ class ObjectStrings {
     public static final String INIT_NEST = "Beside you on the branch is a small bird's nest.";
     public static final String INIT_PAINTING = "Fortunately, there is still one chance for you to be a vandal, "
         + "for on the far wall is a painting of unparalleled beauty.";
+    public static final String INIT_POT_OF_GOLD = "At the end of the rainbow is a pot of gold.";
     public static final String INIT_ROPE = "A large coil of rope is lying in the corner.";
     public static final String INIT_RUSTY_KNIFE = "Beside the skeleton is a rusty knife.";
     public static final String INIT_SACK = "On the table is an elongated brown sack, smelling of hot peppers.";
@@ -50,7 +51,6 @@ class ObjectStrings {
     public static final String LEAF_PILE = "On the ground is a pile of leaves.";
     public static final String PAINTING = "A painting by a neglected genius is here.";
     public static final String PLATINUM_BAR = "On the ground is a large platinum bar.";
-    public static final String POT = "At the end of the rainbow is a pot of gold.";
     public static final String SCEPTRE = "An ornamented sceptre, tapering to a sharp point, is here.";
     public static final String TUBE = "There is an object which looks like a tube of toothpaste here.";
 
@@ -62,7 +62,7 @@ class ObjectStrings {
 
 
     public static final String MACHINE_FAIL = "The machine doesn't seem to want to do anything.";
-    public static final String MACHINE_SUCCESS = "The machine comes to life (figuratively) with a dazzing display of "
+    public static final String MACHINE_SUCCESS = "The machine comes to life (figuratively) with a dazzling display of "
             + "colored lights and bizarre noises. After a few moments, the excitement abates.";
 
     public static final String CARPET_SIT_1 = "As you sit, you notice an irregularity underneath it. Rather than be "
@@ -73,6 +73,14 @@ class ObjectStrings {
 
     public static final String HOUSE_EXAMINE = "The house is a beautiful colonial house which is painted white. It is clear "
             + "that the owners must have been extremely wealthy.";
+
+    public static final String SCEPTRE_WAVE = "A dazzling display of color briefly emanates from the sceptre.";
+    public static final String SCEPTRE_RAINBOW = "Suddenly, the rainbow appears to become solid and, I venture, walkable "
+            + "(I think the giveaway was the stairs and bannister.)";
+    public static final String SCEPTRE_RAINBOW_1 = "The rainbow seems to have become somewhat run-of-the-mill.";
+    public static final String SCEPTRE_RAINBOW_2 = "The structural integrity of the rainbow is severely compromised, leaving you "
+            + "hanging in mid-air, supported only by water vapor. Bye.";
+
 
     public static final String WOODEN_DOOR = "The engravings translate to \"This space intentionally left blank.\"";
 

@@ -153,6 +153,12 @@ class Room {
 
 		switch (roomID)
 		{
+			case ARAGAIN_FALLS:
+			{
+				if (state.rainbowSolid)
+					result += "\nA solid rainbow spans the falls.";
+			} break;
+
 			case BEHIND_HOUSE:
             {
                 if (exits.get(Action.WEST).isOpen())

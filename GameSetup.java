@@ -1137,7 +1137,7 @@ class GameSetup {
         Item pot = new Item("pot of gold", Location.NULL_LOCATION);
         pot.altNames.add("pot");
         pot.altNames.add("gold");
-        pot.presenceString = ObjectStrings.POT;
+        pot.initialPresenceString = ObjectStrings.INIT_POT_OF_GOLD;
         
         Item sapphire = new Item("sapphire-encrusted bracelet", Location.GAS_ROOM);
         sapphire.altNames.add("sapphire");
@@ -1152,6 +1152,7 @@ class GameSetup {
         sceptre.altNames.add("scepter");
         sceptre.initialPresenceString = ObjectStrings.INIT_SCEPTRE;
         sceptre.presenceString = ObjectStrings.SCEPTRE;
+        sceptre.waveString = ObjectStrings.SCEPTRE_WAVE;
         
         Item skull = new Item("crystal skull", Location.LAND_OF_THE_DEAD);
         skull.altNames.add("skull");
@@ -1462,6 +1463,11 @@ class GameSetup {
         
         Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM);
         pedestal.inventoryID = Location.ON_PEDESTAL;
+
+        Feature rainbow = new Feature("rainbow", Location.END_OF_RAINBOW);
+        rainbow.altLocations.add(Location.ON_THE_RAINBOW);
+        rainbow.altLocations.add(Location.ARAGAIN_FALLS);
+        rainbow.crossString = "Can you walk on water vapor?";
         
         Feature skeleton = new Feature("skeleton", Location.MAZE_5);
         
@@ -1606,6 +1612,7 @@ class GameSetup {
         state.objectList.put(mirror.name, mirror);
         state.objectList.put(mountains.name, mountains);
         state.objectList.put(pedestal.name, pedestal);
+        state.objectList.put(rainbow.name, rainbow);
         state.objectList.put(skeleton.name, skeleton);
         state.objectList.put(trapDoor.name, trapDoor);
         state.objectList.put(trophyCase.name, trophyCase);

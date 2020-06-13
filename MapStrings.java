@@ -76,7 +76,7 @@ class MapStrings {
     public static final String DESC_CANYON_BOTTOM = "You are beneath the walls of the river canyon which may be climbable here. "
         + "The lesser part of the runoff of Aragain Falls flows by below. To the north is a narrow path.";
 
-    public static final String DESC_END_OF_RAINBOW = "You are on a small, rocky beach on the continuation of the Frigid River "
+    public static final String DESC_END_OF_RAINBOW = "You are on a small, rocky beach on the continuation of the Frigid River past "
         + "the Falls. The beach is narrow due to the presence of the White Cliffs. The river canyon opens here and sunlight "
         + "shines in from above. A rainbow crosses over the falls to the east and a narrow path continues to the southwest.";
 

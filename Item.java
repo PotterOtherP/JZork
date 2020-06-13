@@ -373,6 +373,68 @@ class Item extends GameObject{
 
     }
 
+    @Override
+    public void wave(GameState state)
+    {
+        if (name.equals("sceptre"))
+        {
+            switch (state.playerLocation)
+            {
+                case END_OF_RAINBOW:
+                case ARAGAIN_FALLS:
+                case ON_THE_RAINBOW:
+                {
+                    Room onRainbow = state.worldMap.get(Location.ON_THE_RAINBOW);
+                    Passage p1 = onRainbow.exits.get(Action.EAST);
+                    Passage p2 = onRainbow.exits.get(Action.WEST);
+                    Item pot = (Item)state.objectList.get("pot of gold");
+
+                    if (!state.rainbowSolid)
+                    {
+                        state.rainbowSolid = true;
+                        Game.output(ObjectStrings.SCEPTRE_RAINBOW);
+                        p1.open();
+                        p2.open();
+
+                        if (state.playerLocation == Location.END_OF_RAINBOW &&
+                            !state.potOfGoldAppeared)
+                        {
+                            state.potOfGoldAppeared = true;
+                            Game.output("A shimmering pot of gold appears at the end of the rainbow.");
+                            pot.location = Location.END_OF_RAINBOW;
+                        }
+                    }
+
+                    else
+                    {
+                        state.rainbowSolid = false;
+                        p1.close();
+                        p2.close();
+
+                        if (state.playerLocation == Location.ON_THE_RAINBOW)
+                        {
+                            Game.output(ObjectStrings.SCEPTRE_RAINBOW_2);
+                            state.playerDies();
+                        }
+
+                        else
+                            Game.output(ObjectStrings.SCEPTRE_RAINBOW_1);
+
+                    }
+                } break;
+
+                default:
+                {
+                    Game.output(waveString);
+                } break;
+            }
+
+        }
+
+        else
+            super.wave(state);
+    }
+
 
     public String getItemDescription()
     {

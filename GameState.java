@@ -12,6 +12,8 @@ class GameState {
 	public boolean houseWindowOpened;
 	public boolean carpetMoved;
 	public boolean leafPileMoved;
+	public boolean rainbowSolid;
+	public boolean potOfGoldAppeared;
 
 	// player attributes
 	public Location playerLocation;
@@ -64,6 +66,8 @@ class GameState {
 		houseWindowOpened = false;
 		carpetMoved = false;
 		leafPileMoved = false;
+		potOfGoldAppeared = false;
+		rainbowSolid = false;
 
 		
 		resetInput();
@@ -154,6 +158,18 @@ class GameState {
 
         
 
+    }
+
+
+    public void playerDies()
+    {
+    	if (Game.godmode) return;
+
+    	Game.output("You have died.");
+    	playerPreviousLocation = playerLocation;
+    	playerLocation = Location.FOREST_PATH;
+    	Room path = worldMap.get(Location.FOREST_PATH);
+    	path.lookAround(this);
     }
 
 
