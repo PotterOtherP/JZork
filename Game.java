@@ -16,7 +16,7 @@ public final class Game {
 
 
     // Constants
-    public static final int LINE_LENGTH = 72;
+    public static final int MAX_LINE_LENGTH = 80;
 	public static final Location STARTING_LOCATION = Location.WEST_OF_HOUSE;
     public static final int LANTERN_LIFESPAN = 100;
     public static final int CARRY_WEIGHT_LIMIT = 20;
@@ -57,21 +57,17 @@ public final class Game {
 
             if (!parser.parsePlayerInput())
             {
-                outputLine();
                 continue;
             }
 
             if (!parser.validateAction())
             {
-                outputLine();
                 continue;
             }
 
             updateGame(gameState);
 
             if (debug) parser.inputTest();
-            
-            outputLine();
 		}
 
 		endGame(gameState);
@@ -86,6 +82,13 @@ public final class Game {
 		new GameSetup(state, godmode, debug);
 
 		// Put the player in the starting location
+        Room start = state.worldMap.get(STARTING_LOCATION);
+        state.setPlayerLocation(STARTING_LOCATION);
+        start.firstVisit = false;
+        outputLine();
+        start.lookAround(state);
+
+        /*
 		state.setPlayerLocation(Location.WEST_OF_HOUSE);
 		state.worldMap.get(Location.WEST_OF_HOUSE).firstVisit = false;
 
@@ -93,8 +96,7 @@ public final class Game {
         outputLine();
         output(state.worldMap.get(Location.WEST_OF_HOUSE).name);
 		output(MapStrings.DESC_WEST_OF_HOUSE);
-        outputLine();
-		
+		*/
 	}
 
 
@@ -275,7 +277,6 @@ public final class Game {
 
             case LOOK:
             {
-                output(currentRoom.name);
                 currentRoom.lookAround(state);
 
             } break;
@@ -352,11 +353,39 @@ public final class Game {
                     if (nextRoom.isDark() && !state.lightActivated)
                             output(GameStrings.ENTER_DARKNESS);
 
+
+                    switch(state.verbosity)
+                    {
+                        case SUPERBRIEF:
+                        {
+                            nextRoom.getRoomObjects(state);
+                        } break;
+
+                        case BRIEF:
+                        {
+                            if (nextRoom.firstVisit)
+                            {
+                                outputLine();
+                                nextRoom.getDescription(state);
+                            }
+                            
+                            nextRoom.getRoomObjects(state);
+
+                        } break;
+
+                        case VERBOSE:
+                        {
+                            outputLine();
+                            nextRoom.getDescription(state);
+                            nextRoom.getRoomObjects(state);
+                        } break;
+
+                        default: {} break;
+                    }
+
 					if (nextRoom.firstVisit)
-					{
-						nextRoom.firstVisit = false;              
-						nextRoom.lookAround(state);
-					}
+						nextRoom.firstVisit = false;
+
 				}
 
 			} break;
@@ -418,9 +447,31 @@ public final class Game {
             } break;
 
 			case NULL_ACTION: {} break;
-			case VERBOSE: { output("You said too many words."); } break;
+
+			case SUPERBRIEF:
+            {
+                output("Superbrief verbosity on.");
+                state.verbosity = Verbosity.SUPERBRIEF;
+            } break;
+
+            case BRIEF:
+            {
+                output("Brief verbosity on.");
+                state.verbosity = Verbosity.BRIEF;
+            } break;
+
+            case VERBOSE:
+            {
+                output("Maximum verbosity on.");
+                state.verbosity = Verbosity.VERBOSE;
+            } break;
+
 			case PROFANITY: { output(GameStrings.PROFANITY_ONE); } break;			
-			case QUIT: { /* if (verifyQuit()) */ gameover = true; } break;
+			case QUIT:
+            {
+                /* if (verifyQuit()) */
+                gameover = true;
+            } break;
             case AUTHOR: { output(GameStrings.AUTHOR_INFO); } break;
 
 
@@ -428,12 +479,7 @@ public final class Game {
 		}
 
 		// The player's action could end the game before anything else happens.
-
-        if (!state.playerAlive)
-        {
-            gameover = true;
-            return;
-        }
+        if (gameover) return;
 
         for (GameObject ob : state.objectList.values())
         {
@@ -493,29 +539,38 @@ public final class Game {
         }
     }
 
-	public static void prompt() { System.out.print(">> "); }
+	public static void prompt() { System.out.print("\n>> "); }
 	public static void outputLine() { System.out.println(); }
 	public static void output() { System.out.println(); }
 	
 	public static void output(String s)
     {
-        String[] words = s.split(" ");
-        int count = 0;
+        if (s.isEmpty()) return;
 
-        for (int i = 0; i < words.length; ++i)
+        String[] lines = s.split("\n");
+
+        for (int i = 0; i < lines.length; ++i)
         {
-            if (count > LINE_LENGTH)
+            String line = lines[i];
+
+            while (line.length() > MAX_LINE_LENGTH)
             {
-                if (words[i].charAt(0) != '\n')
-                    System.out.print("\n");
-                count = 0;
+                char endChar = line.charAt(MAX_LINE_LENGTH);
+                int shift = MAX_LINE_LENGTH;
+                while (endChar != ' ' && shift > 0)
+                {
+                    --shift;
+                    endChar = line.charAt(shift);
+                }
+
+                String chunk = line.substring(0, shift);
+                System.out.println(chunk);
+                line = line.substring(shift + 1);
             }
 
-            System.out.print(words[i] + " ");
-            count += words[i].length() + 1;
+            System.out.println(line);
         }
 
-        System.out.print("\n");
     }
 
 	public static String getPlayerText()
@@ -530,7 +585,7 @@ public final class Game {
 
 			if (result.isEmpty())
 			{
-				output("\nI beg your pardon?\n");
+				output("I beg your pardon?");
 				prompt();
 			}
 		}

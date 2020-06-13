@@ -139,6 +139,13 @@ enum ObjectType {
     SURFACE
     }
 
+enum Verbosity {
+
+    SUPERBRIEF,
+    BRIEF,
+    VERBOSE
+}
+
 
 class GameSetup {
 
@@ -1754,6 +1761,9 @@ class GameSetup {
 		state.actions.put("wait", Action.WAIT);
 	    state.actions.put("author", Action.AUTHOR);
 	    state.actions.put("pray", Action.PRAY);
+        state.actions.put("superbrief", Action.SUPERBRIEF);
+        state.actions.put("brief", Action.BRIEF);
+        state.actions.put("verbose", Action.VERBOSE);
 	
 	
 	    // Direct object interaction actions
@@ -1847,6 +1857,9 @@ class GameSetup {
 	    state.actionTypes.put(Action.AUTHOR, ActionType.REFLEXIVE);
 	    state.actionTypes.put(Action.PRAY, ActionType.REFLEXIVE);
 	    state.actionTypes.put(Action.SWIM, ActionType.REFLEXIVE);
+        state.actionTypes.put(Action.SUPERBRIEF, ActionType.REFLEXIVE);
+        state.actionTypes.put(Action.BRIEF, ActionType.REFLEXIVE);
+        state.actionTypes.put(Action.VERBOSE, ActionType.REFLEXIVE);
 	
 	    state.actionTypes.put(Action.NORTH, ActionType.EXIT);
 	    state.actionTypes.put(Action.SOUTH, ActionType.EXIT);

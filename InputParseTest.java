@@ -13,18 +13,21 @@ public class InputParseTest {
 
 		new GameSetup(gs, true, true);
 
-		InputParser parse = null;
+		String alpha9 = "123456789";
+		String alpha10 = "abcdefghij";
+		String alpha20 = "abcdefghijklmnopqrst";
+		String alpha26 = "abcdefghijklmnopqrstuvwxyz";
+		String alpha50 = alpha9 + " " + alpha9 + " " + alpha9 + " " + alpha9 + " " + alpha9;
+		String alpha100 = alpha50 + " " + alpha50;
 
-		for (int i = 0; i < testPhrases.length; ++i)
-		{
-			gs.resetInput();
-			gs.completePlayerInput = testPhrases[i];
-			parse = new InputParser(gs);
-			boolean success = parse.parsePlayerInput();
-			Game.output(success ? "Action succeeded" : "Action failed");
-			parse.inputTest();
-			Game.outputLine();
-		}
+
+		System.out.println("Substring(0, 10) of alphabet is " + alpha26.substring(0, 10));
+		System.out.println("Substring(10) of alphabet is " + alpha26.substring(10));
+
+		Game.output(alpha50);
+		Game.output(alpha100);
+
+
 
 
 	}

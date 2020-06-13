@@ -62,9 +62,13 @@ class Item extends GameObject{
         {
             Item bottle = (Item)(state.objectList.get("glass bottle"));
 
-            
+            if (!bottle.open)
+            {
+                Game.output("The bottle is closed.");
+                return;
+            }
 
-            Game.output("Thank you very much. I was rather thirsty (from all this talking, probably.");
+            Game.output("Thank you very much. I was rather thirsty (from all this talking, probably.)");
             location = Location.NULL_LOCATION;
             return;
         }
@@ -200,6 +204,7 @@ class Item extends GameObject{
                     activated = true;
                     state.lightActivated = true;
                     Game.output("The brass lantern is now on.");
+                    Game.outputLine();
                     Room rm = state.worldMap.get(state.playerLocation);
                     if (rm.isDark()) rm.lookAround(state);
                     examineString = "The lamp is on.";

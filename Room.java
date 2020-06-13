@@ -145,11 +145,15 @@ class Room {
 	}
 
 
-	public String getDescription(GameState state)
+	public void getDescription(GameState state)
 	{
+		if (darkness && !state.lightActivated)
+        {
+            Game.output(GameStrings.DARKNESS);
+            return;
+        }
+
 		String result = description;
-
-
 
 		switch (roomID)
 		{
@@ -183,22 +187,17 @@ class Room {
 			} break;
 		}
 
-		return result;
+		Game.output(result);
 	}
 
-	public void lookAround(GameState state)
+	public void getRoomObjects(GameState state)
 	{
-		Game.outputLine();
 		state.refreshInventories();
 
-        if (darkness && !state.lightActivated)
+		if (darkness && !state.lightActivated)
         {
-            Game.output(GameStrings.DARKNESS);
             return;
         }
-
-		Game.output(getDescription(state));
-
 
 		for (GameObject g : state.objectList.values())
 		{
@@ -246,6 +245,8 @@ class Room {
 				}
 			}
 
+			// An annoying exception: the glass bottle, in which the water can be seen
+			// even though it's closed.
 			if (g.isContainer() && (g.isOpen() || g.name.equals("glass bottle")) )
 			{
 				if (!g.inventory.isEmpty())
@@ -272,14 +273,24 @@ class Room {
 						for (Item it : g.inventory)
 							Game.output(it.capArticleName);
 					}
-
 				}
-			}
-
-			// An annoying exception: the glass bottle, in which the water can be seen
-			// even though it's closed.
-				
+			}	
 		}
+	}
+
+	public void lookAround(GameState state)
+	{
+
+        
+
+        Game.output(name);
+        Game.outputLine();
+
+		getDescription(state);
+		getRoomObjects(state);
+
+
+		
 
 	}
 

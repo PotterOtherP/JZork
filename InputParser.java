@@ -379,7 +379,6 @@ public class InputParser {
 				if (roomName.equals(input))
 				{
 					state.playerLocation = rm.roomID;
-					Game.output(rm.name);
 					rm.lookAround(state);
 					teleportCheck = true;
 					return true;

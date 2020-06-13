@@ -7,6 +7,8 @@ class GameState {
 	public int turns;
     public int darknessTurns;
     public boolean lightActivated;
+    public int playerDeaths;
+    public Verbosity verbosity;
 
 	// game events
 	public boolean houseWindowOpened;
@@ -45,7 +47,8 @@ class GameState {
 	public ArrayList<String> dictionary;
 	public ArrayList<String> gameNouns;
 
-
+	// Constants
+	public static final int MAX_PLAYER_DEATHS = 4;
 
 	public GameState()
 	{
@@ -58,6 +61,7 @@ class GameState {
 		lightActivated = false;
 		playerAlive = true;
 		playerCarryWeight = 0;
+		playerDeaths = 0;
 		playerScore = 0;
 		playerMaxCarryWeight = Game.CARRY_WEIGHT_LIMIT;
 		completePlayerInput = "";
@@ -68,6 +72,7 @@ class GameState {
 		leafPileMoved = false;
 		potOfGoldAppeared = false;
 		rainbowSolid = false;
+		verbosity = Verbosity.BRIEF;
 
 		
 		resetInput();
@@ -165,11 +170,35 @@ class GameState {
     {
     	if (Game.godmode) return;
 
-    	Game.output("You have died.");
+    	if (playerDeaths == MAX_PLAYER_DEATHS)
+    	{
+    		playerDeaths = 0;
+    		playerDiesForReal();
+    	}
+
+    	else
+    	{
+    		++playerDeaths;
+    		Game.outputLine();
+    		Game.output("You have died.");
+    		playerPreviousLocation = playerLocation;
+    		playerLocation = Location.FOREST_PATH;
+    		Room path = worldMap.get(Location.FOREST_PATH);
+    		path.lookAround(this);
+    	}
+
+    }
+
+    public void playerDiesForReal()
+    {
+    	if (Game.godmode) return;
+
+    	Game.outputLine();
+    	Game.output("You really died this time.");
     	playerPreviousLocation = playerLocation;
-    	playerLocation = Location.FOREST_PATH;
-    	Room path = worldMap.get(Location.FOREST_PATH);
-    	path.lookAround(this);
+    	playerLocation = Location.ENTRANCE_TO_HADES;
+    	Room r = worldMap.get(Location.ENTRANCE_TO_HADES);
+    	r.lookAround(this);
     }
 
 
