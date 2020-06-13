@@ -3,17 +3,7 @@ import java.util.Scanner;
 /**
  * This program is my attempt to recreate Zork I as well as possible.
  *
- * TODO
- * - Input parsing: reprompting, prepositions, godmode
- * - Finalize actions and action types
- * - Object locations and inventories
- * - Glass bottle exception
- * - Actions on multiple objects
- * - Full and alternate names for objects
- * - Game object functionality one-by-one
- * - Score
- * - Death
- * - Saving, file processing
+ * 
  *
  * @author Nathan Tryon January 2020 - 
  */
@@ -53,6 +43,16 @@ public final class Game {
             parser.reset();
             gameState.refreshInventories();
             gameState.fillCurrentObjectList();
+
+            if (debug)
+            {
+                output("Current object list:\n");
+
+                for (String str : gameState.currentObjects.keySet())
+                    output(str);
+
+                output("---------------");
+            }
 
 
             if (!parser.parsePlayerInput())
@@ -118,7 +118,6 @@ public final class Game {
          * This is a change from the original game, which allows you to do some things
          * that don't really make sense.
          */
-
         state.lightActivated = false;
 
         Item lightsrc = (Item)(state.objectList.get("brass lantern"));
@@ -436,7 +435,6 @@ public final class Game {
             return;
         }
 
-        // The actors get to take their turns
         for (GameObject ob : state.objectList.values())
         {
 
@@ -452,6 +450,7 @@ public final class Game {
             }
         }
 
+        // The actors get to take their turns
         Actor cyclops = (Actor)(state.objectList.get("cyclops"));
         Actor flood = (Actor)(state.objectList.get("flood"));
         Actor gustOfWind = (Actor)(state.objectList.get("gust of wind"));
@@ -560,7 +559,6 @@ public final class Game {
 
 	public static void endGame(GameState state)
 	{
-		// Save the game state
 
 		output("Game has ended.");
 		output("Total turns: " + state.turns);

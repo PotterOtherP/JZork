@@ -45,8 +45,6 @@ class GameState {
 
 
 
-
-	// constructor
 	public GameState()
 	{
 		dummyObject = new Feature("dummy_feature", Location.NULL_LOCATION);
@@ -140,7 +138,6 @@ class GameState {
             }
 
             // Items on a surface
-
             if (g.location == playerLocation && g.isSurface())
             {
                 for (Item it : g.inventory)
@@ -155,15 +152,7 @@ class GameState {
             
         }
 
-        if (Game.debug)
-        {
-            Game.output("Current object list:\n");
-
-            for (String str : currentObjects.keySet())
-                Game.output(str);
-
-            Game.output("---------------");
-        }
+        
 
     }
 

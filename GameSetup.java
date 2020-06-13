@@ -1352,6 +1352,8 @@ class GameSetup {
         // Features, containers and surfaces
         Surface atticTable = new Surface("attic table", Location.ATTIC);
         atticTable.inventoryID = Location.ON_ATTIC_TABLE;
+        atticTable.altNames.add("table");
+        atticTable.capacity = 3;
         
         Container basket = new Container("basket", Location.SHAFT_ROOM);
         basket.altNames.add("cage");

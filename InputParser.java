@@ -76,6 +76,22 @@ public class InputParser {
 		// Inside jokes, special cases, profanity, etc
 		if (specialInputCheck())
 			return false;
+
+		// Remove articles and prepositions
+		input = " " + input + " ";
+		input = input.replaceAll(" at ", " ");
+		input = input.replaceAll(" back ", " ");
+		input = input.replaceAll(" in ", " ");
+		input = input.replaceAll(" from ", " ");
+		input = input.replaceAll(" of ", " ");
+		input = input.replaceAll(" on ", " ");
+		input = input.replaceAll(" out ", " ");
+		input = input.replaceAll(" the ", " ");
+		input = input.replaceAll(" to ", " ");
+		input = input.replaceAll(" with ", " ");
+		while(input.contains("  "))
+			input.replaceAll("  ", " ");
+		input = input.trim();
 		
 		// All words must be known by the game
 		for (int i = 0; i < inputWords.length; ++i)

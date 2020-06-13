@@ -211,20 +211,26 @@ class Room {
 
 			if (g.isSurface())
 			{
+
 				if (!g.inventory.isEmpty())
 				{
-					boolean check = false;
+					boolean check = true;
 
 					for (Item it : g.inventory)
 					{
-						if (!it.initialPresenceString.isEmpty() && !it.movedFromStart)
+						if (it.initialPresenceString.isEmpty() || it.movedFromStart)
 						{
-							Game.output(it.initialPresenceString);
-							check = true;
+							check = false;
 						}
 					}
 
-					if (!check)
+					if (check)
+					{
+						for (Item it : g.inventory)
+							Game.output(it.initialPresenceString);
+					}
+
+					else
 					{
 						Game.output("Sitting on the " + g.name + " is:");
 						for (Item it : g.inventory)
@@ -238,18 +244,23 @@ class Room {
 			{
 				if (!g.inventory.isEmpty())
 				{
-					boolean check = false;
+					boolean check = true;
 
 					for (Item it : g.inventory)
 					{
-						if (!it.initialPresenceString.isEmpty() && !it.movedFromStart)
+						if (it.initialPresenceString.isEmpty() || it.movedFromStart)
 						{
-							Game.output(it.initialPresenceString);
-							check = true;
+							check = false;
 						}
 					}
 
-					if (!check)
+					if (check)
+					{
+						for (Item it : g.inventory)
+							Game.output(it.initialPresenceString);
+					}
+
+					else
 					{
 						Game.output("The " + g.name + " contains:");
 						for (Item it : g.inventory)

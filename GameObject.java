@@ -20,10 +20,7 @@ abstract class GameObject {
     public String initialPresenceString;
     public String presenceString;
 
-    // responses to player actions, mostly taking the place of the lambda methods.
-
-    public String answerString;
-   
+    public String answerString;  
     public String blowString;
     public String boardString;
     public String climbString;
@@ -202,6 +199,14 @@ abstract class GameObject {
     }
 
     public Location getLocation() { return location; }
+
+    public void getDescription(GameState state)
+    {
+        if (initialPresenceString.isEmpty() || movedFromStart)
+            Game.output(presenceString);
+        else
+            Game.output(initialPresenceString);
+    }
 
     public void actorTurn() {}
 
