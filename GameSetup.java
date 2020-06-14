@@ -1367,6 +1367,12 @@ class GameSetup {
         basket.altNames.add("cage");
         basket.takeString = "The cage is securely fastened to the iron chain.";
         basket.inventoryID = Location.INSIDE_BASKET;
+
+        Feature brokenMirror = new Feature("broken mirror", Location.NULL_LOCATION);
+        brokenMirror.altNames.add("mirror");
+        brokenMirror.examineString = "The mirror is broken into many pieces.";
+        brokenMirror.takeString = "The mirror is many times your size. Give up.";
+        brokenMirror.breakString = "Haven't you done enough damage already?";
         
         Feature buttonBlue = new Feature("blue button", Location.MAINTENANCE_ROOM);
         buttonBlue.altNames.add("blue");
@@ -1463,6 +1469,11 @@ class GameSetup {
         
         Feature mirror = new Feature("mirror", Location.MIRROR_ROOM_SOUTH);
         mirror.altLocations.add(Location.MIRROR_ROOM_NORTH);
+        mirror.touchString = "There is a rumble from deep within the earth and the room shakes.";
+        mirror.examineString = "There is an ugly person staring back at you.";
+        mirror.lookInString = "There is an ugly person staring back at you.";
+        mirror.takeString = "The mirror is many times your size. Give up.";
+        mirror.breakString = "You have broken the mirror. I hope you have a seven years' supply of good luck handy.";
         
         Feature mountains = new Feature("mountains", Location.FOREST_NORTHEAST);
         mountains.altNames.add("mountain");
@@ -1539,6 +1550,12 @@ class GameSetup {
 
         // Add all objects to the gamestate list
 
+        sceptre.isWeapon = true;
+        axe.isWeapon = true;
+        sword.isWeapon = true;
+        knife.isWeapon = true;
+        rustyKnife.isWeapon = true;
+
         state.objectList.put(bar.name, bar);
         state.objectList.put(bauble.name, bauble);
         state.objectList.put(chalice.name, chalice);
@@ -1599,6 +1616,7 @@ class GameSetup {
 
         state.objectList.put(atticTable.name, atticTable);
         state.objectList.put(basket.name, basket);
+        state.objectList.put(brokenMirror.name, brokenMirror);
         state.objectList.put(buttonBlue.name, buttonBlue);
         state.objectList.put(buttonYellow.name, buttonYellow);
         state.objectList.put(buttonBrown.name, buttonBrown);

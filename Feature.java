@@ -12,6 +12,38 @@ class Feature extends GameObject {
 	}
 
 	@Override
+	public void breakObject(GameState state)
+	{
+		switch (name)
+		{
+			case "broken mirror":
+			{
+				Game.output(breakString);
+			} break;
+
+			case "mirror":
+			{
+				if (state.indirectObject.isWeapon)
+				{
+					Game.output(breakString);
+					location = Location.NULL_LOCATION;
+					altLocations.clear();
+
+					Feature brokeMirror = (Feature)(state.objectList.get("broken mirror"));
+					brokeMirror.location = Location.MIRROR_ROOM_SOUTH;
+					brokeMirror.altLocations.add(Location.MIRROR_ROOM_NORTH);
+					state.mirrorBroken = true;
+				}
+			} break;
+
+			default:
+			{
+				super.breakObject(state);
+			}
+		}
+	}
+
+	@Override
 	public void close(GameState state)
 	{
 		switch (name)
@@ -147,6 +179,39 @@ class Feature extends GameObject {
 			{
 				Game.output(openString);
 			} break;
+		}
+	}
+
+	@Override
+	public void touch(GameState state)
+	{
+		switch (name)
+		{
+			case "mirror":
+			{
+				Game.output(touchString);
+				if (state.playerLocation == Location.MIRROR_ROOM_SOUTH)
+				{
+					state.playerPreviousLocation = Location.MIRROR_ROOM_SOUTH;
+					state.playerLocation = Location.MIRROR_ROOM_NORTH;
+				}
+				else
+				{
+					state.playerPreviousLocation = Location.MIRROR_ROOM_NORTH;
+					state.playerLocation = Location.MIRROR_ROOM_SOUTH;
+				}
+
+				for (GameObject g : state.objectList.values())
+				{
+					if (g.isItem() && g.location == state.playerPreviousLocation)
+						g.location = state.playerLocation;
+				}
+			} break;
+
+			default:
+			{
+				super.touch(state);
+			}
 		}
 	}
 

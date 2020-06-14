@@ -147,6 +147,7 @@ public final class Game {
 
             case ANSWER: { obj.answer(state); } break;
             case BLOW: { obj.blow(state); } break;
+            case BREAK: { obj.breakObject(state); } break;
             case CLIMB: {obj.climb(state); } break;
             case COUNT: { obj.count(state); } break;
             case CROSS: { obj.cross(state); } break;
@@ -164,6 +165,7 @@ public final class Game {
             case LOOK_IN: {obj.lookIn(state); } break;
             case LOOK_OUT: {obj.lookOut(state); } break;
             case LOOK_UNDER: {obj.lookUnder(state); } break;
+            case MOVE_OBJECT: { obj.move(state); } break;
             case LOWER: { obj.lower(state); } break;
             case POUR: { obj.pour(state); } break;
             case PULL: { obj.pull(state); } break;
@@ -181,16 +183,6 @@ public final class Game {
             case WEAR: { obj.wear(state); } break;
             case WIND: { obj.wind(state); } break;
 
-
-
-
-
-
-
-            case MOVE_OBJECT:
-            {
-                obj.move(state);
-            } break;
             
    
 

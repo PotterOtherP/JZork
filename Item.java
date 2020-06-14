@@ -204,9 +204,13 @@ class Item extends GameObject{
                     activated = true;
                     state.lightActivated = true;
                     Game.output("The brass lantern is now on.");
-                    Game.outputLine();
                     Room rm = state.worldMap.get(state.playerLocation);
-                    if (rm.isDark()) rm.lookAround(state);
+                    if (rm.isDark())
+                    {
+                        Game.outputLine();
+                        rm.lookAround(state);
+                    }
+                    
                     examineString = "The lamp is on.";
                 }
 

@@ -17,6 +17,7 @@ abstract class GameObject {
     public String articleName;
     public String capArticleName;
     public boolean movedFromStart;
+    public boolean isWeapon;
     public String initialPresenceString;
     public String presenceString;
 
@@ -97,6 +98,9 @@ abstract class GameObject {
 
         articleName = (vowelStart() ? "an " : "a ") + name;
         capArticleName = (vowelStart() ? "An " : "A ") + name;
+
+        isWeapon = false;
+        movedFromStart = false;
 
         setStrings();
 
@@ -311,8 +315,16 @@ abstract class GameObject {
     public void attack(GameState state) { Game.output(attackString); }
     public void breakObject(GameState state)
     {
-        Game.output("Trying to destroy " + articleName + " with "
-        + state.indirectObject.articleName + " is futile.");
+        if (state.indirectObject.isWeapon)
+        {
+            Game.output("Nice try.");
+        }
+
+        else
+        {
+            Game.output("Trying to destroy " + articleName + " with "
+            + state.indirectObject.articleName + " is futile.");
+        }
     }
     public void burn(GameState state) { Game.output(burnString); }
     public void close(GameState state) { Game.output("You can't close that."); }

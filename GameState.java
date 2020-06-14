@@ -14,6 +14,7 @@ class GameState {
 	public boolean houseWindowOpened;
 	public boolean carpetMoved;
 	public boolean leafPileMoved;
+	public boolean mirrorBroken;
 	public boolean rainbowSolid;
 	public boolean potOfGoldAppeared;
 

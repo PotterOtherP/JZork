@@ -180,6 +180,13 @@ class Room {
 
             } break;
 
+            case MIRROR_ROOM_SOUTH:
+            case MIRROR_ROOM_NORTH:
+            {
+            	if (state.mirrorBroken)
+            		result += "\nUnfortunately, the mirror has been destroyed by your recklessness.";
+            }
+
 
 			default:
 			{
