@@ -1,13 +1,17 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 class GameState {
 
 	// gameplay information
 	public int turns;
     public int darknessTurns;
+    public boolean darkness;
     public boolean lightActivated;
+	public boolean playerDead;
     public int playerDeaths;
+    public int suicideCount;
     public Verbosity verbosity;
 
 	// game events
@@ -25,7 +29,6 @@ class GameState {
 	public int playerScore;
 	public int playerCarryWeight;
 	public int playerMaxCarryWeight;
-	public boolean playerAlive;
 
 	// player action
 	public String completePlayerInput;
@@ -49,7 +52,7 @@ class GameState {
 	public ArrayList<String> gameNouns;
 
 	// Constants
-	public static final int MAX_PLAYER_DEATHS = 4;
+	public static final int MAX_PLAYER_DEATHS = 3;
 
 	public GameState()
 	{
@@ -60,7 +63,7 @@ class GameState {
 		playerLocation = Location.NULL_LOCATION;
 		playerPreviousLocation = Location.NULL_LOCATION;
 		lightActivated = false;
-		playerAlive = true;
+		playerDead = false;
 		playerCarryWeight = 0;
 		playerDeaths = 0;
 		playerScore = 0;
@@ -88,35 +91,7 @@ class GameState {
 	}
 
 
-
-	public void setPlayerLocation(Location loc) { playerLocation = loc; }
-	public Location getPlayerLocation() { return playerLocation; }
-
-	public void setPreviousLocation(Location loc) { playerPreviousLocation = loc; }
-	public Location getPreviousLocation() { return playerPreviousLocation; }
-
-	public void setPlayerAction(Action act) { playerAction = act; }
-	public Action getPlayerAction() { return playerAction; }
-
-
-
-	public void resetInput()
-	{
-		if (!completePlayerInput.equals("again") && !completePlayerInput.equals("g"))
-		{
-			playerPreviousInput = completePlayerInput;
-		}
-
-		firstInputPhrase = "";
-		secondInputPhrase = "";
-		thirdInputPhrase = "";
-		completePlayerInput = "";
-
-		playerAction = Action.NULL_ACTION;
-		playerActionType = ActionType.NULL_TYPE;
-		directObject = dummyObject;
-		indirectObject = dummyObject;
-	}
+	public void addTurn() { ++turns; }
 
 	public void fillCurrentObjectList()
     {
@@ -161,17 +136,42 @@ class GameState {
 
             
         }
-
-        
-
     }
-
 
     public void playerDies()
     {
     	if (Game.godmode) return;
 
-    	if (playerDeaths == MAX_PLAYER_DEATHS)
+    	/*
+    	 * Items get randomly distributed in the overworld for any kind of death.
+    	 * The brass lantern always goes back in the living room. 
+    	 */
+		Location[] overworld = { Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE, Location.BEHIND_HOUSE,
+    	Location.SOUTH_OF_HOUSE, Location.FOREST_PATH, Location.FOREST_WEST, Location.FOREST_EAST,
+    	Location.FOREST_NORTHEAST, Location.FOREST_SOUTH, Location.CLEARING_NORTH, Location.CLEARING_EAST,
+    	Location.CANYON_VIEW, Location.ROCKY_LEDGE, Location.CANYON_BOTTOM };
+
+    	Location[] forest = { Location.FOREST_WEST, Location.FOREST_EAST,
+    	Location.FOREST_NORTHEAST, Location.FOREST_SOUTH };
+
+    	++playerDeaths;
+    	Game.outputLine();
+    	Game.output(GameStrings.PLAYER_DIES);
+
+    	Random rnd = new Random();
+    	for (GameObject g : objectList.values())
+    	{
+    		if (g.location == Location.PLAYER_INVENTORY)
+    		{
+
+    			int i = rnd.nextInt(overworld.length);
+   				g.location = overworld[i];
+   				if (g.name.equals("brass lantern"))
+   					g.location = Location.LIVING_ROOM;
+   			}
+   		}
+
+    	if (playerDeaths % MAX_PLAYER_DEATHS == 0)
     	{
     		playerDeaths = 0;
     		playerDiesForReal();
@@ -179,20 +179,20 @@ class GameState {
 
     	else
     	{
-    		++playerDeaths;
-    		Game.outputLine();
-    		Game.output("You have died.");
+    		int p = rnd.nextInt(forest.length);
+
     		playerPreviousLocation = playerLocation;
-    		playerLocation = Location.FOREST_PATH;
-    		Room path = worldMap.get(Location.FOREST_PATH);
+    		playerLocation = forest[p];
+    		Room path = worldMap.get(playerLocation);
     		path.lookAround(this);
     	}
-
     }
 
     public void playerDiesForReal()
     {
     	if (Game.godmode) return;
+
+    	playerDead = true;
 
     	Game.outputLine();
     	Game.output("You really died this time.");
@@ -201,7 +201,6 @@ class GameState {
     	Room r = worldMap.get(Location.ENTRANCE_TO_HADES);
     	r.lookAround(this);
     }
-
 
 	public void refreshInventories()
 	{
@@ -223,45 +222,58 @@ class GameState {
 		}
 	}
 
+	public void resetInput()
+	{
+		if (!completePlayerInput.equals("again") && !completePlayerInput.equals("g"))
+		{
+			playerPreviousInput = completePlayerInput;
+		}
+
+		firstInputPhrase = "";
+		secondInputPhrase = "";
+		thirdInputPhrase = "";
+		completePlayerInput = "";
+
+		playerAction = Action.NULL_ACTION;
+		playerActionType = ActionType.NULL_TYPE;
+		directObject = dummyObject;
+		indirectObject = dummyObject;
+	}
+
+	public void updateGame()
+	{
+		if (playerDead)
+		{
+			updateDeath();
+			return;
+		}
+
+		if (darkness)
+		{
+			updateDarkness();
+			return;
+		}
+
+		switch (playerAction)
+		{
+			
+		}
+
+
+	}
+
+	public void updateDarkness()
+	{
+
+	}
+
+	public void updateDeath()
+	{
+
+	}
 
 
 
-	// It should not be possible to alter the number of turns except by adding 1.
-	public void addTurn() { ++turns; }
-	public int getTurns() { return turns; }
-
-
-	/**
-	 * Game Score
-	 * 
-	 * Kitchen 10
-	 * Cellar 25
-	 * East-West Passage 5
-	 * 
-	 * 
-	 * 272 points from treasures.
-	 *
-	 * 10 Egg 5 in case 5
-	 * 15 Platinum bar 10 in case 5
-	 * 15 Trident 4 in case 11
-	 * 20 Torch 14 in case 6
-	 * 10 Sceptre 4 in case 6
-	 * 25 Coffin 10 in case 15
-	 * 20 Pot of gold 10 in case 10
-	 * 10 Scarab 5 in case 5
-	 * 20 Skull 10 in case 10
-	 * 10 Jade figurine 5 in case 5
-	 * 10 Sapphire bracelet 5 in case 5
-	 * 20 Diamond 10 in case 10
-	 * 15 Emerald (opening buoy) 5 in case 10
-	 * 20 Trunk of jewels 15 in case 5
-	 * 15 Bag of coins 10 in case 5
-	 * 15 Silver chalice 10 in case 5
-	 * 10 Canary 6 in case 4
-	 * 2  Bauble 1 in case 1
-	 * 10 Painting 4 in case 6
-	 * Broken canary 0 in case 1
-	 */
 
 
 

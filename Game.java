@@ -55,15 +55,8 @@ public final class Game {
             }
 
 
-            if (!parser.parsePlayerInput())
-            {
-                continue;
-            }
-
-            if (!parser.validateAction())
-            {
-                continue;
-            }
+            if (!parser.parsePlayerInput()) continue;
+            if (!parser.validateAction()) continue;
 
             updateGame(gameState);
 
@@ -83,20 +76,11 @@ public final class Game {
 
 		// Put the player in the starting location
         Room start = state.worldMap.get(STARTING_LOCATION);
-        state.setPlayerLocation(STARTING_LOCATION);
+        state.playerLocation = STARTING_LOCATION;
         start.firstVisit = false;
         outputLine();
         start.lookAround(state);
 
-        /*
-		state.setPlayerLocation(Location.WEST_OF_HOUSE);
-		state.worldMap.get(Location.WEST_OF_HOUSE).firstVisit = false;
-
-		// Beginning text of the game.
-        outputLine();
-        output(state.worldMap.get(Location.WEST_OF_HOUSE).name);
-		output(MapStrings.DESC_WEST_OF_HOUSE);
-		*/
 	}
 
 
@@ -392,7 +376,7 @@ public final class Game {
                     if (state.darknessTurns >= 2)
                     {
                         output(GameStrings.GRUE_DEATH_2);
-                        state.playerAlive = false;
+                        state.playerDies();
                         break;
                     }
                     ++state.darknessTurns;
@@ -405,7 +389,7 @@ public final class Game {
                 if (currentRoom.height)
                 {
                     output("Not a good place to try jumping.");
-                    state.playerAlive = false;
+                    state.playerDies();
                     break;
                 }
 
@@ -414,7 +398,7 @@ public final class Game {
                     if (state.darknessTurns >= 2)
                     {
                         output(GameStrings.GRUE_DEATH_2);
-                        state.playerAlive = false;
+                        state.playerDies();
                         break;
                     }
                     ++state.darknessTurns;
@@ -430,7 +414,7 @@ public final class Game {
                     if (state.darknessTurns >= 2)
                     {
                         output(GameStrings.GRUE_DEATH_2);
-                        state.playerAlive = false;
+                        state.playerDies();
                         break;
                     }
                     ++state.darknessTurns;

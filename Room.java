@@ -87,7 +87,7 @@ class Room {
 			if (isDark() && !state.lightActivated)
 			{
 				Game.output(GameStrings.GRUE_DEATH_1);
-				state.playerAlive = false;
+				state.playerDies();
 				return false;
 			}
 
@@ -116,7 +116,7 @@ class Room {
 		if (isDark() && !state.lightActivated && (dest != state.playerPreviousLocation))
 		{
 			Game.output(GameStrings.GRUE_DEATH_1);
-			state.playerAlive = false;
+			state.playerDies();
 			return false;
 
 		}

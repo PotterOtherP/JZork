@@ -957,6 +957,7 @@ class GameSetup {
         maze2_maze4.message = "You won't be able to get back up to the tunnel you are going through "
             + "when it gets to the next room.";
         cellar_livingroom.message = "The trap door crashes shut, and you hear someone barring it.";
+        studio_kitchen.closedFail = "Going up empty-handed is a bad idea.";
 
         // Narrow passages
         studio_kitchen.weightLimit = 5;

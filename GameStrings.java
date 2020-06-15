@@ -35,7 +35,36 @@ class GameStrings {
 	public static final String CANT_GO = "You can't go that way.";
     public static final String PASSAGE_OVERBURDENED = "You are carrying too much.";
 
-	
+	public static final String PLAYER_DIES = "\n   ****  You have died  ****\n\n"
+        + "Now, let's take a look here... Well, you probably deserve another chance. I can't quite fix you up "
+        + "completely, but you can't have everything.";
+
+    public static final String PLAYER_DIES_FOR_REAL = "As you take your last breath, you feel relieved of your burdens. "
+        + "The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you "
+        + "entry. Your senses are disturbed. The objects in the dungeon appear indistinct, bleached of color, even unreal.";
+
+    public static final String PLAYER_DIES_SUICIDE = "You clearly are a suicidal maniac. We don't allow psychotics in the cave, "
+        + "since they may harm other adventurers. Your remains will be installed in the Land of the Living Dead, where your "
+        + "fellow adventurers may gloat over them.";
+
+    public static final String PLAYER_DIES_WHILE_DEAD = "It takes a talented person to be killed while already dead. YOU are "
+        + "such a talent. Unfortunately, it takes a talented person to deal with it. I am not such a talent. Sorry.";
+
+    public static final String DEAD_COAL_PASSAGE = "You cannot enter in your condition.";
+    public static final String DEAD_DOME_PASSAGE = "As you enter the dome you feel a strong pull as if from a wind drawing "
+        + "you over the railing and down.";
+    public static final String DEAD_TAKE_OBJECT = "Your hand passes through its object.";
+    public static final String DEAD_ACTION_FAIL = "You can't even do that.";
+    public static final String DEAD_WAIT = "Might as well. You've got an eternity.";
+    public static final String DEAD_TOUCH = "Even such an action is beyond your capabilities.";
+    public static final String DEAD_INVENTORY = "You have no possessions.";
+    public static final String DEAD_PRAY_FAIL = "Your prayers are not heard.";
+    public static final String DEAD_PRAY_ALTAR = "From the distance the sound of a lone trumpet is heard. The room becomes "
+        + "very bright and you feel disembodied. In a moment, the brightness fades and you find yourself rising as if from "
+        + "a long sleep, deep in the woods. In the distance you can faintly hear a songbird and the sounds of the forest.";
+    public static final String DEAD_LOOK = "The room looks strage and unearthly and objects appear indistinct."
+        + "\nAlthough there is no light, the room seems dimly illuminated.";
+
 
 
 	public static final String LEAFLET_TEXT = "WELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore "
