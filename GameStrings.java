@@ -39,7 +39,8 @@ class GameStrings {
         + "Now, let's take a look here... Well, you probably deserve another chance. I can't quite fix you up "
         + "completely, but you can't have everything.";
 
-    public static final String PLAYER_DIES_FOR_REAL = "As you take your last breath, you feel relieved of your burdens. "
+    public static final String PLAYER_DIES_FOR_REAL = "\n   ****  You have died  ****\n\n"
+        + "As you take your last breath, you feel relieved of your burdens. "
         + "The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you "
         + "entry. Your senses are disturbed. The objects in the dungeon appear indistinct, bleached of color, even unreal.";
 

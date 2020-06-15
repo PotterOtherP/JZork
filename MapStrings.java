@@ -208,7 +208,7 @@ class MapStrings {
     public static final String DESC_ARAGAIN_FALLS = "You are at the top of Aragain Falls, an enormous waterfall with a drop of "
         + "about 450 feet. The only path here is on the north end.";
 
-    public static final String DESC_ON_THE_RAINBOW = "You are on top of a rainbow (I bet you never thought you woulk walk on "
+    public static final String DESC_ON_THE_RAINBOW = "You are on top of a rainbow (I bet you never thought you would walk on "
         + "a rainbow), with a magnificent view of the Falls. The rainbow travels east-west here.";
 
     public static final String DESC_NORTH_SOUTH_PASSAGE = "This is a high north-south passage, which forks to the northeast.";

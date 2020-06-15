@@ -95,8 +95,8 @@ enum Action {
     NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
     UP, DOWN, IN, OUT, WALK, GO, SLIDE, SWIM, EXIT, CROSS,
    
-    AUTHOR, BRIEF, DEFEND, DIAGNOSE, INVENTORY, JUMP, LOOK, PRAY,
-    PROFANITY, QUIT, RESTART, RESTORE, SAVE, SAY, SCORE, SHOUT,
+    BRIEF, DEFEND, DIAGNOSE, INVENTORY, JUMP, LOOK, PRAY,
+    QUIT, RESTART, RESTORE, SAVE, SAY, SCORE, SHOUT,
     STAY, SUPERBRIEF, VERBOSE, WAIT,
   
     ACTIVATE, ANSWER, BLOW, BOARD, CLIMB, CLOSE, COUNT,
@@ -1487,7 +1487,12 @@ class GameSetup {
         rainbow.altLocations.add(Location.ON_THE_RAINBOW);
         rainbow.altLocations.add(Location.ARAGAIN_FALLS);
         rainbow.crossString = "Can you walk on water vapor?";
-        
+
+        Item self = new Item("you", Location.NULL_LOCATION);
+        self.altNames.add("me");
+        self.altNames.add("self");
+        self.altNames.add("myself");
+
         Feature skeleton = new Feature("skeleton", Location.MAZE_5);
         
         Feature toolChests = new Feature("tool chests", Location.MAINTENANCE_ROOM);
@@ -1510,6 +1515,7 @@ class GameSetup {
         woodenDoor.openString = "The door cannot be opened.";
         woodenDoor.readString = ObjectStrings.WOODEN_DOOR;
         woodenDoor.examineString = ObjectStrings.WOODEN_DOOR;
+
 
         
         // Actors
@@ -1639,6 +1645,7 @@ class GameSetup {
         state.objectList.put(mountains.name, mountains);
         state.objectList.put(pedestal.name, pedestal);
         state.objectList.put(rainbow.name, rainbow);
+        state.objectList.put(self.name, self);
         state.objectList.put(skeleton.name, skeleton);
         state.objectList.put(trapDoor.name, trapDoor);
         state.objectList.put(trophyCase.name, trophyCase);
@@ -1772,13 +1779,10 @@ class GameSetup {
 		state.actions.put("l",     Action.LOOK);
 		state.actions.put("inventory", Action.INVENTORY);
 		state.actions.put("i",         Action.INVENTORY);
-		state.actions.put("fuck",  Action.PROFANITY);
-		state.actions.put("shit",  Action.PROFANITY);
 		state.actions.put("shout", Action.SHOUT);
 		state.actions.put("yell",  Action.SHOUT);
 		state.actions.put("scream",  Action.SHOUT);
 		state.actions.put("wait", Action.WAIT);
-	    state.actions.put("author", Action.AUTHOR);
 	    state.actions.put("pray", Action.PRAY);
         state.actions.put("superbrief", Action.SUPERBRIEF);
         state.actions.put("brief", Action.BRIEF);
@@ -1871,9 +1875,7 @@ class GameSetup {
 	    state.actionTypes.put(Action.INVENTORY, ActionType.REFLEXIVE);
 	    state.actionTypes.put(Action.SHOUT, ActionType.REFLEXIVE);
 	    state.actionTypes.put(Action.WAIT, ActionType.REFLEXIVE);
-	    state.actionTypes.put(Action.PROFANITY, ActionType.REFLEXIVE);
 	    state.actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
-	    state.actionTypes.put(Action.AUTHOR, ActionType.REFLEXIVE);
 	    state.actionTypes.put(Action.PRAY, ActionType.REFLEXIVE);
 	    state.actionTypes.put(Action.SWIM, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.SUPERBRIEF, ActionType.REFLEXIVE);

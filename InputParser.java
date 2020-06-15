@@ -467,6 +467,8 @@ public class InputParser {
 			}
 		}
 
+		if (input.equals("author")) Game.output(GameStrings.AUTHOR_INFO);
+
 		// Old ZORK inside jokes
 		if (input.equals("xyzzy") || input.equals("plugh"))
 		{
@@ -520,8 +522,6 @@ public class InputParser {
 	public boolean startsWith(String token, String input)
 	{
 		boolean check = true;
-
-
 
 		String[] tokenWords = token.split(" ");
 		String[] inputWords = input.split(" ");

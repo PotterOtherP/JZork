@@ -3,8 +3,9 @@ import java.util.HashMap;
 class Room {
 	
 	public final String name;
-	public String description;
 	public final Location roomID;
+	public String description;
+	public String jumpString;
 
 	public boolean firstVisit;
 
@@ -24,6 +25,7 @@ class Room {
 	{
 		name = "";
 		description = "";
+		jumpString = "";
 		roomID = Location.NULL_LOCATION;		
 		exits = new HashMap<Action, Passage>();
 		failMessages = new HashMap<Action, String>();
@@ -37,6 +39,7 @@ class Room {
 		name = nm;
 		description = desc;
 		roomID = loc;
+		jumpString = "";
 		firstVisit = true;
 		exits = new HashMap<Action, Passage>();
 		failMessages = new HashMap<Action, String>();

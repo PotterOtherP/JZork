@@ -356,6 +356,12 @@ class Item extends GameObject{
     @Override
     public void take(GameState state)
     {
+        if (location == Location.PLAYER_INVENTORY)
+        {
+            Game.output("You're already carrying the " + name + "!");
+            return;
+        }
+
         if (name.equals("pile of leaves") && !state.leafPileMoved)
         {
             revealGrating(state);       
