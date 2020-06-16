@@ -7,6 +7,7 @@ abstract class GameObject {
     
     public final String name;
     public Location location;
+    public Location startLocation;
     public Location inventoryID;
 
     public ArrayList<Item> inventory;
@@ -95,6 +96,7 @@ abstract class GameObject {
     {
         name = nm;
         location = loc;
+        startLocation = loc;
 
         articleName = (vowelStart() ? "an " : "a ") + name;
         capArticleName = (vowelStart() ? "An " : "A ") + name;

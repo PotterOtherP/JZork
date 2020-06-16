@@ -25,6 +25,7 @@ class GameStrings {
 
 	public static final String ENTER_DARKNESS = "You have moved into a dark place.";
     public static final String DARKNESS = "It is pitch black. You are likely to be eaten by a grue.";
+    public static final String DARKNESS_LISTEN = "There are sinister gurgling noises in the darkness all around you!";
     public static final String TOO_DARK = "It's too dark to see!";
     public static final String GRUE_DEATH_1 = "Oh no! You have walked into the slavering fangs of a lurking grue!";
     public static final String GRUE_DEATH_2 = "Oh no! A lurking grue slithered into the room and devoured you!";

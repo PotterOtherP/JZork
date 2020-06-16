@@ -11,18 +11,6 @@ class Passage {
 
 	public int weightLimit;
 
-	// Constructors
-	public Passage()
-	{
-		closedFail = GameStrings.CANT_GO;
-		weightFail = GameStrings.PASSAGE_OVERBURDENED;
-		message = "";
-		locationA = Location.NULL_LOCATION;
-		locationB = Location.NULL_LOCATION;
-		open = false;
-		weightLimit = Game.CARRY_WEIGHT_LIMIT;
-	}
-
 	public Passage(Location locA, Location locB)
 	{
 		locationA = locA;

@@ -81,11 +81,9 @@ public class InputParser {
 		input = " " + input + " ";
 		input = input.replaceAll(" at ", " ");
 		input = input.replaceAll(" back ", " ");
-		input = input.replaceAll(" in ", " ");
 		input = input.replaceAll(" from ", " ");
 		input = input.replaceAll(" of ", " ");
 		input = input.replaceAll(" on ", " ");
-		input = input.replaceAll(" out ", " ");
 		input = input.replaceAll(" the ", " ");
 		input = input.replaceAll(" to ", " ");
 		input = input.replaceAll(" with ", " ");
@@ -107,6 +105,8 @@ public class InputParser {
 		if (!parseInputAction())
 			return false;
 
+		input = input.replaceAll(" in ", " ");
+		input = input.replaceAll(" out ", " ");
 
 		switch (state.playerActionType)
 		{
@@ -320,15 +320,15 @@ public class InputParser {
 	
 	public boolean validateAction()
 	{
-		GameObject dirOjb = state.directObject;
-		GameObject indOjb = state.indirectObject;
+		GameObject dirObj = state.directObject;
+		GameObject indObj = state.indirectObject;
 		Action act = state.playerAction;
 
 		switch(state.playerActionType)
 		{
 			case DIRECT:
 			{
-				if (dirOjb.isItem() && !(state.currentObjects.containsValue(dirOjb)))
+				if (dirObj.isItem() && dirObj.location != Location.PLAYER_INVENTORY)
 				{
 					switch (act)
 					{
@@ -339,7 +339,7 @@ public class InputParser {
 						} break;
 						default:
 						{
-							Game.output("You're not carrying the " + dirOjb.name + ".");
+							Game.output("You're not carrying the " + dirObj.name + ".");
 							return false;
 						}
 					}
@@ -350,9 +350,9 @@ public class InputParser {
 			case INDIRECT:
 			case INDIRECT_INVERSE:
 			{
-				if (indOjb.isItem() && !indOjb.playerHasObject())
+				if (indObj.isItem() && !indObj.playerHasObject())
 				{
-					Game.output("You're not carrying the " + indOjb.name + ".");
+					Game.output("You're not carrying the " + indObj.name + ".");
 					return false;
 				}
 			} break;

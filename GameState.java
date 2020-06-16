@@ -53,6 +53,7 @@ class GameState {
 
 	// Constants
 	public static final int MAX_PLAYER_DEATHS = 3;
+    public static final int MAX_DARKNESS_TURNS = 2;
 
 	public GameState()
 	{
@@ -92,6 +93,30 @@ class GameState {
 
 
 	public void addTurn() { ++turns; }
+
+    public void darknessCheck()
+    {
+        lightActivated = false;
+
+        Item lightSource1 = (Item)(objectList.get("brass lantern"));
+        Item lightSource2 = (Item)(objectList.get("torch"));
+        Item lightSource3 = (Item)(objectList.get("pair of candles"));
+        Item lightSource4 = (Item)(objectList.get("matchbook"));
+
+        Item[] lightSources = { lightSource1, lightSource2, lightSource3, lightSource4 };
+
+        for (Item source : lightSources)
+        {
+            if ((source.location == Location.PLAYER_INVENTORY || source.location == playerLocation) && source.activated)
+                lightActivated = true;
+        }
+
+        Room currentRoom = worldMap.get(playerLocation);
+
+        darkness = (currentRoom.isDark() && !lightActivated);
+
+        if (!darkness) darknessTurns = 0;
+    }
 
 	public void fillCurrentObjectList()
     {
@@ -167,9 +192,11 @@ class GameState {
 
     			int i = rnd.nextInt(overworld.length);
    				g.location = overworld[i];
-   				if (g.name.equals("brass lantern"))
-   					g.location = Location.LIVING_ROOM;
    			}
+
+            // The lantern should be returned to the living room even if the player dropped it
+   			if (g.name.equals("brass lantern"))
+   				g.location = g.startLocation;
    		}
 
     	if (playerDeaths % MAX_PLAYER_DEATHS == 0)
@@ -197,11 +224,13 @@ class GameState {
     	playerDead = true;
 
     	Game.output(GameStrings.PLAYER_DIES_FOR_REAL);
-    	Game.output(GameStrings.DEAD_LOOK);
     	playerPreviousLocation = playerLocation;
     	playerLocation = Location.ENTRANCE_TO_HADES;
     	Room r = worldMap.get(Location.ENTRANCE_TO_HADES);
-    	r.lookAround(this);
+        Game.output(r.name);
+        Game.outputLine();
+    	Game.output(GameStrings.DEAD_LOOK);
+    	Game.output(r.description);
     }
 
 	public void refreshInventories()
@@ -253,26 +282,10 @@ class GameState {
 			return;
 		}
 
-		Item lightsrc = (Item)(objectList.get("brass lantern"));
-        if ((lightsrc.location == Location.PLAYER_INVENTORY || lightsrc.location == playerLocation) && lightsrc.activated)
-            lightActivated = true;
-        
-        lightsrc = (Item)(objectList.get("torch"));
-        if ((lightsrc.location == Location.PLAYER_INVENTORY || lightsrc.location == playerLocation) && lightsrc.activated)
-            lightActivated = true;
-        
-        lightsrc = (Item)(objectList.get("pair of candles"));
-        if ((lightsrc.location == Location.PLAYER_INVENTORY || lightsrc.location == playerLocation) && lightsrc.activated)
-            lightActivated = true;
-
-
-        darkness = (currentRoom.isDark() && !lightActivated);
-
-        if (!darkness) darknessTurns = 0;
+        darknessCheck();
 
 		if (darkness)
 		{
-			++darknessTurns;
 			updateDarkness();
 			return;
 		}
@@ -412,6 +425,8 @@ class GameState {
 					Room nextRoom = worldMap.get(playerLocation);
 					Game.output(nextRoom.name);
 
+                    darknessCheck();
+
                     if (nextRoom.isDark() && !lightActivated)
                     {
                         Game.output(GameStrings.ENTER_DARKNESS);
@@ -505,22 +520,31 @@ class GameState {
 		// The player's action could end the game before anything else happens.
         if (Game.gameover) return;
 
-        for (GameObject ob : objectList.values())
-        {
-
-            if (ob.isItem())
+        for (GameObject g : objectList.values())
+        {   
+            if (g.isItem())
             {
-                Item it = (Item)(ob);
-                if(it.activated && it.lifespan > 0)
+                Item it = (Item)(g);
+                if (it.activated && it.lifespan > 0)
                 {
                     it.tick();
                     if (it.lifespan <= 0)
                         it.activated = false;
+                    
                 }
             }
         }
 
         // The actors get to take their turns
+        updateActors();
+
+		addTurn();
+
+
+	}
+
+    public void updateActors()
+    {
         Actor cyclops = (Actor)(objectList.get("cyclops"));
         Actor flood = (Actor)(objectList.get("flood"));
         Actor gustOfWind = (Actor)(objectList.get("gust of wind"));
@@ -539,20 +563,256 @@ class GameState {
         thief.thiefTurn(this);
         troll.trollTurn(this);
         vampireBat.vampireBatTurn(this);
-
-		addTurn();
-
-
-	}
+    }
 
 	public void updateDarkness()
 	{
+        Room currentRoom = worldMap.get(playerLocation);
+
+        if (darknessTurns > MAX_DARKNESS_TURNS)
+        {
+            Game.output(GameStrings.GRUE_DEATH_2);
+            playerDies();
+            return;
+        }
+
+        switch (playerAction)
+        {
+            case DROP:
+            {
+                directObject.drop(this);
+                ++darknessTurns;
+            } break;
+
+            case INVENTORY:
+            {
+                int count = 0;
+                for (GameObject item : objectList.values())
+                {
+                    
+                    if (item.location == Location.PLAYER_INVENTORY)
+                    {
+                        ++count;
+                        if (count == 1)
+                            Game.output("You are carrying: \n");
+                        Game.output(item.capArticleName);
+                    }
+
+                    if (item.location == Location.PLAYER_INVENTORY && item.isContainer()
+                        && (item.isOpen() || item.name.equals("glass bottle")) )
+                    {
+                        if (!item.inventory.isEmpty())
+                        {
+                            boolean check = false;
+
+                            for (Item it : item.inventory)
+                            {
+                                if (!it.initialPresenceString.isEmpty() && !it.movedFromStart)
+                                {
+                                    Game.output(it.initialPresenceString);
+                                    check = true;
+                                }
+                            }
+
+                            if (!check)
+                            {
+                                Game.output("The " + item.name + " contains:");
+                                for (Item it : item.inventory)
+                                    Game.output(it.capArticleName);
+                            }
+                        }
+                    }
+                }
+                if (count == 0)
+                    Game.output("You are empty-handed.");
+            } break;
+
+            case JUMP:
+            {
+                Game.output(GameStrings.getJumpSarcasm());
+                ++darknessTurns;
+            } break;
+
+            case LIGHT:
+            {
+                directObject.light(this);
+                ++darknessTurns;
+            } break;
+
+            case LISTEN:
+            {
+                Game.output(GameStrings.DARKNESS_LISTEN);
+                ++darknessTurns;
+            } break;
+
+            case LOOK:
+            {
+                Game.output(GameStrings.DARKNESS);
+                ++darknessTurns;
+            } break;
+
+            case SHOUT:
+            {
+                Game.output("Yaaaaarrrrggghhh!");
+                ++darknessTurns;
+            } break;
+
+            case WAIT:
+            {
+                Game.output("Time passes...");
+                ++darknessTurns;
+            } break;
+
+            case NORTH:
+            case SOUTH:
+            case EAST:
+            case WEST:
+            case NORTHEAST:
+            case NORTHWEST:
+            case SOUTHEAST:
+            case SOUTHWEST:
+            case UP:
+            case DOWN:
+            {
+                if (currentRoom.exit(this, playerAction))
+                {
+                    Room nextRoom = worldMap.get(playerLocation);
+                    Game.output(nextRoom.name);
+
+                    darknessCheck();
+
+                    if (darkness)
+                    {
+                        Game.output(GameStrings.ENTER_DARKNESS);
+                        // return;
+                    }
+
+                    switch(verbosity)
+                    {
+                        case SUPERBRIEF:
+                        {
+                            nextRoom.getRoomObjects(this);
+            
+                        } break;
+
+                        case BRIEF:
+                        {
+                            if (nextRoom.firstVisit)
+                            {
+                                Game.outputLine();
+                                nextRoom.getDescription(this);
+                            }
+                            
+                            nextRoom.getRoomObjects(this);
+
+                        } break;
+
+                        case VERBOSE:
+                        {
+                            Game.outputLine();
+                            nextRoom.getDescription(this);
+                            nextRoom.getRoomObjects(this);
+                        } break;
+
+                        default: {} break;
+                    }
+
+                    if (nextRoom.firstVisit)
+                        nextRoom.firstVisit = false;
+
+                }
+
+
+            } break;
+
+            case BRIEF:
+            {
+                Game.output("Brief verbosity on.");
+                verbosity = Verbosity.BRIEF;
+            } break;
+
+            case DIAGNOSE:
+            {
+
+            } break;
+
+            case QUIT:
+            {
+                Game.gameover = true;
+            } break;
+
+            case SCORE:
+            {
+
+            } break;
+
+            case SUPERBRIEF:
+            {
+                Game.output("Superbrief verbosity on.");
+                verbosity = Verbosity.SUPERBRIEF;
+            } break;
+
+            case VERBOSE:
+            {
+                Game.output("Maximum verbosity on.");
+                verbosity = Verbosity.VERBOSE;
+            } break;
+
+
+            case NULL_ACTION: {} break;
+            default:
+            {
+                Game.output("It's too dark to see!");
+                ++darknessTurns;
+            } break;
+
+        }
+
+        updateActors();
 
 	}
 
 	public void updateDeath()
 	{
+        switch (playerAction)
+        {
+            case BRIEF:
+            {
+                Game.output("Brief verbosity on.");
+                verbosity = Verbosity.BRIEF;
+            } break;
 
+            case DIAGNOSE:
+            {
+
+            } break;
+
+            case QUIT:
+            {
+                Game.gameover = true;
+            } break;
+
+            case SCORE:
+            {
+
+            } break;
+
+            case SUPERBRIEF:
+            {
+                Game.output("Superbrief verbosity on.");
+                verbosity = Verbosity.SUPERBRIEF;
+            } break;
+
+            case VERBOSE:
+            {
+                Game.output("Maximum verbosity on.");
+                verbosity = Verbosity.VERBOSE;
+            } break;
+
+
+            case NULL_ACTION: {} break;
+            default: {} break;
+        }
 	}
 
 

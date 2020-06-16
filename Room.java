@@ -19,21 +19,6 @@ class Room {
 	public HashMap<Action, Passage> exits;
 	public HashMap<Action, String> failMessages;
 
-
-
-	public Room()
-	{
-		name = "";
-		description = "";
-		jumpString = "";
-		roomID = Location.NULL_LOCATION;		
-		exits = new HashMap<Action, Passage>();
-		failMessages = new HashMap<Action, String>();
-		firstVisit = true;
-
-
-	}
-
 	public Room(String nm, String desc, Location loc)
 	{
 		name = nm;
@@ -87,7 +72,7 @@ class Room {
 		else
 		{
 			// Darkness check
-			if (isDark() && !state.lightActivated)
+			if (state.darkness)
 			{
 				Game.output(GameStrings.GRUE_DEATH_1);
 				state.playerDies();
@@ -150,6 +135,14 @@ class Room {
 
 	public void getDescription(GameState state)
 	{
+		if (state.playerDead)
+		{
+			Game.output(GameStrings.DEAD_LOOK);
+			Game.outputLine();
+			Game.output(description);
+			return;
+		}
+
 		if (darkness && !state.lightActivated)
         {
             Game.output(GameStrings.DARKNESS);
