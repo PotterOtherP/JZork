@@ -227,6 +227,7 @@ class GameState {
     	playerPreviousLocation = playerLocation;
     	playerLocation = Location.ENTRANCE_TO_HADES;
     	Room r = worldMap.get(Location.ENTRANCE_TO_HADES);
+        Game.outputLine();
         Game.output(r.name);
         Game.outputLine();
     	Game.output(GameStrings.DEAD_LOOK);
@@ -778,11 +779,15 @@ class GameState {
 
         switch (playerAction)
         {
+            case INVENTORY:
+            {
+                Game.output(GameStrings.DEAD_INVENTORY);
+            } break;
+
             case LOOK:
             {
-                Game.output(GameStrings.DEAD_LOOK);
-                Game.outputLine();
-                Game.output(currentRoom.description);
+                currentRoom.lookAround(this);
+
             } break;
 
             case PRAY:
@@ -797,6 +802,11 @@ class GameState {
 
                 else
                     Game.output(GameStrings.DEAD_PRAY_FAIL);
+            } break;
+
+            case TAKE:
+            {
+                Game.output(GameStrings.DEAD_TAKE_OBJECT);
             } break;
 
             case TOUCH:
@@ -841,6 +851,88 @@ class GameState {
                 Game.output("Maximum verbosity on.");
                 verbosity = Verbosity.VERBOSE;
             } break;
+
+            case NORTH:
+            case SOUTH:
+            case EAST:
+            case WEST:
+            case NORTHEAST:
+            case NORTHWEST:
+            case SOUTHEAST:
+            case SOUTHWEST:
+            case UP:
+            case DOWN:
+            {
+                if (playerLocation == Location.TIMBER_ROOM && playerAction == Action.WEST)
+                {
+                    Game.output(GameStrings.DEAD_CANNOT_ENTER);
+                    return;
+                }
+
+                if (playerLocation == Location.STUDIO && playerAction == Action.UP)
+                {
+                    Game.output(GameStrings.DEAD_CANNOT_ENTER);
+                    return;
+                }
+
+                if (playerLocation == Location.SLIDE_ROOM && playerAction == Action.DOWN)
+                {
+                    Game.output(GameStrings.DEAD_CANNOT_ENTER);
+                    return;
+                }
+                
+                if (currentRoom.exit(this, playerAction))
+                {
+                    Room nextRoom = worldMap.get(playerLocation);
+                    Game.output(nextRoom.name);
+
+                    if (playerLocation == Location.DOME_ROOM)
+                    {
+                        Game.outputLine();
+                        Game.output(GameStrings.DEAD_DOME_PASSAGE);
+                        playerLocation = Location.TORCH_ROOM;
+                        Room rm = worldMap.get(Location.TORCH_ROOM);
+                        Game.outputLine();
+                        rm.lookAround(this);
+                        return;
+                    }
+
+                    switch(verbosity)
+                    {
+                        case SUPERBRIEF:
+                        {
+                            nextRoom.getRoomObjects(this);
+            
+                        } break;
+
+                        case BRIEF:
+                        {
+                            if (nextRoom.firstVisit)
+                            {
+                                Game.outputLine();
+                                nextRoom.getDescription(this);
+                            }
+                            
+                            nextRoom.getRoomObjects(this);
+
+                        } break;
+
+                        case VERBOSE:
+                        {
+                            Game.outputLine();
+                            nextRoom.getDescription(this);
+                            nextRoom.getRoomObjects(this);
+                        } break;
+
+                        default: {} break;
+                    }
+
+                    if (nextRoom.firstVisit)
+                        nextRoom.firstVisit = false;
+
+                }
+
+            } break; 
 
 
             case NULL_ACTION: {} break;

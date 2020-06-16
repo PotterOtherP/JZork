@@ -393,6 +393,12 @@ public class InputParser {
 
 		if (startsWith(accio, input))
 		{
+			if (state.playerDead)
+			{
+				Game.output("You cannot possess anything while dead.");
+				return true;
+			}
+
 			input = input.substring(accio.length()).trim();
 
 			boolean accioCheck = false;
@@ -418,6 +424,13 @@ public class InputParser {
 			return true;
 		}
 
+		if (input.equals("revive") && state.playerDead)
+		{
+			Game.output("You have come back to life.");
+			state.playerDead = false;
+			return true;
+		}
+
 
 		if (input.equals("terminate troll"))
 		{
@@ -434,10 +447,11 @@ public class InputParser {
 			return true;
 		}
 
-		if (input.equals("zombie"))
+		if (input.equals("zombie") && !state.playerDead)
 		{
 			Game.output("You are now dead.");
 			state.playerDead = true;
+			return true;
 		}
 
 		return false;

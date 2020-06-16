@@ -1771,22 +1771,23 @@ class GameSetup {
 	    state.actions.put("swim", Action.SWIM);
 	
 	    // Reflexive actions: no interaction with game objects
-		state.actions.put("quit",  Action.QUIT);
-		state.actions.put("q",     Action.QUIT);
+        state.actions.put("brief", Action.BRIEF);
+        state.actions.put("diagnose", Action.DIAGNOSE);
+		state.actions.put("inventory", Action.INVENTORY);
+		state.actions.put("i",         Action.INVENTORY);
 		state.actions.put("jump",  Action.JUMP);
 		state.actions.put("look around",  Action.LOOK);
 		state.actions.put("look",  Action.LOOK);
 		state.actions.put("l",     Action.LOOK);
-		state.actions.put("inventory", Action.INVENTORY);
-		state.actions.put("i",         Action.INVENTORY);
+		state.actions.put("quit",  Action.QUIT);
+		state.actions.put("q",     Action.QUIT);
 		state.actions.put("shout", Action.SHOUT);
 		state.actions.put("yell",  Action.SHOUT);
 		state.actions.put("scream",  Action.SHOUT);
-		state.actions.put("wait", Action.WAIT);
-	    state.actions.put("pray", Action.PRAY);
         state.actions.put("superbrief", Action.SUPERBRIEF);
-        state.actions.put("brief", Action.BRIEF);
+	    state.actions.put("pray", Action.PRAY);
         state.actions.put("verbose", Action.VERBOSE);
+		state.actions.put("wait", Action.WAIT);
 	
 	
 	    // Direct object interaction actions
@@ -1870,17 +1871,18 @@ class GameSetup {
 	
 	    // Assigning action types
 	
-	    state.actionTypes.put(Action.QUIT, ActionType.REFLEXIVE);
-	    state.actionTypes.put(Action.LOOK, ActionType.REFLEXIVE);
-	    state.actionTypes.put(Action.INVENTORY, ActionType.REFLEXIVE);
-	    state.actionTypes.put(Action.SHOUT, ActionType.REFLEXIVE);
-	    state.actionTypes.put(Action.WAIT, ActionType.REFLEXIVE);
-	    state.actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
-	    state.actionTypes.put(Action.PRAY, ActionType.REFLEXIVE);
-	    state.actionTypes.put(Action.SWIM, ActionType.REFLEXIVE);
-        state.actionTypes.put(Action.SUPERBRIEF, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.BRIEF, ActionType.REFLEXIVE);
+        state.actionTypes.put(Action.DIAGNOSE, ActionType.REFLEXIVE);
+	    state.actionTypes.put(Action.INVENTORY, ActionType.REFLEXIVE);
+	    state.actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
+	    state.actionTypes.put(Action.LOOK, ActionType.REFLEXIVE);
+	    state.actionTypes.put(Action.PRAY, ActionType.REFLEXIVE);
+	    state.actionTypes.put(Action.QUIT, ActionType.REFLEXIVE);
+	    state.actionTypes.put(Action.SHOUT, ActionType.REFLEXIVE);
+        state.actionTypes.put(Action.SUPERBRIEF, ActionType.REFLEXIVE);
+	    state.actionTypes.put(Action.SWIM, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.VERBOSE, ActionType.REFLEXIVE);
+	    state.actionTypes.put(Action.WAIT, ActionType.REFLEXIVE);
 	
 	    state.actionTypes.put(Action.NORTH, ActionType.EXIT);
 	    state.actionTypes.put(Action.SOUTH, ActionType.EXIT);

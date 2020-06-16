@@ -52,7 +52,7 @@ class GameStrings {
     public static final String PLAYER_DIES_WHILE_DEAD = "It takes a talented person to be killed while already dead. YOU are "
         + "such a talent. Unfortunately, it takes a talented person to deal with it. I am not such a talent. Sorry.";
 
-    public static final String DEAD_COAL_PASSAGE = "You cannot enter in your condition.";
+    public static final String DEAD_CANNOT_ENTER = "You cannot enter in your condition.";
     public static final String DEAD_DOME_PASSAGE = "As you enter the dome you feel a strong pull as if from a wind drawing "
         + "you over the railing and down.";
     public static final String DEAD_TAKE_OBJECT = "Your hand passes through its object.";

@@ -72,7 +72,7 @@ class Room {
 		else
 		{
 			// Darkness check
-			if (state.darkness)
+			if (state.darkness && !state.playerDead)
 			{
 				Game.output(GameStrings.GRUE_DEATH_1);
 				state.playerDies();
@@ -101,7 +101,7 @@ class Room {
 
 		// Darkness check. If the room is in darkness, and the destination
 		// is not the previous room, player dies by grue.
-		if (isDark() && !state.lightActivated && (dest != state.playerPreviousLocation))
+		if (isDark() && !state.lightActivated && (dest != state.playerPreviousLocation) && !state.playerDead)
 		{
 			Game.output(GameStrings.GRUE_DEATH_1);
 			state.playerDies();
@@ -137,8 +137,11 @@ class Room {
 	{
 		if (state.playerDead)
 		{
-			Game.output(GameStrings.DEAD_LOOK);
-			Game.outputLine();
+			if (darkness)
+			{
+				Game.output(GameStrings.DEAD_LOOK);
+				Game.outputLine();
+			}
 			Game.output(description);
 			return;
 		}
@@ -197,7 +200,7 @@ class Room {
 	{
 		state.refreshInventories();
 
-		if (darkness && !state.lightActivated)
+		if (darkness && !state.lightActivated && !state.playerDead)
         {
             return;
         }
