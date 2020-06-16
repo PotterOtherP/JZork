@@ -774,8 +774,41 @@ class GameState {
 
 	public void updateDeath()
 	{
+        Room currentRoom = worldMap.get(playerLocation);
+
         switch (playerAction)
         {
+            case LOOK:
+            {
+                Game.output(GameStrings.DEAD_LOOK);
+                Game.outputLine();
+                Game.output(currentRoom.description);
+            } break;
+
+            case PRAY:
+            {
+                if (playerLocation == Location.ALTAR)
+                {
+                    Game.output(GameStrings.DEAD_PRAY_ALTAR);
+                    playerPreviousLocation = playerLocation;
+                    playerLocation = Location.FOREST_WEST;
+                    playerDead = false;
+                }
+
+                else
+                    Game.output(GameStrings.DEAD_PRAY_FAIL);
+            } break;
+
+            case TOUCH:
+            {
+                Game.output(GameStrings.DEAD_TOUCH);
+            } break;
+
+            case WAIT:
+            {
+                Game.output(GameStrings.DEAD_WAIT);
+            } break;
+
             case BRIEF:
             {
                 Game.output("Brief verbosity on.");
@@ -784,7 +817,7 @@ class GameState {
 
             case DIAGNOSE:
             {
-
+                Game.output(GameStrings.DEAD_DIAGNOSE);
             } break;
 
             case QUIT:
@@ -794,7 +827,7 @@ class GameState {
 
             case SCORE:
             {
-
+                Game.output(GameStrings.DEAD_SCORE);
             } break;
 
             case SUPERBRIEF:
@@ -811,7 +844,10 @@ class GameState {
 
 
             case NULL_ACTION: {} break;
-            default: {} break;
+            default:
+            {
+                Game.output(GameStrings.DEAD_ACTION_FAIL);
+            }
         }
 	}
 

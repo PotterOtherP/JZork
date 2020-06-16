@@ -434,6 +434,12 @@ public class InputParser {
 			return true;
 		}
 
+		if (input.equals("zombie"))
+		{
+			Game.output("You are now dead.");
+			state.playerDead = true;
+		}
+
 		return false;
 	}
 

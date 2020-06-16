@@ -59,8 +59,10 @@ class GameStrings {
     public static final String DEAD_ACTION_FAIL = "You can't even do that.";
     public static final String DEAD_WAIT = "Might as well. You've got an eternity.";
     public static final String DEAD_TOUCH = "Even such an action is beyond your capabilities.";
+    public static final String DEAD_SCORE = "You're dead! How can you think of your score?";
     public static final String DEAD_INVENTORY = "You have no possessions.";
     public static final String DEAD_PRAY_FAIL = "Your prayers are not heard.";
+    public static final String DEAD_DIAGNOSE = "You are dead.";
     public static final String DEAD_PRAY_ALTAR = "From the distance the sound of a lone trumpet is heard. The room becomes "
         + "very bright and you feel disembodied. In a moment, the brightness fades and you find yourself rising as if from "
         + "a long sleep, deep in the woods. In the distance you can faintly hear a songbird and the sounds of the forest.";
@@ -218,7 +220,8 @@ class GameStrings {
     public static final String[] GODMODE_WORDS = {
 
     "accio",
-    "teleport"
+    "teleport",
+    "zombie"
 
     };
 
