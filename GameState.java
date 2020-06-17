@@ -96,6 +96,11 @@ class GameState {
 
 	public void addTurn() { ++turns; }
 
+    public void calculateScore()
+    {
+        
+    }
+
     public void darknessCheck()
     {
         lightActivated = false;

@@ -6,6 +6,7 @@ public class Actor extends GameObject {
 	
 	public boolean alive;
     public boolean staggered;
+    public boolean unconscious;
     public int hitPoints;
     public int strength;
 
@@ -22,6 +23,7 @@ public class Actor extends GameObject {
 
 		alive = true;
         staggered = false;
+        unconscious = false;
         hitPoints = ENEMY_HIT_POINTS;
         strength = 0;
 
