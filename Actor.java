@@ -5,8 +5,12 @@ import java.util.Random;
 public class Actor extends GameObject {
 	
 	public boolean alive;
+    public int hitPoints;
 
-	public static final int SONGBIRD_CHIRP_PERCENT = 15;
+
+
+    public static final int SONGBIRD_CHIRP_PERCENT = 15;
+	public static final int ENEMY_HIT_POINTS = 10;
 
 
 	public Actor(String name, Location loc)
@@ -15,8 +19,45 @@ public class Actor extends GameObject {
 		type = ObjectType.ACTOR;
 
 		alive = true;
+        hitPoints = ENEMY_HIT_POINTS;
 
 	}
+
+    @Override
+    public void attack(GameState state)
+    {
+        
+
+        switch (name)
+        {
+            case "cyclops":
+            {
+
+            } break;
+
+            case "thief":
+            {
+
+            } break;
+
+            case "troll":
+            {
+
+            } break;
+
+            case "vampire bat":
+            {
+
+            } break;
+
+
+
+            default:
+            {
+                super.attack(state);
+            } break
+        }
+    }
     
 
 	public void cyclopsTurn(GameState state)

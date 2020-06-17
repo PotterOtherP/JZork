@@ -54,6 +54,7 @@ class GameState {
 	// Constants
 	public static final int MAX_PLAYER_DEATHS = 3;
     public static final int MAX_DARKNESS_TURNS = 2;
+    public static final int MAX_HIT_POINTS = 10;
 
 	public GameState()
 	{
@@ -68,6 +69,7 @@ class GameState {
 		playerCarryWeight = 0;
 		playerDeaths = 0;
 		playerScore = 0;
+        playerHitPoints = MAX_HIT_POINTS;
 		playerMaxCarryWeight = Game.CARRY_WEIGHT_LIMIT;
 		completePlayerInput = "";
 		playerPreviousInput = "";

@@ -121,7 +121,6 @@ abstract class GameObject {
         presenceString = "There is " + articleName + " here.";
 
         answerString = "It is hardly likely that the " + name + " is interested.";
-        attackString = "I've known strange people, but fighting " + articleName + "?";
         blowString = "You can't blow that out.";
         boardString = "You have a theory on how to board " + articleName + ", perhaps?";
         climbString = "You can't do that!";
@@ -169,6 +168,7 @@ abstract class GameObject {
         waveString = "Waving the " + name;
 
         // indirect action objects
+        attackString = "I've known strange people, but fighting " + articleName + "?";
         breakString = "";
         burnString = "";
         cutString = "Strange concept, cutting the " + name + "...";

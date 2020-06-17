@@ -1850,7 +1850,9 @@ class GameSetup {
 	
 	
 	    // Indirect actions
-	    state.actions.put("attack", Action.ATTACK);
+        state.actions.put("attack", Action.ATTACK);
+        state.actions.put("kill", Action.ATTACK);
+	    state.actions.put("fight", Action.ATTACK);
 	    state.actions.put("break", Action.BREAK);
 	    state.actions.put("burn", Action.BURN);
 	    state.actions.put("cut", Action.CUT);
