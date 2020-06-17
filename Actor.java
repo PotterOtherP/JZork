@@ -5,7 +5,9 @@ import java.util.Random;
 public class Actor extends GameObject {
 	
 	public boolean alive;
+    public boolean staggered;
     public int hitPoints;
+    public int strength;
 
 
 
@@ -19,29 +21,41 @@ public class Actor extends GameObject {
 		type = ObjectType.ACTOR;
 
 		alive = true;
+        staggered = false;
         hitPoints = ENEMY_HIT_POINTS;
+        strength = 0;
 
 	}
 
     @Override
     public void attack(GameState state)
     {
+        GameObject weapon = state.indirectObject;
         
 
         switch (name)
         {
             case "cyclops":
-            {
-
-            } break;
-
             case "thief":
-            {
-
-            } break;
-
             case "troll":
             {
+                if (!weapon.isWeapon || weapon.name.equals("sceptre"))
+                {
+                    Game.output("Attacking the " + name + " with " + weapon.articleName + " is suicide.");
+                    return;
+                }
+
+                // Should this just be when delivering a killing blow?
+                if (weapon.name.equals("rusty knife"))
+                {
+                    Game.output(ObjectStrings.RUSTY_KNIFE_CURSE);
+                    state.playerDies();
+                    return;
+                }
+
+                Random rand = new Random();
+                int dieRoll = rand.nextInt(100);
+
 
             } break;
 
@@ -55,7 +69,7 @@ public class Actor extends GameObject {
             default:
             {
                 super.attack(state);
-            } break
+            } break;
         }
     }
     

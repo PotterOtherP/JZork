@@ -74,6 +74,12 @@ class ObjectStrings {
     public static final String HOUSE_EXAMINE = "The house is a beautiful colonial house which is painted white. It is clear "
             + "that the owners must have been extremely wealthy.";
 
+    public static final String RUSTY_KNIFE_TAKE = "As you touch the rusty knife, your sword gives a single pulse "
+        + "of blinding blue light.";
+    public static final String RUSTY_KNIFE_CURSE = "As the knife approaches its victim, your mind is submerged by "
+        + "an overmastering will. Slowly, your hand turns, until the rusty blade is an inch fromm your neck. "
+        + "The knife seems to sing as it savagely slits your throat.";
+
     public static final String SCEPTRE_WAVE = "A dazzling display of color briefly emanates from the sceptre.";
     public static final String SCEPTRE_RAINBOW = "Suddenly, the rainbow appears to become solid and, I venture, walkable "
             + "(I think the giveaway was the stairs and bannister.)";

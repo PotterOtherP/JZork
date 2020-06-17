@@ -19,6 +19,7 @@ abstract class GameObject {
     public String capArticleName;
     public boolean movedFromStart;
     public boolean isWeapon;
+    public int weaponStrength;
     public String initialPresenceString;
     public String presenceString;
 
@@ -102,6 +103,7 @@ abstract class GameObject {
         capArticleName = (vowelStart() ? "An " : "A ") + name;
 
         isWeapon = false;
+        weaponStrength = 0;
         movedFromStart = false;
 
         setStrings();
