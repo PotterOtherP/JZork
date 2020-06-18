@@ -9,6 +9,7 @@ class GameState {
     public int darknessTurns;
     public boolean darkness;
     public boolean lightActivated;
+    public boolean playerStaggered;
 	public boolean playerDead;
     public int playerDeaths;
     public int suicideCount;

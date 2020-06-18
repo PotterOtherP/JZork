@@ -13,6 +13,7 @@ public final class Game {
 	public static boolean gameover = true;
 	public static boolean godmode = false;
     public static boolean debug = false;
+    public static GameState gameState;
 
 
     // Constants
@@ -27,7 +28,7 @@ public final class Game {
 	{
         setMode(args);      
 
-		GameState gameState = new GameState();
+		gameState = new GameState();
         InputParser parser = new InputParser(gameState);
 	
 		initGame(gameState);
@@ -105,6 +106,16 @@ public final class Game {
 	public static void output(String s)
     {
         if (s.isEmpty()) return;
+
+        if (s.contains("ITEM"))
+        {
+            s = s.replace("ITEM", (gameState.indirectObject.name));
+        }
+
+        if (s.contains("OBJECT"))
+        {
+            s = s.replace("OBJECT", (gameState.directObject.name));
+        }
 
         String[] lines = s.split("\n");
 

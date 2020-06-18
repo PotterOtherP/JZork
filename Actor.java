@@ -188,6 +188,27 @@ public class Actor extends GameObject {
 
         if (location == state.playerLocation)
         {
+            /** COMBAT WITH THE TROLL **
+
+            In order to attack you, the troll must be alive,
+            conscious, not staggered, and armed with his axe.
+            He can't fight with any other weapons.
+
+            When the troll attacks with the axe, the possible results are:
+
+             - Miss
+             - Glancing or light blow
+             - Severe blow
+             - Staggering blow
+             - Knockout blow
+             - Fatal blow
+
+            If he's unconscious, he'll wake up after X turns.
+            If he's staggered, he'll take one turn to recover.
+            If he's disarmed, he will pathetically babbly and plead for his life.
+            If you give him the axe or leave it on the ground, he'll continue fighting.
+
+            */
             Game.output("The troll attacks you.");
         }
     }

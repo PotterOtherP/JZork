@@ -99,9 +99,9 @@ class ObjectStrings {
         + "and eats it hungrily. Poor troll, he dies from an internal hemorrhage and his carcass disappears in "
         + "a sinister black fog.";
 
-    public static final String TROLL_EAT_2A = "The troll, who is not overly proud, graciously accepts the gift "
-        + "and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the ";
-    public static final String TROLL_EAT_2B = " falls to the floor. He does not look pleased.";
+    public static final String TROLL_EAT_2 = "The troll, who is not overly proud, graciously accepts the gift "
+        + "and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the ITEM ";
+        + "falls to the floor. He does not look pleased.";
 
     public static final String TROLL_EAT_3 = "The troll, who is not overly proud, graciously accepts the gift "
         + "and not having the most discriminating tastes, gleefully eats it.";
@@ -135,9 +135,9 @@ class ObjectStrings {
     public static final String TROLL_FIGHT_STAGGER_1 = "The troll hits you with a glancing blow, and you are momentarily stunned.";
     public static final String TROLL_FIGHT_STAGGER_2 = "You stagger back under a hail of axe strokes";
     public static final String TROLL_FIGHT_STAGGER_3 = "The troll's mighty blow drops you to your knees.";
-    public static final String TROLL_FIGHT_DISARM_1 = "The axe hits your X and knocks it spinning.";
+    public static final String TROLL_FIGHT_DISARM_1 = "The axe hits your ITEM and knocks it spinning.";
     public static final String TROLL_FIGHT_DISARM_2 = "The troll swings, you parry, but the force of his blow knocks your X away.";
-    public static final String TROLL_FIGHT_DISARM_3 = "The axe knocks your X out of your hand. It falls to the floor.";
+    public static final String TROLL_FIGHT_DISARM_3 = "The axe knocks your ITEM out of your hand. It falls to the floor.";
     public static final String TROLL_FIGHT_HESITATE_1 = "The troll hesitates, fingering his axe.";
     public static final String TROLL_FIGHT_HESITATE_2 = "The troll scratches his head ruminatively: Might you be magically "
         + "protected, he wonders?";

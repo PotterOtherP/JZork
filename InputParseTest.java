@@ -13,19 +13,13 @@ public class InputParseTest {
 
 		new GameSetup(gs, true, true);
 
-		String alpha9 = "123456789";
-		String alpha10 = "abcdefghij";
-		String alpha20 = "abcdefghijklmnopqrst";
-		String alpha26 = "abcdefghijklmnopqrstuvwxyz";
-		String alpha50 = alpha9 + " " + alpha9 + " " + alpha9 + " " + alpha9 + " " + alpha9;
-		String alpha100 = alpha50 + " " + alpha50;
+		Game.gameState = gs;
+		gs.directObject = gs.objectList.get("troll");
+		gs.indirectObject = gs.objectList.get("nasty knife");
 
+		String test = "The OBJECT swings his axe and sends your ITEM flying.";
 
-		System.out.println("Substring(0, 10) of alphabet is " + alpha26.substring(0, 10));
-		System.out.println("Substring(10) of alphabet is " + alpha26.substring(10));
-
-		Game.output(alpha50);
-		Game.output(alpha100);
+		Game.output(test);
 
 
 
