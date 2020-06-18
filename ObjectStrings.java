@@ -87,6 +87,62 @@ class ObjectStrings {
     public static final String SCEPTRE_RAINBOW_2 = "The structural integrity of the rainbow is severely compromised, leaving you "
             + "hanging in mid-air, supported only by water vapor. Bye.";
 
+    public static final String TROLL_TALK_1 = "The troll isn't much of a conversationalist.";
+    public static final String TROLL_TALK_2 = "Unfortunately, the troll can't hear you.";
+    public static final String TROLL_RECOVER_AXE = "The troll, angered and humiliated, recovers his weapon. He appears to have an axe "
+        + "to grind with you.";
+    public static final String TROLL_DISARMED = "The troll, disarmed, cowers in terror, pleading for his life in the guttural tongue "
+        + "of the trolls.";
+    public static final String TROLL_WAKES = "The troll stirs, quickly resuming a fighting stance.";
+    public static final String TROLL_GIVE_AXE = "The troll scratches his head in confusion, then takes the axe.";
+    public static final String TROLL_EAT_1 = "The troll, who is not overly proud, graciously accepts the gift "
+        + "and eats it hungrily. Poor troll, he dies from an internal hemorrhage and his carcass disappears in "
+        + "a sinister black fog.";
+
+    public static final String TROLL_EAT_2A = "The troll, who is not overly proud, graciously accepts the gift "
+        + "and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the ";
+    public static final String TROLL_EAT_2B = " falls to the floor. He does not look pleased.";
+
+    public static final String TROLL_EAT_3 = "The troll, who is not overly proud, graciously accepts the gift "
+        + "and not having the most discriminating tastes, gleefully eats it.";
+
+    public static final String TROLL_TAKE = "The troll spits in your face, grunting \"Better luck next time\" "
+        + "in a rather barbarous accent.";
+
+    public static final String TROLL_LAUGH = "The troll laughs at your puny gesture.";
+    public static final String TROLL_TAUNT = "Every so often the troll says something, probably uncomplimentary, "
+        + "in his guttural toungue.";
+
+    public static final String TROLL_FIGHT_MISS_1 = "The troll swings his axe, but it misses.";
+    public static final String TROLL_FIGHT_MISS_2 = "The troll's axe barely misses your ear.";
+    public static final String TROLL_FIGHT_MISS_3 = "The axe sweeps past as you jump aside.";
+    public static final String TROLL_FIGHT_MISS_4 = "The axe crashes against the rock, throwing sparks!";
+    public static final String TROLL_FIGHT_MISS_5 = "The troll's swing almost knocks you over as you barely parry in time.";
+    public static final String TROLL_FIGHT_KNOCKOUT = "The flat of the troll's axe hits you delicately on the head, "
+        + "knocking you out.";
+    public static final String TROLL_FIGHT_FATAL_1 = "The troll neatly removes your head.";
+    public static final String TROLL_FIGHT_FATAL_2 = "The troll's axe stroke cleaves you from the nave to the chops.";
+    public static final String TROLL_FIGHT_FATAL_3 = "The troll's axe removes your head.";
+    public static final String TROLL_FIGHT_SEVERE_1 = "The axe gets you right in the side. Ouch!";
+    public static final String TROLL_FIGHT_SEVERE_2 = "An axe stroke makes a deep wound in your leg.";
+    public static final String TROLL_FIGHT_SEVERE_3 = "The troll's axe swings down, gashing your shoulder.";
+    public static final String TROLL_FIGHT_SEVERE_4 = "The troll swings; the blade turns on your armor but crashes broadside "
+        + "into your head.";
+    public static final String TROLL_FIGHT_LIGHT_1 = "The flat of the troll's axe skins across your forearm.";
+    public static final String TROLL_FIGHT_LIGHT_2 = "The troll swings his axe, and it nicks your arm as you dodge.";
+    public static final String TROLL_FIGHT_LIGHT_3A = "The troll charges, and his axe slashes you on your left arm.";
+    public static final String TROLL_FIGHT_LIGHT_3B = "The troll charges, and his axe slashes you on your right arm.";
+    public static final String TROLL_FIGHT_STAGGER_1 = "The troll hits you with a glancing blow, and you are momentarily stunned.";
+    public static final String TROLL_FIGHT_STAGGER_2 = "You stagger back under a hail of axe strokes";
+    public static final String TROLL_FIGHT_STAGGER_3 = "The troll's mighty blow drops you to your knees.";
+    public static final String TROLL_FIGHT_DISARM_1 = "The axe hits your X and knocks it spinning.";
+    public static final String TROLL_FIGHT_DISARM_2 = "The troll swings, you parry, but the force of his blow knocks your X away.";
+    public static final String TROLL_FIGHT_DISARM_3 = "The axe knocks your X out of your hand. It falls to the floor.";
+    public static final String TROLL_FIGHT_HESITATE_1 = "The troll hesitates, fingering his axe.";
+    public static final String TROLL_FIGHT_HESITATE_2 = "The troll scratches his head ruminatively: Might you be magically "
+        + "protected, he wonders?";
+    public static final String TROLL_FIGHT_FINISH = "Conquering his fears, the troll puts you to death.";
+
 
     public static final String WOODEN_DOOR = "The engravings translate to \"This space intentionally left blank.\"";
 

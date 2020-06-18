@@ -338,7 +338,11 @@ abstract class GameObject {
         Game.output("Digging with " + state.indirectObject.articleName + " is silly.");
     }
     public void fill(GameState state) { Game.output(fillString); }
-    public void give(GameState state) { Game.output(giveString); }
+    public void give(GameState state)
+    {
+        Game.output("You can't give " + state.indirectObject.articleName + " to "
+            + state.directObject.articleName + ".");
+    }
     public void inflate(GameState state) { Game.output(inflateString); }
     public void lock(GameState state) { Game.output("You can't lock that."); }
     public void place(GameState state, Item it) {}

@@ -74,7 +74,57 @@ public class Actor extends GameObject {
             } break;
         }
     }
+
+    @Override
+    public void give(GameState state)
+    {
+        switch (name)
+        {
+            case "troll":
+            {
+                trollGive(state);
+            } break;
+
+            default:
+            {
+                super.give(state);
+            } break;
+        }
+    }
     
+
+    public void trollDies(GameState state)
+    {
+        alive = false;
+        Game.output("The troll dies.");
+
+        Room trollrm = state.worldMap.get(Location.TROLL_ROOM);
+        Passage p1 = trollrm.exits.get(Action.WEST);
+        Passage p2 = trollrm.exits.get(Action.EAST);
+
+        p1.open();
+        p2.open();
+    }
+
+    public void trollGive(GameState state)
+    {
+        String item = state.indirectObject.name;
+        switch (item)
+        {
+            case "axe":
+            {
+                Game.output(ObjectStrings.TROLL_GIVE_AXE);
+                state.indirectObject.location = Location.TROLL_INVENTORY;
+            } break;
+
+            default:
+            {
+                
+                Game.output("The troll, who is remarkably coordinated, catches the " + item + ".");
+                state.indirectObject.location = Location.TROLL_INVENTORY;
+            } break;
+        }
+    }
 
 	public void cyclopsTurn(GameState state)
 	{
@@ -142,18 +192,6 @@ public class Actor extends GameObject {
         }
     }
 
-    public void trollDies(GameState state)
-    {
-        alive = false;
-        Game.output("The troll dies.");
-
-        Room trollrm = state.worldMap.get(Location.TROLL_ROOM);
-        Passage p1 = trollrm.exits.get(Action.WEST);
-        Passage p2 = trollrm.exits.get(Action.EAST);
-
-        p1.open();
-        p2.open();
-    }
 
     public void vampireBatTurn(GameState state)
     {
