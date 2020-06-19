@@ -47,7 +47,7 @@ public class Actor extends GameObject {
                     return;
                 }
 
-                // Should this just be when delivering a killing blow?
+                // Should this just be when delivering a killing blow? No...
                 if (weapon.name.equals("rusty knife"))
                 {
                     Game.output(ObjectStrings.RUSTY_KNIFE_CURSE);
