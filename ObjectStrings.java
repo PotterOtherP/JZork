@@ -100,7 +100,7 @@ class ObjectStrings {
         + "a sinister black fog.";
 
     public static final String TROLL_EAT_2 = "The troll, who is not overly proud, graciously accepts the gift "
-        + "and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the ITEM ";
+        + "and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the ITEM "
         + "falls to the floor. He does not look pleased.";
 
     public static final String TROLL_EAT_3 = "The troll, who is not overly proud, graciously accepts the gift "

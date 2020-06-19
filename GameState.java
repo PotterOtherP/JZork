@@ -220,6 +220,7 @@ class GameState {
 
     		playerPreviousLocation = playerLocation;
     		playerLocation = forest[p];
+            playerHitPoints = MAX_HIT_POINTS;
     		Room path = worldMap.get(playerLocation);
     		path.lookAround(this);
     	}
@@ -496,7 +497,7 @@ class GameState {
 
             case DIAGNOSE:
             {
-
+                Game.output("You have " + playerHitPoints + "/" + MAX_HIT_POINTS + " hit points.");
             } break;
 
             case QUIT:
@@ -548,6 +549,9 @@ class GameState {
         updateActors();
 
 		addTurn();
+
+        if (playerHitPoints <= 0)
+            playerDies();
 
 
 	}
@@ -806,6 +810,7 @@ class GameState {
                     playerPreviousLocation = playerLocation;
                     playerLocation = Location.FOREST_WEST;
                     playerDead = false;
+                    playerHitPoints = 1;
                 }
 
                 else

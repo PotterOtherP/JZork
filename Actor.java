@@ -209,7 +209,46 @@ public class Actor extends GameObject {
             If you give him the axe or leave it on the ground, he'll continue fighting.
 
             */
-            Game.output("The troll attacks you.");
+            // Game.output("The troll attacks you.");
+
+            Random rand = new Random();
+            int dieRoll = rand.nextInt(100);
+
+            if (0 <= dieRoll && dieRoll < 20)
+            {
+                Game.output(ObjectStrings.TROLL_FIGHT_MISS_1);
+            }
+
+            else if (20 <= dieRoll && dieRoll < 40)
+            {
+                Game.output(ObjectStrings.TROLL_FIGHT_LIGHT_1);
+                state.playerHitPoints -= 1;
+            }
+
+            else if (40 <= dieRoll && dieRoll < 60)
+            {
+                Game.output(ObjectStrings.TROLL_FIGHT_SEVERE_1);
+                state.playerHitPoints -= 5;
+            }
+
+            else if (60 <= dieRoll && dieRoll < 80)
+            {
+                Game.output(ObjectStrings.TROLL_FIGHT_STAGGER_1);
+                state.playerStaggered = true;
+            }
+
+            else if (80 <= dieRoll && dieRoll < 90)
+            {
+                Game.output(ObjectStrings.TROLL_FIGHT_KNOCKOUT);
+
+            }
+
+            else if (90 <= dieRoll && dieRoll < 100)
+            {
+                Game.output(ObjectStrings.TROLL_FIGHT_FATAL_1);
+                state.playerDies();
+
+            }
         }
     }
 
