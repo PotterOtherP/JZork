@@ -87,13 +87,47 @@ class ObjectStrings {
     public static final String SCEPTRE_RAINBOW_2 = "The structural integrity of the rainbow is severely compromised, leaving you "
             + "hanging in mid-air, supported only by water vapor. Bye.";
 
+    public static final String CYCLOPS = "A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. "
+        + "From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes people.";
+
+    public static final String CYCLOPS_FLEE = "The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down "
+        + "the wall on the east side of the room.";
+
+    public static final String CYCLOPS_WAIT_1 = "The cyclops seems somewhat agitated.";
+    public static final String CYCLOPS_WAIT_2 = "The cyclops appears to be getting more agitated.";
+    public static final String CYCLOPS_WAIT_3 = "The cyclops is moving about the room, looking for something.";
+    public static final String CYCLOPS_WAIT_4 = "The cyclops was looking for salt and pepper. No doubt they are condiments for his upcoming snack.";
+    public static final String CYCLOPS_WAIT_5 = "The cyclops is moving toward you in an unfriendly manner.";
+    public static final String CYCLOPS_WAIT_6 = "You have two choices. 1. Leave 2. Become dinner.";
+    public static final String CYCLOPS_WAIT_7 = "The cyclops, tired of all your games and trickery, grabs you firmly. As he licks his chops, "
+        + "he says \"Mmm. Just like Mom used to make 'em.\" It's nice to be appreciated.";
+
+    public static final String CYCLOPS_FIGHT_MISS_1 = "The cyclops misses, but the backwash almost knocks you over.";
+    public static final String CYCLOPS_FIGHT_MISS_2 = "The cyclops rushes you, but runs into the wall.";
+    public static final String CYCLOPS_FIGHT_KNOCKOUT_1 = "The cyclops sends you crashing to the floor, unconscious.";
+    public static final String CYCLOPS_FIGHT_FATAL_1 = "The cyclops breaks your neck with a massive smash.";
+    public static final String CYCLOPS_FIGHT_LIGHT_1 = "A quick punch, but it was only a glancing blow.";
+    public static final String CYCLOPS_FIGHT_LIGHT_2 = "A glancing blow from the cyclops' fist.";
+    public static final String CYCLOPS_FIGHT_STAGGER_1 = "The cyclops almost knocks the wind out of you with a quick punch.";
+    public static final String CYCLOPS_FIGHT_STAGGER_2 = "The cyclops lands a punch that almost knocks the wind out of you.";
+    public static final String CYCLOPS_FIGHT_SEVERE_1 = "The monster smashes his huge fist into your chest, breaking several ribs.";
+    public static final String CYCLOPS_FIGHT_SEVERE_2 = "Heedless of your weapons, the cyclops tosses you against the rock wall of the room.";
+    public static final String CYCLOPS_FIGHT_DISARM_1 = "The cyclops graps your WEAPON, tastes it, and throws it to the ground in disgust.";
+    public static final String CYCLOPS_FIGHT_DISARM_2 = "The monster grabs you on the wrist, squeezes, and you drop your WEAPON in pain.";
+    public static final String CYCLOPS_FIGHT_HESITATE = "The cyclops seems unable to decide whether to broil or stew his dinner.";
+    public static final String CYCLOPS_FIGHT_FINISH = "The cyclops, no sportsman, dispatches his unconscious victim.";
+
+    public static final String TROLL_PRESENCE = "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.";
+    public static final String TROLL_PRESENCE_UNCONSCIOUS = "An unconscious troll is sprawled on the floor. All passages out of the room are open.";
+    public static final String TROLL_PRESENCE_DISARMED = "A pathetically babbling troll is here.";
+
     public static final String TROLL_TALK_1 = "The troll isn't much of a conversationalist.";
     public static final String TROLL_TALK_2 = "Unfortunately, the troll can't hear you.";
     public static final String TROLL_RECOVER_AXE = "The troll, angered and humiliated, recovers his weapon. He appears to have an axe "
         + "to grind with you.";
     public static final String TROLL_DISARMED = "The troll, disarmed, cowers in terror, pleading for his life in the guttural tongue "
         + "of the trolls.";
-    public static final String TROLL_WAKES = "The troll stirs, quickly resuming a fighting stance.";
+    public static final String TROLL_RECOVERS_STAGGER = "The troll stirs, quickly resuming a fighting stance.";
     public static final String TROLL_GIVE_AXE = "The troll scratches his head in confusion, then takes the axe.";
     public static final String TROLL_EAT_1 = "The troll, who is not overly proud, graciously accepts the gift "
         + "and eats it hungrily. Poor troll, he dies from an internal hemorrhage and his carcass disappears in "
@@ -123,26 +157,59 @@ class ObjectStrings {
     public static final String TROLL_FIGHT_FATAL_1 = "The troll neatly removes your head.";
     public static final String TROLL_FIGHT_FATAL_2 = "The troll's axe stroke cleaves you from the nave to the chops.";
     public static final String TROLL_FIGHT_FATAL_3 = "The troll's axe removes your head.";
-    public static final String TROLL_FIGHT_SEVERE_1 = "The axe gets you right in the side. Ouch!";
-    public static final String TROLL_FIGHT_SEVERE_2 = "An axe stroke makes a deep wound in your leg.";
-    public static final String TROLL_FIGHT_SEVERE_3 = "The troll's axe swings down, gashing your shoulder.";
-    public static final String TROLL_FIGHT_SEVERE_4 = "The troll swings; the blade turns on your armor but crashes broadside "
+    public static final String TROLL_FIGHT_SEVERE_1 = "An axe stroke makes a deep wound in your leg.";
+    public static final String TROLL_FIGHT_SEVERE_2 = "The troll's axe swings down, gashing your shoulder.";
+    public static final String TROLL_FIGHT_SEVERE_3 = "The troll swings; the blade turns on your armor but crashes broadside "
         + "into your head.";
     public static final String TROLL_FIGHT_LIGHT_1 = "The flat of the troll's axe skins across your forearm.";
     public static final String TROLL_FIGHT_LIGHT_2 = "The troll swings his axe, and it nicks your arm as you dodge.";
-    public static final String TROLL_FIGHT_LIGHT_3A = "The troll charges, and his axe slashes you on your left arm.";
-    public static final String TROLL_FIGHT_LIGHT_3B = "The troll charges, and his axe slashes you on your right arm.";
+    public static final String TROLL_FIGHT_LIGHT_3 = "The troll charges, and his axe slashes you on your left arm.";
+    public static final String TROLL_FIGHT_LIGHT_4 = "The troll charges, and his axe slashes you on your right arm.";
+    public static final String TROLL_FIGHT_LIGHT_5 = "The axe gets you right in the side. Ouch!";
     public static final String TROLL_FIGHT_STAGGER_1 = "The troll hits you with a glancing blow, and you are momentarily stunned.";
-    public static final String TROLL_FIGHT_STAGGER_2 = "You stagger back under a hail of axe strokes";
+    public static final String TROLL_FIGHT_STAGGER_2 = "You stagger back under a hail of axe strokes.";
     public static final String TROLL_FIGHT_STAGGER_3 = "The troll's mighty blow drops you to your knees.";
-    public static final String TROLL_FIGHT_DISARM_1 = "The axe hits your ITEM and knocks it spinning.";
+    public static final String TROLL_FIGHT_DISARM_1 = "The axe hits your WEAPON and knocks it spinning.";
     public static final String TROLL_FIGHT_DISARM_2 = "The troll swings, you parry, but the force of his blow knocks your X away.";
-    public static final String TROLL_FIGHT_DISARM_3 = "The axe knocks your ITEM out of your hand. It falls to the floor.";
+    public static final String TROLL_FIGHT_DISARM_3 = "The axe knocks your WEAPON out of your hand. It falls to the floor.";
     public static final String TROLL_FIGHT_HESITATE_1 = "The troll hesitates, fingering his axe.";
     public static final String TROLL_FIGHT_HESITATE_2 = "The troll scratches his head ruminatively: Might you be magically "
         + "protected, he wonders?";
     public static final String TROLL_FIGHT_FINISH = "Conquering his fears, the troll puts you to death.";
 
+    public static final String THIEF_FIGHT_MISS_1 = "The thief stabs nonchalantly with his knife and misses.";
+    public static final String THIEF_FIGHT_MISS_2 = "You dodge as the thief comes in low.";
+    public static final String THIEF_FIGHT_MISS_3 = "You parry a lightning thrust, and the thief salutes you with a grim nod.";
+    public static final String THIEF_FIGHT_MISS_4 = "The thief tries to sneak past your guard, but you twist away.";
+    public static final String THIEF_FIGHT_KNOCKOUT_1 = "Shifting in the middle of a thrust, the thief knocks you unconscious "
+        + "with the haft of his stiletto.";
+    public static final String THIEF_FIGHT_KNOCKOUT_2 = "The thief knocks you out.";
+    public static final String THIEF_FIGHT_FATAL_1 = "Finishing you off, the thief inserts his blade into your heart.";
+    public static final String THIEF_FIGHT_FATAL_2 = "The thief comes in from the side, feints, and inserts the blade into your ribs.";
+    public static final String THIEF_FIGHT_FATAL_3 = "The thief bows formally, raises his stiletto, and with a wry grin, "
+        + "ends the battle and your life.";
+    public static final String THIEF_FIGHT_LIGHT_1 = "A quick thrust pinks your left arm, and blood starts to trickle down.";
+    public static final String THIEF_FIGHT_LIGHT_2 = "The thief draws blood, raking his stiletto across your arm.";
+    public static final String THIEF_FIGHT_LIGHT_3 = "The stiletto flashes faster than you can follow, and blood wells "
+        + "from your leg.";
+    public static final String THIEF_FIGHT_LIGHT_4 = "The thief slowly approaches, strikes like a snake, and leaves you wounded.";
+    public static final String THIEF_FIGHT_SEVERE_1 = "The thief strikes like a snake! The resulting wound is serious.";
+    public static final String THIEF_FIGHT_SEVERE_2 = "The thief stabs a deep cut in your upper arm.";
+    public static final String THIEF_FIGHT_SEVERE_3 = "The stiletto touches your forehead, and blood obscures your vision.";
+    public static final String THIEF_FIGHT_SEVERE_4 = "The thief strikes at your wrist, and suddenly your grip is slippery with blood.";
+    public static final String THIEF_FIGHT_STAGGER_1 = "The butt of his stiletto cracks you on the skull, and you stagger back.";
+    public static final String THIEF_FIGHT_STAGGER_2 = "The thief rams the haft of his blade into your stomach, leaving you out of breath.";
+    public static final String THIEF_FIGHT_STAGGER_3 = "The thief attacks, and you fall back desperately.";
+    public static final String THIEF_FIGHT_DISARM_1 = "A long, theatrical slash. You catch it on your WEAPON, but the thief twists "
+        + "his knife, and the WEAPON goes flying.";
+    public static final String THIEF_FIGHT_DISARM_2 = "The thief neatly flips your WEAPON out of your hands, and it drops to the floor.";
+    public static final String THIEF_FIGHT_DISARM_3 = "You parry a low thrust, and your WEAPON slips out of your hand.";
+    public static final String THIEF_FIGHT_HESITATE_1 = "The thief, a man of superior breeding, pauses for a moment to consider the "
+        + "propriety of finishing you off.";
+    public static final String THIEF_FIGHT_HESITATE_2 = "The thief amuses himself by searching your pockets.";
+    public static final String THIEF_FIGHT_HESITATE_3 = "The thief entertains himself by rifling your pack.";
+    public static final String THIEF_FIGHT_FINISH_1 = "The thief, forgetting his essentially genteel upbringing, cuts your throat.";
+    public static final String THIEF_FIGHT_FINISH_2 = "The thief, a pragmatist, dispatches you as a threat to his livelihood.";
 
     public static final String WOODEN_DOOR = "The engravings translate to \"This space intentionally left blank.\"";
 

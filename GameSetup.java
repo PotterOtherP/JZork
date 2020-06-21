@@ -1270,7 +1270,7 @@ class GameSetup {
         lantern.altNames.add("lamp");
         lantern.altNames.add("lantern");
         lantern.altNames.add("brass lamp");
-        lantern.lifespan = Game.LANTERN_LIFESPAN;
+        lantern.lifespan = GameState.LANTERN_LIFESPAN;
 
         Item nest = new Item("bird's nest", Location.UP_TREE);
         nest.altNames.add("nest");
@@ -1548,9 +1548,9 @@ class GameSetup {
         thief.inventoryID = Location.THIEF_INVENTORY;
         
         Actor troll = new Actor("troll", Location.TROLL_ROOM);
-        troll.presenceString = "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.";
-        troll.takeString = "The troll spits in your face, grunting \"Better luck next time\" in a rather barbarous accent.";
-        troll.talkString = "The troll isn't much of a conversationalist.";
+        troll.presenceString = ObjectStrings.TROLL_PRESENCE;
+        troll.takeString = ObjectStrings.TROLL_TAKE;
+        troll.talkString = ObjectStrings.TROLL_TALK_1;
         troll.inventoryID = Location.TROLL_INVENTORY;
         
         Actor vampireBat = new Actor("vampire bat", Location.BAT_ROOM);

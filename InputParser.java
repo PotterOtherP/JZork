@@ -424,6 +424,25 @@ public class InputParser {
 			return true;
 		}
 
+		if (input.equals("reanimate troll"))
+		{
+			Actor troll = (Actor)state.objectList.get("troll");
+			troll.alive = true;
+			troll.location = Location.TROLL_ROOM;
+			troll.hitPoints = Actor.MAX_ENEMY_HIT_POINTS;
+			Game.output("The troll comes back to life.");
+			return true;
+		}
+
+		if (input.equals("reanimate thief"))
+		{
+			Actor thief = (Actor)state.objectList.get("thief");
+			Game.output("The thief comes back to life.");
+			thief.alive = true;
+			thief.location = Location.TREASURE_ROOM;
+			return true;
+		}
+
 		if (input.equals("revive") && state.playerDead)
 		{
 			Game.output("You have come back to life.");
@@ -434,6 +453,7 @@ public class InputParser {
 
 		if (input.equals("terminate troll"))
 		{
+			Game.output("The troll is now dead.");
 			Actor troll = (Actor)state.objectList.get("troll");
 			troll.trollDies(state);
 			return true;

@@ -19,8 +19,7 @@ public final class Game {
     // Constants
     public static final int MAX_LINE_LENGTH = 80;
 	public static final Location STARTING_LOCATION = Location.WEST_OF_HOUSE;
-    public static final int LANTERN_LIFESPAN = 100;
-    public static final int CARRY_WEIGHT_LIMIT = 20;
+
 
 
 
@@ -107,14 +106,14 @@ public final class Game {
     {
         if (s.isEmpty()) return;
 
-        if (s.contains("ITEM"))
+        if (s.contains("WEAPON"))
         {
-            s = s.replace("ITEM", (gameState.indirectObject.name));
+            s = s.replace("WEAPON", (gameState.indirectObject.name));
         }
 
-        if (s.contains("OBJECT"))
+        if (s.contains("ENEMY"))
         {
-            s = s.replace("OBJECT", (gameState.directObject.name));
+            s = s.replace("ENEMY", (gameState.directObject.name));
         }
 
         String[] lines = s.split("\n");

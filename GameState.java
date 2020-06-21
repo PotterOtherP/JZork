@@ -56,6 +56,8 @@ class GameState {
 	public static final int MAX_PLAYER_DEATHS = 3;
     public static final int MAX_DARKNESS_TURNS = 2;
     public static final int MAX_HIT_POINTS = 10;
+    public static final int LANTERN_LIFESPAN = 100;
+    public static final int CARRY_WEIGHT_LIMIT = 20;
 
 	public GameState()
 	{
@@ -67,11 +69,12 @@ class GameState {
 		playerPreviousLocation = Location.NULL_LOCATION;
 		lightActivated = false;
 		playerDead = false;
+        playerStaggered = false;
 		playerCarryWeight = 0;
 		playerDeaths = 0;
 		playerScore = 0;
         playerHitPoints = MAX_HIT_POINTS;
-		playerMaxCarryWeight = Game.CARRY_WEIGHT_LIMIT;
+		playerMaxCarryWeight = CARRY_WEIGHT_LIMIT;
 		completePlayerInput = "";
 		playerPreviousInput = "";
 
@@ -305,6 +308,7 @@ class GameState {
 		{
 			/* ACTION ON AN OBJECT */
 			case ANSWER: { directObject.answer(this); } break;
+            case ATTACK: { directObject.attack(this); } break;
             case BLOW: { directObject.blow(this); } break;
             case BREAK: { directObject.breakObject(this); } break;
             case CLIMB: {directObject.climb(this); } break;
@@ -791,9 +795,19 @@ class GameState {
 
         switch (playerAction)
         {
+            case ATTACK:
+            {
+                Game.output("All such attacks are vain in your condition.");
+            } break;
+
             case INVENTORY:
             {
                 Game.output(GameStrings.DEAD_INVENTORY);
+            } break;
+
+            case LIGHT:
+            {
+                Game.output("You need no light to guide you.");
             } break;
 
             case LOOK:

@@ -3,8 +3,40 @@ import java.util.Random;
 class GameStrings {
 	
 	
-	
-	
+	public static final String COMBAT_MISS_1 = "Your WEAPON misses the ENEMY by an inch.";
+    public static final String COMBAT_MISS_2 = "A good slash, but it misses the ENEMY by a mile.";
+	public static final String COMBAT_MISS_3 = "You charge, but the ENEMY jumps nimbly aside.";
+    public static final String COMBAT_PARRY_1 = "Clang! Crash! The ENEMY parries.";
+    public static final String COMBAT_PARRY_2 = "A quick stroke, but the ENEMY is on guard.";
+    public static final String COMBAT_PARRY_3 = "A good stroke, but it's too slow; the ENEMY dodges.";
+    public static final String COMBAT_KNOCKOUT_1 = "Your WEAPON crashes down, knocking the ENEMY into dreamland.";
+    public static final String COMBAT_KNOCKOUT_2 = "The ENEMY is battered into unconsciousness.";
+    public static final String COMBAT_KNOCKOUT_3 = "A furious exchange, and the ENEMY is knocked out!";
+    public static final String COMBAT_KNOCKOUT_4 = "The haft of your WEAPON knocks out the ENEMY.";
+    public static final String COMBAT_FATAL_1 = "It's curtains for the ENEMY as your WEAPON removes his head.";
+    public static final String COMBAT_FATAL_2 = "The fatal blow strikes the ENEMY square in the heart: He dies.";
+    public static final String COMBAT_FATAL_3 = "The ENEMY takes a fatal blow and slumps to the floor dead.";
+    public static final String COMBAT_LIGHT_1 = "The ENEMY is struck on the arm; blood begins to trickle down.";
+    public static final String COMBAT_LIGHT_2 = "The WEAPON pinks the ENEMY on the wrist, but it's not serious.";
+    public static final String COMBAT_LIGHT_3 = "Your stroke lands, but it was only the flat of the blade.";
+    public static final String COMBAT_LIGHT_4 = "The blow lands, making a shallow gash in the ENEMY's arm!";
+    public static final String COMBAT_SEVERE_1 = "The ENEMY receives a deep gash in his side.";
+    public static final String COMBAT_SEVERE_2 = "A savage blow on the thigh! The ENEMY is stunned but can still fight!";
+    public static final String COMBAT_SEVERE_3 = "Slash! Your blow lands! That one hit an artery, it could be serious!";
+    public static final String COMBAT_SEVERE_4 = "Slash! Your stroke connects! This could be serious!";
+    public static final String COMBAT_STAGGER_1 = "The ENEMY is staggered, and drops to his knees.";
+    public static final String COMBAT_STAGGER_2 = "The ENEMY is momentarily disoriented and can't fight back.";
+    public static final String COMBAT_STAGGER_3 = "The force of your blow knocks the ENEMY back, stunned.";
+    public static final String COMBAT_STAGGER_4 = "The ENEMY is confused, and can't fight back.";
+    public static final String COMBAT_DISARM_1 = "The quickness of your thrust knocks the ENEMY's weapon to the floor, leaving him unarmed.";
+    public static final String COMBAT_DISARM_2 = "The ENEMY is disarmed by a subtle feint past his guard.";
+    public static final String COMBAT_FINISH_DISARMED = "The unarmed ENEMY cannot defend himself: He dies.";
+    public static final String COMBAT_FINISH_UNCONSCIOUS = "The unconscious ENEMY cannot defend himself: He dies.";
+
+    public static final String COMBAT_ENEMY_DIES = "Almost as soon as the ENEMY breathes his last breath, a cloud of sinister black fog "
+        + "envelops him, and when the fog lifts, the carcass has disappeared.";
+
+    public static final String COMBAT_HP_ZERO = "It appears that last blow was too much for you. I'm afraid you are dead.";
 
     public static final String THIEF_ARRIVES = "You hear a scream of anguish as you violate the robber's hideaway. Using "
         + "passages unknown to you, he rushes to its defense.";
@@ -131,11 +163,7 @@ class GameStrings {
 
 
 
-    public static final String CYCLOPS_ONE = "A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. "
-        + "From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes people.";
 
-    public static final String CYCLOPS_TWO = "The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down "
-        + "the wall on the east side of the room.";
 
 	public static final String OVERBURDENED = "You can't carry any more.";
 
