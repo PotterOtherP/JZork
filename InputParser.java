@@ -36,6 +36,11 @@ public class InputParser {
 		if (input.equals("again") || input.equals("g"))
 		{
 			input = state.playerPreviousInput;
+			if (input.isEmpty())
+			{
+				Game.output("Again what?");
+				return false;
+			}
 			return parsePlayerInput();
 		}
 
@@ -131,6 +136,7 @@ public class InputParser {
 				{
 					Game.output("What do you want to " + state.firstInputPhrase + "?");
 					input = Game.getPlayerText();
+					Game.outputLine();
 				}
 
 				
@@ -509,6 +515,25 @@ public class InputParser {
 		}
 
 		if (input.equals("author")) Game.output(GameStrings.AUTHOR_INFO);
+
+		if (input.equals("help"))
+		{
+			Game.output("Find the 19 lost treasures of Zork and return them to the trophy case.");
+			Game.outputLine();
+			Game.output("Possible actions:");
+			Game.outputLine();
+			Game.output("activate  again  answer  attack  blow  board  break  brief  burn");
+			Game.output("climb  close  count  cross  cut  defend  deflate  diagnose  dig");
+			Game.output("down  drink  drop  east  eat  enter  examine  exit  extinguish");
+			Game.output("fill  follow  give  go  in  inflate  inventory  jump  kick  knock  ");
+			Game.output("launch  light  listen  lock  look  lower  move  north  northeast");
+			Game.output("northwest  open  out  play  pour  pray  pull  push  put  quit  raise");
+			Game.output("read  restore  restart  ring  save  say  search  shake  shout  slide");
+			Game.output("smell  south  southeast  southwest  stay  strike  superbrief  swim");
+			Game.output("take  talk  throw  tie  touch  turn  unlock  up  verbose  wait");
+			Game.output("walk  wake  wave  wear  west  wind");
+			return true;
+		}
 
 		// Old ZORK inside jokes
 		if (input.equals("xyzzy") || input.equals("plugh"))

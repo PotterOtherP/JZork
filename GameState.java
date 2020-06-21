@@ -219,6 +219,7 @@ class GameState {
     	else
     	{
 	    	Game.output(GameStrings.PLAYER_DIES);
+            Game.outputLine();
     		int p = rnd.nextInt(forest.length);
 
     		playerPreviousLocation = playerLocation;

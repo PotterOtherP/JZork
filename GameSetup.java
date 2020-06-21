@@ -568,6 +568,7 @@ class GameSetup {
         temple.addExit(Action.NORTH, torch_temple);
         temple.addExit(Action.UP, torch_temple);
         temple.addExit(Action.EAST, temple_egypt);
+        temple.addExit(Action.DOWN, temple_egypt);
         temple.addExit(Action.SOUTH, temple_altar);
 
         Room egyptianRoom = new Room("Egyptian Room", MapStrings.DESC_EGYPTIAN_ROOM, Location.EGYPTIAN_ROOM);
