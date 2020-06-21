@@ -100,11 +100,52 @@ public final class Game {
 
 	public static void prompt() { System.out.print("\n>> "); }
 	public static void outputLine() { System.out.println(); }
-	public static void output() { System.out.println(); }
 	
 	public static void output(String s)
     {
         if (s.isEmpty()) return;
+
+        if (s.contains("WEAPON"))
+        {
+            s = s.replace("WEAPON", (gameState.indirectObject.name));
+        }
+
+        if (s.contains("ENEMY"))
+        {
+            s = s.replace("ENEMY", (gameState.directObject.name));
+        }
+
+        String[] lines = s.split("\n");
+
+        for (int i = 0; i < lines.length; ++i)
+        {
+            String line = lines[i];
+
+            while (line.length() > MAX_LINE_LENGTH)
+            {
+                char endChar = line.charAt(MAX_LINE_LENGTH);
+                int shift = MAX_LINE_LENGTH;
+                while (endChar != ' ' && shift > 0)
+                {
+                    --shift;
+                    endChar = line.charAt(shift);
+                }
+
+                String chunk = line.substring(0, shift);
+                System.out.println(chunk);
+                line = line.substring(shift + 1);
+            }
+
+            System.out.println(line);
+        }
+
+    }
+
+    public static void lineOutput(String s)
+    {
+        if (s.isEmpty()) return;
+
+        System.out.println();
 
         if (s.contains("WEAPON"))
         {

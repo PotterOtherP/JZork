@@ -44,6 +44,12 @@ public class Actor extends GameObject {
             case "thief":
             case "troll":
             {
+                if (weapon.name.equals("dummy_feature"))
+                {
+                    Game.output("Trying to attack the " + name + " with your bare hands is suicidal.");
+                    return;
+                }
+
                 if (!weapon.isWeapon || weapon.name.equals("sceptre"))
                 {
                     Game.output("Attacking the " + name + " with " + weapon.articleName + " is suicide.");
@@ -55,6 +61,13 @@ public class Actor extends GameObject {
                 {
                     Game.output(ObjectStrings.RUSTY_KNIFE_CURSE);
                     state.playerDies();
+                    return;
+                }
+
+                if (state.playerStaggered)
+                {
+                    Game.output(GameStrings.COMBAT_STAGGERED);
+                    state.playerStaggered = false;
                     return;
                 }
 
@@ -177,35 +190,73 @@ public class Actor extends GameObject {
     
     public void trollCombat(GameState state)
     {
+        String[] misses = { GameStrings.COMBAT_MISS_1, GameStrings.COMBAT_MISS_2, GameStrings.COMBAT_MISS_3,
+            GameStrings.COMBAT_PARRY_1, GameStrings.COMBAT_PARRY_2, GameStrings.COMBAT_PARRY_3 };
+        String[] lightBlows = { GameStrings.COMBAT_LIGHT_1, GameStrings.COMBAT_LIGHT_2, GameStrings.COMBAT_LIGHT_3,
+            GameStrings.COMBAT_LIGHT_4 };
+        String[] severeBlows = { GameStrings.COMBAT_SEVERE_1, GameStrings.COMBAT_SEVERE_2, GameStrings.COMBAT_SEVERE_3,
+            GameStrings.COMBAT_SEVERE_4 };
+        String[] staggerBlows = { GameStrings.COMBAT_STAGGER_1, GameStrings.COMBAT_STAGGER_2, GameStrings.COMBAT_STAGGER_3,
+            GameStrings.COMBAT_STAGGER_4 };
+        String[] disarmingBlows = { GameStrings.COMBAT_DISARM_1, GameStrings.COMBAT_DISARM_2 };
+        String[] knockoutBlows = { GameStrings.COMBAT_KNOCKOUT_1, GameStrings.COMBAT_KNOCKOUT_2, GameStrings.COMBAT_KNOCKOUT_3,
+            GameStrings.COMBAT_KNOCKOUT_4 };
+        String[] fatalBlows = { GameStrings.COMBAT_FATAL_1, GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
+
         Random rand = new Random();
         int dieRoll = rand.nextInt(100);
 
         if (0 <= dieRoll && dieRoll < 10)
         {
-            Game.output(GameStrings.COMBAT_MISS_1);
+            int phrase = rand.nextInt(misses.length);
+            Game.output(misses[phrase]);
         }
 
         else if (10 <= dieRoll && dieRoll < 25)
         {
-            Game.output(GameStrings.COMBAT_LIGHT_1);
             hitPoints -= 1;
+
+            if (hitPoints <= 0)
+            {
+                int phrase = rand.nextInt(fatalBlows.length);
+                Game.output(fatalBlows[phrase]);
+            }
+
+            else
+            {
+                int phrase = rand.nextInt(lightBlows.length);
+                Game.output(lightBlows[phrase]);
+            }
         }
 
         else if (25 <= dieRoll && dieRoll < 40)
         {
-            Game.output(GameStrings.COMBAT_SEVERE_1);
             hitPoints -= 5;
+
+            if (hitPoints <= 0)
+            {
+                int phrase = rand.nextInt(fatalBlows.length);
+                Game.output(fatalBlows[phrase]);
+            }
+
+            else
+            {
+                int phrase = rand.nextInt(severeBlows.length);
+                Game.output(severeBlows[phrase]);
+            }         
         }
 
         else if (40 <= dieRoll && dieRoll < 55)
         {
-            Game.output(GameStrings.COMBAT_STAGGER_1);
+            int phrase = rand.nextInt(staggerBlows.length);
+            Game.output(staggerBlows[phrase]);
             staggered = true;
         }
 
         else if (55 <= dieRoll && dieRoll < 70)
         {
-            Game.output(GameStrings.COMBAT_DISARM_1);
+            int phrase = rand.nextInt(disarmingBlows.length);
+            Game.output(disarmingBlows[phrase]);
             GameObject axe = state.objectList.get("bloody axe");
             axe.location = state.playerLocation;
             disarmed = true;
@@ -213,13 +264,15 @@ public class Actor extends GameObject {
 
         else if (70 <= dieRoll && dieRoll < 85)
         {
-            Game.output(GameStrings.COMBAT_KNOCKOUT_1);
+            int phrase = rand.nextInt(knockoutBlows.length);
+            Game.output(knockoutBlows[phrase]);
             unconscious = true;
         }
 
         else if (85 <= dieRoll && dieRoll < 100)
         {
-            Game.output(GameStrings.COMBAT_FATAL_1);
+            int phrase = rand.nextInt(fatalBlows.length);
+            Game.output(fatalBlows[phrase]);
             alive = false;
         }
     }
@@ -241,7 +294,8 @@ public class Actor extends GameObject {
         p1.open();
         p2.open();
 
-        Game.output(GameStrings.COMBAT_ENEMY_DIES);
+        if (state.playerLocation == Location.TROLL_ROOM && state.directObject.name.equals("troll"))
+            Game.lineOutput(GameStrings.COMBAT_ENEMY_DIES);
     }
 
     public void trollGive(GameState state)
@@ -377,15 +431,16 @@ public class Actor extends GameObject {
 
                     if (check > 0)
                     {
-                        Game.output(ObjectStrings.TROLL_RECOVER_AXE);
+                        Game.lineOutput(ObjectStrings.TROLL_RECOVER_AXE);
                         axe.location = Location.TROLL_INVENTORY;
                         disarmed = false;
+                        presenceString = ObjectStrings.TROLL_PRESENCE;
                     }
                     return;
                 }
                 else
                 {
-                    Game.output(ObjectStrings.TROLL_DISARMED);
+                    Game.lineOutput(ObjectStrings.TROLL_DISARMED);
                     return;
                 }
             }
@@ -396,7 +451,7 @@ public class Actor extends GameObject {
 
                 if (check == 1)
                 {
-                    Game.output(ObjectStrings.TROLL_RECOVERS_STAGGER);
+                    Game.lineOutput(ObjectStrings.TROLL_RECOVERS_STAGGER);
                     staggered = false;
                 }
                 
@@ -409,8 +464,9 @@ public class Actor extends GameObject {
 
                 if (check > 0)
                 {
-                    Game.output(ObjectStrings.TROLL_RECOVERS_STAGGER);
+                    Game.lineOutput(ObjectStrings.TROLL_RECOVERS_STAGGER);
                     unconscious = false;
+                    presenceString = ObjectStrings.TROLL_PRESENCE;
                 }
 
                 return;
@@ -428,27 +484,27 @@ public class Actor extends GameObject {
             if (0 <= dieRoll && dieRoll < 25)
             {
                 int phrase = rand.nextInt(misses.length);
-                    Game.output(misses[phrase]);
+                    Game.lineOutput(misses[phrase]);
             }
 
             else if (25 <= dieRoll && dieRoll < 45)
             {
                 int phrase = rand.nextInt(lightBlows.length);
-                    Game.output(lightBlows[phrase]);
+                    Game.lineOutput(lightBlows[phrase]);
                 state.playerHitPoints -= 1;
             }
 
             else if (45 <= dieRoll && dieRoll < 60)
             {
                 int phrase = rand.nextInt(severeBlows.length);
-                    Game.output(severeBlows[phrase]);
+                    Game.lineOutput(severeBlows[phrase]);
                 state.playerHitPoints -= 5;
             }
 
             else if (60 <= dieRoll && dieRoll < 75)
             {
                 int phrase = rand.nextInt(staggerBlows.length);
-                    Game.output(staggerBlows[phrase]);
+                    Game.lineOutput(staggerBlows[phrase]);
                 state.playerStaggered = true;
             }
 
@@ -459,19 +515,19 @@ public class Actor extends GameObject {
                 if (!state.indirectObject.isWeapon)
                 {
                     int phrase = rand.nextInt(staggerBlows.length);
-                    Game.output(staggerBlows[phrase]);
+                    Game.lineOutput(staggerBlows[phrase]);
                     state.playerStaggered = true;
                     return;
                 }
 
                 int phrase = rand.nextInt(disarmingBlows.length);
-                Game.output(disarmingBlows[phrase]);
+                Game.lineOutput(disarmingBlows[phrase]);
                 state.indirectObject.location = state.playerLocation;
                 for (GameObject g : state.objectList.values())
                 {
                     if (g.isWeapon)
                     {
-                        Game.output("Fortunately, you still have " + g.articleName + ".");
+                        Game.lineOutput("Fortunately, you still have " + g.articleName + ".");
                         break;
                     }
                 }
@@ -479,16 +535,16 @@ public class Actor extends GameObject {
 
             else if (90 <= dieRoll && dieRoll < 95)
             {
-                Game.output(ObjectStrings.TROLL_FIGHT_KNOCKOUT);
+                Game.lineOutput(ObjectStrings.TROLL_FIGHT_KNOCKOUT);
 
                 int phrase = rand.nextInt(2);
 
                 if (phrase == 0)
-                    Game.output(ObjectStrings.TROLL_FIGHT_HESITATE_1);
+                    Game.lineOutput(ObjectStrings.TROLL_FIGHT_HESITATE_1);
                 else
-                    Game.output(ObjectStrings.TROLL_FIGHT_HESITATE_2);
+                    Game.lineOutput(ObjectStrings.TROLL_FIGHT_HESITATE_2);
 
-                Game.output(ObjectStrings.TROLL_FIGHT_FINISH);
+                Game.lineOutput(ObjectStrings.TROLL_FIGHT_FINISH);
                 state.playerDies();
 
             }
@@ -496,15 +552,15 @@ public class Actor extends GameObject {
             else if (95 <= dieRoll && dieRoll < 100)
             {
                 int phrase = rand.nextInt(fatalBlows.length);
-                Game.output(fatalBlows[phrase]);
-                Game.output(GameStrings.COMBAT_HP_ZERO);
+                Game.lineOutput(fatalBlows[phrase]);
+                Game.lineOutput(GameStrings.COMBAT_HP_ZERO);
                 state.playerDies();
 
             }
 
             if (state.playerHitPoints <= 0)
             {
-                Game.output(GameStrings.COMBAT_HP_ZERO);
+                Game.lineOutput(GameStrings.COMBAT_HP_ZERO);
                 state.playerDies();
 
             }

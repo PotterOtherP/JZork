@@ -33,6 +33,8 @@ class GameStrings {
     public static final String COMBAT_FINISH_DISARMED = "The unarmed ENEMY cannot defend himself: He dies.";
     public static final String COMBAT_FINISH_UNCONSCIOUS = "The unconscious ENEMY cannot defend himself: He dies.";
 
+    public static final String COMBAT_STAGGERED = "You are still recovering from that last blow, so your attack is ineffective.";
+
     public static final String COMBAT_ENEMY_DIES = "Almost as soon as the ENEMY breathes his last breath, a cloud of sinister black fog "
         + "envelops him, and when the fog lifts, the carcass has disappeared.";
 

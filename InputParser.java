@@ -428,6 +428,7 @@ public class InputParser {
 		{
 			Actor troll = (Actor)state.objectList.get("troll");
 			troll.alive = true;
+			troll.unconscious = false;
 			troll.location = Location.TROLL_ROOM;
 			troll.hitPoints = Actor.MAX_ENEMY_HIT_POINTS;
 			Game.output("The troll comes back to life.");
