@@ -431,6 +431,23 @@ public class InputParser {
 			return true;
 		}
 
+		if (input.equals("find thief"))
+		{
+			GameObject thief = state.objectList.get("thief");
+			String room = state.worldMap.get(thief.location).name.toLowerCase();
+			Game.output("The thief is in the " + room + ".");
+			return true;
+		}
+
+		if (input.equals("reactivate lamp"))
+		{
+			Item lamp = (Item)(state.objectList.get("brass lantern"));
+			lamp.lifespan = GameState.LANTERN_LIFESPAN;
+			lamp.activated = true;
+			Game.output("The lantern has been reactivated.");
+			return true;
+		}
+
 		if (input.equals("reanimate troll"))
 		{
 			Actor troll = (Actor)state.objectList.get("troll");

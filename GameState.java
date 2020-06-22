@@ -567,7 +567,7 @@ class GameState {
         Actor flood = (Actor)(objectList.get("flood"));
         Actor gustOfWind = (Actor)(objectList.get("gust of wind"));
         Actor riverCurrent = (Actor)(objectList.get("current"));
-        Actor songbird = (Actor)(objectList.get("songbird"));
+        Actor songbird = (Actor)(objectList.get("song bird"));
         Actor spirits = (Actor)(objectList.get("spirits"));
         Actor thief = (Actor)(objectList.get("thief"));
         Actor troll = (Actor)(objectList.get("troll"));

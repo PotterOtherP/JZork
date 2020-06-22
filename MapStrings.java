@@ -237,7 +237,7 @@ class MapStrings {
     public static final String DESC_RESERVOIR = "You are on the lake. Beaches can be seen north and south. Upstream a small "
      + "stream enters the lake through a narrow cleft in the rocks. The dam can be seen downstream.";
 
-    public static final String DESC_RESERVOIR_NORTH = "You are in a large cavernous room, north of a large lake.\n There is a "
+    public static final String DESC_RESERVOIR_NORTH = "You are in a large cavernous room, north of a large lake.\nThere is a "
         + "slimy stairway leaving the room to the north.";
 
     public static final String DESC_ATLANTIS_ROOM = "This is an ancient room, long under water. There is an exit to the south "

@@ -9,6 +9,8 @@ public class Actor extends GameObject {
     public boolean disarmed;
     public boolean unconscious;
     public boolean firstCombatTurn;
+    public boolean thiefAggro;
+    public boolean thiefFirstTurn;
     public int hitPoints;
     public int strength;
 
@@ -29,6 +31,8 @@ public class Actor extends GameObject {
         unconscious = false;
         disarmed = false;
         firstCombatTurn = true;
+        thiefAggro = false;
+        thiefFirstTurn = false;
         hitPoints = MAX_ENEMY_HIT_POINTS;
         strength = 0;
 
@@ -510,25 +514,29 @@ public class Actor extends GameObject {
 
         Random rand = new Random();
 
-        // Put the thief in one of his possible locations.
-        int thiefPossibleLocations = GameSetup.thiefLocations.length;
-        int nextThiefLocation = rand.nextInt(thiefPossibleLocations);
-        this.location = GameSetup.thiefLocations[nextThiefLocation];
-
-        // Check if the player is in a possible thief location
-        boolean playerInThiefArea = false;
-        for (int i = 0; i < GameSetup.thiefLocations.length; ++i)
+        // If the thief is not already in the room with the player, put him in one of his possible locations.
+        if (this.location != state.playerLocation)
         {
-            if (GameSetup.thiefLocations[i] == state.playerLocation)
-                playerInThiefArea = true;
-        }
+            int thiefPossibleLocations = GameSetup.thiefLocations.length;
+            int nextThiefLocation = rand.nextInt(thiefPossibleLocations);
+            this.location = GameSetup.thiefLocations[nextThiefLocation];
 
-        // Move the thief to the player if we roll an encounter.
-        int encounterCheck = rand.nextInt(100);
-        if (encounterCheck < THIEF_ENCOUNTER_PERCENT && playerInThiefArea)
-        {
-            this.location = state.playerLocation;
+            // Check if the player is in a possible thief location
+            boolean playerInThiefArea = false;
+            for (int i = 0; i < GameSetup.thiefLocations.length; ++i)
+            {
+                if (GameSetup.thiefLocations[i] == state.playerLocation)
+                    playerInThiefArea = true;
+            }
+
+            // Move the thief to the player if we roll an encounter.
+            int encounterCheck = rand.nextInt(100);
+            if (encounterCheck < THIEF_ENCOUNTER_PERCENT && playerInThiefArea)
+            {
+                this.location = state.playerLocation;
+            }
         }
+        
 
         // Thief is not in the same room as the player - will loot loose treasures
         if (this.location != state.playerLocation)
@@ -548,6 +556,8 @@ public class Actor extends GameObject {
         // Thief and player are having an encounter!
         else
         {
+            if (thiefAggro) thiefAttacks(state);
+
 
         }
 
