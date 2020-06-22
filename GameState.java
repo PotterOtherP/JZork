@@ -50,7 +50,7 @@ class GameState {
 	public HashMap<String, Action> actions;
 	public HashMap<Action, ActionType> actionTypes;
 	public ArrayList<String> dictionary;
-	public ArrayList<String> gameNouns;
+	public ArrayList<String> gameNouns;    // used in direct object validation
 
 	// Constants
 	public static final int MAX_PLAYER_DEATHS = 3;

@@ -15,6 +15,7 @@ public class Actor extends GameObject {
 
 
     public static final int SONGBIRD_CHIRP_PERCENT = 15;
+    public static final int THIEF_ENCOUNTER_PERCENT = 5;
 	public static final int MAX_ENEMY_HIT_POINTS = 10;
 
 
@@ -139,46 +140,126 @@ public class Actor extends GameObject {
 
     public void thiefCombat(GameState state)
     {
+        firstCombatTurn = false;
+
+        String[] misses = { GameStrings.COMBAT_MISS_1, GameStrings.COMBAT_MISS_2, GameStrings.COMBAT_MISS_3,
+            GameStrings.COMBAT_PARRY_1, GameStrings.COMBAT_PARRY_2, GameStrings.COMBAT_PARRY_3 };
+        String[] lightBlows = { GameStrings.COMBAT_LIGHT_1, GameStrings.COMBAT_LIGHT_2, GameStrings.COMBAT_LIGHT_3,
+            GameStrings.COMBAT_LIGHT_4 };
+        String[] severeBlows = { GameStrings.COMBAT_SEVERE_1, GameStrings.COMBAT_SEVERE_2, GameStrings.COMBAT_SEVERE_3,
+            GameStrings.COMBAT_SEVERE_4 };
+        String[] staggerBlows = { GameStrings.COMBAT_STAGGER_1, GameStrings.COMBAT_STAGGER_2, GameStrings.COMBAT_STAGGER_3,
+            GameStrings.COMBAT_STAGGER_4 };
+        String[] disarmingBlows = { GameStrings.COMBAT_DISARM_1, GameStrings.COMBAT_DISARM_2 };
+        String[] knockoutBlows = { GameStrings.COMBAT_KNOCKOUT_1, GameStrings.COMBAT_KNOCKOUT_2, GameStrings.COMBAT_KNOCKOUT_3,
+            GameStrings.COMBAT_KNOCKOUT_4 };
+        String[] fatalBlows = { GameStrings.COMBAT_FATAL_1, GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
+
+        // values for the sword - not very useful against the thief
+        int missCutoff = 40;
+        int lightCutoff = 80;
+        int severeCutoff = 85;
+        int staggerCutoff = 90;
+        int disarmCutoff = 93;
+        int knockoutCutoff = 97;
+
+        // Fighting the thief with the knife is a lot more effective.
+        if (state.indirectObject.name.equals("nasty knife"))
+        {
+            // remove the decapitation string. These arrays have strange rules...
+            String[] fatals = { GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
+            fatalBlows = fatals;
+
+            missCutoff = 20;
+            lightCutoff = 50;
+            severeCutoff = 60;
+            staggerCutoff = 70;
+            disarmCutoff = 80;
+            knockoutCutoff = 90;
+
+        }
+
+        // Fighting the thief with the axe is almost completely ineffective.
+        if (state.indirectObject.name.equals("bloody axe"))
+        {
+            missCutoff = 60;
+            lightCutoff = 90;
+            severeCutoff = 92;
+            staggerCutoff = 94;
+            disarmCutoff = 96;
+            knockoutCutoff = 99;
+        }
+
         Random rand = new Random();
         int dieRoll = rand.nextInt(100);
 
-        if (0 <= dieRoll && dieRoll < 10)
+        if (0 <= dieRoll && dieRoll < missCutoff)
         {
-            Game.output(GameStrings.COMBAT_MISS_1);
+            int phrase = rand.nextInt(misses.length);
+            Game.output(misses[phrase]);
         }
 
-        else if (10 <= dieRoll && dieRoll < 25)
+        else if (missCutoff <= dieRoll && dieRoll < lightCutoff)
         {
-            Game.output(GameStrings.COMBAT_LIGHT_1);
             hitPoints -= 1;
+
+            if (hitPoints <= 0)
+            {
+                int phrase = rand.nextInt(fatalBlows.length);
+                Game.output(fatalBlows[phrase]);
+            }
+
+            else
+            {
+                int phrase = rand.nextInt(lightBlows.length);
+                Game.output(lightBlows[phrase]);
+            }
         }
 
-        else if (25 <= dieRoll && dieRoll < 40)
+        else if (lightCutoff <= dieRoll && dieRoll < severeCutoff)
         {
-            Game.output(GameStrings.COMBAT_SEVERE_1);
             hitPoints -= 5;
+
+            if (hitPoints <= 0)
+            {
+                int phrase = rand.nextInt(fatalBlows.length);
+                Game.output(fatalBlows[phrase]);
+            }
+
+            else
+            {
+                int phrase = rand.nextInt(severeBlows.length);
+                Game.output(severeBlows[phrase]);
+            }         
         }
 
-        else if (40 <= dieRoll && dieRoll < 55)
+        else if (severeCutoff <= dieRoll && dieRoll < staggerCutoff)
         {
-            Game.output(GameStrings.COMBAT_STAGGER_1);
+            int phrase = rand.nextInt(staggerBlows.length);
+            Game.output(staggerBlows[phrase]);
             staggered = true;
         }
 
-        else if (55 <= dieRoll && dieRoll < 70)
+        else if (staggerCutoff <= dieRoll && dieRoll < disarmCutoff)
         {
-            Game.output(GameStrings.COMBAT_DISARM_1);
+            int phrase = rand.nextInt(disarmingBlows.length);
+            Game.output(disarmingBlows[phrase]);
+            GameObject stil = state.objectList.get("stiletto");
+            stil.location = state.playerLocation;
+            disarmed = true;
         }
 
-        else if (70 <= dieRoll && dieRoll < 85)
+        else if (disarmCutoff <= dieRoll && dieRoll < knockoutCutoff)
         {
-            Game.output(GameStrings.COMBAT_KNOCKOUT_1);
+            int phrase = rand.nextInt(knockoutBlows.length);
+            Game.output(knockoutBlows[phrase]);
             unconscious = true;
         }
 
-        else if (85 <= dieRoll && dieRoll < 100)
+        else if (knockoutCutoff <= dieRoll && dieRoll < 100)
         {
-            Game.output(GameStrings.COMBAT_FATAL_1);
+            int phrase = rand.nextInt(fatalBlows.length);
+            Game.output(fatalBlows[phrase]);
             alive = false;
         }
     }
@@ -203,16 +284,40 @@ public class Actor extends GameObject {
             GameStrings.COMBAT_KNOCKOUT_4 };
         String[] fatalBlows = { GameStrings.COMBAT_FATAL_1, GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
 
+        // values for the sword
+        int missCutoff = 10;
+        int lightCutoff = 25;
+        int severeCutoff = 40;
+        int staggerCutoff = 55;
+        int disarmCutoff = 70;
+        int knockoutCutoff = 85;
+
+        // Fighting the troll with the knife is a little harder.
+        if (state.indirectObject.name.equals("nasty knife"))
+        {
+            // remove the decapitation string. These arrays have strange rules...
+            String[] fatals = { GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
+            fatalBlows = fatals;
+
+            missCutoff = 20;
+            lightCutoff = 50;
+            severeCutoff = 60;
+            staggerCutoff = 70;
+            disarmCutoff = 80;
+            knockoutCutoff = 90;
+
+        }
+
         Random rand = new Random();
         int dieRoll = rand.nextInt(100);
 
-        if (0 <= dieRoll && dieRoll < 10)
+        if (0 <= dieRoll && dieRoll < missCutoff)
         {
             int phrase = rand.nextInt(misses.length);
             Game.output(misses[phrase]);
         }
 
-        else if (10 <= dieRoll && dieRoll < 25)
+        else if (missCutoff <= dieRoll && dieRoll < lightCutoff)
         {
             hitPoints -= 1;
 
@@ -229,7 +334,7 @@ public class Actor extends GameObject {
             }
         }
 
-        else if (25 <= dieRoll && dieRoll < 40)
+        else if (lightCutoff <= dieRoll && dieRoll < severeCutoff)
         {
             hitPoints -= 5;
 
@@ -246,14 +351,14 @@ public class Actor extends GameObject {
             }         
         }
 
-        else if (40 <= dieRoll && dieRoll < 55)
+        else if (severeCutoff <= dieRoll && dieRoll < staggerCutoff)
         {
             int phrase = rand.nextInt(staggerBlows.length);
             Game.output(staggerBlows[phrase]);
             staggered = true;
         }
 
-        else if (55 <= dieRoll && dieRoll < 70)
+        else if (staggerCutoff <= dieRoll && dieRoll < disarmCutoff)
         {
             int phrase = rand.nextInt(disarmingBlows.length);
             Game.output(disarmingBlows[phrase]);
@@ -262,14 +367,17 @@ public class Actor extends GameObject {
             disarmed = true;
         }
 
-        else if (70 <= dieRoll && dieRoll < 85)
+        else if (disarmCutoff <= dieRoll && dieRoll < knockoutCutoff)
         {
             int phrase = rand.nextInt(knockoutBlows.length);
             Game.output(knockoutBlows[phrase]);
             unconscious = true;
+            GameObject axe = state.objectList.get("bloody axe");
+            axe.location = state.playerLocation;
+            disarmed = true;
         }
 
-        else if (85 <= dieRoll && dieRoll < 100)
+        else if (knockoutCutoff <= dieRoll && dieRoll < 100)
         {
             int phrase = rand.nextInt(fatalBlows.length);
             Game.output(fatalBlows[phrase]);
@@ -360,9 +468,90 @@ public class Actor extends GameObject {
         if (!alive) return;
     }
 
+    public void thiefAttacks(GameState state)
+    {
+
+    }
+
+    public void thiefHideoutTurn(GameState state)
+    {
+
+    }
+
     public void thiefTurn(GameState state)
     {
         if (!alive) return;
+
+        // Let's have a separate method for the hideout.
+        if (state.playerLocation == Location.TREASURE_ROOM)
+        {
+            thiefHideoutTurn(state);
+            return;
+        }
+
+
+        /*
+            The thief will randomly move around the underground and pick up
+            objects that the player has dropped.
+
+            If he appears in the same room as the player, he'll wait one turn to
+            allow the player to do something. The thief will not initiate combat until
+            the player enters the thief's hideout.
+
+            Unlike the troll, the thief will withdraw from combat and flee (unless in the hideout).
+
+            The player can interact with the thief, give him things, etc. After one turn,
+            the thief will have a chance to rob the player/loot the room and leave, unless
+            the player exits first.
+
+            Giving an item to the thief will distract him from combat.
+
+        */
+
+        Random rand = new Random();
+
+        // Put the thief in one of his possible locations.
+        int thiefPossibleLocations = GameSetup.thiefLocations.length;
+        int nextThiefLocation = rand.nextInt(thiefPossibleLocations);
+        this.location = GameSetup.thiefLocations[nextThiefLocation];
+
+        // Check if the player is in a possible thief location
+        boolean playerInThiefArea = false;
+        for (int i = 0; i < GameSetup.thiefLocations.length; ++i)
+        {
+            if (GameSetup.thiefLocations[i] == state.playerLocation)
+                playerInThiefArea = true;
+        }
+
+        // Move the thief to the player if we roll an encounter.
+        int encounterCheck = rand.nextInt(100);
+        if (encounterCheck < THIEF_ENCOUNTER_PERCENT && playerInThiefArea)
+        {
+            this.location = state.playerLocation;
+        }
+
+        // Thief is not in the same room as the player - will loot loose treasures
+        if (this.location != state.playerLocation)
+        {
+            for (GameObject g : state.objectList.values())
+            {
+                if (g.isItem() && g.location == this.location)
+                {
+                    Item it = (Item)(g);
+                    if (it.trophyCaseValue > 0 && it.movedFromStart)
+                        it.location = Location.THIEF_INVENTORY;
+
+                }
+            }
+        }
+
+        // Thief and player are having an encounter!
+        else
+        {
+
+        }
+
+
     }
 
     public void trollTurn(GameState state)
@@ -421,9 +610,17 @@ public class Actor extends GameObject {
 
             */
             // Game.output("The troll attacks you.");
+
+            int missCutoff = 25;
+            int lightCutoff = 45;
+            int severeCutoff = 60;
+            int staggerCutoff = 75;
+            int disarmCutoff = 90;
+            int knockoutCutoff = 95;
+
             Random rand = new Random();
 
-            if (disarmed)
+            if (disarmed && !unconscious)
             {
                 if (axe.location == Location.TROLL_ROOM)
                 {
@@ -462,7 +659,7 @@ public class Actor extends GameObject {
             {
                 int check = rand.nextInt(3);
 
-                if (check > 0)
+                if (check == 0)
                 {
                     Game.lineOutput(ObjectStrings.TROLL_RECOVERS_STAGGER);
                     unconscious = false;
@@ -481,34 +678,34 @@ public class Actor extends GameObject {
                 if (dieRoll >= 90) dieRoll = rand.nextInt(90);
             }
 
-            if (0 <= dieRoll && dieRoll < 25)
+            if (0 <= dieRoll && dieRoll < missCutoff)
             {
                 int phrase = rand.nextInt(misses.length);
                     Game.lineOutput(misses[phrase]);
             }
 
-            else if (25 <= dieRoll && dieRoll < 45)
+            else if (missCutoff <= dieRoll && dieRoll < lightCutoff)
             {
                 int phrase = rand.nextInt(lightBlows.length);
                     Game.lineOutput(lightBlows[phrase]);
                 state.playerHitPoints -= 1;
             }
 
-            else if (45 <= dieRoll && dieRoll < 60)
+            else if (lightCutoff <= dieRoll && dieRoll < severeCutoff)
             {
                 int phrase = rand.nextInt(severeBlows.length);
                     Game.lineOutput(severeBlows[phrase]);
                 state.playerHitPoints -= 5;
             }
 
-            else if (60 <= dieRoll && dieRoll < 75)
+            else if (severeCutoff <= dieRoll && dieRoll < staggerCutoff)
             {
                 int phrase = rand.nextInt(staggerBlows.length);
                     Game.lineOutput(staggerBlows[phrase]);
                 state.playerStaggered = true;
             }
 
-            else if (75 <= dieRoll && dieRoll < 90)
+            else if (staggerCutoff <= dieRoll && dieRoll < disarmCutoff)
             {
                 // If the player hasn't attacked with a weapon, stagger instead.
 
@@ -533,7 +730,7 @@ public class Actor extends GameObject {
                 }
             }
 
-            else if (90 <= dieRoll && dieRoll < 95)
+            else if (disarmCutoff <= dieRoll && dieRoll < knockoutCutoff)
             {
                 Game.lineOutput(ObjectStrings.TROLL_FIGHT_KNOCKOUT);
 
@@ -549,7 +746,7 @@ public class Actor extends GameObject {
 
             }
 
-            else if (95 <= dieRoll && dieRoll < 100)
+            else if (knockoutCutoff <= dieRoll && dieRoll < 100)
             {
                 int phrase = rand.nextInt(fatalBlows.length);
                 Game.lineOutput(fatalBlows[phrase]);

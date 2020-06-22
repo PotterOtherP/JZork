@@ -147,11 +147,12 @@ enum Verbosity {
 }
 
 
-class GameSetup {
+public class GameSetup {
 
     private GameState state;
     private boolean godmode;
     private boolean debug;
+
 
     public GameSetup(GameState state, boolean godmode, boolean debug)
     {
@@ -1081,9 +1082,8 @@ class GameSetup {
         state.worldMap.put(treasureRoom.roomID, treasureRoom);
         state.worldMap.put(strangePassage.roomID, strangePassage);
 
-
-
         // end world map creation
+
     }
 
     public void createGameObjects()
@@ -1534,10 +1534,10 @@ class GameSetup {
         riverCurrent.altLocations.add(Location.FRIGID_RIVER_5);
 
         
-        Actor songbird = new Actor("songbird", forest.location);
+        Actor songbird = new Actor("song bird", forest.location);
         for (Location l : forest.altLocations)
             songbird.altLocations.add(l);
-        songbird.altNames.add("song bird");
+        songbird.altNames.add("songbird");
         songbird.altNames.add("bird");
         songbird.presenceString = "";
         songbird.takeString = GameStrings.SONGBIRD_NEARBY;
@@ -1664,6 +1664,7 @@ class GameSetup {
         state.objectList.put(vampireBat.name, vampireBat);
 
         state.refreshInventories();
+
     }
 
 	public void createActions()
@@ -1960,7 +1961,6 @@ class GameSetup {
 	    state.actionTypes.put(Action.THROW, ActionType.INDIRECT_INVERSE);
 	    state.actionTypes.put(Action.TIE, ActionType.INDIRECT_INVERSE);
 	    
-	
 	}
 
     public void fillDictionary()
@@ -1972,11 +1972,14 @@ class GameSetup {
 
         for (String name : state.objectList.keySet())
         {
+            state.dictionary.add(name);
+            state.gameNouns.add(name);
+
             String[] words = name.split(" ");
             for (int i = 0; i < words.length; ++i)
             {
                 state.dictionary.add(words[i]);
-                state.gameNouns.add(name);
+                state.gameNouns.add(words[i]);
                 
             }
 
@@ -1988,6 +1991,13 @@ class GameSetup {
             {
                 state.dictionary.add(str);
                 state.gameNouns.add(str);
+
+                String[] words = str.split(" ");
+                for (int i = 0; i < words.length; ++i)
+                {
+                    state.dictionary.add(words[i]);
+                    state.gameNouns.add(words[i]);
+                }
             }
         }
 
@@ -2005,6 +2015,49 @@ class GameSetup {
                 state.dictionary.add(GameStrings.GODMODE_WORDS[i]);
             }
         }
+
     }
+
+    public static Location[] overworld = { Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE, Location.BEHIND_HOUSE,
+        Location.SOUTH_OF_HOUSE, Location.FOREST_PATH, Location.FOREST_WEST, Location.FOREST_EAST,
+        Location.FOREST_NORTHEAST, Location.FOREST_SOUTH, Location.CLEARING_NORTH, Location.CLEARING_EAST,
+        Location.CANYON_VIEW, Location.ROCKY_LEDGE, Location.CANYON_BOTTOM };
+
+    public static Location[] forest = { Location.FOREST_WEST, Location.FOREST_EAST,
+        Location.FOREST_NORTHEAST, Location.FOREST_SOUTH };
+
+    // This is used for possible thief locations, so it doesn't include everything on the map.
+    public static Location[] thiefLocations = {
+        Location.EAST_OF_CHASM, Location.GALLERY, Location.STUDIO, Location.EAST_WEST_PASSAGE,
+        Location.ROUND_ROOM, Location.NARROW_PASSAGE, Location.MIRROR_ROOM_SOUTH, Location.WINDING_PASSAGE,
+        Location.CAVE_SOUTH, Location.ENTRANCE_TO_HADES, Location.ALTAR, Location.TEMPLE,
+        Location.EGYPTIAN_ROOM, Location.TORCH_ROOM, Location.DOME_ROOM, Location.ENGRAVINGS_CAVE,
+        Location.LOUD_ROOM, Location.DAMP_CAVE, Location.WHITE_CLIFFS_BEACH_NORTH, Location.WHITE_CLIFFS_BEACH_SOUTH,
+        Location.DAM_BASE, Location.DAM, Location.DAM_LOBBY, Location.MAINTENANCE_ROOM,
+
+        Location.NORTH_SOUTH_PASSAGE, Location.CHASM, Location.DEEP_CANYON, Location.RESERVOIR_SOUTH,
+        Location.STREAM_VIEW, Location.STREAM, Location.RESERVOIR, Location.RESERVOIR_NORTH,
+        Location.ATLANTIS_ROOM, Location.CAVE_NORTH, Location.TWISTING_PASSAGE, Location.MIRROR_ROOM_NORTH,
+        Location.COLD_PASSAGE, Location.SLIDE_ROOM, Location.MINE_ENTRANCE, Location.SQUEAKY_ROOM,
+
+        Location.SHAFT_ROOM, Location.SMELLY_ROOM, Location.COAL_MINE_1, Location.COAL_MINE_2,
+        Location.COAL_MINE_3, Location.COAL_MINE_4, Location.LADDER_TOP, Location.LADDER_BOTTOM,
+        Location.DEAD_END_COAL_MINE, Location.TIMBER_ROOM,
+
+        Location.MAZE_1, Location.MAZE_2, Location.MAZE_3, Location.MAZE_4,
+        Location.MAZE_5, Location.MAZE_6, Location.MAZE_7, Location.MAZE_8,
+        Location.MAZE_9, Location.MAZE_10, Location.MAZE_11, Location.MAZE_12,
+        Location.MAZE_13, Location.MAZE_14, Location.MAZE_15, Location.DEAD_END_MAZE_NORTH,
+        Location.DEAD_END_MAZE_SOUTHEAST, Location.DEAD_END_MAZE_CENTER, Location.DEAD_END_MAZE_SOUTHWEST, Location.GRATING_ROOM, };
+
+    public static Location[] maze = { Location.MAZE_1, Location.MAZE_2, Location.MAZE_3, Location.MAZE_4,
+        Location.MAZE_5, Location.MAZE_6, Location.MAZE_7, Location.MAZE_8,
+        Location.MAZE_9, Location.MAZE_10, Location.MAZE_11, Location.MAZE_12,
+        Location.MAZE_13, Location.MAZE_14, Location.MAZE_15,
+        Location.DEAD_END_MAZE_NORTH, Location.DEAD_END_MAZE_SOUTHEAST, Location.DEAD_END_MAZE_CENTER,
+        Location.DEAD_END_MAZE_SOUTHWEST };
+
+    public static Location[] coalMine = { Location.COAL_MINE_1,
+        Location.COAL_MINE_2, Location.COAL_MINE_3, Location.COAL_MINE_4 };
 
 }

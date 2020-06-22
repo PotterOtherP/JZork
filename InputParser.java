@@ -339,6 +339,7 @@ public class InputParser {
 					switch (act)
 					{
 						case TAKE:
+						case OPEN:
 						case MOVE_OBJECT:
 						{
 

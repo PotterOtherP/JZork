@@ -170,12 +170,44 @@ class ObjectStrings {
     public static final String TROLL_FIGHT_STAGGER_2 = "You stagger back under a hail of axe strokes.";
     public static final String TROLL_FIGHT_STAGGER_3 = "The troll's mighty blow drops you to your knees.";
     public static final String TROLL_FIGHT_DISARM_1 = "The axe hits your WEAPON and knocks it spinning.";
-    public static final String TROLL_FIGHT_DISARM_2 = "The troll swings, you parry, but the force of his blow knocks your X away.";
+    public static final String TROLL_FIGHT_DISARM_2 = "The troll swings, you parry, but the force of his blow knocks your WEAPON away.";
     public static final String TROLL_FIGHT_DISARM_3 = "The axe knocks your WEAPON out of your hand. It falls to the floor.";
     public static final String TROLL_FIGHT_HESITATE_1 = "The troll hesitates, fingering his axe.";
     public static final String TROLL_FIGHT_HESITATE_2 = "The troll scratches his head ruminatively: Might you be magically "
         + "protected, he wonders?";
     public static final String TROLL_FIGHT_FINISH = "Conquering his fears, the troll puts you to death.";
+
+
+
+    public static final String THIEF_ENCOUNTER_1 = "Someone carrying a large bag is casually leaning against one of the walls here. "
+        + "He does not speak, but it is clear from his aspect that the bag will be taken only over his dead body.";
+
+    public static final String THIEF_ENCOUNTER_2 = "You feel a light touch, and turning, notice a grinning figure holding a large bag "
+        + "in one hand and a stiletto in the other.";
+
+    public static final String THIEF_PRESENT = "There is a suspicious-looking individual, holding a large bag, leaning against one "
+        + "wall. He is armed with a deadly stiletto.";
+
+    public static final String THIEF_EXAMINE = "The thief is a slippery character with beady eyes, that flit back and forth. He carries, "
+        + "along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly "
+        + "in your direction. I'd watch out if I were you.";
+
+    public static final String THIEF_LEAVES_1 = "The holder of the large bag just left, looking disgusted. Fortunately, he took nothing.";
+    public static final String THIEF_LEAVES_2 = "The thief, finding nothing of value, left disgusted.";
+
+    public static final String THIEF_LEAVES_ROBS = "The thief just left, still carrying his large bag. You may not have noticed that "
+        + "he robbed you blind first.";
+
+    public static final String THIEF_LEAVES_LOOTS = "The thief just left, still carrying his large bag. You may not have noticed that "
+        + "he appropriated the valuables in the room.";
+
+    public static final String THIEF_COMES_AND_ROBS = "A seedy-looking individual with a large bag just wandered through the room. On the way "
+        + "through, he quietly abstracted some valuables from the room and from your possession, mumbling something about "
+        + "\"Doing unto others before...\"";
+
+    public static final String THIEF_COMES_AND_GOES = "A \"lean and hungry\" gentleman just wandered through, carrying a large bag. "
+        + "Finding nothing of value, he left disgruntled.";
+
 
     public static final String THIEF_FIGHT_MISS_1 = "The thief stabs nonchalantly with his knife and misses.";
     public static final String THIEF_FIGHT_MISS_2 = "You dodge as the thief comes in low.";
@@ -210,6 +242,10 @@ class ObjectStrings {
     public static final String THIEF_FIGHT_HESITATE_3 = "The thief entertains himself by rifling your pack.";
     public static final String THIEF_FIGHT_FINISH_1 = "The thief, forgetting his essentially genteel upbringing, cuts your throat.";
     public static final String THIEF_FIGHT_FINISH_2 = "The thief, a pragmatist, dispatches you as a threat to his livelihood.";
+    public static final String THIEF_FIGHT_RETREAT_1 = "Your opponent, determining discretion to be the better part of valor, decides to "
+        + "terminate this little contretemps. With a rueful nod of his head, he steps backward into the gloom and disappears.";
+    public static final String THIEF_FIGHT_RETREAT_2 = "You evidently frightened the robber, though you didn't hit him. He flees "
+        + "the room, but the contents of his bag fall on the floor.";
 
     public static final String WOODEN_DOOR = "The engravings translate to \"This space intentionally left blank.\"";
 

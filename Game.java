@@ -110,6 +110,11 @@ public final class Game {
             s = s.replace("WEAPON", (gameState.indirectObject.name));
         }
 
+        if (s.contains("ITEM"))
+        {
+            s = s.replace("ITEM", (gameState.indirectObject.name));
+        }
+
         if (s.contains("ENEMY"))
         {
             s = s.replace("ENEMY", (gameState.directObject.name));
