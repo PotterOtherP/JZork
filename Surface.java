@@ -5,13 +5,15 @@ class Surface extends GameObject {
 
 
     public int capacity;
+    private GameState state;
     
     public Surface(String name, Location loc)
     {
         super(name, loc);
         type = ObjectType.SURFACE;
-        
+    
         capacity = 0;
+        state = Game.gameState;
     }
 
     @Override
