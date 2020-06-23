@@ -17,7 +17,7 @@ public class Actor extends GameObject {
 
 
     public static final int SONGBIRD_CHIRP_PERCENT = 15;
-    public static final int THIEF_ENCOUNTER_PERCENT = 5;
+    public static final int THIEF_ENCOUNTER_PERCENT = 25;
 	public static final int MAX_ENEMY_HIT_POINTS = 10;
 
 
@@ -270,7 +270,12 @@ public class Actor extends GameObject {
 
     public void thiefDies(GameState state)
     {
-
+        for (Item it : inventory)
+        {
+            it.location = this.location;
+        }
+        alive = false;
+        location = Location.NULL_LOCATION;
     }
     
     public void trollCombat(GameState state)
@@ -514,7 +519,9 @@ public class Actor extends GameObject {
 
         Random rand = new Random();
 
-        // If the thief is not already in the room with the player, put him in one of his possible locations.
+        /* If the thief is not already in the room with the player, roll for an encounter.
+           
+        */
         if (this.location != state.playerLocation)
         {
             int thiefPossibleLocations = GameSetup.thiefLocations.length;
@@ -534,33 +541,46 @@ public class Actor extends GameObject {
             if (encounterCheck < THIEF_ENCOUNTER_PERCENT && playerInThiefArea)
             {
                 this.location = state.playerLocation;
+                int option = rand.nextInt(3);
+                if (option == 0)
+                {
+                    Game.output(ObjectStrings.THIEF_ARRIVES);
+                    
+                }
+
+                if (option == 1)
+                {
+                    Game.output(ObjectStrings.THIEF_COMES_AND_ROBS);
+                    while (location == state.playerLocation)
+                    {
+                        nextThiefLocation = rand.nextInt(thiefPossibleLocations);
+                        location = GameSetup.thiefLocations[nextThiefLocation];
+                    }
+                }
+
+                if (option == 2)
+                {
+                    Game.output(ObjectStrings.THIEF_COMES_AND_GOES);
+                    while (location == state.playerLocation)
+                    {
+                        nextThiefLocation = rand.nextInt(thiefPossibleLocations);
+                        location = GameSetup.thiefLocations[nextThiefLocation];
+                    }
+                }
+
             }
         }
         
-
-        // Thief is not in the same room as the player - will loot loose treasures
-        if (this.location != state.playerLocation)
-        {
-            for (GameObject g : state.objectList.values())
-            {
-                if (g.isItem() && g.location == this.location)
-                {
-                    Item it = (Item)(g);
-                    if (it.trophyCaseValue > 0 && it.movedFromStart)
-                        it.location = Location.THIEF_INVENTORY;
-
-                }
-            }
-        }
-
-        // Thief and player are having an encounter!
+        // Thief is already in the room.
         else
         {
-            if (thiefAggro) thiefAttacks(state);
+            int option = rand.nextInt(2);
 
+            if (option == 0) Game.output(ObjectStrings.THIEF_PRESENT_1);
+            if (option == 1) Game.output(ObjectStrings.THIEF_PRESENT_2);
 
+            
         }
-
 
     }
 

@@ -488,7 +488,7 @@ public class InputParser {
 		{
 			Game.output("The thief is now dead.");
 			Actor thief = (Actor)state.objectList.get("thief");
-			thief.alive = false;
+			thief.thiefDies(state);
 			return true;
 		}
 

@@ -179,18 +179,14 @@ class ObjectStrings {
 
 
 
-    public static final String THIEF_ENCOUNTER_1 = "Someone carrying a large bag is casually leaning against one of the walls here. "
-        + "He does not speak, but it is clear from his aspect that the bag will be taken only over his dead body.";
-
-    public static final String THIEF_ENCOUNTER_2 = "You feel a light touch, and turning, notice a grinning figure holding a large bag "
+    public static final String THIEF_ARRIVES = "You feel a light touch, and turning, notice a grinning figure holding a large bag "
         + "in one hand and a stiletto in the other.";
 
-    public static final String THIEF_PRESENT = "There is a suspicious-looking individual, holding a large bag, leaning against one "
-        + "wall. He is armed with a deadly stiletto.";
+    public static final String THIEF_PRESENT_1 = "Someone carrying a large bag is casually leaning against one of the walls here. "
+        + "He does not speak, but it is clear from his aspect that the bag will be taken only over his dead body.";
 
-    public static final String THIEF_EXAMINE = "The thief is a slippery character with beady eyes, that flit back and forth. He carries, "
-        + "along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly "
-        + "in your direction. I'd watch out if I were you.";
+    public static final String THIEF_PRESENT_2 = "There is a suspicious-looking individual, holding a large bag, leaning against one "
+        + "wall. He is armed with a deadly stiletto.";
 
     public static final String THIEF_LEAVES_1 = "The holder of the large bag just left, looking disgusted. Fortunately, he took nothing.";
     public static final String THIEF_LEAVES_2 = "The thief, finding nothing of value, left disgusted.";
@@ -208,6 +204,9 @@ class ObjectStrings {
     public static final String THIEF_COMES_AND_GOES = "A \"lean and hungry\" gentleman just wandered through, carrying a large bag. "
         + "Finding nothing of value, he left disgruntled.";
 
+    public static final String THIEF_EXAMINE = "The thief is a slippery character with beady eyes, that flit back and forth. He carries, "
+        + "along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly "
+        + "in your direction. I'd watch out if I were you.";
 
     public static final String THIEF_FIGHT_MISS_1 = "The thief stabs nonchalantly with his knife and misses.";
     public static final String THIEF_FIGHT_MISS_2 = "You dodge as the thief comes in low.";
