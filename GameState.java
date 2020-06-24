@@ -21,6 +21,7 @@ class GameState {
 	public boolean leafPileMoved;
 	public boolean mirrorBroken;
 	public boolean rainbowSolid;
+    public boolean ropeRailTied;
 	public boolean potOfGoldAppeared;
 
 	// player attributes

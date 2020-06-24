@@ -1485,6 +1485,9 @@ public class GameSetup {
         Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM);
         pedestal.inventoryID = Location.ON_PEDESTAL;
 
+        Feature railing = new Feature("railing", Location.DOME_ROOM);
+        railing.altNames.add("rail");
+
         Feature rainbow = new Feature("rainbow", Location.END_OF_RAINBOW);
         rainbow.altLocations.add(Location.ON_THE_RAINBOW);
         rainbow.altLocations.add(Location.ARAGAIN_FALLS);
@@ -1647,6 +1650,7 @@ public class GameSetup {
         state.objectList.put(mirror.name, mirror);
         state.objectList.put(mountains.name, mountains);
         state.objectList.put(pedestal.name, pedestal);
+        state.objectList.put(railing.name, railing);
         state.objectList.put(rainbow.name, rainbow);
         state.objectList.put(self.name, self);
         state.objectList.put(skeleton.name, skeleton);
