@@ -431,13 +431,6 @@ public class InputParser {
 			return true;
 		}
 
-		if (input.equals("find stiletto"))
-		{
-			Item stil = (Item)state.objectList.get("stiletto");
-			Game.output("The stiletto is in the " + stil.location + ".");
-			return true;
-		}
-
 		if (input.equals("find thief"))
 		{
 			Actor thief = (Actor)state.objectList.get("thief");

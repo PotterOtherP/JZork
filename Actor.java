@@ -493,13 +493,38 @@ public class Actor extends GameObject {
 
     }
 
+    public void thiefLootsRoom(GameState state)
+    {
+        for (GameObject g : state.objectList.values())
+        {
+            if (g.isItem() && g.location == this.location)
+            {
+                Item it = (Item)(g);
+                if (it.trophyCaseValue > 0)
+                    it.location = Location.THIEF_INVENTORY;
+            }
+        }
+    }
+
+    public void thiefRobsPlayer(GameState state)
+    {
+        for (GameObject g : state.objectList.values())
+        {
+            if (g.isItem() && g.location == Location.PLAYER_INVENTORY)
+            {
+                Item it = (Item)(g);
+                if (it.trophyCaseValue > 0)
+                    it.location = Location.THIEF_INVENTORY;
+            }
+        }
+    }
+
 
     public void thiefTurn(GameState state)
     {
         if (!alive) return;
 
         Random rand = new Random();
-        int thiefPossibleLocations = GameSetup.thiefLocations.length;
         boolean playerHasTreasure = false;
         boolean roomHasTreasure = false;
 
@@ -543,6 +568,8 @@ public class Actor extends GameObject {
                 if (hitPoints == 1)
                 {
                     Game.output(ObjectStrings.THIEF_FIGHT_RETREAT_2);
+                    for (Item it : inventory)
+                        it.location = this.location;
                     thiefMoves(state);
                 }
 
@@ -584,13 +611,15 @@ public class Actor extends GameObject {
                 else if (option > 2 && playerHasTreasure)
                 {
                     Game.output(ObjectStrings.THIEF_LEAVES_ROBS);
+                    thiefRobsPlayer(state);
                     thiefMoves(state);
                 }
 
                 // Loot the room and leave...
                 else if (option <= 2 && roomHasTreasure)
                 {
-                    Game.output(ObjectStrings.THIEF_LEAVES_ROBS);
+                    Game.output(ObjectStrings.THIEF_LEAVES_LOOTS);
+                    thiefLootsRoom(state);
                     thiefMoves(state);
                 }
 
@@ -599,8 +628,7 @@ public class Actor extends GameObject {
                 {
                     if (option > 2) Game.output(ObjectStrings.THIEF_LEAVES_1);
                     if (option <= 2) Game.output(ObjectStrings.THIEF_LEAVES_2);
-                    int nextThiefLocation = rand.nextInt(thiefPossibleLocations);
-                    this.location = GameSetup.thiefLocations[nextThiefLocation];
+                    thiefMoves(state);
                 }
 
                 return;
@@ -637,6 +665,8 @@ public class Actor extends GameObject {
                     Game.output(ObjectStrings.THIEF_COMES_AND_ROBS);
                     while (location == state.playerLocation)
                     {
+                        thiefRobsPlayer(state);
+                        thiefLootsRoom(state);
                         thiefMoves(state);
                     }
                 }
