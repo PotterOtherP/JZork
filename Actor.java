@@ -17,7 +17,7 @@ public class Actor extends GameObject {
 
 
     public static final int SONGBIRD_CHIRP_PERCENT = 15;
-    public static final int THIEF_ENCOUNTER_PERCENT = 25;
+    public static final int THIEF_ENCOUNTER_PERCENT = 5;
 	public static final int MAX_ENEMY_HIT_POINTS = 10;
 
 
@@ -145,6 +145,7 @@ public class Actor extends GameObject {
     public void thiefCombat(GameState state)
     {
         firstCombatTurn = false;
+        thiefAggro = true;
 
         String[] misses = { GameStrings.COMBAT_MISS_1, GameStrings.COMBAT_MISS_2, GameStrings.COMBAT_MISS_3,
             GameStrings.COMBAT_PARRY_1, GameStrings.COMBAT_PARRY_2, GameStrings.COMBAT_PARRY_3 };
@@ -272,7 +273,7 @@ public class Actor extends GameObject {
     {
         for (Item it : inventory)
         {
-            it.location = this.location;
+            it.location = location;
         }
         alive = false;
         location = Location.NULL_LOCATION;
@@ -398,10 +399,9 @@ public class Actor extends GameObject {
     {
         alive = false;
 
-        for (GameObject g : state.objectList.values())
+        for (Item it : inventory)
         {
-            if (g.location == Location.TROLL_INVENTORY)
-                g.location = location;
+            it.location = location;
         }
 
         location = Location.NULL_LOCATION;
@@ -479,54 +479,138 @@ public class Actor extends GameObject {
 
     public void thiefAttacks(GameState state)
     {
-
+        Game.output("The thief attacks you, sucka!");
     }
 
-    public void thiefHideoutTurn(GameState state)
+
+    public void thiefMoves(GameState state)
     {
+        Random rand = new Random();
+        int thiefPossibleLocations = GameSetup.thiefLocations.length;
+        int nextThiefLocation = rand.nextInt(thiefPossibleLocations);
+        location = GameSetup.thiefLocations[nextThiefLocation];
+        thiefFirstTurn = true;
 
     }
+
 
     public void thiefTurn(GameState state)
     {
         if (!alive) return;
 
-        // Let's have a separate method for the hideout.
+        Random rand = new Random();
+        int thiefPossibleLocations = GameSetup.thiefLocations.length;
+        boolean playerHasTreasure = false;
+        boolean roomHasTreasure = false;
+
+        for (GameObject g : state.objectList.values())
+        {
+            if (g.isItem())
+            {
+                Item it = (Item)(g);
+                if (it.trophyCaseValue > 0 && it.location == this.location)
+                    roomHasTreasure = true;
+
+                if (it.trophyCaseValue > 0 && it.location == Location.PLAYER_INVENTORY)
+                    playerHasTreasure = true;
+            }
+        }
+
+        // Has the player found my secret hideout?
         if (state.playerLocation == Location.TREASURE_ROOM)
         {
-            thiefHideoutTurn(state);
+            // Did the player just get here?
+            if (thiefFirstTurn)
+            {
+                Game.output(ObjectStrings.THIEF_HIDEOUT);
+                location = Location.TREASURE_ROOM;
+                thiefFirstTurn = false;
+            }
+
+            // Attack without pity!
+            thiefAttacks(state);
+
             return;
         }
 
-
-        /*
-            The thief will randomly move around the underground and pick up
-            objects that the player has dropped.
-
-            If he appears in the same room as the player, he'll wait one turn to
-            allow the player to do something. The thief will not initiate combat until
-            the player enters the thief's hideout.
-
-            Unlike the troll, the thief will withdraw from combat and flee (unless in the hideout).
-
-            The player can interact with the thief, give him things, etc. After one turn,
-            the thief will have a chance to rob the player/loot the room and leave, unless
-            the player exits first.
-
-            Giving an item to the thief will distract him from combat.
-
-        */
-
-        Random rand = new Random();
-
-        /* If the thief is not already in the room with the player, roll for an encounter.
-           
-        */
-        if (this.location != state.playerLocation)
+        // Am I in the same room as the player?
+        if (location == state.playerLocation)
         {
-            int thiefPossibleLocations = GameSetup.thiefLocations.length;
-            int nextThiefLocation = rand.nextInt(thiefPossibleLocations);
-            this.location = GameSetup.thiefLocations[nextThiefLocation];
+            // Is the player attacking me?
+            if (thiefAggro)
+            {
+                // Retreat, dropping my bag
+                if (hitPoints == 1)
+                {
+                    Game.output(ObjectStrings.THIEF_FIGHT_RETREAT_2);
+                    thiefMoves(state);
+                }
+
+                // Retreat, holding my bag
+                else if (2 <= hitPoints && hitPoints <= 4)
+                {
+                    Game.output(ObjectStrings.THIEF_FIGHT_RETREAT_1);
+                    thiefMoves(state);
+                }
+
+                // Attack the player...
+                else
+                {
+                    thiefAttacks(state);
+                }
+
+                return;
+            }
+
+            // Did the player just get here?
+            if (thiefFirstTurn)
+            {
+                // I am here.
+                int option = rand.nextInt(2);
+                if (option == 0) Game.output(ObjectStrings.THIEF_PRESENT_1);
+                if (option == 1) Game.output(ObjectStrings.THIEF_PRESENT_2);
+                thiefFirstTurn = false;
+                return;
+            }
+
+            // The player has been here at least one turn and we're not fighting.
+            {
+                int option = rand.nextInt(5);
+
+                // Wait...
+                if (option == 0) return;
+
+                // Rob the player and leave...
+                else if (option > 2 && playerHasTreasure)
+                {
+                    Game.output(ObjectStrings.THIEF_LEAVES_ROBS);
+                    thiefMoves(state);
+                }
+
+                // Loot the room and leave...
+                else if (option <= 2 && roomHasTreasure)
+                {
+                    Game.output(ObjectStrings.THIEF_LEAVES_ROBS);
+                    thiefMoves(state);
+                }
+
+                // Leave without taking anything.
+                else
+                {
+                    if (option > 2) Game.output(ObjectStrings.THIEF_LEAVES_1);
+                    if (option <= 2) Game.output(ObjectStrings.THIEF_LEAVES_2);
+                    int nextThiefLocation = rand.nextInt(thiefPossibleLocations);
+                    this.location = GameSetup.thiefLocations[nextThiefLocation];
+                }
+
+                return;
+            }
+        }
+
+        // I'm not in the same room as the player. Let's move!
+        if (location != state.playerLocation)
+        {
+            thiefMoves(state);
 
             // Check if the player is in a possible thief location
             boolean playerInThiefArea = false;
@@ -544,7 +628,7 @@ public class Actor extends GameObject {
                 int option = rand.nextInt(3);
                 if (option == 0)
                 {
-                    Game.output(ObjectStrings.THIEF_ARRIVES);
+                    Game.output(ObjectStrings.THIEF_ARRIVES_GRIN);
                     
                 }
 
@@ -553,8 +637,7 @@ public class Actor extends GameObject {
                     Game.output(ObjectStrings.THIEF_COMES_AND_ROBS);
                     while (location == state.playerLocation)
                     {
-                        nextThiefLocation = rand.nextInt(thiefPossibleLocations);
-                        location = GameSetup.thiefLocations[nextThiefLocation];
+                        thiefMoves(state);
                     }
                 }
 
@@ -563,24 +646,13 @@ public class Actor extends GameObject {
                     Game.output(ObjectStrings.THIEF_COMES_AND_GOES);
                     while (location == state.playerLocation)
                     {
-                        nextThiefLocation = rand.nextInt(thiefPossibleLocations);
-                        location = GameSetup.thiefLocations[nextThiefLocation];
+                        thiefMoves(state);
                     }
                 }
 
             }
         }
         
-        // Thief is already in the room.
-        else
-        {
-            int option = rand.nextInt(2);
-
-            if (option == 0) Game.output(ObjectStrings.THIEF_PRESENT_1);
-            if (option == 1) Game.output(ObjectStrings.THIEF_PRESENT_2);
-
-            
-        }
 
     }
 

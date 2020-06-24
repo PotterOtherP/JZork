@@ -40,8 +40,7 @@ class GameStrings {
 
     public static final String COMBAT_HP_ZERO = "It appears that last blow was too much for you. I'm afraid you are dead.";
 
-    public static final String THIEF_ARRIVES = "You hear a scream of anguish as you violate the robber's hideaway. Using "
-        + "passages unknown to you, he rushes to its defense.";
+
 
     public static final String TROLL_FEND = "The troll fends you off with a menacing gesture.";
 

@@ -431,11 +431,23 @@ public class InputParser {
 			return true;
 		}
 
+		if (input.equals("find stiletto"))
+		{
+			Item stil = (Item)state.objectList.get("stiletto");
+			Game.output("The stiletto is in the " + stil.location + ".");
+			return true;
+		}
+
 		if (input.equals("find thief"))
 		{
-			GameObject thief = state.objectList.get("thief");
+			Actor thief = (Actor)state.objectList.get("thief");
+			if (!thief.alive)
+			{
+				Game.output("The thief is dead.");
+				return true;
+			}
 			String room = state.worldMap.get(thief.location).name.toLowerCase();
-			Game.output("The thief is in the " + room + ".");
+			Game.output("The thief is in the " + thief.location + ".");
 			return true;
 		}
 
