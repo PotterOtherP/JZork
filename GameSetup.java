@@ -44,6 +44,7 @@ enum Location {
     TIMBER_ROOM, DRAFTY_ROOM, MACHINE_ROOM,
 
     GRATING_ROOM, CYCLOPS_ROOM, STRANGE_PASSAGE, TREASURE_ROOM,
+    TREASURE_ROOM_INVISIBLE,
 
     MAZE_1, MAZE_2, MAZE_3, MAZE_4, MAZE_5, MAZE_6, MAZE_7, MAZE_8,
     MAZE_9, MAZE_10, MAZE_11, MAZE_12, MAZE_13, MAZE_14, MAZE_15,
@@ -1547,6 +1548,7 @@ public class GameSetup {
         
         Actor thief = new Actor("thief", Location.TREASURE_ROOM);
         thief.inventoryID = Location.THIEF_INVENTORY;
+        thief.presenceString = ObjectStrings.THIEF_PRESENT_2;
         
         Actor troll = new Actor("troll", Location.TROLL_ROOM);
         troll.presenceString = ObjectStrings.TROLL_PRESENCE;

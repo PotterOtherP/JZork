@@ -182,14 +182,23 @@ class ObjectStrings {
     public static final String THIEF_ARRIVES_GRIN = "You feel a light touch, and turning, notice a grinning figure holding a large bag "
         + "in one hand and a stiletto in the other.";
 
+    public static final String THIEF_GIVE_ITEM = "The thief places the ITEM in his bag and thanks you politely.";
+    public static final String THIEF_GIVE_TREASURE = "The thief is taken aback by your unexpected generosity, but accepts the ITEM "
+        + "and stops to admire its beauty.";
+
     public static final String THIEF_HIDEOUT = "You hear a scream of anguish as you violate the robber's hideaway. Using "
         + "passages unknown to you, he rushes to its defense.";
+
+    public static final String THIEF_MAGIC_1 = "The thief gestures mysteriously, and the treasures in the room suddenly vanish.";
+    public static final String THIEF_MAGIC_2 = "As the thief dies, the power of his magic decreases, and his treasures reappear:";
 
     public static final String THIEF_PRESENT_1 = "Someone carrying a large bag is casually leaning against one of the walls here. "
         + "He does not speak, but it is clear from his aspect that the bag will be taken only over his dead body.";
 
     public static final String THIEF_PRESENT_2 = "There is a suspicious-looking individual, holding a large bag, leaning against one "
         + "wall. He is armed with a deadly stiletto.";
+
+    public static final String THIEF_PRESENT_UNCONSCIOUS = "There is a suspicious-looking individual lying unconscious on the ground.";
 
     public static final String THIEF_LEAVES_1 = "The holder of the large bag just left, looking disgusted. Fortunately, he took nothing.";
     public static final String THIEF_LEAVES_2 = "The thief, finding nothing of value, left disgusted.";
@@ -211,19 +220,18 @@ class ObjectStrings {
         + "along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly "
         + "in your direction. I'd watch out if I were you.";
 
+    public static final String THIEF_RECOVER_STILETTO = "The robber, somewhat surprised at this turn of events, nimbly retrieves "
+        + "his stiletto.";
+
+    public static final String THIEF_WAKES = "The robber revives, briefly feigning continued unconsciousness, and, when he sees his "
+        + "moment, scrambles away from you.";
+
 
 
     public static final String THIEF_FIGHT_MISS_1 = "The thief stabs nonchalantly with his knife and misses.";
     public static final String THIEF_FIGHT_MISS_2 = "You dodge as the thief comes in low.";
     public static final String THIEF_FIGHT_MISS_3 = "You parry a lightning thrust, and the thief salutes you with a grim nod.";
     public static final String THIEF_FIGHT_MISS_4 = "The thief tries to sneak past your guard, but you twist away.";
-    public static final String THIEF_FIGHT_KNOCKOUT_1 = "Shifting in the middle of a thrust, the thief knocks you unconscious "
-        + "with the haft of his stiletto.";
-    public static final String THIEF_FIGHT_KNOCKOUT_2 = "The thief knocks you out.";
-    public static final String THIEF_FIGHT_FATAL_1 = "Finishing you off, the thief inserts his blade into your heart.";
-    public static final String THIEF_FIGHT_FATAL_2 = "The thief comes in from the side, feints, and inserts the blade into your ribs.";
-    public static final String THIEF_FIGHT_FATAL_3 = "The thief bows formally, raises his stiletto, and with a wry grin, "
-        + "ends the battle and your life.";
     public static final String THIEF_FIGHT_LIGHT_1 = "A quick thrust pinks your left arm, and blood starts to trickle down.";
     public static final String THIEF_FIGHT_LIGHT_2 = "The thief draws blood, raking his stiletto across your arm.";
     public static final String THIEF_FIGHT_LIGHT_3 = "The stiletto flashes faster than you can follow, and blood wells "
@@ -240,6 +248,13 @@ class ObjectStrings {
         + "his knife, and the WEAPON goes flying.";
     public static final String THIEF_FIGHT_DISARM_2 = "The thief neatly flips your WEAPON out of your hands, and it drops to the floor.";
     public static final String THIEF_FIGHT_DISARM_3 = "You parry a low thrust, and your WEAPON slips out of your hand.";
+    public static final String THIEF_FIGHT_KNOCKOUT_1 = "Shifting in the middle of a thrust, the thief knocks you unconscious "
+        + "with the haft of his stiletto.";
+    public static final String THIEF_FIGHT_KNOCKOUT_2 = "The thief knocks you out.";
+    public static final String THIEF_FIGHT_FATAL_1 = "Finishing you off, the thief inserts his blade into your heart.";
+    public static final String THIEF_FIGHT_FATAL_2 = "The thief comes in from the side, feints, and inserts the blade into your ribs.";
+    public static final String THIEF_FIGHT_FATAL_3 = "The thief bows formally, raises his stiletto, and with a wry grin, "
+        + "ends the battle and your life.";
     public static final String THIEF_FIGHT_HESITATE_1 = "The thief, a man of superior breeding, pauses for a moment to consider the "
         + "propriety of finishing you off.";
     public static final String THIEF_FIGHT_HESITATE_2 = "The thief amuses himself by searching your pockets.";

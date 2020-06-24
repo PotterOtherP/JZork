@@ -11,6 +11,7 @@ public class Actor extends GameObject {
     public boolean firstCombatTurn;
     public boolean thiefAggro;
     public boolean thiefFirstTurn;
+    public boolean thiefItemsHidden;
     public int hitPoints;
     public int strength;
 
@@ -33,6 +34,7 @@ public class Actor extends GameObject {
         firstCombatTurn = true;
         thiefAggro = false;
         thiefFirstTurn = false;
+        thiefItemsHidden = false;
         hitPoints = MAX_ENEMY_HIT_POINTS;
         strength = 0;
 
@@ -118,18 +120,36 @@ public class Actor extends GameObject {
             if (name.equals("thief")) thiefDies(state);
             if (name.equals("troll")) trollDies(state);
         }
+
     }
 
+    
     public void cyclopsCombat(GameState state)
     {
         
     }
 
+    
     @Override
     public void give(GameState state)
     {
         switch (name)
         {
+            case "thief":
+            {
+                Item it = (Item)(state.indirectObject);
+                it.location = Location.THIEF_INVENTORY;
+
+                if (it.trophyCaseValue > 0)
+                {
+                    Game.output(ObjectStrings.THIEF_GIVE_TREASURE);
+                    staggered = true;
+                }
+                else
+                    Game.output(ObjectStrings.THIEF_GIVE_ITEM);
+
+
+            } break;
             case "troll":
             {
                 trollGive(state);
@@ -140,8 +160,10 @@ public class Actor extends GameObject {
                 super.give(state);
             } break;
         }
+
     }
 
+    
     public void thiefCombat(GameState state)
     {
         firstCombatTurn = false;
@@ -258,6 +280,7 @@ public class Actor extends GameObject {
         {
             int phrase = rand.nextInt(knockoutBlows.length);
             Game.output(knockoutBlows[phrase]);
+            presenceString = ObjectStrings.THIEF_PRESENT_UNCONSCIOUS;
             unconscious = true;
         }
 
@@ -267,8 +290,10 @@ public class Actor extends GameObject {
             Game.output(fatalBlows[phrase]);
             alive = false;
         }
+
     }
 
+    
     public void thiefDies(GameState state)
     {
         for (Item it : inventory)
@@ -277,7 +302,22 @@ public class Actor extends GameObject {
         }
         alive = false;
         location = Location.NULL_LOCATION;
+
+        if (state.playerLocation == Location.TREASURE_ROOM)
+            Game.output(ObjectStrings.THIEF_MAGIC_2);
+
+        for (GameObject g : state.objectList.values())
+        {
+            if (g.location == Location.TREASURE_ROOM_INVISIBLE)
+            {
+                g.location = Location.TREASURE_ROOM;
+                if (state.playerLocation == Location.TREASURE_ROOM)
+                    Game.output("The " + g.name + " is now safe to take.");
+            }
+        }
+
     }
+    
     
     public void trollCombat(GameState state)
     {
@@ -393,8 +433,10 @@ public class Actor extends GameObject {
             Game.output(fatalBlows[phrase]);
             alive = false;
         }
+
     }
 
+    
     public void trollDies(GameState state)
     {
         alive = false;
@@ -413,8 +455,10 @@ public class Actor extends GameObject {
 
         if (state.playerLocation == Location.TROLL_ROOM && state.directObject.name.equals("troll"))
             Game.lineOutput(GameStrings.COMBAT_ENEMY_DIES);
+
     }
 
+    
     public void trollGive(GameState state)
     {
         String item = state.indirectObject.name;
@@ -435,7 +479,8 @@ public class Actor extends GameObject {
         }
     }
 
-	public void cyclopsTurn(GameState state)
+	
+    public void cyclopsTurn(GameState state)
 	{
 		if (state.playerLocation == Location.CELLAR && state.playerPreviousLocation == Location.LIVING_ROOM)
         {
@@ -445,11 +490,13 @@ public class Actor extends GameObject {
         }
 	}
 
-	public void floodTurn(GameState state)
+	
+    public void floodTurn(GameState state)
     {
     	if (!alive) return;
     }
 
+    
     public void gustOfWindTurn(GameState state)
     {
     	
@@ -460,7 +507,8 @@ public class Actor extends GameObject {
 
     }
 
-	public void songbirdTurn(GameState state)
+	
+    public void songbirdTurn(GameState state)
 	{
 		if (altLocations.contains(state.playerLocation))
 		{
@@ -468,18 +516,169 @@ public class Actor extends GameObject {
 			if (rand.nextInt(100) < SONGBIRD_CHIRP_PERCENT)
 				Game.output(GameStrings.SONGBIRD);
 		}
-
 		
 	}
 
-	public void spiritsTurn(GameState state)
+	
+    public void spiritsTurn(GameState state)
     {
         if (!alive) return;
     }
 
+    
     public void thiefAttacks(GameState state)
     {
-        Game.output("The thief attacks you, sucka!");
+        // Game.output("The thief attacks you, sucka!");
+        Random rand = new Random();
+
+        String[] misses = { ObjectStrings.THIEF_FIGHT_MISS_1, ObjectStrings.THIEF_FIGHT_MISS_2, ObjectStrings.THIEF_FIGHT_MISS_3,
+                ObjectStrings.THIEF_FIGHT_MISS_4 };
+        String[] lightBlows = { ObjectStrings.THIEF_FIGHT_LIGHT_1, ObjectStrings.THIEF_FIGHT_LIGHT_2, ObjectStrings.THIEF_FIGHT_LIGHT_3,
+                ObjectStrings.THIEF_FIGHT_LIGHT_4 };
+        String[] severeBlows = { ObjectStrings.THIEF_FIGHT_SEVERE_1, ObjectStrings.THIEF_FIGHT_SEVERE_2, ObjectStrings.THIEF_FIGHT_SEVERE_3,
+            ObjectStrings.THIEF_FIGHT_SEVERE_4 };
+        String[] staggerBlows = { ObjectStrings.THIEF_FIGHT_STAGGER_1, ObjectStrings.THIEF_FIGHT_STAGGER_2, ObjectStrings.THIEF_FIGHT_STAGGER_3 };
+        String[] disarmingBlows = { ObjectStrings.THIEF_FIGHT_DISARM_1, ObjectStrings.THIEF_FIGHT_DISARM_2, ObjectStrings.THIEF_FIGHT_DISARM_3 };
+        String[] knockoutBlows = { ObjectStrings.THIEF_FIGHT_KNOCKOUT_1, ObjectStrings.THIEF_FIGHT_KNOCKOUT_2 };
+        String[] fatalBlows = { ObjectStrings.THIEF_FIGHT_FATAL_1, ObjectStrings.THIEF_FIGHT_FATAL_2, ObjectStrings.THIEF_FIGHT_FATAL_3 };
+        String[] hesitations = { ObjectStrings.THIEF_FIGHT_HESITATE_1, ObjectStrings.THIEF_FIGHT_HESITATE_2, ObjectStrings.THIEF_FIGHT_HESITATE_3};
+        String[] finishes = { ObjectStrings.THIEF_FIGHT_FINISH_1, ObjectStrings.THIEF_FIGHT_FINISH_2 };
+
+        int missCutoff = 15;
+        int lightCutoff = 35;
+        int severeCutoff = 50;
+        int staggerCutoff = 60;
+        int disarmCutoff = 75;
+        int knockoutCutoff = 90;
+
+        if (disarmed && !unconscious)
+        {
+            Game.lineOutput(ObjectStrings.THIEF_RECOVER_STILETTO);
+            Item stil = (Item)(state.objectList.get("stiletto"));
+            stil.location = Location.THIEF_INVENTORY;
+            disarmed = false;
+            return;
+        }
+
+        if (staggered)
+        {
+            staggered = false;
+            return;
+        }
+
+        if (unconscious)
+        {
+            // 50% chance to recover
+            int check = rand.nextInt(2);
+
+            if (check == 0)
+            {
+                Game.lineOutput(ObjectStrings.THIEF_WAKES);
+                unconscious = false;
+                presenceString = ObjectStrings.THIEF_PRESENT_2;
+            }
+
+            return;
+        }
+
+        int dieRoll = rand.nextInt(100);
+
+        if (0 <= dieRoll && dieRoll < missCutoff)
+        {
+            int phrase = rand.nextInt(misses.length);
+                Game.lineOutput(misses[phrase]);
+        }
+
+        else if (missCutoff <= dieRoll && dieRoll < lightCutoff)
+        {
+            int phrase = rand.nextInt(lightBlows.length);
+            Game.lineOutput(lightBlows[phrase]);
+            state.playerHitPoints -= 1;
+        }
+
+        else if (lightCutoff <= dieRoll && dieRoll < severeCutoff)
+        {
+            int phrase = rand.nextInt(severeBlows.length);
+            Game.lineOutput(severeBlows[phrase]);
+            state.playerHitPoints -= 5;
+        }
+
+        else if (severeCutoff <= dieRoll && dieRoll < staggerCutoff)
+        {
+            int phrase = rand.nextInt(staggerBlows.length);
+            Game.lineOutput(staggerBlows[phrase]);
+            state.playerStaggered = true;
+        }
+
+        else if (staggerCutoff <= dieRoll && dieRoll < disarmCutoff)
+        {
+            // If the player hasn't attacked with a weapon, stagger instead.
+
+            if (!state.indirectObject.isWeapon)
+            {
+                int phrase = rand.nextInt(staggerBlows.length);
+                Game.lineOutput(staggerBlows[phrase]);
+                state.playerStaggered = true;
+                return;
+            }
+
+            int phrase = rand.nextInt(disarmingBlows.length);
+            Game.lineOutput(disarmingBlows[phrase]);
+            state.indirectObject.location = state.playerLocation;
+            for (GameObject g : state.objectList.values())
+            {
+                if (g.isWeapon)
+                {
+                    Game.lineOutput("Fortunately, you still have " + g.articleName + ".");
+                    break;
+                }
+            }
+        }
+
+        else if (disarmCutoff <= dieRoll && dieRoll < knockoutCutoff)
+        {
+            int phrase = rand.nextInt(knockoutBlows.length);
+            Game.lineOutput(knockoutBlows[phrase]);
+
+            phrase = rand.nextInt(hesitations.length);
+            Game.lineOutput(hesitations[phrase]);
+
+            phrase = rand.nextInt(finishes.length);
+            Game.lineOutput(finishes[phrase]);
+
+            state.playerDies();
+        }
+
+        else if (knockoutCutoff <= dieRoll && dieRoll < 100)
+        {
+            int phrase = rand.nextInt(fatalBlows.length);
+            Game.lineOutput(fatalBlows[phrase]);
+            Game.lineOutput(GameStrings.COMBAT_HP_ZERO);
+            state.playerDies();
+        }
+
+        if (state.playerHitPoints <= 0)
+        {
+            Game.lineOutput(GameStrings.COMBAT_HP_ZERO);
+            state.playerDies();
+
+        }
+
+    }
+
+    
+    public void thiefLootsRoom(GameState state)
+    {
+        for (GameObject g : state.objectList.values())
+        {
+            if (g.isItem() && g.location == this.location)
+            {
+                Item it = (Item)(g);
+                if (it.trophyCaseValue > 0)
+                    it.location = Location.THIEF_INVENTORY;
+            }
+        }
+
     }
 
 
@@ -493,18 +692,6 @@ public class Actor extends GameObject {
 
     }
 
-    public void thiefLootsRoom(GameState state)
-    {
-        for (GameObject g : state.objectList.values())
-        {
-            if (g.isItem() && g.location == this.location)
-            {
-                Item it = (Item)(g);
-                if (it.trophyCaseValue > 0)
-                    it.location = Location.THIEF_INVENTORY;
-            }
-        }
-    }
 
     public void thiefRobsPlayer(GameState state)
     {
@@ -517,6 +704,7 @@ public class Actor extends GameObject {
                     it.location = Location.THIEF_INVENTORY;
             }
         }
+
     }
 
 
@@ -550,6 +738,20 @@ public class Actor extends GameObject {
                 Game.output(ObjectStrings.THIEF_HIDEOUT);
                 location = Location.TREASURE_ROOM;
                 thiefFirstTurn = false;
+            }
+
+            // Have I already hidden the treasures?
+            if (!thiefItemsHidden)
+            {
+                Game.output(ObjectStrings.THIEF_MAGIC_1);
+
+                for (GameObject g : state.objectList.values())
+                {
+                    if (g.location == Location.TREASURE_ROOM)
+                        g.location = Location.TREASURE_ROOM_INVISIBLE;
+                }
+
+                thiefItemsHidden = true;
             }
 
             // Attack without pity!
@@ -683,7 +885,6 @@ public class Actor extends GameObject {
             }
         }
         
-
     }
 
     public void trollTurn(GameState state)
@@ -895,6 +1096,7 @@ public class Actor extends GameObject {
             }
 
         }
+
     }
 
 

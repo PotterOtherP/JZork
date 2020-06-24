@@ -324,6 +324,7 @@ class GameState {
             case EXAMINE: { directObject.examine(this); } break;
             case EXTINGUISH: { directObject.extinguish(this); } break;
             case FOLLOW: { directObject.follow(this); } break;
+            case GIVE: { directObject.give(this); } break;
             case KICK: { directObject.kick(this); } break;
             case KNOCK: { directObject.knock(this); } break;
             case LIGHT: { directObject.light(this); } break;
