@@ -348,6 +348,7 @@ class GameState {
             case SMELL: { directObject.smell(this); } break;
             case TAKE: {directObject.take(this); } break;
             case TALK_TO: { directObject.talk(this); } break;
+            case TIE: {directObject.tie(this); } break;
             case TOUCH: { directObject.touch(this); } break;
             case TURN: { directObject.turn(this); } break;
             case UNLOCK: {directObject.unlock(this); } break;

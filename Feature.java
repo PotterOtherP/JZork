@@ -183,6 +183,48 @@ class Feature extends GameObject {
 	}
 
 	@Override
+	public void tie(GameState state)
+	{
+		switch (name)
+		{
+			case "railing":
+			{
+				if (state.indirectObject.name.equals("rope"))
+				{
+					if (!state.ropeRailTied)
+					{
+						state.ropeRailTied = true;
+						Game.output("The rope drops over the side and comes within ten feet of the floor.");
+						GameObject rope = state.objectList.get("rope");
+						rope.location = Location.ON_RAILING;
+
+						Room rm1 = state.worldMap.get(Location.DOME_ROOM);
+						Room rm2 = state.worldMap.get(Location.TORCH_ROOM);
+						rm2.addFailMessage(Action.UP, "You cannot reach the rope.");
+						Passage psg = rm1.exits.get(Action.DOWN);
+						psg.open();
+					}
+
+					else
+					{
+						Game.output("It is already tied to the railing.");
+					}
+				}
+
+				else
+				{
+					Game.output("You can't tie that to the railing!");
+				}
+			} break;
+
+			default:
+			{
+				super.tie(state);
+			} break;
+		}
+	}
+
+	@Override
 	public void touch(GameState state)
 	{
 		switch (name)

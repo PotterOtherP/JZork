@@ -68,6 +68,7 @@ enum Location {
     ON_KITCHEN_TABLE,
     ON_ATTIC_TABLE,
     ON_PEDESTAL,
+    ON_RAILING,
 
 
     PLAYER_INVENTORY,
