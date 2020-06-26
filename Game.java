@@ -200,6 +200,7 @@ public final class Game {
 
 			if (result.isEmpty())
 			{
+                outputLine();
 				output("I beg your pardon?");
 				prompt();
 			}

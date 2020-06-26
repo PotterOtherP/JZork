@@ -982,39 +982,4 @@ class GameState {
         }
 	}
 
-    public void updateLoudRoom()
-    {
-        if (completePlayerInput.equals("echo"))
-        {
-            Game.output(MapStrings.LOUD_ROOM_CHANGE);
-            loudRoomSolved = true;
-            return;
-        }
-
-        switch(playerAction)
-        {
-            case EAST:
-            case WEST:
-            case UP:
-            {
-
-            } break;
-
-            default:
-            {
-
-            } break;
-        }
-
-
-
-    }
-
-
-
-
-
-
-
-
 }

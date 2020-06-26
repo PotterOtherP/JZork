@@ -5,21 +5,19 @@ import java.util.Random;
 public class Actor extends GameObject {
 	
 	public boolean alive;
-    public boolean staggered;
     public boolean disarmed;
-    public boolean unconscious;
     public boolean firstCombatTurn;
+    public int hitPoints;
+    public boolean staggered;
+    public int strength;
     public boolean thiefAggro;
     public boolean thiefFirstTurn;
     public boolean thiefItemsHidden;
-    public int hitPoints;
-    public int strength;
+    public boolean unconscious;
 
-
-
-    public static final int SONGBIRD_CHIRP_PERCENT = 15;
-    public static final int THIEF_ENCOUNTER_PERCENT = 5;
 	public static final int MAX_ENEMY_HIT_POINTS = 10;
+    public static final int THIEF_ENCOUNTER_PERCENT = 5;
+    public static final int SONGBIRD_CHIRP_PERCENT = 15;
 
 
 	public Actor(String name, Location loc)
@@ -123,13 +121,7 @@ public class Actor extends GameObject {
 
     }
 
-    
-    public void cyclopsCombat(GameState state)
-    {
-        
-    }
 
-    
     @Override
     public void give(GameState state)
     {
@@ -164,368 +156,59 @@ public class Actor extends GameObject {
     }
 
     
-    public void thiefCombat(GameState state)
+    public void cyclopsCombat(GameState state)
     {
-        firstCombatTurn = false;
-        thiefAggro = true;
-
-        String[] misses = { GameStrings.COMBAT_MISS_1, GameStrings.COMBAT_MISS_2, GameStrings.COMBAT_MISS_3,
-            GameStrings.COMBAT_PARRY_1, GameStrings.COMBAT_PARRY_2, GameStrings.COMBAT_PARRY_3 };
-        String[] lightBlows = { GameStrings.COMBAT_LIGHT_1, GameStrings.COMBAT_LIGHT_2, GameStrings.COMBAT_LIGHT_3,
-            GameStrings.COMBAT_LIGHT_4 };
-        String[] severeBlows = { GameStrings.COMBAT_SEVERE_1, GameStrings.COMBAT_SEVERE_2, GameStrings.COMBAT_SEVERE_3,
-            GameStrings.COMBAT_SEVERE_4 };
-        String[] staggerBlows = { GameStrings.COMBAT_STAGGER_1, GameStrings.COMBAT_STAGGER_2, GameStrings.COMBAT_STAGGER_3,
-            GameStrings.COMBAT_STAGGER_4 };
-        String[] disarmingBlows = { GameStrings.COMBAT_DISARM_1, GameStrings.COMBAT_DISARM_2 };
-        String[] knockoutBlows = { GameStrings.COMBAT_KNOCKOUT_1, GameStrings.COMBAT_KNOCKOUT_2, GameStrings.COMBAT_KNOCKOUT_3,
-            GameStrings.COMBAT_KNOCKOUT_4 };
-        String[] fatalBlows = { GameStrings.COMBAT_FATAL_1, GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
-
-        // values for the sword - not very useful against the thief
-        int missCutoff = 40;
-        int lightCutoff = 80;
-        int severeCutoff = 85;
-        int staggerCutoff = 90;
-        int disarmCutoff = 93;
-        int knockoutCutoff = 97;
-
-        // Fighting the thief with the knife is a lot more effective.
-        if (state.indirectObject.name.equals("nasty knife"))
-        {
-            // remove the decapitation string. These arrays have strange rules...
-            String[] fatals = { GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
-            fatalBlows = fatals;
-
-            missCutoff = 20;
-            lightCutoff = 50;
-            severeCutoff = 60;
-            staggerCutoff = 70;
-            disarmCutoff = 80;
-            knockoutCutoff = 90;
-
-        }
-
-        // Fighting the thief with the axe is almost completely ineffective.
-        if (state.indirectObject.name.equals("bloody axe"))
-        {
-            missCutoff = 60;
-            lightCutoff = 90;
-            severeCutoff = 92;
-            staggerCutoff = 94;
-            disarmCutoff = 96;
-            knockoutCutoff = 99;
-        }
-
-        Random rand = new Random();
-        int dieRoll = rand.nextInt(100);
-
-        if (0 <= dieRoll && dieRoll < missCutoff)
-        {
-            int phrase = rand.nextInt(misses.length);
-            Game.output(misses[phrase]);
-        }
-
-        else if (missCutoff <= dieRoll && dieRoll < lightCutoff)
-        {
-            hitPoints -= 1;
-
-            if (hitPoints <= 0)
-            {
-                int phrase = rand.nextInt(fatalBlows.length);
-                Game.output(fatalBlows[phrase]);
-            }
-
-            else
-            {
-                int phrase = rand.nextInt(lightBlows.length);
-                Game.output(lightBlows[phrase]);
-            }
-        }
-
-        else if (lightCutoff <= dieRoll && dieRoll < severeCutoff)
-        {
-            hitPoints -= 5;
-
-            if (hitPoints <= 0)
-            {
-                int phrase = rand.nextInt(fatalBlows.length);
-                Game.output(fatalBlows[phrase]);
-            }
-
-            else
-            {
-                int phrase = rand.nextInt(severeBlows.length);
-                Game.output(severeBlows[phrase]);
-            }         
-        }
-
-        else if (severeCutoff <= dieRoll && dieRoll < staggerCutoff)
-        {
-            int phrase = rand.nextInt(staggerBlows.length);
-            Game.output(staggerBlows[phrase]);
-            staggered = true;
-        }
-
-        else if (staggerCutoff <= dieRoll && dieRoll < disarmCutoff)
-        {
-            int phrase = rand.nextInt(disarmingBlows.length);
-            Game.output(disarmingBlows[phrase]);
-            GameObject stil = state.objectList.get("stiletto");
-            stil.location = state.playerLocation;
-            disarmed = true;
-        }
-
-        else if (disarmCutoff <= dieRoll && dieRoll < knockoutCutoff)
-        {
-            int phrase = rand.nextInt(knockoutBlows.length);
-            Game.output(knockoutBlows[phrase]);
-            presenceString = ObjectStrings.THIEF_PRESENT_UNCONSCIOUS;
-            unconscious = true;
-        }
-
-        else if (knockoutCutoff <= dieRoll && dieRoll < 100)
-        {
-            int phrase = rand.nextInt(fatalBlows.length);
-            Game.output(fatalBlows[phrase]);
-            alive = false;
-        }
-
+        
     }
 
-    
-    public void thiefDies(GameState state)
-    {
-        for (Item it : inventory)
-        {
-            it.location = location;
-        }
-        alive = false;
-        location = Location.NULL_LOCATION;
 
-        if (state.playerLocation == Location.TREASURE_ROOM)
-            Game.output(ObjectStrings.THIEF_MAGIC_2);
-
-        for (GameObject g : state.objectList.values())
-        {
-            if (g.location == Location.TREASURE_ROOM_INVISIBLE)
-            {
-                g.location = Location.TREASURE_ROOM;
-                if (state.playerLocation == Location.TREASURE_ROOM)
-                    Game.output("The " + g.name + " is now safe to take.");
-            }
-        }
-
-    }
-    
-    
-    public void trollCombat(GameState state)
-    {
-        String[] misses = { GameStrings.COMBAT_MISS_1, GameStrings.COMBAT_MISS_2, GameStrings.COMBAT_MISS_3,
-            GameStrings.COMBAT_PARRY_1, GameStrings.COMBAT_PARRY_2, GameStrings.COMBAT_PARRY_3 };
-        String[] lightBlows = { GameStrings.COMBAT_LIGHT_1, GameStrings.COMBAT_LIGHT_2, GameStrings.COMBAT_LIGHT_3,
-            GameStrings.COMBAT_LIGHT_4 };
-        String[] severeBlows = { GameStrings.COMBAT_SEVERE_1, GameStrings.COMBAT_SEVERE_2, GameStrings.COMBAT_SEVERE_3,
-            GameStrings.COMBAT_SEVERE_4 };
-        String[] staggerBlows = { GameStrings.COMBAT_STAGGER_1, GameStrings.COMBAT_STAGGER_2, GameStrings.COMBAT_STAGGER_3,
-            GameStrings.COMBAT_STAGGER_4 };
-        String[] disarmingBlows = { GameStrings.COMBAT_DISARM_1, GameStrings.COMBAT_DISARM_2 };
-        String[] knockoutBlows = { GameStrings.COMBAT_KNOCKOUT_1, GameStrings.COMBAT_KNOCKOUT_2, GameStrings.COMBAT_KNOCKOUT_3,
-            GameStrings.COMBAT_KNOCKOUT_4 };
-        String[] fatalBlows = { GameStrings.COMBAT_FATAL_1, GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
-
-        // values for the sword
-        int missCutoff = 10;
-        int lightCutoff = 25;
-        int severeCutoff = 40;
-        int staggerCutoff = 55;
-        int disarmCutoff = 70;
-        int knockoutCutoff = 85;
-
-        // Fighting the troll with the knife is a little harder.
-        if (state.indirectObject.name.equals("nasty knife"))
-        {
-            // remove the decapitation string. These arrays have strange rules...
-            String[] fatals = { GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
-            fatalBlows = fatals;
-
-            missCutoff = 20;
-            lightCutoff = 50;
-            severeCutoff = 60;
-            staggerCutoff = 70;
-            disarmCutoff = 80;
-            knockoutCutoff = 90;
-
-        }
-
-        Random rand = new Random();
-        int dieRoll = rand.nextInt(100);
-
-        if (0 <= dieRoll && dieRoll < missCutoff)
-        {
-            int phrase = rand.nextInt(misses.length);
-            Game.output(misses[phrase]);
-        }
-
-        else if (missCutoff <= dieRoll && dieRoll < lightCutoff)
-        {
-            hitPoints -= 1;
-
-            if (hitPoints <= 0)
-            {
-                int phrase = rand.nextInt(fatalBlows.length);
-                Game.output(fatalBlows[phrase]);
-            }
-
-            else
-            {
-                int phrase = rand.nextInt(lightBlows.length);
-                Game.output(lightBlows[phrase]);
-            }
-        }
-
-        else if (lightCutoff <= dieRoll && dieRoll < severeCutoff)
-        {
-            hitPoints -= 5;
-
-            if (hitPoints <= 0)
-            {
-                int phrase = rand.nextInt(fatalBlows.length);
-                Game.output(fatalBlows[phrase]);
-            }
-
-            else
-            {
-                int phrase = rand.nextInt(severeBlows.length);
-                Game.output(severeBlows[phrase]);
-            }         
-        }
-
-        else if (severeCutoff <= dieRoll && dieRoll < staggerCutoff)
-        {
-            int phrase = rand.nextInt(staggerBlows.length);
-            Game.output(staggerBlows[phrase]);
-            staggered = true;
-        }
-
-        else if (staggerCutoff <= dieRoll && dieRoll < disarmCutoff)
-        {
-            int phrase = rand.nextInt(disarmingBlows.length);
-            Game.output(disarmingBlows[phrase]);
-            GameObject axe = state.objectList.get("bloody axe");
-            axe.location = state.playerLocation;
-            disarmed = true;
-        }
-
-        else if (disarmCutoff <= dieRoll && dieRoll < knockoutCutoff)
-        {
-            int phrase = rand.nextInt(knockoutBlows.length);
-            Game.output(knockoutBlows[phrase]);
-            unconscious = true;
-            GameObject axe = state.objectList.get("bloody axe");
-            axe.location = state.playerLocation;
-            disarmed = true;
-        }
-
-        else if (knockoutCutoff <= dieRoll && dieRoll < 100)
-        {
-            int phrase = rand.nextInt(fatalBlows.length);
-            Game.output(fatalBlows[phrase]);
-            alive = false;
-        }
-
-    }
-
-    
-    public void trollDies(GameState state)
-    {
-        alive = false;
-
-        for (Item it : inventory)
-        {
-            it.location = location;
-        }
-
-        location = Location.NULL_LOCATION;
-        Room trollrm = state.worldMap.get(Location.TROLL_ROOM);
-        Passage p1 = trollrm.exits.get(Action.WEST);
-        Passage p2 = trollrm.exits.get(Action.EAST);
-        p1.open();
-        p2.open();
-
-        if (state.playerLocation == Location.TROLL_ROOM && state.directObject.name.equals("troll"))
-            Game.lineOutput(GameStrings.COMBAT_ENEMY_DIES);
-
-    }
-
-    
-    public void trollGive(GameState state)
-    {
-        String item = state.indirectObject.name;
-        switch (item)
-        {
-            case "axe":
-            {
-                Game.output(ObjectStrings.TROLL_GIVE_AXE);
-                state.indirectObject.location = Location.TROLL_INVENTORY;
-            } break;
-
-            default:
-            {
-                
-                Game.output("The troll, who is remarkably coordinated, catches the " + item + ".");
-                state.indirectObject.location = Location.TROLL_INVENTORY;
-            } break;
-        }
-    }
-
-	
     public void cyclopsTurn(GameState state)
-	{
-		if (state.playerLocation == Location.CELLAR && state.playerPreviousLocation == Location.LIVING_ROOM)
+    {
+        if (state.playerLocation == Location.CELLAR && state.playerPreviousLocation == Location.LIVING_ROOM)
         {
             Room rm = state.worldMap.get(Location.CELLAR);
             Passage p = rm.exits.get(Action.UP);
             p.close();
         }
-	}
 
-	
+    }
+
+
     public void floodTurn(GameState state)
     {
-    	if (!alive) return;
+        if (!alive) return;
     }
 
-    
+
     public void gustOfWindTurn(GameState state)
     {
-    	
+        
     }
+
 
     public void riverCurrentTurn(GameState state)
     {
 
     }
 
-	
-    public void songbirdTurn(GameState state)
-	{
-		if (altLocations.contains(state.playerLocation))
-		{
-			Random rand = new Random();
-			if (rand.nextInt(100) < SONGBIRD_CHIRP_PERCENT)
-				Game.output(GameStrings.SONGBIRD);
-		}
-		
-	}
 
-	
+    public void songbirdTurn(GameState state)
+    {
+        if (altLocations.contains(state.playerLocation))
+        {
+            Random rand = new Random();
+            if (rand.nextInt(100) < SONGBIRD_CHIRP_PERCENT)
+                Game.output(GameStrings.SONGBIRD);
+        }
+        
+    }
+
+
     public void spiritsTurn(GameState state)
     {
         if (!alive) return;
     }
 
-    
     public void thiefAttacks(GameState state)
     {
         // Game.output("The thief attacks you, sucka!");
@@ -666,6 +349,161 @@ public class Actor extends GameObject {
 
     }
 
+
+    public void thiefCombat(GameState state)
+    {
+        firstCombatTurn = false;
+        thiefAggro = true;
+
+        String[] misses = { GameStrings.COMBAT_MISS_1, GameStrings.COMBAT_MISS_2, GameStrings.COMBAT_MISS_3,
+            GameStrings.COMBAT_PARRY_1, GameStrings.COMBAT_PARRY_2, GameStrings.COMBAT_PARRY_3 };
+        String[] lightBlows = { GameStrings.COMBAT_LIGHT_1, GameStrings.COMBAT_LIGHT_2, GameStrings.COMBAT_LIGHT_3,
+            GameStrings.COMBAT_LIGHT_4 };
+        String[] severeBlows = { GameStrings.COMBAT_SEVERE_1, GameStrings.COMBAT_SEVERE_2, GameStrings.COMBAT_SEVERE_3,
+            GameStrings.COMBAT_SEVERE_4 };
+        String[] staggerBlows = { GameStrings.COMBAT_STAGGER_1, GameStrings.COMBAT_STAGGER_2, GameStrings.COMBAT_STAGGER_3,
+            GameStrings.COMBAT_STAGGER_4 };
+        String[] disarmingBlows = { GameStrings.COMBAT_DISARM_1, GameStrings.COMBAT_DISARM_2 };
+        String[] knockoutBlows = { GameStrings.COMBAT_KNOCKOUT_1, GameStrings.COMBAT_KNOCKOUT_2, GameStrings.COMBAT_KNOCKOUT_3,
+            GameStrings.COMBAT_KNOCKOUT_4 };
+        String[] fatalBlows = { GameStrings.COMBAT_FATAL_1, GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
+
+        // values for the sword - not very useful against the thief
+        int missCutoff = 40;
+        int lightCutoff = 80;
+        int severeCutoff = 85;
+        int staggerCutoff = 90;
+        int disarmCutoff = 93;
+        int knockoutCutoff = 97;
+
+        // Fighting the thief with the knife is a lot more effective.
+        if (state.indirectObject.name.equals("nasty knife"))
+        {
+            // remove the decapitation string. These arrays have strange rules...
+            String[] fatals = { GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
+            fatalBlows = fatals;
+
+            missCutoff = 20;
+            lightCutoff = 50;
+            severeCutoff = 60;
+            staggerCutoff = 70;
+            disarmCutoff = 80;
+            knockoutCutoff = 90;
+
+        }
+
+        // Fighting the thief with the axe is almost completely ineffective.
+        if (state.indirectObject.name.equals("bloody axe"))
+        {
+            missCutoff = 60;
+            lightCutoff = 90;
+            severeCutoff = 92;
+            staggerCutoff = 94;
+            disarmCutoff = 96;
+            knockoutCutoff = 99;
+        }
+
+        Random rand = new Random();
+        int dieRoll = rand.nextInt(100);
+
+        if (0 <= dieRoll && dieRoll < missCutoff)
+        {
+            int phrase = rand.nextInt(misses.length);
+            Game.output(misses[phrase]);
+        }
+
+        else if (missCutoff <= dieRoll && dieRoll < lightCutoff)
+        {
+            hitPoints -= 1;
+
+            if (hitPoints <= 0)
+            {
+                int phrase = rand.nextInt(fatalBlows.length);
+                Game.output(fatalBlows[phrase]);
+            }
+
+            else
+            {
+                int phrase = rand.nextInt(lightBlows.length);
+                Game.output(lightBlows[phrase]);
+            }
+        }
+
+        else if (lightCutoff <= dieRoll && dieRoll < severeCutoff)
+        {
+            hitPoints -= 5;
+
+            if (hitPoints <= 0)
+            {
+                int phrase = rand.nextInt(fatalBlows.length);
+                Game.output(fatalBlows[phrase]);
+            }
+
+            else
+            {
+                int phrase = rand.nextInt(severeBlows.length);
+                Game.output(severeBlows[phrase]);
+            }         
+        }
+
+        else if (severeCutoff <= dieRoll && dieRoll < staggerCutoff)
+        {
+            int phrase = rand.nextInt(staggerBlows.length);
+            Game.output(staggerBlows[phrase]);
+            staggered = true;
+        }
+
+        else if (staggerCutoff <= dieRoll && dieRoll < disarmCutoff)
+        {
+            int phrase = rand.nextInt(disarmingBlows.length);
+            Game.output(disarmingBlows[phrase]);
+            GameObject stil = state.objectList.get("stiletto");
+            stil.location = state.playerLocation;
+            disarmed = true;
+        }
+
+        else if (disarmCutoff <= dieRoll && dieRoll < knockoutCutoff)
+        {
+            int phrase = rand.nextInt(knockoutBlows.length);
+            Game.output(knockoutBlows[phrase]);
+            presenceString = ObjectStrings.THIEF_PRESENT_UNCONSCIOUS;
+            unconscious = true;
+        }
+
+        else if (knockoutCutoff <= dieRoll && dieRoll < 100)
+        {
+            int phrase = rand.nextInt(fatalBlows.length);
+            Game.output(fatalBlows[phrase]);
+            alive = false;
+        }
+
+    }
+
+ 
+    public void thiefDies(GameState state)
+    {
+        for (Item it : inventory)
+        {
+            it.location = location;
+        }
+        alive = false;
+        location = Location.NULL_LOCATION;
+
+        if (state.playerLocation == Location.TREASURE_ROOM)
+            Game.output(ObjectStrings.THIEF_MAGIC_2);
+
+        for (GameObject g : state.objectList.values())
+        {
+            if (g.location == Location.TREASURE_ROOM_INVISIBLE)
+            {
+                g.location = Location.TREASURE_ROOM;
+                if (state.playerLocation == Location.TREASURE_ROOM)
+                    Game.output("The " + g.name + " is now safe to take.");
+            }
+        }
+
+    }
+    
     
     public void thiefLootsRoom(GameState state)
     {
@@ -887,6 +725,169 @@ public class Actor extends GameObject {
         
     }
 
+
+    public void trollCombat(GameState state)
+    {
+        String[] misses = { GameStrings.COMBAT_MISS_1, GameStrings.COMBAT_MISS_2, GameStrings.COMBAT_MISS_3,
+            GameStrings.COMBAT_PARRY_1, GameStrings.COMBAT_PARRY_2, GameStrings.COMBAT_PARRY_3 };
+        String[] lightBlows = { GameStrings.COMBAT_LIGHT_1, GameStrings.COMBAT_LIGHT_2, GameStrings.COMBAT_LIGHT_3,
+            GameStrings.COMBAT_LIGHT_4 };
+        String[] severeBlows = { GameStrings.COMBAT_SEVERE_1, GameStrings.COMBAT_SEVERE_2, GameStrings.COMBAT_SEVERE_3,
+            GameStrings.COMBAT_SEVERE_4 };
+        String[] staggerBlows = { GameStrings.COMBAT_STAGGER_1, GameStrings.COMBAT_STAGGER_2, GameStrings.COMBAT_STAGGER_3,
+            GameStrings.COMBAT_STAGGER_4 };
+        String[] disarmingBlows = { GameStrings.COMBAT_DISARM_1, GameStrings.COMBAT_DISARM_2 };
+        String[] knockoutBlows = { GameStrings.COMBAT_KNOCKOUT_1, GameStrings.COMBAT_KNOCKOUT_2, GameStrings.COMBAT_KNOCKOUT_3,
+            GameStrings.COMBAT_KNOCKOUT_4 };
+        String[] fatalBlows = { GameStrings.COMBAT_FATAL_1, GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
+
+        // values for the sword
+        int missCutoff = 10;
+        int lightCutoff = 25;
+        int severeCutoff = 40;
+        int staggerCutoff = 55;
+        int disarmCutoff = 70;
+        int knockoutCutoff = 85;
+
+        // Fighting the troll with the knife is a little harder.
+        if (state.indirectObject.name.equals("nasty knife"))
+        {
+            // remove the decapitation string. These arrays have strange rules...
+            String[] fatals = { GameStrings.COMBAT_FATAL_2, GameStrings.COMBAT_FATAL_3 };
+            fatalBlows = fatals;
+
+            missCutoff = 20;
+            lightCutoff = 50;
+            severeCutoff = 60;
+            staggerCutoff = 70;
+            disarmCutoff = 80;
+            knockoutCutoff = 90;
+
+        }
+
+        Random rand = new Random();
+        int dieRoll = rand.nextInt(100);
+
+        if (0 <= dieRoll && dieRoll < missCutoff)
+        {
+            int phrase = rand.nextInt(misses.length);
+            Game.output(misses[phrase]);
+        }
+
+        else if (missCutoff <= dieRoll && dieRoll < lightCutoff)
+        {
+            hitPoints -= 1;
+
+            if (hitPoints <= 0)
+            {
+                int phrase = rand.nextInt(fatalBlows.length);
+                Game.output(fatalBlows[phrase]);
+            }
+
+            else
+            {
+                int phrase = rand.nextInt(lightBlows.length);
+                Game.output(lightBlows[phrase]);
+            }
+        }
+
+        else if (lightCutoff <= dieRoll && dieRoll < severeCutoff)
+        {
+            hitPoints -= 5;
+
+            if (hitPoints <= 0)
+            {
+                int phrase = rand.nextInt(fatalBlows.length);
+                Game.output(fatalBlows[phrase]);
+            }
+
+            else
+            {
+                int phrase = rand.nextInt(severeBlows.length);
+                Game.output(severeBlows[phrase]);
+            }         
+        }
+
+        else if (severeCutoff <= dieRoll && dieRoll < staggerCutoff)
+        {
+            int phrase = rand.nextInt(staggerBlows.length);
+            Game.output(staggerBlows[phrase]);
+            staggered = true;
+        }
+
+        else if (staggerCutoff <= dieRoll && dieRoll < disarmCutoff)
+        {
+            int phrase = rand.nextInt(disarmingBlows.length);
+            Game.output(disarmingBlows[phrase]);
+            GameObject axe = state.objectList.get("bloody axe");
+            axe.location = state.playerLocation;
+            disarmed = true;
+        }
+
+        else if (disarmCutoff <= dieRoll && dieRoll < knockoutCutoff)
+        {
+            int phrase = rand.nextInt(knockoutBlows.length);
+            Game.output(knockoutBlows[phrase]);
+            unconscious = true;
+            GameObject axe = state.objectList.get("bloody axe");
+            axe.location = state.playerLocation;
+            disarmed = true;
+        }
+
+        else if (knockoutCutoff <= dieRoll && dieRoll < 100)
+        {
+            int phrase = rand.nextInt(fatalBlows.length);
+            Game.output(fatalBlows[phrase]);
+            alive = false;
+        }
+
+    }
+
+    
+    public void trollDies(GameState state)
+    {
+        alive = false;
+
+        for (Item it : inventory)
+        {
+            it.location = location;
+        }
+
+        location = Location.NULL_LOCATION;
+        Room trollrm = state.worldMap.get(Location.TROLL_ROOM);
+        Passage p1 = trollrm.exits.get(Action.WEST);
+        Passage p2 = trollrm.exits.get(Action.EAST);
+        p1.open();
+        p2.open();
+
+        if (state.playerLocation == Location.TROLL_ROOM && state.directObject.name.equals("troll"))
+            Game.lineOutput(GameStrings.COMBAT_ENEMY_DIES);
+
+    }
+
+    
+    public void trollGive(GameState state)
+    {
+        String item = state.indirectObject.name;
+        switch (item)
+        {
+            case "axe":
+            {
+                Game.output(ObjectStrings.TROLL_GIVE_AXE);
+                state.indirectObject.location = Location.TROLL_INVENTORY;
+            } break;
+
+            default:
+            {
+                
+                Game.output("The troll, who is remarkably coordinated, catches the " + item + ".");
+                state.indirectObject.location = Location.TROLL_INVENTORY;
+            } break;
+        }
+
+    }
+
+
     public void trollTurn(GameState state)
     {
         if (!alive) return;
@@ -1105,9 +1106,10 @@ public class Actor extends GameObject {
 
     }
 
+
+
 	@Override
 	public boolean isAlive() { return alive; }
-
 	public String toString() { return name; }
 
 

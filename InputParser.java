@@ -35,7 +35,36 @@ public class InputParser {
 		// The loud room needs to be dealt with here
 		if (state.playerLocation == Location.LOUD_ROOM && !state.loudRoomSolved)
 		{
-			String firstWord = input.trim().split(" ")[0];
+			if (input.equals("echo"))
+	        {
+	            Game.output(MapStrings.LOUD_ROOM_CHANGE);
+	            state.loudRoomSolved = true;
+	            return false;
+	        }
+
+	        String[] words = input.trim().split(" ");
+	        String lastWord = words[words.length - 1];
+
+			parseInputAction();
+
+			switch (state.playerAction)
+			{
+				case EAST:
+				case WEST:
+				case UP:
+				case QUIT:
+				{
+					return true;
+				}
+
+				default:
+				{
+					Game.output(lastWord + " " + lastWord + "...");
+				} break;
+
+			}
+
+			return false;
 		}
 
 		// Get previous input if player typed "again"
