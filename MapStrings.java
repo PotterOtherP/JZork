@@ -137,13 +137,21 @@ class MapStrings {
     
     public static final String DESC_EGYPTIAN_ROOM = "This is a room which looks like an Egyptian tomb. There is an "
         + "ascending staircase to the west.";
+        
+    public static final String DESC_DOME_ROOM = "You are at the periphery of a large dome, which forms the ceiling of another "
+        + "room below. Protecting you from a precipitous drop is a wooden railing which circles the dome.";
     
+    public static final String DESC_DOME_ROOM_ROPE = "You are at the periphery of a large dome, which forms the ceiling of another "
+        + "room below. Protecting you from a precipitous drop is a wooden railing which circles the dome."
+        + "\nHanging down from the railing is a rope which ends about ten feet from the floor below.";
+
     public static final String DESC_TORCH_ROOM = "This is a large room with a prominent doorway leading to a down staircase. "
         + "Above you is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In the center of the "
         + "room sits a white marble pedestal.";
-    
-    public static final String DESC_DOME_ROOM = "You are at the periphery of a large dome, which forms the ceiling of another "
-        + "room below. Protecting you from a precipitous drop is a wooden railing which circles the dome.";
+
+    public static final String DESC_TORCH_ROOM_ROPE = "You are at the periphery of a large dome, which forms the ceiling of another "
+        + "room below. Protecting you from a precipitous drop is a wooden railing which circles the dome."
+        + "\nA piece of rope descends from the railing above, ending some five feet above your head.";
     
     public static final String DESC_ENGRAVINGS_CAVE = "You have entered a low cave with passages leading northwest and east. "
         + "There are old engravings on the walls here.";

@@ -174,6 +174,10 @@ class GameState {
                 }
             }
 
+            // Individual cases
+            if (ropeRailTied && (playerLocation == Location.DOME_ROOM || playerLocation == Location.TORCH_ROOM) )
+                currentObjects.put("rope", objectList.get("rope"));
+
             
         }
     }
@@ -343,6 +347,7 @@ class GameState {
             case PUSH: { directObject.push(this); } break;
             case RAISE: { directObject.raise(this); } break;
             case READ: { directObject.read(this); } break;
+            case REMOVE: { directObject.remove(this); } break;
             case SEARCH: { directObject.search(this); } break;
             case SHAKE: { directObject.shake(this); } break;
             case SMELL: { directObject.smell(this); } break;
@@ -352,6 +357,7 @@ class GameState {
             case TOUCH: { directObject.touch(this); } break;
             case TURN: { directObject.turn(this); } break;
             case UNLOCK: {directObject.unlock(this); } break;
+            case UNTIE: {directObject.untie(this); } break;
             case WAKE: { directObject.wake(this); } break;
             case WAVE: { directObject.wave(this); } break;
             case WEAR: { directObject.wear(this); } break;

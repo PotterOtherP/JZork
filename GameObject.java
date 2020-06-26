@@ -54,6 +54,7 @@ abstract class GameObject {
     public String pushString;
     public String raiseString;
     public String readString;
+    public String removeString;
     public String searchString;
     public String shakeString;
     public String smellString;    
@@ -61,6 +62,7 @@ abstract class GameObject {
     public String talkString;
     public String throwString;
     public String touchString;
+    public String untieString;
     public String wakeString;
     public String waveString;
     public String wearString;
@@ -147,12 +149,14 @@ abstract class GameObject {
         pourString = "";    // game treats this as "drop"
         pullString = "";    // game treats this as "move"
         readString = "You can't read that!";
+        removeString = "You can't read that!";
         searchString = "You find nothing unusual.";
         shakeString = "Shaken.";
         smellString = "It smells like " + articleName + ".";    
         takeString = "";
         talkString = "You can't talk to the " + name + "!";
         touchString = "";
+        untieString = "The " + name + " cannot be tied, so it cannot be untied!";
         wakeString = "The " + name + " isn't sleeping.";
         wearString = "You can't wear the " + name + ".";
         windString = "You cannot wind up " + articleName + ".";
@@ -297,6 +301,7 @@ abstract class GameObject {
     public void push(GameState state) { Game.output(pushString + randPhrase()); }    
     public void raise(GameState state) { Game.output(raiseString + randPhrase()); }
     public void read(GameState state) { Game.output(readString); }
+    public void remove(GameState state) { Game.output(removeString); }
     public void search(GameState state) { Game.output(searchString); }
     public void shake(GameState state) { Game.output(shakeString); }
     public void smell(GameState state) { Game.output(smellString); }   
@@ -309,6 +314,7 @@ abstract class GameObject {
     }
     public void talk(GameState state) { Game.output(talkString); }   
     public void touch(GameState state) { Game.output(touchString + randPhrase()); }
+    public void untie(GameState state) { Game.output(untieString); }
     public void wake(GameState state) { Game.output(wakeString); }
     public void wave(GameState state) { Game.output(waveString + randPhrase()); }
     public void wear(GameState state) { Game.output(wearString); }
@@ -349,9 +355,8 @@ abstract class GameObject {
 
     public void put(GameState state) { Game.output(putString); }
 
-    public void remove(GameState state) {}
     public void throwObject(GameState state) { Game.output(throwString); }
-    public void tie(GameState state) { Game.output(tieString); }
+    public void tie(GameState state) { Game.output("You can't tie the " + state.indirectObject.name + " to that."); }
     public void turn(GameState state) { Game.output(turnString); }
     public void unlock(GameState state) { Game.output("You can't unlock that."); }
     public void drop(GameState state) { Game.output("You can't drop that."); }

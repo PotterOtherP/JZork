@@ -374,6 +374,12 @@ class Item extends GameObject{
             return;
         }
 
+        if (name.equals("rope") && state.ropeRailTied)
+        {
+            this.untie(state);
+            return;
+        }
+
         if ((state.playerCarryWeight + weight) >= state.playerMaxCarryWeight)
         {
             Game.output(GameStrings.OVERBURDENED);
@@ -386,6 +392,47 @@ class Item extends GameObject{
 
         movedFromStart = true;
 
+    }
+
+    @Override
+    public void untie(GameState state)
+    {
+        switch (name)
+        {
+            case "rope":
+            {
+                if (state.ropeRailTied)
+                {
+                    if (state.playerLocation == Location.TORCH_ROOM)
+                        Game.output("You cannot reach the rope.");
+                    else if (state.playerLocation == Location.DOME_ROOM)
+                    {
+                        state.ropeRailTied = false;
+                        Game.output("The rope is now untied.");
+                        GameObject rope = state.objectList.get("rope");
+                        rope.location = Location.PLAYER_INVENTORY;
+
+                        Room rm1 = state.worldMap.get(Location.DOME_ROOM);
+                        Room rm2 = state.worldMap.get(Location.TORCH_ROOM);
+                        rm1.description = MapStrings.DESC_DOME_ROOM;
+                        rm2.description = MapStrings.DESC_TORCH_ROOM;
+                        rm2.removeFailMessage(Action.UP);
+                        Passage psg = rm1.exits.get(Action.DOWN);
+                        psg.close();
+                    }
+                }
+
+                else
+                {
+                    Game.output("It is not tied to anything.");
+                }
+            } break;
+
+            default:
+            {
+                super.untie(state);
+            }
+        }
     }
 
     @Override

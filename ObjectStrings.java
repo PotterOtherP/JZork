@@ -74,6 +74,9 @@ class ObjectStrings {
     public static final String HOUSE_EXAMINE = "The house is a beautiful colonial house which is painted white. It is clear "
             + "that the owners must have been extremely wealthy.";
 
+    public static final String ROPE_ON_RAIL = "Hanging down from the railing is a rope which ends about ten feet from the "
+        + " floor below.";
+
     public static final String RUSTY_KNIFE_TAKE = "As you touch the rusty knife, your sword gives a single pulse "
         + "of blinding blue light.";
     public static final String RUSTY_KNIFE_CURSE = "As the knife approaches its victim, your mind is submerged by "

@@ -187,7 +187,7 @@ class Feature extends GameObject {
 	{
 		switch (name)
 		{
-			case "railing":
+			case "wooden railing":
 			{
 				if (state.indirectObject.name.equals("rope"))
 				{
@@ -200,6 +200,8 @@ class Feature extends GameObject {
 
 						Room rm1 = state.worldMap.get(Location.DOME_ROOM);
 						Room rm2 = state.worldMap.get(Location.TORCH_ROOM);
+						rm1.description = MapStrings.DESC_DOME_ROOM_ROPE;
+						rm2.description = MapStrings.DESC_TORCH_ROOM_ROPE;
 						rm2.addFailMessage(Action.UP, "You cannot reach the rope.");
 						Passage psg = rm1.exits.get(Action.DOWN);
 						psg.open();
@@ -207,13 +209,13 @@ class Feature extends GameObject {
 
 					else
 					{
-						Game.output("It is already tied to the railing.");
+						Game.output("The rope is already tied to it.");
 					}
 				}
 
 				else
 				{
-					Game.output("You can't tie that to the railing!");
+					Game.output("You can't tie the " + state.indirectObject.name + " to that.");
 				}
 			} break;
 

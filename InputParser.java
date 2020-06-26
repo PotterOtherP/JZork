@@ -341,6 +341,7 @@ public class InputParser {
 						case TAKE:
 						case OPEN:
 						case MOVE_OBJECT:
+						case UNTIE:
 						{
 
 						} break;
@@ -420,6 +421,20 @@ public class InputParser {
 						g.location = Location.PLAYER_INVENTORY;
 						g.movedFromStart = true;
 						accioCheck = true;
+
+						if (g.name.equals("rope") && state.ropeRailTied)
+						{
+							state.ropeRailTied = false;
+	                        g.location = Location.PLAYER_INVENTORY;
+
+	                        Room rm1 = state.worldMap.get(Location.DOME_ROOM);
+	                        Room rm2 = state.worldMap.get(Location.TORCH_ROOM);
+	                        rm1.description = MapStrings.DESC_DOME_ROOM;
+	                        rm2.description = MapStrings.DESC_TORCH_ROOM;
+	                        rm2.removeFailMessage(Action.UP);
+	                        Passage psg = rm1.exits.get(Action.DOWN);
+	                        psg.close();
+						}
 						return true;
 					}
 				}

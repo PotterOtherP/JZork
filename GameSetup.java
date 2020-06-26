@@ -105,8 +105,8 @@ enum Action {
     DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXTINGUISH,
     FOLLOW, KICK, KNOCK, LAUNCH, LIGHT, LISTEN, LOOK_IN, LOOK_OUT, LOOK_UNDER,
     LOWER, MOVE_OBJECT, OPEN, PLAY, POUR, PULL, PUSH, RAISE,
-    READ, RING, SEARCH, SHAKE, SMELL, STRIKE, TAKE, TALK_TO,
-    TOUCH, WAKE, WAVE, WEAR, WIND,
+    READ, REMOVE, RING, SEARCH, SHAKE, SMELL, STRIKE, TAKE, TALK_TO,
+    TOUCH, UNTIE, WAKE, WAVE, WEAR, WIND,
 
     ATTACK, BREAK, BURN, CUT, DIG, FILL, INFLATE, LOCK,
     TURN, UNLOCK,
@@ -1486,7 +1486,8 @@ public class GameSetup {
         Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM);
         pedestal.inventoryID = Location.ON_PEDESTAL;
 
-        Feature railing = new Feature("railing", Location.DOME_ROOM);
+        Feature railing = new Feature("wooden railing", Location.DOME_ROOM);
+        railing.altNames.add("railing");
         railing.altNames.add("rail");
 
         Feature rainbow = new Feature("rainbow", Location.END_OF_RAINBOW);
@@ -1839,6 +1840,7 @@ public class GameSetup {
 	    state.actions.put("push", Action.PUSH);
 	    state.actions.put("raise", Action.RAISE);
 	    state.actions.put("read", Action.READ);
+        state.actions.put("remove", Action.REMOVE);
 	    state.actions.put("say", Action.TALK_TO);
 	    state.actions.put("search", Action.SEARCH);
 	    state.actions.put("shake", Action.SHAKE);
@@ -1851,6 +1853,8 @@ public class GameSetup {
 	    state.actions.put("talk to", Action.TALK_TO);
 	    state.actions.put("touch", Action.TOUCH);
 	    state.actions.put("turn", Action.TURN);
+        state.actions.put("detach", Action.UNTIE);
+        state.actions.put("untie", Action.UNTIE);
 	    state.actions.put("wake", Action.WAKE);
 	    state.actions.put("wave", Action.WAVE);
 	    state.actions.put("wear", Action.WEAR);
@@ -1939,6 +1943,7 @@ public class GameSetup {
 	    state.actionTypes.put(Action.PUSH, ActionType.DIRECT);
 	    state.actionTypes.put(Action.RAISE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.READ, ActionType.DIRECT);
+        state.actionTypes.put(Action.REMOVE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.SEARCH, ActionType.DIRECT);
 	    state.actionTypes.put(Action.SHAKE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.SMELL, ActionType.DIRECT);
@@ -1947,6 +1952,7 @@ public class GameSetup {
 	    state.actionTypes.put(Action.TALK_TO, ActionType.DIRECT);
 	    state.actionTypes.put(Action.TOUCH, ActionType.DIRECT);
 	    state.actionTypes.put(Action.TURN, ActionType.DIRECT);
+        state.actionTypes.put(Action.UNTIE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.WAKE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.WAVE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.WEAR, ActionType.DIRECT);
