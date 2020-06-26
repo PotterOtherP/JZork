@@ -32,6 +32,12 @@ public class InputParser {
 		if (Game.godmode && processGodmode())
 			return false;
 
+		// The loud room needs to be dealt with here
+		if (state.playerLocation == Location.LOUD_ROOM && !state.loudRoomSolved)
+		{
+			String firstWord = input.trim().split(" ")[0];
+		}
+
 		// Get previous input if player typed "again"
 		if (input.equals("again") || input.equals("g"))
 		{

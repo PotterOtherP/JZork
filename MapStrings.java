@@ -159,6 +159,8 @@ class MapStrings {
     public static final String DESC_LOUD_ROOM = "This is a large room with a ceiling which cannot be detected from the ground. "
         + "There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an "
         + "undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.";
+
+    public static final String LOUD_ROOM_CHANGE = "The acoustics of the room change subtlely.";
     
     public static final String DESC_DAMP_CAVE = "This cave has exits to the west and east, and narrows to a crack toward the "
         + "south. The earth is particularly damp here.";

@@ -19,6 +19,7 @@ class GameState {
 	public boolean houseWindowOpened;
 	public boolean carpetMoved;
 	public boolean leafPileMoved;
+    public boolean loudRoomSolved;
 	public boolean mirrorBroken;
 	public boolean rainbowSolid;
     public boolean ropeRailTied;
@@ -82,7 +83,9 @@ class GameState {
 		houseWindowOpened = false;
 		carpetMoved = false;
 		leafPileMoved = false;
+        loudRoomSolved = false;
 		potOfGoldAppeared = false;
+        ropeRailTied = false;
 		rainbowSolid = false;
 		verbosity = Verbosity.BRIEF;
 
@@ -308,7 +311,6 @@ class GameState {
 			updateDarkness();
 			return;
 		}
-
 
 		switch (playerAction)
 		{
@@ -979,6 +981,34 @@ class GameState {
             }
         }
 	}
+
+    public void updateLoudRoom()
+    {
+        if (completePlayerInput.equals("echo"))
+        {
+            Game.output(MapStrings.LOUD_ROOM_CHANGE);
+            loudRoomSolved = true;
+            return;
+        }
+
+        switch(playerAction)
+        {
+            case EAST:
+            case WEST:
+            case UP:
+            {
+
+            } break;
+
+            default:
+            {
+
+            } break;
+        }
+
+
+
+    }
 
 
 
