@@ -20,9 +20,6 @@ public final class Game {
     public static final int MAX_LINE_LENGTH = 80;
 	public static final Location STARTING_LOCATION = Location.WEST_OF_HOUSE;
 
-
-
-
 	public static void main(String[] args)
 	{
         setMode(args);      
@@ -68,6 +65,12 @@ public final class Game {
 	}
 
 
+    public static void endGame(GameState state)
+    {
+        output("Game has ended.");
+        output("Total turns: " + state.turns);
+
+    }
 
 
 	public static void initGame(GameState state)
@@ -83,23 +86,43 @@ public final class Game {
 
 	}
 
-    public static void setMode(String[] args)
+
+    public static String getPlayerText()
     {
-        if (args.length > 0 && args[0].equals("debug"))
+        Scanner scn = new Scanner(System.in);
+        String result = "";
+        prompt();
+
+        while(result.isEmpty())
         {
-            debug = true;
-            output("Testing mode on.");
+            result = scn.nextLine();
+
+            if (result.isEmpty())
+            {
+                outputLine();
+                output("I beg your pardon?");
+                prompt();
+            }
         }
 
-        if (args.length > 0 && args[0].equals("godmode"))
-        {
-            output("God mode enabled.");
-            godmode = true;
-        }
+        return result.trim().toLowerCase();
+
     }
 
-	public static void prompt() { System.out.print("\n>> "); }
+
+    public static void lineOutput(String s)
+    {
+        if (s.isEmpty()) return;
+
+        System.out.println();
+
+        output(s);
+
+    }
+
+
 	public static void outputLine() { System.out.println(); }
+
 	
 	public static void output(String s)
     {
@@ -146,70 +169,25 @@ public final class Game {
 
     }
 
-    public static void lineOutput(String s)
+
+    public static void prompt() { System.out.print("\n>> "); }
+
+
+    public static void setMode(String[] args)
     {
-        if (s.isEmpty()) return;
-
-        System.out.println();
-
-        if (s.contains("WEAPON"))
+        if (args.length > 0 && args[0].equals("debug"))
         {
-            s = s.replace("WEAPON", (gameState.indirectObject.name));
+            debug = true;
+            output("Testing mode on.");
         }
 
-        if (s.contains("ENEMY"))
+        if (args.length > 0 && args[0].equals("godmode"))
         {
-            s = s.replace("ENEMY", (gameState.directObject.name));
-        }
-
-        String[] lines = s.split("\n");
-
-        for (int i = 0; i < lines.length; ++i)
-        {
-            String line = lines[i];
-
-            while (line.length() > MAX_LINE_LENGTH)
-            {
-                char endChar = line.charAt(MAX_LINE_LENGTH);
-                int shift = MAX_LINE_LENGTH;
-                while (endChar != ' ' && shift > 0)
-                {
-                    --shift;
-                    endChar = line.charAt(shift);
-                }
-
-                String chunk = line.substring(0, shift);
-                System.out.println(chunk);
-                line = line.substring(shift + 1);
-            }
-
-            System.out.println(line);
+            output("God mode enabled.");
+            godmode = true;
         }
 
     }
-
-	public static String getPlayerText()
-	{
-        Scanner scn = new Scanner(System.in);
-		String result = "";
-		prompt();
-
-		while(result.isEmpty())
-		{
-			result = scn.nextLine();
-
-			if (result.isEmpty())
-			{
-                outputLine();
-				output("I beg your pardon?");
-				prompt();
-			}
-		}
-
-		return result.trim().toLowerCase();
-	}
-
-
 
 
 	public static boolean verifyQuit()
@@ -224,18 +202,7 @@ public final class Game {
 		scn.close();
 		
 		return result;
-	}
-
-
-
-	public static void endGame(GameState state)
-	{
-
-		output("Game has ended.");
-		output("Total turns: " + state.turns);
 
 	}
-
-
 
 }

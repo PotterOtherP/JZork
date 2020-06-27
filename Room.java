@@ -6,15 +6,9 @@ class Room {
 	public final Location roomID;
 	public String description;
 	public String jumpString;
-
-	public boolean firstVisit;
-
 	public boolean darkness;
-	public boolean gas;
+	public boolean firstVisit;
 	public boolean height;
-    public int danger;
-    public int loudness;
-
 
 	public HashMap<Action, Passage> exits;
 	public HashMap<Action, String> failMessages;
@@ -22,39 +16,17 @@ class Room {
 	public Room(String nm, String desc, Location loc)
 	{
 		name = nm;
-		description = desc;
 		roomID = loc;
+		description = desc;
 		jumpString = "";
+		darkness = false;
 		firstVisit = true;
+		height = false;
+
 		exits = new HashMap<Action, Passage>();
 		failMessages = new HashMap<Action, String>();
 	}
 
-	public void addExit(Action act, Passage psg)
-	{
-		exits.put(act, psg);
-	}
-
-	public void addFailMessage(Action act, String msg)
-	{
-		failMessages.put(act, msg);
-	}
-
-	public void removeFailMessage(Action act)
-	{
-		failMessages.remove(act);
-	}
-
-	public void setDark() { darkness = true; }
-	public void setLight() { darkness = false; }
-	public boolean isDark() { return darkness; }
-	public void setGas() { gas = true; }
-	public boolean hasGas() { return gas; }
-
-	public void setDescription(String s)
-	{
-		description = s;
-	}
 
 	public boolean exit(GameState state, Action act)
 	{
@@ -130,6 +102,7 @@ class Room {
 		
 
 		return result;
+
 	}
 
 
@@ -194,7 +167,9 @@ class Room {
 		}
 
 		Game.output(result);
+
 	}
+
 
 	public void getRoomObjects(GameState state)
 	{
@@ -282,22 +257,39 @@ class Room {
 				}
 			}	
 		}
+		
 	}
+
 
 	public void lookAround(GameState state)
 	{
-
-        
-
         Game.output(name);
         Game.outputLine();
 
 		getDescription(state);
 		getRoomObjects(state);
 
-
-		
-
 	}
+
+
+	public void addExit(Action act, Passage psg)
+	{
+		exits.put(act, psg);
+	}
+
+	public void addFailMessage(Action act, String msg)
+	{
+		failMessages.put(act, msg);
+	}
+
+	public void removeFailMessage(Action act)
+	{
+		failMessages.remove(act);
+	}
+
+	public void setDark() { darkness = true; }
+	public void setLight() { darkness = false; }
+	public boolean isDark() { return darkness; }
+
 
 }

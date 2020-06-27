@@ -9,7 +9,6 @@ public class Actor extends GameObject {
     public boolean firstCombatTurn;
     public int hitPoints;
     public boolean staggered;
-    public int strength;
     public boolean thiefAggro;
     public boolean thiefFirstTurn;
     public boolean thiefItemsHidden;
@@ -26,17 +25,17 @@ public class Actor extends GameObject {
 		type = ObjectType.ACTOR;
 
 		alive = true;
-        staggered = false;
-        unconscious = false;
         disarmed = false;
         firstCombatTurn = true;
+        hitPoints = MAX_ENEMY_HIT_POINTS;
+        staggered = false;
         thiefAggro = false;
         thiefFirstTurn = false;
         thiefItemsHidden = false;
-        hitPoints = MAX_ENEMY_HIT_POINTS;
-        strength = 0;
+        unconscious = false;
 
 	}
+
 
     @Override
     public void attack(GameState state)
@@ -164,6 +163,7 @@ public class Actor extends GameObject {
                 super.kick(state);
             } break;
         }
+
     }
 
     
@@ -209,7 +209,7 @@ public class Actor extends GameObject {
         {
             Random rand = new Random();
             if (rand.nextInt(100) < SONGBIRD_CHIRP_PERCENT)
-                Game.output(GameStrings.SONGBIRD);
+                Game.output(ObjectStrings.SONGBIRD);
         }
         
     }
@@ -219,6 +219,7 @@ public class Actor extends GameObject {
     {
         if (!alive) return;
     }
+
 
     public void thiefAttacks(GameState state)
     {
@@ -918,8 +919,8 @@ public class Actor extends GameObject {
 
         p1.close();
         p2.close();
-        p1.closedFail = GameStrings.TROLL_FEND;
-        p2.closedFail = GameStrings.TROLL_FEND;
+        p1.closedFail = ObjectStrings.TROLL_FEND;
+        p2.closedFail = ObjectStrings.TROLL_FEND;
 
         if (location == state.playerLocation)
         {

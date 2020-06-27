@@ -9,11 +9,7 @@ class GameState {
     public int darknessTurns;
     public boolean darkness;
     public boolean lightActivated;
-    public boolean playerStaggered;
-	public boolean playerDead;
-    public int playerDeaths;
     public int suicideCount;
-    public int matchCount;
     public Verbosity verbosity;
 
 	// game events
@@ -21,18 +17,21 @@ class GameState {
 	public boolean carpetMoved;
 	public boolean leafPileMoved;
     public boolean loudRoomSolved;
+    public int matchCount;
 	public boolean mirrorBroken;
+	public boolean potOfGoldAppeared;
 	public boolean rainbowSolid;
     public boolean ropeRailTied;
-	public boolean potOfGoldAppeared;
 
 	// player attributes
+	public int playerCarryWeight;
+	public boolean playerDead;
+    public int playerDeaths;
+	public int playerHitPoints;
 	public Location playerLocation;
 	public Location playerPreviousLocation;
-	public int playerHitPoints;
 	public int playerScore;
-	public int playerCarryWeight;
-	public int playerMaxCarryWeight;
+    public boolean playerStaggered;
 
 	// player action
 	public String completePlayerInput;
@@ -47,22 +46,22 @@ class GameState {
 	public Feature dummyObject;
 
 	// lists of game objects
-	public HashMap<Location, Room> worldMap;
-	public HashMap<String, GameObject> objectList;
-	public HashMap<String, GameObject> currentObjects;
 	public HashMap<String, Action> actions;
 	public HashMap<Action, ActionType> actionTypes;
+	public HashMap<String, GameObject> currentObjects;
 	public ArrayList<String> dictionary;
 	public ArrayList<String> gameNouns;    // used in direct object validation
+	public HashMap<String, GameObject> objectList;
+	public HashMap<Location, Room> worldMap;
 
 	// Constants
+    public static final int CARRY_WEIGHT_LIMIT = 20;
+    public static final int LANTERN_LIFESPAN = 100;
 	public static final int MAX_PLAYER_DEATHS = 3;
     public static final int MAX_DARKNESS_TURNS = 2;
     public static final int MAX_HIT_POINTS = 10;
-    public static final int LANTERN_LIFESPAN = 100;
     public static final int MATCH_LIFESPAN = 5;
     public static final int MATCHES_IN_BOOK = 20;
-    public static final int CARRY_WEIGHT_LIMIT = 20;
 
 	public GameState()
 	{
@@ -70,16 +69,20 @@ class GameState {
 
 		turns = 0;
 		darknessTurns = 0;
+        darkness = false;
+		lightActivated = false;
+        suicideCount = 0;
+		verbosity = Verbosity.BRIEF;
+
+		playerCarryWeight = 0;
+		playerDead = false;
+		playerDeaths = 0;
+        playerHitPoints = MAX_HIT_POINTS;
 		playerLocation = Location.NULL_LOCATION;
 		playerPreviousLocation = Location.NULL_LOCATION;
-		lightActivated = false;
-		playerDead = false;
-        playerStaggered = false;
-		playerCarryWeight = 0;
-		playerDeaths = 0;
 		playerScore = 0;
-        playerHitPoints = MAX_HIT_POINTS;
-		playerMaxCarryWeight = CARRY_WEIGHT_LIMIT;
+        playerStaggered = false;
+
 		completePlayerInput = "";
 		playerPreviousInput = "";
 
@@ -88,30 +91,30 @@ class GameState {
 		leafPileMoved = false;
         loudRoomSolved = false;
         matchCount = MATCHES_IN_BOOK;
+        mirrorBroken = false;
 		potOfGoldAppeared = false;
         ropeRailTied = false;
 		rainbowSolid = false;
-		verbosity = Verbosity.BRIEF;
 
 		
 		resetInput();
 
-		worldMap = new HashMap<Location, Room>();
+		actions = new HashMap<String, Action>();
+		actionTypes = new HashMap<Action, ActionType>();
+		currentObjects = new HashMap<String, GameObject>();
 		dictionary = new ArrayList<String>();
 		gameNouns = new ArrayList<String>();
 		objectList = new HashMap<String, GameObject>();
-		currentObjects = new HashMap<String, GameObject>();
-		actions = new HashMap<String, Action>();
-		actionTypes = new HashMap<Action, ActionType>();
+		worldMap = new HashMap<Location, Room>();
+
 	}
 
-
-	public void addTurn() { ++turns; }
 
     public void calculateScore()
     {
         
     }
+
 
     public void darknessCheck()
     {
@@ -135,7 +138,9 @@ class GameState {
         darkness = (currentRoom.isDark() && !lightActivated);
 
         if (!darkness) darknessTurns = 0;
+
     }
+
 
 	public void fillCurrentObjectList()
     {
@@ -187,7 +192,9 @@ class GameState {
 
             
         }
+
     }
+
 
     public void playerDies()
     {
@@ -219,7 +226,7 @@ class GameState {
 
             // The lantern should be returned to the living room even if the player dropped it
    			if (g.name.equals("brass lantern"))
-   				g.location = g.startLocation;
+   				g.location = Location.LIVING_ROOM;
    		}
 
     	if (playerDeaths % MAX_PLAYER_DEATHS == 0)
@@ -240,7 +247,9 @@ class GameState {
     		Room path = worldMap.get(playerLocation);
     		path.lookAround(this);
     	}
+
     }
+
 
     public void playerDiesForReal()
     {
@@ -257,7 +266,9 @@ class GameState {
         Game.outputLine();
     	Game.output(GameStrings.DEAD_LOOK);
     	Game.output(r.description);
+
     }
+
 
 	public void refreshInventories()
 	{
@@ -277,7 +288,9 @@ class GameState {
 				}
 			}
 		}
+
 	}
+
 
     public void relocatePlayer(Location loc)
     {
@@ -286,7 +299,9 @@ class GameState {
         Room rm = worldMap.get(loc);
         darknessCheck();
         rm.lookAround(this);
+
     }
+
 
 	public void resetInput()
 	{
@@ -304,7 +319,9 @@ class GameState {
 		playerActionType = ActionType.NULL_TYPE;
 		directObject = dummyObject;
 		indirectObject = dummyObject;
+
 	}
+
 
 	public void updateGame()
 	{
@@ -601,13 +618,13 @@ class GameState {
         // The actors get to take their turns
         updateActors();
 
-		addTurn();
+		++turns;
 
         if (playerHitPoints <= 0)
             playerDies();
 
-
 	}
+
 
     public void updateActors()
     {
@@ -629,7 +646,9 @@ class GameState {
         thief.thiefTurn(this);
         troll.trollTurn(this);
         vampireBat.vampireBatTurn(this);
+
     }
+
 
 	public void updateDarkness()
 	{
@@ -838,6 +857,7 @@ class GameState {
 
 	}
 
+
 	public void updateDeath()
 	{
         Room currentRoom = worldMap.get(playerLocation);
@@ -1022,6 +1042,8 @@ class GameState {
                 Game.output(GameStrings.DEAD_ACTION_FAIL);
             }
         }
+
 	}
+
 
 }

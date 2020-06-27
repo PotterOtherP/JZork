@@ -1,7 +1,6 @@
 import java.util.Random;
 import java.util.HashMap;
 
-
 /**
  * A location is any place a moveable object can exist.
  *
@@ -167,6 +166,7 @@ public class GameSetup {
         createActions();
         fillDictionary();
     }
+
 
     @SuppressWarnings("unused")
 	public void createWorldMap()
@@ -923,9 +923,6 @@ public class GameSetup {
         // Rooms with a dangerous height
         eastOfChasm.height = true; chasm.height = true; canyonView.height = true;
 
-        // Gaseous rooms
-        gasRoom.setGas();
-
         house_behind_kitchen.close();
 
         // Closed passages
@@ -1087,6 +1084,7 @@ public class GameSetup {
         // end world map creation
 
     }
+
 
     public void createGameObjects()
     {
@@ -1555,8 +1553,8 @@ public class GameSetup {
         songbird.altNames.add("songbird");
         songbird.altNames.add("bird");
         songbird.presenceString = "";
-        songbird.takeString = GameStrings.SONGBIRD_NEARBY;
-        songbird.examineString = GameStrings.SONGBIRD_NEARBY;
+        songbird.takeString = ObjectStrings.SONGBIRD_NEARBY;
+        songbird.examineString = ObjectStrings.SONGBIRD_NEARBY;
         
         Actor spirits = new Actor("spirits", Location.ENTRANCE_TO_HADES);
         
@@ -1694,6 +1692,7 @@ public class GameSetup {
         state.refreshInventories();
 
     }
+
 
 	public void createActions()
 	{
@@ -2001,6 +2000,7 @@ public class GameSetup {
 	    
 	}
 
+
     public void fillDictionary()
     {
         for (int i = 0; i < GameStrings.GAME_WORDS.length; ++i)
@@ -2055,6 +2055,7 @@ public class GameSetup {
         }
 
     }
+
 
     public static Location[] overworld = { Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE, Location.BEHIND_HOUSE,
         Location.SOUTH_OF_HOUSE, Location.FOREST_PATH, Location.FOREST_WEST, Location.FOREST_EAST,

@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 class Surface extends GameObject {
     
-
-
     public int capacity;
     private GameState state;
     
@@ -15,6 +13,7 @@ class Surface extends GameObject {
         capacity = 0;
         state = Game.gameState;
     }
+
 
     @Override
     public void put(GameState state)
@@ -30,7 +29,9 @@ class Surface extends GameObject {
         {
             Game.output("There's no more room.");
         }
+
     }
+
 
     @Override
     public void remove(GameState state)
@@ -49,6 +50,7 @@ class Surface extends GameObject {
         }
         
     }
+
 
     public String toString() { return name; }
 

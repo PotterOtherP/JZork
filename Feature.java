@@ -7,9 +7,9 @@ class Feature extends GameObject {
 	{
 		super(name, loc);
 		type = ObjectType.FEATURE;
-
-		
+	
 	}
+
 
 	@Override
 	public void breakObject(GameState state)
@@ -41,7 +41,9 @@ class Feature extends GameObject {
 				super.breakObject(state);
 			}
 		}
+
 	}
+
 
 	@Override
 	public void close(GameState state)
@@ -83,7 +85,9 @@ class Feature extends GameObject {
 				Game.output(closeString);
 			} break;
 		}
+
 	}
+
 
 	@Override
 	public void lookIn(GameState state)
@@ -100,7 +104,9 @@ class Feature extends GameObject {
 
 			default: { super.lookIn(state); } break;
 		}
+
 	}
+
 
 	@Override
 	public void lookOut(GameState state)
@@ -117,10 +123,10 @@ class Feature extends GameObject {
 
 			default: { super.lookOut(state); } break;
 		}
+
 	}
 
 	
-
 	@Override
 	public void move(GameState state)
 	{
@@ -153,7 +159,9 @@ class Feature extends GameObject {
 				Game.output(moveString);
 			} break;
 		}
+
 	}
+
 
 	@Override
 	public void open(GameState state)
@@ -196,7 +204,9 @@ class Feature extends GameObject {
 				Game.output(openString);
 			} break;
 		}
+
 	}
+
 
 	@Override
 	public void tie(GameState state)
@@ -240,7 +250,9 @@ class Feature extends GameObject {
 				super.tie(state);
 			} break;
 		}
+
 	}
+
 
 	@Override
 	public void touch(GameState state)
@@ -273,7 +285,9 @@ class Feature extends GameObject {
 				super.touch(state);
 			}
 		}
+
 	}
+	
 
 	public String toString() { return name; }
 

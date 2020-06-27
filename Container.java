@@ -2,15 +2,11 @@ import java.util.ArrayList;
 
 class Container extends GameObject {
 
-    
-
-
     public int capacity;
     public boolean open;
     public boolean locked;
 
 
-    
     public Container(String name, Location loc)
     {
         super(name, loc);
@@ -21,41 +17,39 @@ class Container extends GameObject {
         
     }
 
-    @Override
-    public boolean isContainer() { return true; }
 
     @Override
-    public void put(GameState state)
-    {
+    public void close(GameState state)
+    { 
         if (open)
         {
-            Item it = (Item)(state.indirectObject);
-            inventory.add(it);
-            it.location = inventoryID;
-            Game.output("Done.");
+            open = false; 
+            Game.output("Closed.");
         }
         else
         {
-            Game.output("The " + name + " isn't open.");
+            Game.output("It is already closed.");
         }
+
     }
 
+
     @Override
-    public void remove(GameState state)
+    public void examine(GameState state)
     {
-        Item it = (Item)(state.indirectObject);
         if (open)
         {
-            if (inventory.contains(it))
-            {
-                inventory.remove(it);
-                it.location = Location.PLAYER_INVENTORY;
-                Game.output("Taken.");
-            }
-
+            if (inventory.size() == 0)
+                Game.output("The " + name + " is empty.");
             else
             {
-                Game.output("There's no " + it.name + " in the " + name);
+                Game.output("The " + name + " contains:");
+
+                for (int i = 0; i < inventory.size(); ++i)
+                {
+                    Item it = inventory.get(i);
+                    Game.output("  " + it.capArticleName);
+                }
             }
         }
 
@@ -63,8 +57,9 @@ class Container extends GameObject {
         {
             Game.output("The " + name + " is closed.");
         }
-        
+
     }
+
 
     @Override
     public void open(GameState state)
@@ -99,39 +94,44 @@ class Container extends GameObject {
                 Game.output(str);
             }
         }
-    }
-
-    @Override
-    public void close(GameState state)
-    { 
-        if (open)
-        {
-            open = false; 
-            Game.output("Closed.");
-        }
-        else
-        {
-            Game.output("It is already closed.");
-        }
 
     }
 
+
     @Override
-    public void examine(GameState state)
+    public void put(GameState state)
     {
         if (open)
         {
-            if (inventory.size() == 0)
-                Game.output("The " + name + " is empty.");
+            Item it = (Item)(state.indirectObject);
+            inventory.add(it);
+            it.location = inventoryID;
+            Game.output("Done.");
+        }
+        else
+        {
+            Game.output("The " + name + " isn't open.");
+        }
+
+    }
+
+
+    @Override
+    public void remove(GameState state)
+    {
+        Item it = (Item)(state.indirectObject);
+        if (open)
+        {
+            if (inventory.contains(it))
+            {
+                inventory.remove(it);
+                it.location = Location.PLAYER_INVENTORY;
+                Game.output("Taken.");
+            }
+
             else
             {
-                Game.output("The " + name + " contains:");
-
-                for (int i = 0; i < inventory.size(); ++i)
-                {
-                    Item it = inventory.get(i);
-                    Game.output("  " + it.capArticleName);
-                }
+                Game.output("There's no " + it.name + " in the " + name);
             }
         }
 
@@ -139,10 +139,16 @@ class Container extends GameObject {
         {
             Game.output("The " + name + " is closed.");
         }
+        
     }
+
+
+    @Override
+    public boolean isContainer() { return true; }
 
     @Override
     public boolean isOpen() { return open; }
 
     public String toString() { return name; }
+
 }

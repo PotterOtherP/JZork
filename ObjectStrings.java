@@ -104,6 +104,8 @@ class ObjectStrings {
     public static final String SCEPTRE_RAINBOW_2 = "The structural integrity of the rainbow is severely compromised, leaving you "
             + "hanging in mid-air, supported only by water vapor. Bye.";
 
+    
+
     public static final String CYCLOPS = "A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. "
         + "From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes people.";
 
@@ -134,10 +136,105 @@ class ObjectStrings {
     public static final String CYCLOPS_FIGHT_HESITATE = "The cyclops seems unable to decide whether to broil or stew his dinner.";
     public static final String CYCLOPS_FIGHT_FINISH = "The cyclops, no sportsman, dispatches his unconscious victim.";
 
+    public static final String SONGBIRD = "You hear in the distance the chirping of a song bird.";
+    public static final String SONGBIRD_NEARBY = "You don't see the song bird, but it's probably somewhere nearby.";
+
+
+
+
+
+    public static final String THIEF_ARRIVES_GRIN = "You feel a light touch, and turning, notice a grinning figure holding a large bag "
+        + "in one hand and a stiletto in the other.";
+
+    public static final String THIEF_GIVE_ITEM = "The thief places the ITEM in his bag and thanks you politely.";
+    public static final String THIEF_GIVE_TREASURE = "The thief is taken aback by your unexpected generosity, but accepts the ITEM "
+        + "and stops to admire its beauty.";
+
+    public static final String THIEF_HIDEOUT = "You hear a scream of anguish as you violate the robber's hideaway. Using "
+        + "passages unknown to you, he rushes to its defense.";
+
+    public static final String THIEF_MAGIC_1 = "The thief gestures mysteriously, and the treasures in the room suddenly vanish.";
+    public static final String THIEF_MAGIC_2 = "As the thief dies, the power of his magic decreases, and his treasures reappear:";
+
+    public static final String THIEF_PRESENT_1 = "Someone carrying a large bag is casually leaning against one of the walls here. "
+        + "He does not speak, but it is clear from his aspect that the bag will be taken only over his dead body.";
+
+    public static final String THIEF_PRESENT_2 = "There is a suspicious-looking individual, holding a large bag, leaning against one "
+        + "wall. He is armed with a deadly stiletto.";
+
+    public static final String THIEF_PRESENT_UNCONSCIOUS = "There is a suspicious-looking individual lying unconscious on the ground.";
+
+    public static final String THIEF_LEAVES_1 = "The holder of the large bag just left, looking disgusted. Fortunately, he took nothing.";
+    public static final String THIEF_LEAVES_2 = "The thief, finding nothing of value, left disgusted.";
+
+    public static final String THIEF_LEAVES_ROBS = "The thief just left, still carrying his large bag. You may not have noticed that "
+        + "he robbed you blind first.";
+
+    public static final String THIEF_LEAVES_LOOTS = "The thief just left, still carrying his large bag. You may not have noticed that "
+        + "he appropriated the valuables in the room.";
+
+    public static final String THIEF_COMES_AND_ROBS = "A seedy-looking individual with a large bag just wandered through the room. On the way "
+        + "through, he quietly abstracted some valuables from the room and from your possession, mumbling something about "
+        + "\"Doing unto others before...\"";
+
+    public static final String THIEF_COMES_AND_GOES = "A \"lean and hungry\" gentleman just wandered through, carrying a large bag. "
+        + "Finding nothing of value, he left disgruntled.";
+
+    public static final String THIEF_EXAMINE = "The thief is a slippery character with beady eyes, that flit back and forth. He carries, "
+        + "along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly "
+        + "in your direction. I'd watch out if I were you.";
+
+    public static final String THIEF_RECOVER_STILETTO = "The robber, somewhat surprised at this turn of events, nimbly retrieves "
+        + "his stiletto.";
+
+    public static final String THIEF_WAKES = "The robber revives, briefly feigning continued unconsciousness, and, when he sees his "
+        + "moment, scrambles away from you.";
+
+    public static final String THIEF_FIGHT_MISS_1 = "The thief stabs nonchalantly with his knife and misses.";
+    public static final String THIEF_FIGHT_MISS_2 = "You dodge as the thief comes in low.";
+    public static final String THIEF_FIGHT_MISS_3 = "You parry a lightning thrust, and the thief salutes you with a grim nod.";
+    public static final String THIEF_FIGHT_MISS_4 = "The thief tries to sneak past your guard, but you twist away.";
+    public static final String THIEF_FIGHT_LIGHT_1 = "A quick thrust pinks your left arm, and blood starts to trickle down.";
+    public static final String THIEF_FIGHT_LIGHT_2 = "The thief draws blood, raking his stiletto across your arm.";
+    public static final String THIEF_FIGHT_LIGHT_3 = "The stiletto flashes faster than you can follow, and blood wells "
+        + "from your leg.";
+    public static final String THIEF_FIGHT_LIGHT_4 = "The thief slowly approaches, strikes like a snake, and leaves you wounded.";
+    public static final String THIEF_FIGHT_SEVERE_1 = "The thief strikes like a snake! The resulting wound is serious.";
+    public static final String THIEF_FIGHT_SEVERE_2 = "The thief stabs a deep cut in your upper arm.";
+    public static final String THIEF_FIGHT_SEVERE_3 = "The stiletto touches your forehead, and blood obscures your vision.";
+    public static final String THIEF_FIGHT_SEVERE_4 = "The thief strikes at your wrist, and suddenly your grip is slippery with blood.";
+    public static final String THIEF_FIGHT_STAGGER_1 = "The butt of his stiletto cracks you on the skull, and you stagger back.";
+    public static final String THIEF_FIGHT_STAGGER_2 = "The thief rams the haft of his blade into your stomach, leaving you out of breath.";
+    public static final String THIEF_FIGHT_STAGGER_3 = "The thief attacks, and you fall back desperately.";
+    public static final String THIEF_FIGHT_DISARM_1 = "A long, theatrical slash. You catch it on your WEAPON, but the thief twists "
+        + "his knife, and the WEAPON goes flying.";
+    public static final String THIEF_FIGHT_DISARM_2 = "The thief neatly flips your WEAPON out of your hands, and it drops to the floor.";
+    public static final String THIEF_FIGHT_DISARM_3 = "You parry a low thrust, and your WEAPON slips out of your hand.";
+    public static final String THIEF_FIGHT_KNOCKOUT_1 = "Shifting in the middle of a thrust, the thief knocks you unconscious "
+        + "with the haft of his stiletto.";
+    public static final String THIEF_FIGHT_KNOCKOUT_2 = "The thief knocks you out.";
+    public static final String THIEF_FIGHT_FATAL_1 = "Finishing you off, the thief inserts his blade into your heart.";
+    public static final String THIEF_FIGHT_FATAL_2 = "The thief comes in from the side, feints, and inserts the blade into your ribs.";
+    public static final String THIEF_FIGHT_FATAL_3 = "The thief bows formally, raises his stiletto, and with a wry grin, "
+        + "ends the battle and your life.";
+    public static final String THIEF_FIGHT_HESITATE_1 = "The thief, a man of superior breeding, pauses for a moment to consider the "
+        + "propriety of finishing you off.";
+    public static final String THIEF_FIGHT_HESITATE_2 = "The thief amuses himself by searching your pockets.";
+    public static final String THIEF_FIGHT_HESITATE_3 = "The thief entertains himself by rifling your pack.";
+    public static final String THIEF_FIGHT_FINISH_1 = "The thief, forgetting his essentially genteel upbringing, cuts your throat.";
+    public static final String THIEF_FIGHT_FINISH_2 = "The thief, a pragmatist, dispatches you as a threat to his livelihood.";
+    public static final String THIEF_FIGHT_RETREAT_1 = "Your opponent, determining discretion to be the better part of valor, decides to "
+        + "terminate this little contretemps. With a rueful nod of his head, he steps backward into the gloom and disappears.";
+    public static final String THIEF_FIGHT_RETREAT_2 = "You evidently frightened the robber, though you didn't hit him. He flees "
+        + "the room, but the contents of his bag fall on the floor.";
+
+
+
     public static final String TROLL_PRESENCE = "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.";
     public static final String TROLL_PRESENCE_UNCONSCIOUS = "An unconscious troll is sprawled on the floor. All passages out of the room are open.";
     public static final String TROLL_PRESENCE_DISARMED = "A pathetically babbling troll is here.";
 
+    public static final String TROLL_FEND = "The troll fends you off with a menacing gesture.";
     public static final String TROLL_TALK_1 = "The troll isn't much of a conversationalist.";
     public static final String TROLL_TALK_2 = "Unfortunately, the troll can't hear you.";
     public static final String TROLL_RECOVER_AXE = "The troll, angered and humiliated, recovers his weapon. He appears to have an axe "
@@ -193,95 +290,6 @@ class ObjectStrings {
     public static final String TROLL_FIGHT_HESITATE_2 = "The troll scratches his head ruminatively: Might you be magically "
         + "protected, he wonders?";
     public static final String TROLL_FIGHT_FINISH = "Conquering his fears, the troll puts you to death.";
-
-
-
-    public static final String THIEF_ARRIVES_GRIN = "You feel a light touch, and turning, notice a grinning figure holding a large bag "
-        + "in one hand and a stiletto in the other.";
-
-    public static final String THIEF_GIVE_ITEM = "The thief places the ITEM in his bag and thanks you politely.";
-    public static final String THIEF_GIVE_TREASURE = "The thief is taken aback by your unexpected generosity, but accepts the ITEM "
-        + "and stops to admire its beauty.";
-
-    public static final String THIEF_HIDEOUT = "You hear a scream of anguish as you violate the robber's hideaway. Using "
-        + "passages unknown to you, he rushes to its defense.";
-
-    public static final String THIEF_MAGIC_1 = "The thief gestures mysteriously, and the treasures in the room suddenly vanish.";
-    public static final String THIEF_MAGIC_2 = "As the thief dies, the power of his magic decreases, and his treasures reappear:";
-
-    public static final String THIEF_PRESENT_1 = "Someone carrying a large bag is casually leaning against one of the walls here. "
-        + "He does not speak, but it is clear from his aspect that the bag will be taken only over his dead body.";
-
-    public static final String THIEF_PRESENT_2 = "There is a suspicious-looking individual, holding a large bag, leaning against one "
-        + "wall. He is armed with a deadly stiletto.";
-
-    public static final String THIEF_PRESENT_UNCONSCIOUS = "There is a suspicious-looking individual lying unconscious on the ground.";
-
-    public static final String THIEF_LEAVES_1 = "The holder of the large bag just left, looking disgusted. Fortunately, he took nothing.";
-    public static final String THIEF_LEAVES_2 = "The thief, finding nothing of value, left disgusted.";
-
-    public static final String THIEF_LEAVES_ROBS = "The thief just left, still carrying his large bag. You may not have noticed that "
-        + "he robbed you blind first.";
-
-    public static final String THIEF_LEAVES_LOOTS = "The thief just left, still carrying his large bag. You may not have noticed that "
-        + "he appropriated the valuables in the room.";
-
-    public static final String THIEF_COMES_AND_ROBS = "A seedy-looking individual with a large bag just wandered through the room. On the way "
-        + "through, he quietly abstracted some valuables from the room and from your possession, mumbling something about "
-        + "\"Doing unto others before...\"";
-
-    public static final String THIEF_COMES_AND_GOES = "A \"lean and hungry\" gentleman just wandered through, carrying a large bag. "
-        + "Finding nothing of value, he left disgruntled.";
-
-    public static final String THIEF_EXAMINE = "The thief is a slippery character with beady eyes, that flit back and forth. He carries, "
-        + "along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly "
-        + "in your direction. I'd watch out if I were you.";
-
-    public static final String THIEF_RECOVER_STILETTO = "The robber, somewhat surprised at this turn of events, nimbly retrieves "
-        + "his stiletto.";
-
-    public static final String THIEF_WAKES = "The robber revives, briefly feigning continued unconsciousness, and, when he sees his "
-        + "moment, scrambles away from you.";
-
-
-
-    public static final String THIEF_FIGHT_MISS_1 = "The thief stabs nonchalantly with his knife and misses.";
-    public static final String THIEF_FIGHT_MISS_2 = "You dodge as the thief comes in low.";
-    public static final String THIEF_FIGHT_MISS_3 = "You parry a lightning thrust, and the thief salutes you with a grim nod.";
-    public static final String THIEF_FIGHT_MISS_4 = "The thief tries to sneak past your guard, but you twist away.";
-    public static final String THIEF_FIGHT_LIGHT_1 = "A quick thrust pinks your left arm, and blood starts to trickle down.";
-    public static final String THIEF_FIGHT_LIGHT_2 = "The thief draws blood, raking his stiletto across your arm.";
-    public static final String THIEF_FIGHT_LIGHT_3 = "The stiletto flashes faster than you can follow, and blood wells "
-        + "from your leg.";
-    public static final String THIEF_FIGHT_LIGHT_4 = "The thief slowly approaches, strikes like a snake, and leaves you wounded.";
-    public static final String THIEF_FIGHT_SEVERE_1 = "The thief strikes like a snake! The resulting wound is serious.";
-    public static final String THIEF_FIGHT_SEVERE_2 = "The thief stabs a deep cut in your upper arm.";
-    public static final String THIEF_FIGHT_SEVERE_3 = "The stiletto touches your forehead, and blood obscures your vision.";
-    public static final String THIEF_FIGHT_SEVERE_4 = "The thief strikes at your wrist, and suddenly your grip is slippery with blood.";
-    public static final String THIEF_FIGHT_STAGGER_1 = "The butt of his stiletto cracks you on the skull, and you stagger back.";
-    public static final String THIEF_FIGHT_STAGGER_2 = "The thief rams the haft of his blade into your stomach, leaving you out of breath.";
-    public static final String THIEF_FIGHT_STAGGER_3 = "The thief attacks, and you fall back desperately.";
-    public static final String THIEF_FIGHT_DISARM_1 = "A long, theatrical slash. You catch it on your WEAPON, but the thief twists "
-        + "his knife, and the WEAPON goes flying.";
-    public static final String THIEF_FIGHT_DISARM_2 = "The thief neatly flips your WEAPON out of your hands, and it drops to the floor.";
-    public static final String THIEF_FIGHT_DISARM_3 = "You parry a low thrust, and your WEAPON slips out of your hand.";
-    public static final String THIEF_FIGHT_KNOCKOUT_1 = "Shifting in the middle of a thrust, the thief knocks you unconscious "
-        + "with the haft of his stiletto.";
-    public static final String THIEF_FIGHT_KNOCKOUT_2 = "The thief knocks you out.";
-    public static final String THIEF_FIGHT_FATAL_1 = "Finishing you off, the thief inserts his blade into your heart.";
-    public static final String THIEF_FIGHT_FATAL_2 = "The thief comes in from the side, feints, and inserts the blade into your ribs.";
-    public static final String THIEF_FIGHT_FATAL_3 = "The thief bows formally, raises his stiletto, and with a wry grin, "
-        + "ends the battle and your life.";
-    public static final String THIEF_FIGHT_HESITATE_1 = "The thief, a man of superior breeding, pauses for a moment to consider the "
-        + "propriety of finishing you off.";
-    public static final String THIEF_FIGHT_HESITATE_2 = "The thief amuses himself by searching your pockets.";
-    public static final String THIEF_FIGHT_HESITATE_3 = "The thief entertains himself by rifling your pack.";
-    public static final String THIEF_FIGHT_FINISH_1 = "The thief, forgetting his essentially genteel upbringing, cuts your throat.";
-    public static final String THIEF_FIGHT_FINISH_2 = "The thief, a pragmatist, dispatches you as a threat to his livelihood.";
-    public static final String THIEF_FIGHT_RETREAT_1 = "Your opponent, determining discretion to be the better part of valor, decides to "
-        + "terminate this little contretemps. With a rueful nod of his head, he steps backward into the gloom and disappears.";
-    public static final String THIEF_FIGHT_RETREAT_2 = "You evidently frightened the robber, though you didn't hit him. He flees "
-        + "the room, but the contents of his bag fall on the floor.";
 
     public static final String WOODEN_DOOR = "The engravings translate to \"This space intentionally left blank.\"";
 

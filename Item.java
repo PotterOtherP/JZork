@@ -4,19 +4,14 @@ public class Item extends GameObject{
 
 	// Items can be picked up and moved to other locations, including the player's inventory.
 
-	public int weight;
 	public int acquirePointValue;
-	public int trophyCaseValue;
-
-	public int capacity;
-    public boolean open;
-    public boolean locked;
-	
-
-	// For items that can be turned on and expire, like the lamp
 	public boolean activated;
+	public int capacity;
 	public int lifespan;
-
+    public boolean locked;
+    public boolean open;
+	public int trophyCaseValue;
+	public int weight;
 
 	public Item(String name, Location loc)
 	{
@@ -24,15 +19,13 @@ public class Item extends GameObject{
 		type = ObjectType.ITEM;
 
 		acquirePointValue = 0;
+		activated = false;
+		capacity = 0;
+		lifespan = 0;
+		locked = false;
+		open = false;
 		trophyCaseValue = 0;
 		weight = 0;
-		activated = false;
-		lifespan = 0;
-		movedFromStart = false;
-
-		capacity = 0;
-		open = false;
-		locked = false;
 	}
 
 
@@ -165,7 +158,9 @@ public class Item extends GameObject{
                 super.eat(state);
             } break;
         }
+
     }
+
 
     @Override
     public void examine(GameState state)
@@ -196,7 +191,9 @@ public class Item extends GameObject{
         {
             Game.output("The " + name + " is closed.");
         }
+
     }
+
 
     @Override
     public void extinguish(GameState state)
@@ -296,6 +293,7 @@ public class Item extends GameObject{
 
 	}
 
+
     @Override
     public void move(GameState state)
     {
@@ -319,7 +317,9 @@ public class Item extends GameObject{
                 super.move(state);
             } break;
         }
+
     }
+
 
     @Override
     public void open(GameState state)
@@ -359,7 +359,9 @@ public class Item extends GameObject{
                 Game.output(str);
             }
         }
+
     }
+
 
     @Override
     public void put(GameState state)
@@ -382,7 +384,9 @@ public class Item extends GameObject{
         {
             Game.output("The " + name + " isn't open.");
         }
+
     }
+
 
     @Override
     public void remove(GameState state)
@@ -416,6 +420,7 @@ public class Item extends GameObject{
         
     }
 
+
     @Override
     public void take(GameState state)
     {
@@ -443,7 +448,7 @@ public class Item extends GameObject{
             return;
         }
 
-        if ((state.playerCarryWeight + weight) >= state.playerMaxCarryWeight)
+        if ((state.playerCarryWeight + weight) >= GameState.CARRY_WEIGHT_LIMIT)
         {
             Game.output(GameStrings.OVERBURDENED);
             return;
@@ -456,6 +461,7 @@ public class Item extends GameObject{
         movedFromStart = true;
 
     }
+
 
     @Override
     public void untie(GameState state)
@@ -496,7 +502,9 @@ public class Item extends GameObject{
                 super.untie(state);
             }
         }
+
     }
+
 
     @Override
     public void wave(GameState state)
@@ -558,6 +566,23 @@ public class Item extends GameObject{
 
         else
             super.wave(state);
+
+    }
+
+
+    private void breakEgg(GameState state)
+    {
+        Item goodEgg = (Item)(state.objectList.get("jewel-encrusted egg"));
+        Item badEgg = (Item)(state.objectList.get("broken jewel-encrusted egg"));
+        Item badCanary = (Item)(state.objectList.get("broken clockwork canary"));
+
+        goodEgg.location = Location.NULL_LOCATION;
+        badCanary.location = Location.INSIDE_BROKEN_EGG;
+        badEgg.location = state.playerLocation;
+        badEgg.open = true;
+
+        Game.output(ObjectStrings.INIT_BROKEN_CANARY);
+
     }
 
 
@@ -572,36 +597,9 @@ public class Item extends GameObject{
         {
             return initialPresenceString;
         }
+
     }
 
-
-	@Override
-	public boolean isAlive() { return lifespan > 0; }
-
-    @Override
-    public boolean isContainer() { return inventoryID != Location.NULL_INVENTORY; }
-
-    @Override
-    public boolean isOpen() { return open; }
-
-	@Override
-	public void tick() { --lifespan; }
-
-	public String toString() { return name; }
-
-    private void breakEgg(GameState state)
-    {
-        Item goodEgg = (Item)(state.objectList.get("jewel-encrusted egg"));
-        Item badEgg = (Item)(state.objectList.get("broken jewel-encrusted egg"));
-        Item badCanary = (Item)(state.objectList.get("broken clockwork canary"));
-
-        goodEgg.location = Location.NULL_LOCATION;
-        badCanary.location = Location.INSIDE_BROKEN_EGG;
-        badEgg.location = state.playerLocation;
-        badEgg.open = true;
-
-        Game.output(ObjectStrings.INIT_BROKEN_CANARY);
-    }
 
     private void revealGrating(GameState state)
     {
@@ -616,6 +614,18 @@ public class Item extends GameObject{
         psg.close();
         psg.closedFail = "The grating is closed!";
         rm.addExit(Action.DOWN, psg);
+
     }
+
+
+    @Override
+    public boolean isAlive() { return lifespan > 0; }
+    @Override
+    public boolean isContainer() { return inventoryID != Location.NULL_INVENTORY; }
+    @Override
+    public boolean isOpen() { return open; }
+    @Override
+    public void tick() { --lifespan; }
+    public String toString() { return name; }
 	
 }

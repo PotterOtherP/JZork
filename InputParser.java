@@ -21,10 +21,128 @@ public class InputParser {
 
 	}
 
+
+	public void inputTest()
+	{
+		Game.outputLine();
+		Game.output("Complete player input: " + state.completePlayerInput);
+		// Game.output("Input words: ");
+		// for (int i = 0; i < inputWords.length; ++i)
+		// 	Game.output(inputWords[i] + " ");
+		Game.output("String in parseActionInput() is \"" + parseActionString + "\"");
+		Game.output("String in parseDirectObject() is \"" + parseDirectString + "\"");
+		Game.output("String in parseIndirectObject() is \"" + parseIndirectString + "\"");
+		Game.output("Player action is " + state.playerAction);
+		Game.output("Action type is " + state.playerActionType);
+		Game.output("Direct object is " + state.directObject);
+		Game.output("Indirect object is " + state.indirectObject);
+
+	}
+
+
+	public boolean isGameWord(String str)
+	{
+		return (state.dictionary.contains(str));
+	}
+
+
+	public boolean parseDirectObject()
+	{
+		boolean check = false;
+
+		for (String token : state.currentObjects.keySet())
+		{
+
+			if (startsWith(token, input))
+			{
+				check = true;
+				state.directObject = state.currentObjects.get(token);
+				state.secondInputPhrase = token;
+				input = input.substring(token.length()).trim();
+				break;
+			}
+		}
+
+		if (!check)
+		{
+			for (String token : state.gameNouns)
+			{
+				if (startsWith(token, input))
+				{
+					Game.output("You can't see any " + token + " here!");
+					return check;
+				}
+			}
+
+			Game.output("You used the phrase \"" + state.firstInputPhrase
+				+ "\" in a way I don't understand.");
+		}
+
+
+		return check;
+
+	}
+
+
+	public boolean parseIndirectObject()
+	{
+		boolean check = false;
+
+		for (String token : state.currentObjects.keySet())
+		{
+			if (startsWith(token, input))
+			{
+				check = true;
+				state.indirectObject = state.currentObjects.get(token);
+				input = input.substring(token.length()).trim();
+				break;
+			}
+		}
+
+		// If the user enters a valid action, but an invalid object.
+		if (!check)
+		{
+			Game.output("You used the phrase \"" + input
+				+ "\" in a way I don't understand.");
+		}
+
+		return check;
+
+	}
+
+
+	public boolean parseInputAction()
+	{
+		parseActionString = input;
+
+		// Compare the beginning of the input to the set of action phrases.
+		boolean check = false;
+		for (String token : state.actions.keySet())
+		{
+			
+			if (startsWith(token, input))
+			{
+				check = true;
+                state.firstInputPhrase = token;
+                state.playerAction = state.actions.get(token);
+        		state.playerActionType = state.actionTypes.get(state.playerAction);
+        		input = input.substring(token.length()).trim();
+        		break;
+			}
+		}
+
+		// If no action was found
+		if (!check)
+			Game.output("Sentence did not start with an action!");
+
+		return check;
+
+	}
+
+
 	/**
 	 * Returns true if the player inputs a phrase which is fully recognized by the game.
 	 * If not, player is re-prompted and no turn is taken.
-	 * TODO: handle input re-starts.
 	 */
 	public boolean parsePlayerInput()
 	{
@@ -259,152 +377,13 @@ public class InputParser {
 			} break;
 
 			default: {} break;
+
 		}
-
-
 
 		return true;
-	}
-
-	public boolean parseInputAction()
-	{
-		parseActionString = input;
-
-		// Compare the beginning of the input to the set of action phrases.
-		boolean check = false;
-		for (String token : state.actions.keySet())
-		{
-			
-			if (startsWith(token, input))
-			{
-				check = true;
-                state.firstInputPhrase = token;
-                state.playerAction = state.actions.get(token);
-        		state.playerActionType = state.actionTypes.get(state.playerAction);
-        		input = input.substring(token.length()).trim();
-        		break;
-			}
-		}
-
-		// If no action was found
-		if (!check)
-			Game.output("Sentence did not start with an action!");
-
-		return check;
-	}
-
-
-	public boolean parseDirectObject()
-	{
-		boolean check = false;
-
-		for (String token : state.currentObjects.keySet())
-		{
-
-			if (startsWith(token, input))
-			{
-				check = true;
-				state.directObject = state.currentObjects.get(token);
-				state.secondInputPhrase = token;
-				input = input.substring(token.length()).trim();
-				break;
-			}
-		}
-
-		if (!check)
-		{
-			for (String token : state.gameNouns)
-			{
-				if (startsWith(token, input))
-				{
-					Game.output("You can't see any " + token + " here!");
-					return check;
-				}
-			}
-
-			Game.output("You used the phrase \"" + state.firstInputPhrase
-				+ "\" in a way I don't understand.");
-		}
-
-
-		return check;
-	}
-
-
-	public boolean parseIndirectObject()
-	{
-		boolean check = false;
-
-		for (String token : state.currentObjects.keySet())
-		{
-			if (startsWith(token, input))
-			{
-				check = true;
-				state.indirectObject = state.currentObjects.get(token);
-				input = input.substring(token.length()).trim();
-				break;
-			}
-		}
-
-		// If the user enters a valid action, but an invalid object.
-		if (!check)
-		{
-			Game.output("You used the phrase \"" + input
-				+ "\" in a way I don't understand.");
-		}
-
-		return check;
-
 
 	}
-	
-	
-	public boolean validateAction()
-	{
-		GameObject dirObj = state.directObject;
-		GameObject indObj = state.indirectObject;
-		Action act = state.playerAction;
 
-		switch(state.playerActionType)
-		{
-			case DIRECT:
-			{
-				if (dirObj.isItem() && dirObj.location != Location.PLAYER_INVENTORY)
-				{
-					switch (act)
-					{
-						case TAKE:
-						case OPEN:
-						case MOVE_OBJECT:
-						case UNTIE:
-						{
-
-						} break;
-						default:
-						{
-							Game.output("You're not carrying the " + dirObj.name + ".");
-							return false;
-						}
-					}
-				}
-
-			} break;
-
-			case INDIRECT:
-			case INDIRECT_INVERSE:
-			{
-				if (indObj.isItem() && !indObj.playerHasObject())
-				{
-					Game.output("You're not carrying the " + indObj.name + ".");
-					return false;
-				}
-			} break;
-
-			default: {} break;
-		}
-		
-		return true;
-	}
 
 	public boolean processGodmode()
 	{
@@ -554,13 +533,20 @@ public class InputParser {
 		}
 
 		return false;
+
 	}
 
-	public boolean reprompt(ActionType actType)
+
+	public void reset()
 	{
-		
-		return false;
+		input = state.completePlayerInput;
+		inputWords = input.split(" ");
+		parseActionString = "";
+		parseDirectString = "";
+		parseIndirectString = "";
+
 	}
+
 
 	public boolean specialInputCheck()
 	{
@@ -631,29 +617,7 @@ public class InputParser {
 
 
 		return result;
-	}
 
-
-	public void inputTest()
-	{
-		Game.outputLine();
-		Game.output("Complete player input: " + state.completePlayerInput);
-		// Game.output("Input words: ");
-		// for (int i = 0; i < inputWords.length; ++i)
-		// 	Game.output(inputWords[i] + " ");
-		Game.output("String in parseActionInput() is \"" + parseActionString + "\"");
-		Game.output("String in parseDirectObject() is \"" + parseDirectString + "\"");
-		Game.output("String in parseIndirectObject() is \"" + parseIndirectString + "\"");
-		Game.output("Player action is " + state.playerAction);
-		Game.output("Action type is " + state.playerActionType);
-		Game.output("Direct object is " + state.directObject);
-		Game.output("Indirect object is " + state.indirectObject);
-
-	}
-
-	public boolean isGameWord(String str)
-	{
-		return (state.dictionary.contains(str));
 	}
 
 
@@ -680,13 +644,54 @@ public class InputParser {
 
 	}
 
-	public void reset()
+
+	public boolean validateAction()
 	{
-		input = state.completePlayerInput;
-		inputWords = input.split(" ");
-		parseActionString = "";
-		parseDirectString = "";
-		parseIndirectString = "";
+		GameObject dirObj = state.directObject;
+		GameObject indObj = state.indirectObject;
+		Action act = state.playerAction;
+
+		switch(state.playerActionType)
+		{
+			case DIRECT:
+			{
+				if (dirObj.isItem() && dirObj.location != Location.PLAYER_INVENTORY)
+				{
+					switch (act)
+					{
+						case TAKE:
+						case OPEN:
+						case MOVE_OBJECT:
+						case UNTIE:
+						{
+
+						} break;
+						default:
+						{
+							Game.output("You're not carrying the " + dirObj.name + ".");
+							return false;
+						}
+					}
+				}
+
+			} break;
+
+			case INDIRECT:
+			case INDIRECT_INVERSE:
+			{
+				if (indObj.isItem() && !indObj.playerHasObject())
+				{
+					Game.output("You're not carrying the " + indObj.name + ".");
+					return false;
+				}
+			} break;
+
+			default: {} break;
+		}
+		
+		return true;
+
 	}
+	
 	
 }
