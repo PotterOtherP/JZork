@@ -62,6 +62,22 @@ class Feature extends GameObject {
 					Game.output("The window is already closed.");
 			} break;
 
+			case "trap door":
+			{
+				Room r = state.worldMap.get(Location.LIVING_ROOM);
+				Passage p = r.exits.get(Action.DOWN);
+				if (p.isOpen())
+				{
+					Game.output("Done.");
+					r.description = MapStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED;
+					p.close();
+				}
+				else
+				{
+					Game.output(GameStrings.getHardSarcasm());
+				}
+			} break;
+
 			default:
 			{
 				Game.output(closeString);

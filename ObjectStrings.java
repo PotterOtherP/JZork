@@ -45,6 +45,12 @@ class ObjectStrings {
 
 
     // Subsequent presence strings
+
+    public static final String BAT_ATTACKS = "\nA large vampire bat, hanging from the ceiling, swoops down at you!"
+        + "\n\nFweep!\nFweep!\nFweep!\n\n\n"
+        + "The bat grabs you by the scruff of your neck and lifts you away....\n\n";
+    public static final String BAT_GARLIC = "In the corner of the room on the ceiling is a large vampire bat who is obviously "
+        + "deranged and holding his nose.";
     public static final String COFFIN = "The solid-gold coffin used for the burial of Ramses II is here.";
     public static final String DIAMOND = "There is an enormous diamond (perfectly cut) here.";
     public static final String JADE = "There is an exquisite jade figurine here.";
@@ -55,10 +61,18 @@ class ObjectStrings {
     public static final String TUBE = "There is an object which looks like a tube of toothpaste here.";
 
 
+    public static final String BAT_CEILING = "You can't reach him; he's on the ceiling.";
+    public static final String GARLIC_EAT = "What the heck! You won't make friends this way, but nobody around here is too "
+        + "friendly anyhow. Gulp!";
+
+
+
     public static final String LANTERN_DIM = "The lantern appears a bit dimmer.";
     public static final String LANTERN_DIMMER = "The lantern is definitely dimmer now.";
     public static final String LANTERN_DIMMEST = "The lamp is nearly out.";
     public static final String LANTERN_EXPIRED = "You'd better have more light than from the brass lantern.";
+
+    public static final String LUNCH_EAT = "Thank you very much. It really hit the spot.";
 
 
     public static final String MACHINE_FAIL = "The machine doesn't seem to want to do anything.";

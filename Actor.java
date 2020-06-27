@@ -98,13 +98,6 @@ public class Actor extends GameObject {
 
             } break;
 
-            case "vampire bat":
-            {
-
-            } break;
-
-
-
             default:
             {
                 super.attack(state);
@@ -153,6 +146,24 @@ public class Actor extends GameObject {
             } break;
         }
 
+    }
+
+
+    @Override
+    public void kick(GameState state)
+    {
+        switch (name)
+        {
+            case "vampire bat":
+            {
+                Game.output(ObjectStrings.BAT_CEILING);
+            } break;
+
+            default:
+            {
+                super.kick(state);
+            } break;
+        }
     }
 
     
@@ -1104,6 +1115,41 @@ public class Actor extends GameObject {
     public void vampireBatTurn(GameState state)
     {
 
+        Item garlic = (Item)(state.objectList.get("clove of garlic"));
+        if (garlic.location == Location.PLAYER_INVENTORY || garlic.location == Location.BAT_ROOM)
+        {
+            presenceString = ObjectStrings.BAT_GARLIC;
+        }
+
+        else if (state.playerDead)
+        {
+            presenceString = "A large vampire bat is cowering on the ceiling, making whimpered squeaking noises.";
+        }
+
+        else
+        {
+            presenceString = ObjectStrings.BAT_ATTACKS;
+
+            if (state.playerLocation == Location.BAT_ROOM)
+            {
+                // Let's give the player a 1 in 10 chance of making it back to the squeaky room.
+                Random rand = new Random();
+
+                int chance = rand.nextInt(10);
+
+                if (chance == 0)
+                {
+                    state.relocatePlayer(Location.SQUEAKY_ROOM);
+                }
+
+                else
+                {
+                    int dieRoll = rand.nextInt(GameSetup.coalMine.length);
+                    state.relocatePlayer(GameSetup.coalMine[dieRoll]);
+                }
+            }
+            
+        }
     }
 
 

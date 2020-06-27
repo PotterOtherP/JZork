@@ -102,8 +102,8 @@ enum Action {
     STAY, SUPERBRIEF, VERBOSE, WAIT,
   
     ACTIVATE, ANSWER, BLOW, BOARD, CLIMB, CLOSE, COUNT,
-    DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXTINGUISH,
-    FOLLOW, KICK, KNOCK, LAUNCH, LIGHT, LISTEN, LOOK_IN, LOOK_OUT, LOOK_UNDER,
+    DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXTINGUISH, FOLLOW, GREET,
+    KICK, KNOCK, LAUNCH, LIGHT, LISTEN, LOOK_IN, LOOK_OUT, LOOK_UNDER,
     LOWER, MOVE_OBJECT, OPEN, PLAY, POUR, PULL, PUSH, RAISE,
     READ, REMOVE, RING, SEARCH, SHAKE, SMELL, STRIKE, TAKE, TALK_TO,
     TOUCH, UNTIE, WAKE, WAVE, WEAR, WIND,
@@ -1174,6 +1174,7 @@ public class GameSetup {
         torch.altNames.add("ivory");
         torch.altNames.add("ivory torch");
         torch.initialPresenceString = ObjectStrings.INIT_TORCH;
+        torch.activated = true;
         
         Item trident = new Item("crystal trident", Location.ATLANTIS_ROOM);
         trident.altNames.add("trident");
@@ -1232,6 +1233,7 @@ public class GameSetup {
         candles.altNames.add("candle");
         candles.altNames.add("pair");
         candles.initialPresenceString = ObjectStrings.INIT_CANDLES;
+        candles.activated = true;
 
         Item coal = new Item("small pile of coal", Location.DEAD_END_COAL_MINE);
         coal.altNames.add("coal");
@@ -1298,7 +1300,9 @@ public class GameSetup {
 
         Item matchbook = new Item("matchbook", Location.DAM_LOBBY);
         matchbook.altNames.add("matches");
+        matchbook.altNames.add("match");
         matchbook.presenceString = ObjectStrings.INIT_MATCHBOOK;
+        matchbook.lifespan = GameState.MATCH_LIFESPAN;
 
         Item pump = new Item("hand-held air pump", Location.RESERVOIR_NORTH);
         pump.altNames.add("air pump");
@@ -1419,6 +1423,10 @@ public class GameSetup {
         forest.altLocations.add(Location.CLEARING_EAST);
         forest.altLocations.add(Location.UP_TREE);
         forest.listenString = "The pines and the hemlocks seem to be murmuring.";
+
+        Feature gas = new Feature("gas", Location.GAS_ROOM);
+        gas.blowString = "There is too much gas to blow away.";
+        gas.smellString = "It smells like coal gas in here.";
         
         Feature grating = new Feature("grating", Location.GRATING_ROOM);
         grating.altNames.add("grate");
@@ -1528,6 +1536,7 @@ public class GameSetup {
         // Actors
         
         Actor cyclops = new Actor("cyclops", Location.CYCLOPS_ROOM);
+        cyclops.helloString = "The cyclops bows his head to you in greeting.";
         
         Actor flood = new Actor("flood", Location.MAINTENANCE_ROOM);
         
@@ -1554,14 +1563,24 @@ public class GameSetup {
         Actor thief = new Actor("thief", Location.TREASURE_ROOM);
         thief.inventoryID = Location.THIEF_INVENTORY;
         thief.presenceString = ObjectStrings.THIEF_PRESENT_2;
+        thief.helloString = "The thief bows his head to you in greeting.";
         
         Actor troll = new Actor("troll", Location.TROLL_ROOM);
         troll.presenceString = ObjectStrings.TROLL_PRESENCE;
         troll.takeString = ObjectStrings.TROLL_TAKE;
         troll.talkString = ObjectStrings.TROLL_TALK_1;
         troll.inventoryID = Location.TROLL_INVENTORY;
+        troll.helloString = "The troll bows his head to you in greeting.";
         
         Actor vampireBat = new Actor("vampire bat", Location.BAT_ROOM);
+        vampireBat.altNames.add("vampire");
+        vampireBat.altNames.add("bat");
+        vampireBat.attackString = ObjectStrings.BAT_CEILING;
+        vampireBat.enterString = ObjectStrings.BAT_CEILING;
+        vampireBat.helloString = "The bat bows his head to you in greeting.";
+        vampireBat.kickString = ObjectStrings.BAT_CEILING;
+        vampireBat.listenString = "The bat makes pained squeaking noises while holding his nose.";
+        vampireBat.takeString = ObjectStrings.BAT_CEILING;
 
         // Add all objects to the gamestate list
 
@@ -1641,6 +1660,7 @@ public class GameSetup {
         state.objectList.put(coalMachine.name, coalMachine);
         state.objectList.put(damBolt.name, damBolt);
         state.objectList.put(forest.name, forest);
+        state.objectList.put(gas.name, gas);
         state.objectList.put(grating.name, grating);
         state.objectList.put(house.name, house);
         state.objectList.put(houseBoards.name, houseBoards);
@@ -1786,6 +1806,7 @@ public class GameSetup {
 		state.actions.put("inventory", Action.INVENTORY);
 		state.actions.put("i",         Action.INVENTORY);
 		state.actions.put("jump",  Action.JUMP);
+        state.actions.put("leap",  Action.JUMP);
 		state.actions.put("look around",  Action.LOOK);
 		state.actions.put("look",  Action.LOOK);
 		state.actions.put("l",     Action.LOOK);
@@ -1822,6 +1843,9 @@ public class GameSetup {
 	    state.actions.put("l at", Action.EXAMINE);
 	    state.actions.put("extinguish", Action. EXTINGUISH);
 	    state.actions.put("follow", Action.FOLLOW);
+        state.actions.put("greet", Action.GREET);
+        state.actions.put("hello", Action.GREET);
+        state.actions.put("say hello", Action.GREET);
 	    state.actions.put("kick", Action.KICK);
 	    state.actions.put("knock", Action.KNOCK);
 	    state.actions.put("light", Action.LIGHT);
@@ -1928,6 +1952,7 @@ public class GameSetup {
 	    state.actionTypes.put(Action.EXAMINE, ActionType.DIRECT);
 	    state.actionTypes.put(Action.EXTINGUISH, ActionType.DIRECT);
 	    state.actionTypes.put(Action.FOLLOW, ActionType.DIRECT);
+        state.actionTypes.put(Action.GREET, ActionType.DIRECT);
 	    state.actionTypes.put(Action.KICK, ActionType.DIRECT);
 	    state.actionTypes.put(Action.KNOCK, ActionType.DIRECT);
 	    state.actionTypes.put(Action.LIGHT, ActionType.DIRECT);
@@ -2070,7 +2095,8 @@ public class GameSetup {
         Location.DEAD_END_MAZE_NORTH, Location.DEAD_END_MAZE_SOUTHEAST, Location.DEAD_END_MAZE_CENTER,
         Location.DEAD_END_MAZE_SOUTHWEST };
 
-    public static Location[] coalMine = { Location.COAL_MINE_1,
-        Location.COAL_MINE_2, Location.COAL_MINE_3, Location.COAL_MINE_4 };
+    public static Location[] coalMine = { Location.COAL_MINE_1, Location.COAL_MINE_2,
+        Location.COAL_MINE_3, Location.COAL_MINE_4, Location.LADDER_TOP, Location.LADDER_BOTTOM,
+        Location.DEAD_END_COAL_MINE, Location.TIMBER_ROOM };
 
 }

@@ -421,8 +421,7 @@ public class InputParser {
 				String roomName = rm.name.toLowerCase();
 				if (roomName.equals(input))
 				{
-					state.playerLocation = rm.roomID;
-					rm.lookAround(state);
+					state.relocatePlayer(rm.roomID);
 					teleportCheck = true;
 					return true;
 				}

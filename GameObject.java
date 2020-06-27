@@ -38,6 +38,7 @@ abstract class GameObject {
     public String examineString;
     public String extinguishString;
     public String followString;
+    public String helloString;
     public String kickString;
     public String knockString;
     public String lightString;
@@ -138,6 +139,7 @@ abstract class GameObject {
         examineString = "There's nothing special about the " + name + ".";
         extinguishString = "You can't turn that off.";
         followString = "You're nuts!";
+        helloString = "It's a well known fact that only schizophrenics say \"Hello\" to " + articleName + ".";
         knockString = "Why knock on " + articleName + "?";
         lightString = "You can't turn that on.";
         listenString = "The " + name + " makes no sound.";
@@ -285,6 +287,7 @@ abstract class GameObject {
     public void examine(GameState state) { Game.output(examineString); }
     public void extinguish(GameState state) { Game.output(extinguishString); }   
     public void follow(GameState state) { Game.output(followString); }  
+    public void greet(GameState state) { Game.output(helloString); }  
     public void kick(GameState state) { Game.output(kickString + randPhrase()); }
     public void knock(GameState state) { Game.output(knockString); }
     public void light(GameState state) { Game.output(lightString); }

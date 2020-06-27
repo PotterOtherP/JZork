@@ -13,6 +13,7 @@ class GameState {
 	public boolean playerDead;
     public int playerDeaths;
     public int suicideCount;
+    public int matchCount;
     public Verbosity verbosity;
 
 	// game events
@@ -59,6 +60,8 @@ class GameState {
     public static final int MAX_DARKNESS_TURNS = 2;
     public static final int MAX_HIT_POINTS = 10;
     public static final int LANTERN_LIFESPAN = 100;
+    public static final int MATCH_LIFESPAN = 5;
+    public static final int MATCHES_IN_BOOK = 20;
     public static final int CARRY_WEIGHT_LIMIT = 20;
 
 	public GameState()
@@ -84,6 +87,7 @@ class GameState {
 		carpetMoved = false;
 		leafPileMoved = false;
         loudRoomSolved = false;
+        matchCount = MATCHES_IN_BOOK;
 		potOfGoldAppeared = false;
         ropeRailTied = false;
 		rainbowSolid = false;
@@ -275,6 +279,15 @@ class GameState {
 		}
 	}
 
+    public void relocatePlayer(Location loc)
+    {
+        playerPreviousLocation = playerLocation;
+        playerLocation = loc;
+        Room rm = worldMap.get(loc);
+        darknessCheck();
+        rm.lookAround(this);
+    }
+
 	public void resetInput()
 	{
 		if (!completePlayerInput.equals("again") && !completePlayerInput.equals("g"))
@@ -332,6 +345,7 @@ class GameState {
             case EXTINGUISH: { directObject.extinguish(this); } break;
             case FOLLOW: { directObject.follow(this); } break;
             case GIVE: { directObject.give(this); } break;
+            case GREET: { directObject.greet(this); } break;
             case KICK: { directObject.kick(this); } break;
             case KNOCK: { directObject.knock(this); } break;
             case LIGHT: { directObject.light(this); } break;
@@ -455,7 +469,7 @@ class GameState {
 
                     if (nextRoom.isDark() && !lightActivated)
                     {
-                        Game.output(GameStrings.ENTER_DARKNESS);
+                        Game.lineOutput(GameStrings.ENTER_DARKNESS);
                         // return;
                     }
 
@@ -491,6 +505,29 @@ class GameState {
 
 					if (nextRoom.firstVisit)
 						nextRoom.firstVisit = false;
+
+                    if (nextRoom.roomID == Location.GAS_ROOM)
+                    {
+                        boolean flameCheck = false;
+
+                        Item torch = (Item)objectList.get("torch");
+                        Item candles = (Item)objectList.get("pair of candles");
+                        Item match = (Item)objectList.get("matchbook");
+
+                        if (torch.location == Location.PLAYER_INVENTORY && torch.activated)
+                            flameCheck = true;
+                        if (candles.location == Location.PLAYER_INVENTORY && candles.activated)
+                            flameCheck = true;
+                        if (match.location == Location.PLAYER_INVENTORY && match.activated)
+                            flameCheck = true;
+
+                        if (flameCheck)
+                        {
+                            Game.outputLine();
+                            Game.output(GameStrings.GAS_EXPLOSION);
+                            playerDies();
+                        }
+                    }
 
 				}
 
@@ -810,6 +847,11 @@ class GameState {
             case ATTACK:
             {
                 Game.output("All such attacks are vain in your condition.");
+            } break;
+
+            case GREET:
+            {
+                Game.output("The dead may not greet the living.");
             } break;
 
             case INVENTORY:

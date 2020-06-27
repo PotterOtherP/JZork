@@ -163,7 +163,8 @@ class GameStrings {
     public static final String TRAP_DOOR_OPENS = "The door reluctantly opens to reveal a rickety staircase descending into darkness.";
 
 
-
+    public static final String GAS_EXPLOSION = "Oh dear. It appears that the smell coming from this room was coal gas. I would have "
+        + "thought twice about carrying flaming objects in here.";
 
 
 	public static final String OVERBURDENED = "You can't carry any more.";

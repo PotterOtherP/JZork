@@ -1,4 +1,6 @@
-class Item extends GameObject{
+import java.util.Random;
+
+public class Item extends GameObject{
 
 	// Items can be picked up and moved to other locations, including the player's inventory.
 
@@ -75,6 +77,7 @@ class Item extends GameObject{
 
         else
             super.drink(state);
+
     }
 
     @Override
@@ -125,8 +128,43 @@ class Item extends GameObject{
             location = state.playerLocation;
             Game.output("Dropped.");
         }
-
         
+    }
+
+    @Override
+    public void eat(GameState state)
+    {
+        switch (name)
+        {
+            case "clove of garlic":
+            {
+                this.location = Location.NULL_LOCATION;
+                Game.output(ObjectStrings.GARLIC_EAT);
+
+                if (state.playerLocation == Location.BAT_ROOM)
+                {
+                    Game.output("The bat, no longer deterred, swoops down at you!"
+                    + "\n\nFweep!\nFweep!\nFweep!\n\n\n"
+                    + "The bat grabs you by the scruff of your neck and lifts you away....\n\n");
+
+                    Random rand = new Random();
+                    int dieRoll = rand.nextInt(GameSetup.coalMine.length);
+                    state.relocatePlayer(GameSetup.coalMine[dieRoll]);
+                }
+                
+            } break;
+
+            case "lunch":
+            {
+                this.location = Location.NULL_LOCATION;
+                Game.output(ObjectStrings.LUNCH_EAT);
+            } break;
+
+            default:
+            {
+                super.eat(state);
+            } break;
+        }
     }
 
     @Override
@@ -190,7 +228,9 @@ class Item extends GameObject{
                 Game.output(extinguishString);
             } break;
         }
+
     }
+
 
 	@Override
 	public void light(GameState state)
@@ -226,11 +266,34 @@ class Item extends GameObject{
 
 			} break;
 
+            case "matchbook":
+            {
+                if (!activated && state.matchCount > 0)
+                {
+                    Game.output("One of the matches begins to burn.");
+                    activated = true;
+                    --state.matchCount;
+                    lifespan = GameState.MATCH_LIFESPAN;
+                }
+
+                else if (state.matchCount <= 0)
+                {
+                    Game.output("There are no matches left in the matchbook.");
+                }
+
+                else if (activated)
+                {
+                    Game.output("You already have a lit match.");
+                }
+
+            } break;
+
 			default:
 			{
 				Game.output(lightString);
 			} break;
 		}
+
 	}
 
     @Override
