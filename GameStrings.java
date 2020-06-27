@@ -4,10 +4,10 @@ class GameStrings {
 
     // This class does not get instantiated.
     private GameStrings() {}
-	
-	public static final String COMBAT_MISS_1 = "Your WEAPON misses the ENEMY by an inch.";
+    
+    public static final String COMBAT_MISS_1 = "Your WEAPON misses the ENEMY by an inch.";
     public static final String COMBAT_MISS_2 = "A good slash, but it misses the ENEMY by a mile.";
-	public static final String COMBAT_MISS_3 = "You charge, but the ENEMY jumps nimbly aside.";
+    public static final String COMBAT_MISS_3 = "You charge, but the ENEMY jumps nimbly aside.";
     public static final String COMBAT_PARRY_1 = "Clang! Crash! The ENEMY parries.";
     public static final String COMBAT_PARRY_2 = "A quick stroke, but the ENEMY is on guard.";
     public static final String COMBAT_PARRY_3 = "A good stroke, but it's too slow; the ENEMY dodges.";
@@ -41,12 +41,12 @@ class GameStrings {
     public static final String COMBAT_STAGGERED = "You are still recovering from that last blow, so your attack is ineffective.";
 
 
-	public static final String GAME_BEGIN = "ZORK I: The Great Underground Empire"
-		+ "\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. All rights reserved."
-		+ "\n ZORK is a registered trademark of Infocom, Inc."
-		+ "\n Revision 88 / Serial number 840726";	
+    public static final String GAME_BEGIN = "ZORK I: The Great Underground Empire"
+        + "\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. All rights reserved."
+        + "\n ZORK is a registered trademark of Infocom, Inc."
+        + "\n Revision 88 / Serial number 840726";    
 
-	public static final String AUTHOR_INFO = "This sad attempt to recreate Zork was written by Nate Tryon "
+    public static final String AUTHOR_INFO = "This sad attempt to recreate Zork was written by Nate Tryon "
         + "in the year of are Lord 2020.\n\nhttps://github.com/PotterOtherP/JZork";
     public static final String BLACK_BOOK_TEXT = "Commandment #12592\n\n"
         + "Oh ye who go about saying unto each:  \"Hello sailor\":\n"
@@ -68,7 +68,7 @@ class GameStrings {
         + "Warning:\n"
         + "   This boat is made of thin plastic.\n"
         + "   Good Luck!";
-	public static final String CANT_GO = "You can't go that way.";
+    public static final String CANT_GO = "You can't go that way.";
     public static final String DAM_GUIDEBOOK_TEXT = "       Flood Control Dam #3\n\n"
         + "FCD#3 was constructed in the year 783 of the Great Underground Empire to harness the mighty Frigid River. This work was supported by "
         + "a grant of 37 million zorkmids from your omnipotent local tyrant Lord Dimwit Flathead the Excessive. This impressive structure is "
@@ -97,14 +97,14 @@ class GameStrings {
     public static final String ENGRAVINGS_TEXT = "The engravings were incised in the living rock of the cave all by an unknown hand. They depict, "
         + "in symbolic form, the beliefs of the ancient Zorkers. Skillfully interwoven with the bas reliefs are excerpts illustrating the major "
         + "religious tenets of that time. Unfortunately, a later age seems to have considered them blasphemous and just as skillfully excised them.";
-	public static final String ENTER_DARKNESS = "You have moved into a dark place.";
+    public static final String ENTER_DARKNESS = "You have moved into a dark place.";
     public static final String GAS_EXPLOSION = "Oh dear. It appears that the smell coming from this room was coal gas. I would have "
         + "thought twice about carrying flaming objects in here.";
     public static final String GRUE_DEATH_1 = "Oh no! You have walked into the slavering fangs of a lurking grue!";
     public static final String GRUE_DEATH_2 = "Oh no! A lurking grue slithered into the room and devoured you!";
     public static final String HOLLOW_VOICE = "A hollow voice says \"Fool.\"";
-	public static final String LEAFLET_TEXT = "WELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore "
-		+ "some of the most amazing territory ever seen by mortals. No computer should be without one!";
+    public static final String LEAFLET_TEXT = "WELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore "
+        + "some of the most amazing territory ever seen by mortals. No computer should be without one!";
     public static final String MOVE_RUG = "With a great effort, the rug is moved to one side of the room, revealing the dusty cover "
         + "of a closed trap door.";
     public static final String NATE_MANUAL_TEXT = "\nCongratulations!\n\nYou are the privileged owner of a shoddy facsimile of ZORK I: "
@@ -112,9 +112,9 @@ class GameStrings {
         + "computer geniuses at MIT. If used and maintained in accordance with normal operating practices for small universes, this pale "
         + "imitation of ZORK I will provide many months of troubled and bug-ridden operation, including bizarre logical errors and "
         + "countless thrown exceptions.";   
-	public static final String OVERBURDENED = "You can't carry any more.";
+    public static final String OVERBURDENED = "You can't carry any more.";
     public static final String PASSAGE_OVERBURDENED = "You are carrying too much.";
-	public static final String PLAYER_DIES = "\n   ****  You have died  ****\n\n"
+    public static final String PLAYER_DIES = "\n   ****  You have died  ****\n\n"
         + "Now, let's take a look here... Well, you probably deserve another chance. I can't quite fix you up "
         + "completely, but you can't have everything.";
     public static final String PLAYER_DIES_FOR_REAL = "\n   ****  You have died  ****\n\n"
@@ -127,8 +127,8 @@ class GameStrings {
     public static final String PLAYER_DIES_WHILE_DEAD = "It takes a talented person to be killed while already dead. YOU are "
         + "such a talent. Unfortunately, it takes a talented person to deal with it. I am not such a talent. Sorry.";
     public static final String PROFANITY_ONE = "Such language in a high-class establishment like this!";
-	public static final String PROFANITY_TWO = "Do you have to use so many cuss words?";
-	public static final String PROFANITY_THREE = "There's no need for that kind of language.";
+    public static final String PROFANITY_TWO = "Do you have to use so many cuss words?";
+    public static final String PROFANITY_THREE = "There's no need for that kind of language.";
     public static final String RUG_ALREADY_MOVED = "Having moved the carpet previously, you find it impossible to move it again.";
     public static final String SAILOR = "Nothing happens here.";
     public static final String TOO_DARK = "It's too dark to see!";
@@ -178,34 +178,34 @@ class GameStrings {
 
 
 
-	// All the words recognized by the game.
-	public static final String[] GAME_WORDS = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
-	"k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
-	"u", "v", "w", "x", "y", "z", "ne", "nw", "se", "sw",
-	"again", "an", "around", "at", "attach", "attack", "author",
-	"bar", "bell", "bird", "bottle", "box",
-	"carpet", "case", "close",
-	"door", "down", "drop",
-	"east", "egg", "examine", "exit",
-	"five", "fuck",
-	"giant", "go",
-	"hand", "high", "highfive", "hit", "house",
-	"in", "inn", "inside", "inventory",
-	"jump", "juniper",
-	"key", "kick", "kitchen", "knife",
-	"lantern", "leaflet", "light", "lock", "look",
-	"mailbox", "move",
-	"nest", "next", "north", "northeast", "northwest", "note",
-	"off", "on", "open", "out",
-	"passage", "piano", "pick", "pile", "place", "put", "play", "please", "pull", "punch",
-	"quit",
-	"read", "ring", "room", "rope",
-	"sack", "say", "scream", "shit", "shout", "slap", "songbird", "south", "southeast", "southwest", "store", "sword",
-	"take", "the", "tie", "to", "trap", "trophy", "turn",
-	"unlock", "up",
-	"wait", "walk", "west", "window", "with", "wizard",
-	"yell"
-	};
+    // All the words recognized by the game.
+    public static final String[] GAME_WORDS = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
+    "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+    "u", "v", "w", "x", "y", "z", "ne", "nw", "se", "sw",
+    "again", "an", "around", "at", "attach", "attack", "author",
+    "bar", "bell", "bird", "bottle", "box",
+    "carpet", "case", "close",
+    "door", "down", "drop",
+    "east", "egg", "examine", "exit",
+    "five", "fuck",
+    "giant", "go",
+    "hand", "high", "highfive", "hit", "house",
+    "in", "inn", "inside", "inventory",
+    "jump", "juniper",
+    "key", "kick", "kitchen", "knife",
+    "lantern", "leaflet", "light", "lock", "look",
+    "mailbox", "move",
+    "nest", "next", "north", "northeast", "northwest", "note",
+    "off", "on", "open", "out",
+    "passage", "piano", "pick", "pile", "place", "put", "play", "please", "pull", "punch",
+    "quit",
+    "read", "ring", "room", "rope",
+    "sack", "say", "scream", "shit", "shout", "slap", "songbird", "south", "southeast", "southwest", "store", "sword",
+    "take", "the", "tie", "to", "trap", "trophy", "turn",
+    "unlock", "up",
+    "wait", "walk", "west", "window", "with", "wizard",
+    "yell"
+    };
 
     public static final String[] GODMODE_WORDS = {
 

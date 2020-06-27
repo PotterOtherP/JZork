@@ -1,141 +1,141 @@
 import java.util.HashMap;
 
 class Room {
-	
-	public final String name;
-	public final Location roomID;
-	public String description;
-	public String jumpString;
-	public boolean darkness;
-	public boolean firstVisit;
-	public boolean height;
+    
+    public final String name;
+    public final Location roomID;
+    public String description;
+    public String jumpString;
+    public boolean darkness;
+    public boolean firstVisit;
+    public boolean height;
 
-	public HashMap<Action, Passage> exits;
-	public HashMap<Action, String> failMessages;
+    public HashMap<Action, Passage> exits;
+    public HashMap<Action, String> failMessages;
 
-	public Room(String nm, String desc, Location loc)
-	{
-		name = nm;
-		roomID = loc;
-		description = desc;
-		jumpString = "";
-		darkness = false;
-		firstVisit = true;
-		height = false;
+    public Room(String nm, String desc, Location loc)
+    {
+        name = nm;
+        roomID = loc;
+        description = desc;
+        jumpString = "";
+        darkness = false;
+        firstVisit = true;
+        height = false;
 
-		exits = new HashMap<Action, Passage>();
-		failMessages = new HashMap<Action, String>();
-	}
-
-
-	public boolean exit(GameState state, Action act)
-	{
-		Passage psg = null;
-		boolean result = false;
-		Location dest = Location.NULL_LOCATION;
+        exits = new HashMap<Action, Passage>();
+        failMessages = new HashMap<Action, String>();
+    }
 
 
-		// Identify which direction the player is trying to go.
-		if (exits.containsKey(act))
-		{
-			psg = exits.get(act);
-		}
-
-		else
-		{
-			// Darkness check
-			if (state.darkness && !state.playerDead)
-			{
-				Game.output(GameStrings.GRUE_DEATH_1);
-				state.playerDies();
-				return false;
-			}
-
-			if (failMessages.containsKey(act))
-				Game.output(failMessages.get(act));
-			else
-				Game.output(GameStrings.CANT_GO);
-
-			return false;
-		}
-
-		// Check here for baggage limit passages.
-		if (state.playerCarryWeight > psg.weightLimit)
-		{
-			Game.output(psg.weightFail);
-			return false;
-		}
+    public boolean exit(GameState state, Action act)
+    {
+        Passage psg = null;
+        boolean result = false;
+        Location dest = Location.NULL_LOCATION;
 
 
-		// Figure out which side of the Passage the player is on.
-		if (psg.locationA == roomID) { dest = psg.locationB; }
-		else { dest = psg.locationA; }
+        // Identify which direction the player is trying to go.
+        if (exits.containsKey(act))
+        {
+            psg = exits.get(act);
+        }
 
-		// Darkness check. If the room is in darkness, and the destination
-		// is not the previous room, player dies by grue.
-		if (isDark() && !state.lightActivated && (dest != state.playerPreviousLocation) && !state.playerDead)
-		{
-			Game.output(GameStrings.GRUE_DEATH_1);
-			state.playerDies();
-			return false;
+        else
+        {
+            // Darkness check
+            if (state.darkness && !state.playerDead)
+            {
+                Game.output(GameStrings.GRUE_DEATH_1);
+                state.playerDies();
+                return false;
+            }
 
-		}
+            if (failMessages.containsKey(act))
+                Game.output(failMessages.get(act));
+            else
+                Game.output(GameStrings.CANT_GO);
 
-		// If the Passage is open... success
-		if (psg.isOpen())
-		{
-			if (!psg.message.isEmpty())
-			{
-				Game.output(psg.message);
-				Game.outputLine();
-			}
+            return false;
+        }
 
-			state.playerPreviousLocation = state.playerLocation;
-			state.playerLocation = dest;
-			result = true;
-		}
-
-		else
-		{	
-			Game.output(psg.closedFail);
-		}
-		
-
-		return result;
-
-	}
+        // Check here for baggage limit passages.
+        if (state.playerCarryWeight > psg.weightLimit)
+        {
+            Game.output(psg.weightFail);
+            return false;
+        }
 
 
-	public void getDescription(GameState state)
-	{
-		if (state.playerDead)
-		{
-			if (darkness)
-			{
-				Game.output(GameStrings.DEAD_LOOK);
-				Game.outputLine();
-			}
-			Game.output(description);
-			return;
-		}
+        // Figure out which side of the Passage the player is on.
+        if (psg.locationA == roomID) { dest = psg.locationB; }
+        else { dest = psg.locationA; }
 
-		if (darkness && !state.lightActivated)
+        // Darkness check. If the room is in darkness, and the destination
+        // is not the previous room, player dies by grue.
+        if (isDark() && !state.lightActivated && (dest != state.playerPreviousLocation) && !state.playerDead)
+        {
+            Game.output(GameStrings.GRUE_DEATH_1);
+            state.playerDies();
+            return false;
+
+        }
+
+        // If the Passage is open... success
+        if (psg.isOpen())
+        {
+            if (!psg.message.isEmpty())
+            {
+                Game.output(psg.message);
+                Game.outputLine();
+            }
+
+            state.playerPreviousLocation = state.playerLocation;
+            state.playerLocation = dest;
+            result = true;
+        }
+
+        else
+        {    
+            Game.output(psg.closedFail);
+        }
+        
+
+        return result;
+
+    }
+
+
+    public void getDescription(GameState state)
+    {
+        if (state.playerDead)
+        {
+            if (darkness)
+            {
+                Game.output(GameStrings.DEAD_LOOK);
+                Game.outputLine();
+            }
+            Game.output(description);
+            return;
+        }
+
+        if (darkness && !state.lightActivated)
         {
             Game.output(GameStrings.DARKNESS);
             return;
         }
 
-		String result = description;
+        String result = description;
 
-		switch (roomID)
-		{
-			case ARAGAIN_FALLS:
-			{
-				if (state.rainbowSolid)
-					result += "\nA solid rainbow spans the falls.";
-			} break;
+        switch (roomID)
+        {
+            case ARAGAIN_FALLS:
+            {
+                if (state.rainbowSolid)
+                    result += "\nA solid rainbow spans the falls.";
+            } break;
 
-			case BEHIND_HOUSE:
+            case BEHIND_HOUSE:
             {
                 if (exits.get(Action.WEST).isOpen())
                     result = MapStrings.DESC_BEHIND_HOUSE_WINDOW_OPEN;
@@ -155,141 +155,141 @@ class Room {
             case MIRROR_ROOM_SOUTH:
             case MIRROR_ROOM_NORTH:
             {
-            	if (state.mirrorBroken)
-            		result += "\nUnfortunately, the mirror has been destroyed by your recklessness.";
+                if (state.mirrorBroken)
+                    result += "\nUnfortunately, the mirror has been destroyed by your recklessness.";
             }
 
 
-			default:
-			{
-				
-			} break;
-		}
+            default:
+            {
+                
+            } break;
+        }
 
-		Game.output(result);
+        Game.output(result);
 
-	}
+    }
 
 
-	public void getRoomObjects(GameState state)
-	{
-		state.refreshInventories();
+    public void getRoomObjects(GameState state)
+    {
+        state.refreshInventories();
 
-		if (darkness && !state.lightActivated && !state.playerDead)
+        if (darkness && !state.lightActivated && !state.playerDead)
         {
             return;
         }
 
-		for (GameObject g : state.objectList.values())
-		{
-			if (g.location != roomID) continue;
-			
-			if (g.isActor())
-			{
-				Game.output(g.presenceString);
-			}
+        for (GameObject g : state.objectList.values())
+        {
+            if (g.location != roomID) continue;
+            
+            if (g.isActor())
+            {
+                Game.output(g.presenceString);
+            }
 
-			if (g.isItem())
-			{
-				Item it = (Item)(g);
-				Game.output(it.getItemDescription());
-			}
+            if (g.isItem())
+            {
+                Item it = (Item)(g);
+                Game.output(it.getItemDescription());
+            }
 
-			if (g.isSurface())
-			{
+            if (g.isSurface())
+            {
 
-				if (!g.inventory.isEmpty())
-				{
-					boolean check = true;
+                if (!g.inventory.isEmpty())
+                {
+                    boolean check = true;
 
-					for (Item it : g.inventory)
-					{
-						if (it.initialPresenceString.isEmpty() || it.movedFromStart)
-						{
-							check = false;
-						}
-					}
+                    for (Item it : g.inventory)
+                    {
+                        if (it.initialPresenceString.isEmpty() || it.movedFromStart)
+                        {
+                            check = false;
+                        }
+                    }
 
-					if (check)
-					{
-						for (Item it : g.inventory)
-							Game.output(it.initialPresenceString);
-					}
+                    if (check)
+                    {
+                        for (Item it : g.inventory)
+                            Game.output(it.initialPresenceString);
+                    }
 
-					else
-					{
-						Game.output("Sitting on the " + g.name + " is:");
-						for (Item it : g.inventory)
-							Game.output(it.capArticleName);
-					}
+                    else
+                    {
+                        Game.output("Sitting on the " + g.name + " is:");
+                        for (Item it : g.inventory)
+                            Game.output(it.capArticleName);
+                    }
 
-				}
-			}
+                }
+            }
 
-			// An annoying exception: the glass bottle, in which the water can be seen
-			// even though it's closed.
-			if (g.isContainer() && (g.isOpen() || g.name.equals("glass bottle")) )
-			{
-				if (!g.inventory.isEmpty())
-				{
-					boolean check = true;
+            // An annoying exception: the glass bottle, in which the water can be seen
+            // even though it's closed.
+            if (g.isContainer() && (g.isOpen() || g.name.equals("glass bottle")) )
+            {
+                if (!g.inventory.isEmpty())
+                {
+                    boolean check = true;
 
-					for (Item it : g.inventory)
-					{
-						if (it.initialPresenceString.isEmpty() || it.movedFromStart)
-						{
-							check = false;
-						}
-					}
+                    for (Item it : g.inventory)
+                    {
+                        if (it.initialPresenceString.isEmpty() || it.movedFromStart)
+                        {
+                            check = false;
+                        }
+                    }
 
-					if (check)
-					{
-						for (Item it : g.inventory)
-							Game.output(it.initialPresenceString);
-					}
+                    if (check)
+                    {
+                        for (Item it : g.inventory)
+                            Game.output(it.initialPresenceString);
+                    }
 
-					else
-					{
-						Game.output("The " + g.name + " contains:");
-						for (Item it : g.inventory)
-							Game.output(it.capArticleName);
-					}
-				}
-			}	
-		}
-		
-	}
+                    else
+                    {
+                        Game.output("The " + g.name + " contains:");
+                        for (Item it : g.inventory)
+                            Game.output(it.capArticleName);
+                    }
+                }
+            }    
+        }
+        
+    }
 
 
-	public void lookAround(GameState state)
-	{
+    public void lookAround(GameState state)
+    {
         Game.output(name);
         Game.outputLine();
 
-		getDescription(state);
-		getRoomObjects(state);
+        getDescription(state);
+        getRoomObjects(state);
 
-	}
+    }
 
 
-	public void addExit(Action act, Passage psg)
-	{
-		exits.put(act, psg);
-	}
+    public void addExit(Action act, Passage psg)
+    {
+        exits.put(act, psg);
+    }
 
-	public void addFailMessage(Action act, String msg)
-	{
-		failMessages.put(act, msg);
-	}
+    public void addFailMessage(Action act, String msg)
+    {
+        failMessages.put(act, msg);
+    }
 
-	public void removeFailMessage(Action act)
-	{
-		failMessages.remove(act);
-	}
+    public void removeFailMessage(Action act)
+    {
+        failMessages.remove(act);
+    }
 
-	public void setDark() { darkness = true; }
-	public void setLight() { darkness = false; }
-	public boolean isDark() { return darkness; }
+    public void setDark() { darkness = true; }
+    public void setLight() { darkness = false; }
+    public boolean isDark() { return darkness; }
 
 
 }

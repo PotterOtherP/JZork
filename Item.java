@@ -2,41 +2,41 @@ import java.util.Random;
 
 public class Item extends GameObject{
 
-	// Items can be picked up and moved to other locations, including the player's inventory.
+    // Items can be picked up and moved to other locations, including the player's inventory.
 
-	public int acquirePointValue;
-	public boolean activated;
-	public int capacity;
-	public int lifespan;
+    public int acquirePointValue;
+    public boolean activated;
+    public int capacity;
+    public int lifespan;
     public boolean locked;
     public boolean open;
-	public int trophyCaseValue;
-	public int weight;
+    public int trophyCaseValue;
+    public int weight;
 
-	public Item(String name, Location loc)
-	{
-		super(name, loc);
-		type = ObjectType.ITEM;
+    public Item(String name, Location loc)
+    {
+        super(name, loc);
+        type = ObjectType.ITEM;
 
-		acquirePointValue = 0;
-		activated = false;
-		capacity = 0;
-		lifespan = 0;
-		locked = false;
-		open = false;
-		trophyCaseValue = 0;
-		weight = 0;
-	}
+        acquirePointValue = 0;
+        activated = false;
+        capacity = 0;
+        lifespan = 0;
+        locked = false;
+        open = false;
+        trophyCaseValue = 0;
+        weight = 0;
+    }
 
 
     @Override
     public void close(GameState state)
     {
-    	if (!isContainer())
-    	{
-    		Game.output(closeString);
-    		return;
-    	} 
+        if (!isContainer())
+        {
+            Game.output(closeString);
+            return;
+        } 
 
         if (open)
         {
@@ -165,11 +165,11 @@ public class Item extends GameObject{
     @Override
     public void examine(GameState state)
     {
-    	if (!isContainer())
-    	{
-    		Game.output(examineString);
-    		return;
-    	}
+        if (!isContainer())
+        {
+            Game.output(examineString);
+            return;
+        }
 
         if (open)
         {
@@ -229,14 +229,14 @@ public class Item extends GameObject{
     }
 
 
-	@Override
-	public void light(GameState state)
-	{
-		switch (name)
-		{
-			case "brass lantern":
-			{
-				if (!activated && lifespan > 0)
+    @Override
+    public void light(GameState state)
+    {
+        switch (name)
+        {
+            case "brass lantern":
+            {
+                if (!activated && lifespan > 0)
                 {
                     activated = true;
                     state.lightActivated = true;
@@ -261,7 +261,7 @@ public class Item extends GameObject{
                     Game.output("It is already on.");
                 }
 
-			} break;
+            } break;
 
             case "matchbook":
             {
@@ -285,13 +285,13 @@ public class Item extends GameObject{
 
             } break;
 
-			default:
-			{
-				Game.output(lightString);
-			} break;
-		}
+            default:
+            {
+                Game.output(lightString);
+            } break;
+        }
 
-	}
+    }
 
 
     @Override
@@ -627,5 +627,5 @@ public class Item extends GameObject{
     @Override
     public void tick() { --lifespan; }
     public String toString() { return name; }
-	
+    
 }

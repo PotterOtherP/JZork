@@ -3,8 +3,8 @@ import java.util.Random;
 
 
 public class Actor extends GameObject {
-	
-	public boolean alive;
+    
+    public boolean alive;
     public boolean disarmed;
     public boolean firstCombatTurn;
     public int hitPoints;
@@ -14,17 +14,17 @@ public class Actor extends GameObject {
     public boolean thiefItemsHidden;
     public boolean unconscious;
 
-	public static final int MAX_ENEMY_HIT_POINTS = 10;
+    public static final int MAX_ENEMY_HIT_POINTS = 10;
     public static final int THIEF_ENCOUNTER_PERCENT = 5;
     public static final int SONGBIRD_CHIRP_PERCENT = 15;
 
 
-	public Actor(String name, Location loc)
-	{
-		super(name, loc);
-		type = ObjectType.ACTOR;
+    public Actor(String name, Location loc)
+    {
+        super(name, loc);
+        type = ObjectType.ACTOR;
 
-		alive = true;
+        alive = true;
         disarmed = false;
         firstCombatTurn = true;
         hitPoints = MAX_ENEMY_HIT_POINTS;
@@ -34,7 +34,7 @@ public class Actor extends GameObject {
         thiefItemsHidden = false;
         unconscious = false;
 
-	}
+    }
 
 
     @Override
@@ -1155,9 +1155,9 @@ public class Actor extends GameObject {
 
 
 
-	@Override
-	public boolean isAlive() { return alive; }
-	public String toString() { return name; }
+    @Override
+    public boolean isAlive() { return alive; }
+    public String toString() { return name; }
 
 
 }

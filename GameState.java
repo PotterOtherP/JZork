@@ -4,110 +4,110 @@ import java.util.Random;
 
 class GameState {
 
-	// gameplay information
-	public int turns;
+    // gameplay information
+    public int turns;
     public int darknessTurns;
     public boolean darkness;
     public boolean lightActivated;
     public int suicideCount;
     public Verbosity verbosity;
 
-	// game events
-	public boolean houseWindowOpened;
-	public boolean carpetMoved;
-	public boolean leafPileMoved;
+    // game events
+    public boolean houseWindowOpened;
+    public boolean carpetMoved;
+    public boolean leafPileMoved;
     public boolean loudRoomSolved;
     public int matchCount;
-	public boolean mirrorBroken;
-	public boolean potOfGoldAppeared;
-	public boolean rainbowSolid;
+    public boolean mirrorBroken;
+    public boolean potOfGoldAppeared;
+    public boolean rainbowSolid;
     public boolean ropeRailTied;
 
-	// player attributes
-	public int playerCarryWeight;
-	public boolean playerDead;
+    // player attributes
+    public int playerCarryWeight;
+    public boolean playerDead;
     public int playerDeaths;
-	public int playerHitPoints;
-	public Location playerLocation;
-	public Location playerPreviousLocation;
-	public int playerScore;
+    public int playerHitPoints;
+    public Location playerLocation;
+    public Location playerPreviousLocation;
+    public int playerScore;
     public boolean playerStaggered;
 
-	// player action
-	public String completePlayerInput;
-	public String playerPreviousInput;
-	public String firstInputPhrase;
-	public String secondInputPhrase;
-	public String thirdInputPhrase;
-	public ActionType playerActionType;
-	public Action playerAction;
-	public GameObject directObject;
-	public GameObject indirectObject;
-	public Feature dummyObject;
+    // player action
+    public String completePlayerInput;
+    public String playerPreviousInput;
+    public String firstInputPhrase;
+    public String secondInputPhrase;
+    public String thirdInputPhrase;
+    public ActionType playerActionType;
+    public Action playerAction;
+    public GameObject directObject;
+    public GameObject indirectObject;
+    public Feature dummyObject;
 
-	// lists of game objects
-	public HashMap<String, Action> actions;
-	public HashMap<Action, ActionType> actionTypes;
-	public HashMap<String, GameObject> currentObjects;
-	public ArrayList<String> dictionary;
-	public ArrayList<String> gameNouns;    // used in direct object validation
-	public HashMap<String, GameObject> objectList;
-	public HashMap<Location, Room> worldMap;
+    // lists of game objects
+    public HashMap<String, Action> actions;
+    public HashMap<Action, ActionType> actionTypes;
+    public HashMap<String, GameObject> currentObjects;
+    public ArrayList<String> dictionary;
+    public ArrayList<String> gameNouns;    // used in direct object validation
+    public HashMap<String, GameObject> objectList;
+    public HashMap<Location, Room> worldMap;
 
-	// Constants
+    // Constants
     public static final int CARRY_WEIGHT_LIMIT = 20;
     public static final int LANTERN_LIFESPAN = 100;
-	public static final int MAX_PLAYER_DEATHS = 3;
+    public static final int MAX_PLAYER_DEATHS = 3;
     public static final int MAX_DARKNESS_TURNS = 2;
     public static final int MAX_HIT_POINTS = 10;
     public static final int MATCH_LIFESPAN = 5;
     public static final int MATCHES_IN_BOOK = 20;
 
-	public GameState()
-	{
-		dummyObject = new Feature("dummy_feature", Location.NULL_LOCATION);
+    public GameState()
+    {
+        dummyObject = new Feature("dummy_feature", Location.NULL_LOCATION);
 
-		turns = 0;
-		darknessTurns = 0;
+        turns = 0;
+        darknessTurns = 0;
         darkness = false;
-		lightActivated = false;
+        lightActivated = false;
         suicideCount = 0;
-		verbosity = Verbosity.BRIEF;
+        verbosity = Verbosity.BRIEF;
 
-		playerCarryWeight = 0;
-		playerDead = false;
-		playerDeaths = 0;
+        playerCarryWeight = 0;
+        playerDead = false;
+        playerDeaths = 0;
         playerHitPoints = MAX_HIT_POINTS;
-		playerLocation = Location.NULL_LOCATION;
-		playerPreviousLocation = Location.NULL_LOCATION;
-		playerScore = 0;
+        playerLocation = Location.NULL_LOCATION;
+        playerPreviousLocation = Location.NULL_LOCATION;
+        playerScore = 0;
         playerStaggered = false;
 
-		completePlayerInput = "";
-		playerPreviousInput = "";
+        completePlayerInput = "";
+        playerPreviousInput = "";
 
-		houseWindowOpened = false;
-		carpetMoved = false;
-		leafPileMoved = false;
+        houseWindowOpened = false;
+        carpetMoved = false;
+        leafPileMoved = false;
         loudRoomSolved = false;
         matchCount = MATCHES_IN_BOOK;
         mirrorBroken = false;
-		potOfGoldAppeared = false;
+        potOfGoldAppeared = false;
         ropeRailTied = false;
-		rainbowSolid = false;
+        rainbowSolid = false;
 
-		
-		resetInput();
+        
+        resetInput();
 
-		actions = new HashMap<String, Action>();
-		actionTypes = new HashMap<Action, ActionType>();
-		currentObjects = new HashMap<String, GameObject>();
-		dictionary = new ArrayList<String>();
-		gameNouns = new ArrayList<String>();
-		objectList = new HashMap<String, GameObject>();
-		worldMap = new HashMap<Location, Room>();
+        actions = new HashMap<String, Action>();
+        actionTypes = new HashMap<Action, ActionType>();
+        currentObjects = new HashMap<String, GameObject>();
+        dictionary = new ArrayList<String>();
+        gameNouns = new ArrayList<String>();
+        objectList = new HashMap<String, GameObject>();
+        worldMap = new HashMap<Location, Room>();
 
-	}
+    }
 
 
     public void calculateScore()
@@ -142,7 +142,7 @@ class GameState {
     }
 
 
-	public void fillCurrentObjectList()
+    public void fillCurrentObjectList()
     {
         currentObjects.clear();
 
@@ -198,98 +198,98 @@ class GameState {
 
     public void playerDies()
     {
-    	if (Game.godmode) return;
+        if (Game.godmode) return;
 
-    	/*
-    	 * Items get randomly distributed in the overworld for any kind of death.
-    	 * The brass lantern always goes back in the living room. 
-    	 */
-		Location[] overworld = { Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE, Location.BEHIND_HOUSE,
-    	Location.SOUTH_OF_HOUSE, Location.FOREST_PATH, Location.FOREST_WEST, Location.FOREST_EAST,
-    	Location.FOREST_NORTHEAST, Location.FOREST_SOUTH, Location.CLEARING_NORTH, Location.CLEARING_EAST,
-    	Location.CANYON_VIEW, Location.ROCKY_LEDGE, Location.CANYON_BOTTOM };
+        /*
+         * Items get randomly distributed in the overworld for any kind of death.
+         * The brass lantern always goes back in the living room. 
+         */
+        Location[] overworld = { Location.WEST_OF_HOUSE, Location.NORTH_OF_HOUSE, Location.BEHIND_HOUSE,
+        Location.SOUTH_OF_HOUSE, Location.FOREST_PATH, Location.FOREST_WEST, Location.FOREST_EAST,
+        Location.FOREST_NORTHEAST, Location.FOREST_SOUTH, Location.CLEARING_NORTH, Location.CLEARING_EAST,
+        Location.CANYON_VIEW, Location.ROCKY_LEDGE, Location.CANYON_BOTTOM };
 
-    	Location[] forest = { Location.FOREST_WEST, Location.FOREST_EAST,
-    	Location.FOREST_NORTHEAST, Location.FOREST_SOUTH };
+        Location[] forest = { Location.FOREST_WEST, Location.FOREST_EAST,
+        Location.FOREST_NORTHEAST, Location.FOREST_SOUTH };
 
-    	++playerDeaths;
+        ++playerDeaths;
 
-    	Random rnd = new Random();
-    	for (GameObject g : objectList.values())
-    	{
-    		if (g.location == Location.PLAYER_INVENTORY)
-    		{
+        Random rnd = new Random();
+        for (GameObject g : objectList.values())
+        {
+            if (g.location == Location.PLAYER_INVENTORY)
+            {
 
-    			int i = rnd.nextInt(overworld.length);
-   				g.location = overworld[i];
-   			}
+                int i = rnd.nextInt(overworld.length);
+                   g.location = overworld[i];
+               }
 
             // The lantern should be returned to the living room even if the player dropped it
-   			if (g.name.equals("brass lantern"))
-   				g.location = Location.LIVING_ROOM;
-   		}
+               if (g.name.equals("brass lantern"))
+                   g.location = Location.LIVING_ROOM;
+           }
 
-    	if (playerDeaths % MAX_PLAYER_DEATHS == 0)
-    	{
-    		playerDeaths = 0;
-    		playerDiesForReal();
-    	}
+        if (playerDeaths % MAX_PLAYER_DEATHS == 0)
+        {
+            playerDeaths = 0;
+            playerDiesForReal();
+        }
 
-    	else
-    	{
-	    	Game.output(GameStrings.PLAYER_DIES);
+        else
+        {
+            Game.output(GameStrings.PLAYER_DIES);
             Game.outputLine();
-    		int p = rnd.nextInt(forest.length);
+            int p = rnd.nextInt(forest.length);
 
-    		playerPreviousLocation = playerLocation;
-    		playerLocation = forest[p];
+            playerPreviousLocation = playerLocation;
+            playerLocation = forest[p];
             playerHitPoints = MAX_HIT_POINTS;
-    		Room path = worldMap.get(playerLocation);
-    		path.lookAround(this);
-    	}
+            Room path = worldMap.get(playerLocation);
+            path.lookAround(this);
+        }
 
     }
 
 
     public void playerDiesForReal()
     {
-    	if (Game.godmode) return;
+        if (Game.godmode) return;
 
-    	playerDead = true;
+        playerDead = true;
 
-    	Game.output(GameStrings.PLAYER_DIES_FOR_REAL);
-    	playerPreviousLocation = playerLocation;
-    	playerLocation = Location.ENTRANCE_TO_HADES;
-    	Room r = worldMap.get(Location.ENTRANCE_TO_HADES);
+        Game.output(GameStrings.PLAYER_DIES_FOR_REAL);
+        playerPreviousLocation = playerLocation;
+        playerLocation = Location.ENTRANCE_TO_HADES;
+        Room r = worldMap.get(Location.ENTRANCE_TO_HADES);
         Game.outputLine();
         Game.output(r.name);
         Game.outputLine();
-    	Game.output(GameStrings.DEAD_LOOK);
-    	Game.output(r.description);
+        Game.output(GameStrings.DEAD_LOOK);
+        Game.output(r.description);
 
     }
 
 
-	public void refreshInventories()
-	{
-		for (GameObject container : objectList.values())
-		{
-			if (container.inventoryID != Location.NULL_INVENTORY)
-			{
-				container.inventory.clear();
+    public void refreshInventories()
+    {
+        for (GameObject container : objectList.values())
+        {
+            if (container.inventoryID != Location.NULL_INVENTORY)
+            {
+                container.inventory.clear();
 
-				for (GameObject item : objectList.values())
-				{
-					if (item.location == container.inventoryID)
-					{
-						Item it = (Item)(item);
-						container.inventory.add(it);
-					}
-				}
-			}
-		}
+                for (GameObject item : objectList.values())
+                {
+                    if (item.location == container.inventoryID)
+                    {
+                        Item it = (Item)(item);
+                        container.inventory.add(it);
+                    }
+                }
+            }
+        }
 
-	}
+    }
 
 
     public void relocatePlayer(Location loc)
@@ -303,49 +303,49 @@ class GameState {
     }
 
 
-	public void resetInput()
-	{
-		if (!completePlayerInput.equals("again") && !completePlayerInput.equals("g"))
-		{
-			playerPreviousInput = completePlayerInput;
-		}
+    public void resetInput()
+    {
+        if (!completePlayerInput.equals("again") && !completePlayerInput.equals("g"))
+        {
+            playerPreviousInput = completePlayerInput;
+        }
 
-		firstInputPhrase = "";
-		secondInputPhrase = "";
-		thirdInputPhrase = "";
-		completePlayerInput = "";
+        firstInputPhrase = "";
+        secondInputPhrase = "";
+        thirdInputPhrase = "";
+        completePlayerInput = "";
 
-		playerAction = Action.NULL_ACTION;
-		playerActionType = ActionType.NULL_TYPE;
-		directObject = dummyObject;
-		indirectObject = dummyObject;
+        playerAction = Action.NULL_ACTION;
+        playerActionType = ActionType.NULL_TYPE;
+        directObject = dummyObject;
+        indirectObject = dummyObject;
 
-	}
+    }
 
 
-	public void updateGame()
-	{
-		refreshInventories();
-		Room currentRoom = worldMap.get(playerLocation);
+    public void updateGame()
+    {
+        refreshInventories();
+        Room currentRoom = worldMap.get(playerLocation);
 
-		if (playerDead)
-		{
-			updateDeath();
-			return;
-		}
+        if (playerDead)
+        {
+            updateDeath();
+            return;
+        }
 
         darknessCheck();
 
-		if (darkness)
-		{
-			updateDarkness();
-			return;
-		}
+        if (darkness)
+        {
+            updateDarkness();
+            return;
+        }
 
-		switch (playerAction)
-		{
-			/* ACTION ON AN OBJECT */
-			case ANSWER: { directObject.answer(this); } break;
+        switch (playerAction)
+        {
+            /* ACTION ON AN OBJECT */
+            case ANSWER: { directObject.answer(this); } break;
             case ATTACK: { directObject.attack(this); } break;
             case BLOW: { directObject.blow(this); } break;
             case BREAK: { directObject.breakObject(this); } break;
@@ -399,20 +399,20 @@ class GameState {
             /* REFLEXIVE GAME ACTIONS */
             case INVENTORY:
             {
-            	int count = 0;
-				for (GameObject item : objectList.values())
-				{
+                int count = 0;
+                for (GameObject item : objectList.values())
+                {
                     
-					if (item.location == Location.PLAYER_INVENTORY)
+                    if (item.location == Location.PLAYER_INVENTORY)
                     {
                         ++count;
                         if (count == 1)
                             Game.output("You are carrying: \n");
-						Game.output(item.capArticleName);
+                        Game.output(item.capArticleName);
                     }
 
                     if (item.location == Location.PLAYER_INVENTORY && item.isContainer()
-                    	&& (item.isOpen() || item.name.equals("glass bottle")) )
+                        && (item.isOpen() || item.name.equals("glass bottle")) )
                     {
                         if (!item.inventory.isEmpty())
                         {
@@ -435,52 +435,52 @@ class GameState {
                             }
                         }
                     }
-				}
+                }
                 if (count == 0)
                     Game.output("You are empty-handed.");
             } break;
 
             case JUMP:
             {
-            	if (currentRoom.height)
-            	{
-            		Game.output(currentRoom.jumpString);
-            		playerDies();
-            	}
+                if (currentRoom.height)
+                {
+                    Game.output(currentRoom.jumpString);
+                    playerDies();
+                }
 
-            	else
-            		Game.output(GameStrings.getJumpSarcasm());
+                else
+                    Game.output(GameStrings.getJumpSarcasm());
             } break;
 
             case LOOK:
             {
-            	currentRoom.lookAround(this);
+                currentRoom.lookAround(this);
             } break;
 
             case SHOUT: { Game.output("Yaaaaarrrrggghhh!"); } break;
 
             case WAIT:
             {
-            	Game.output("Time passes...");
+                Game.output("Time passes...");
             } break;
 
             /* EXIT ACTIONS */
             case NORTH:
-			case SOUTH:
-			case EAST:
-			case WEST:
+            case SOUTH:
+            case EAST:
+            case WEST:
             case NORTHEAST:
             case NORTHWEST:
             case SOUTHEAST:
             case SOUTHWEST:
-			case UP:
-			case DOWN:
-			{
-				
-				if (currentRoom.exit(this, playerAction))
-				{
-					Room nextRoom = worldMap.get(playerLocation);
-					Game.output(nextRoom.name);
+            case UP:
+            case DOWN:
+            {
+                
+                if (currentRoom.exit(this, playerAction))
+                {
+                    Room nextRoom = worldMap.get(playerLocation);
+                    Game.output(nextRoom.name);
 
                     darknessCheck();
 
@@ -520,8 +520,8 @@ class GameState {
                         default: {} break;
                     }
 
-					if (nextRoom.firstVisit)
-						nextRoom.firstVisit = false;
+                    if (nextRoom.firstVisit)
+                        nextRoom.firstVisit = false;
 
                     if (nextRoom.roomID == Location.GAS_ROOM)
                     {
@@ -546,12 +546,12 @@ class GameState {
                         }
                     }
 
-				}
+                }
 
-			} break; 
-			
-			/*
-			case IN:
+            } break; 
+            
+            /*
+            case IN:
             case OUT:
             {
 
@@ -561,8 +561,8 @@ class GameState {
             /* UI/UTILITY ACTIONS */
             case BRIEF:
             {
-            	Game.output("Brief verbosity on.");
-            	verbosity = Verbosity.BRIEF;
+                Game.output("Brief verbosity on.");
+                verbosity = Verbosity.BRIEF;
             } break;
 
             case DIAGNOSE:
@@ -572,7 +572,7 @@ class GameState {
 
             case QUIT:
             {
-            	Game.gameover = true;
+                Game.gameover = true;
             } break;
 
             case SCORE:
@@ -582,22 +582,22 @@ class GameState {
 
             case SUPERBRIEF:
             {
-            	Game.output("Superbrief verbosity on.");
-            	verbosity = Verbosity.SUPERBRIEF;
+                Game.output("Superbrief verbosity on.");
+                verbosity = Verbosity.SUPERBRIEF;
             } break;
 
             case VERBOSE:
             {
-            	Game.output("Maximum verbosity on.");
-            	verbosity = Verbosity.VERBOSE;
+                Game.output("Maximum verbosity on.");
+                verbosity = Verbosity.VERBOSE;
             } break;
 
 
             case NULL_ACTION: {} break;
             default: {} break;
-		}
+        }
 
-		// The player's action could end the game before anything else happens.
+        // The player's action could end the game before anything else happens.
         if (Game.gameover) return;
 
         for (GameObject g : objectList.values())
@@ -618,12 +618,12 @@ class GameState {
         // The actors get to take their turns
         updateActors();
 
-		++turns;
+        ++turns;
 
         if (playerHitPoints <= 0)
             playerDies();
 
-	}
+    }
 
 
     public void updateActors()
@@ -650,8 +650,8 @@ class GameState {
     }
 
 
-	public void updateDarkness()
-	{
+    public void updateDarkness()
+    {
         Room currentRoom = worldMap.get(playerLocation);
 
         if (darknessTurns > MAX_DARKNESS_TURNS)
@@ -855,11 +855,11 @@ class GameState {
 
         updateActors();
 
-	}
+    }
 
 
-	public void updateDeath()
-	{
+    public void updateDeath()
+    {
         Room currentRoom = worldMap.get(playerLocation);
 
         switch (playerAction)
@@ -1043,7 +1043,7 @@ class GameState {
             }
         }
 
-	}
+    }
 
 
 }
