@@ -154,6 +154,53 @@ public class GameSetup {
     private boolean godmode;
     private boolean debug;
 
+    public static final int PLATINUM_VALUE = 10;
+    public static final int PLATINUM_TROPHY_VALUE = 5;
+    public static final int BAUBLE_VALUE = 1;
+    public static final int BAUBLE_TROPHY_VALUE = 1;
+    public static final int CHALICE_VALUE = 10;
+    public static final int CHALICE_TROPHY_VALUE = 5;
+    public static final int COFFIN_VALUE = 10;
+    public static final int COFFIN_TROPHY_VALUE = 15;
+    public static final int COINS_VALUE = 10;
+    public static final int COINS_TROPHY_VALUE = 5;
+    public static final int CANARY_VALUE = 6;
+    public static final int CANARY_TROPHY_VALUE = 4;
+    public static final int DIAMOND_VALUE = 10;
+    public static final int DIAMOND_TROPHY_VALUE = 10;
+    public static final int EGG_VALUE = 5;
+    public static final int EGG_TROPHY_VALUE = 5;
+    public static final int EMERALD_VALUE = 5;
+    public static final int EMERALD_TROPHY_VALUE = 10;
+    public static final int JADE_VALUE = 5;
+    public static final int JADE_TROPHY_VALUE = 5;
+    public static final int PAINTING_VALUE = 4;
+    public static final int PAINTING_TROPHY_VALUE = 6;
+    public static final int POT_OF_GOLD_VALUE = 10;
+    public static final int POT_OF_GOLD_TROPHY_VALUE = 10;
+    public static final int SAPPHIRE_VALUE = 5;
+    public static final int SAPPHIRE_TROPHY_VALUE = 5;
+    public static final int SCARAB_VALUE = 5;
+    public static final int SCARAB_TROPHY_VALUE = 5;
+    public static final int SCEPTRE_VALUE = 4;
+    public static final int SCEPTRE_TROPHY_VALUE = 6;
+    public static final int CRYSTAL_SKULL_VALUE = 10;
+    public static final int CRYSTAL_SKULL_TROPHY_VALUE = 10;
+    public static final int TORCH_VALUE = 14;
+    public static final int TORCH_TROPHY_VALUE = 6;
+    public static final int TRIDENT_VALUE = 4;
+    public static final int TRIDENT_TROPHY_VALUE = 11;
+    public static final int TRUNK_OF_JEWELS_VALUE = 15;
+    public static final int TRUNK_OF_JEWELS_TROPHY_VALUE = 5;
+
+    public static final int BROKEN_EGG_TROPHY_VALUE = 2;
+    public static final int BROKEN_CANARY_TROPHY_VALUE = 1;
+
+    public static final int KITCHEN_VALUE = 10;
+    public static final int CELLAR_VALUE = 25;
+    public static final int EAST_WEST_VALUE = 5;
+    public static final int TREASURE_VALUE = 25;
+
 
     public GameSetup(GameState state, boolean godmode, boolean debug)
     {
@@ -398,6 +445,7 @@ public class GameSetup {
         kitchen.addExit(Action.WEST, kitchen_livingroom);
         kitchen.addExit(Action.UP, kitchen_attic);
         kitchen.addFailMessage(Action.DOWN, "Only Santa Claus climbs down chimneys.");
+        kitchen.discoverValue = KITCHEN_VALUE;
 
         Room attic = new Room("Attic", MapStrings.DESC_ATTIC, Location.ATTIC);
         attic.addExit(Action.DOWN, kitchen_attic);
@@ -496,6 +544,7 @@ public class GameSetup {
         // This exit will be closed by the cyclops until he has been chased off. (in its actor method).
         cellar.addExit(Action.UP, cellar_livingroom);
         cellar.addFailMessage(Action.WEST, "You try to ascend the ramp, but it is impossible, and you slide back down.");
+        cellar.discoverValue = CELLAR_VALUE;
         
 
         Room eastOfChasm = new Room("East of Chasm", MapStrings.DESC_EAST_OF_CHASM, Location.EAST_OF_CHASM);
@@ -521,6 +570,7 @@ public class GameSetup {
         eastWestPassage.addExit(Action.WEST, troll_eastwest);
         eastWestPassage.addExit(Action.NORTH, eastwest_chasm);
         eastWestPassage.addExit(Action.EAST, eastwest_round);
+        eastWestPassage.discoverValue = EAST_WEST_VALUE;
 
         Room roundRoom = new Room("Round Room", MapStrings.DESC_ROUND_ROOM, Location.ROUND_ROOM);
         roundRoom.addExit(Action.WEST, eastwest_round);
@@ -806,6 +856,7 @@ public class GameSetup {
         
         Room treasureRoom = new Room("Treasure Room", MapStrings.DESC_TREASURE_ROOM, Location.TREASURE_ROOM);
         treasureRoom.addExit(Action.DOWN, cyclops_treasure);
+        treasureRoom.discoverValue = TREASURE_VALUE;
         
         Room maze1 = new Room("Maze", MapStrings.DESC_MAZE_1, Location.MAZE_1);
         maze1.addExit(Action.EAST, troll_maze);
@@ -957,6 +1008,8 @@ public class GameSetup {
         cyclops_treasure.closedFail = "The cyclops doesn't look like he'll let you past.";
         maze2_maze4.message = "You won't be able to get back up to the tunnel you are going through "
             + "when it gets to the next room.";
+        maze9_maze11.message = "You won't be able to get back up to the tunnel you are going through "
+            + "when it gets to the next room.";
         cellar_livingroom.message = "The trap door crashes shut, and you hear someone barring it.";
         studio_kitchen.closedFail = "Going up empty-handed is a bad idea.";
 
@@ -1097,24 +1150,34 @@ public class GameSetup {
         bar.altNames.add("bar");
         bar.altNames.add("platinum");
         bar.presenceString = ObjectStrings.PLATINUM_BAR;
+        bar.acquireValue = PLATINUM_VALUE;
+        bar.trophyCaseValue = PLATINUM_TROPHY_VALUE;
 
         Item bauble = new Item("brass bauble", Location.NULL_LOCATION);
         bauble.altNames.add("brass");
         bauble.altNames.add("bauble");
+        bar.acquireValue = BAUBLE_VALUE;
+        bar.trophyCaseValue = BAUBLE_TROPHY_VALUE;
         
         Item chalice = new Item("silver chalice", Location.TREASURE_ROOM);
         chalice.altNames.add("silver");
         chalice.altNames.add("chalice");
+        chalice.acquireValue = CHALICE_VALUE;
+        chalice.trophyCaseValue = CHALICE_TROPHY_VALUE;
         
         Item coffin = new Item("gold coffin", Location.EGYPTIAN_ROOM);
         coffin.altNames.add("coffin");
         coffin.presenceString = ObjectStrings.COFFIN;
         coffin.inventoryID = Location.INSIDE_COFFIN;
+        coffin.acquireValue = COFFIN_VALUE;
+        coffin.trophyCaseValue = COFFIN_TROPHY_VALUE;
         
         Item coins = new Item("bag of coins", Location.MAZE_5);
         coins.altNames.add("bag");
         coins.altNames.add("coins");
         coins.presenceString = ObjectStrings.INIT_COINS;
+        coins.acquireValue = COINS_VALUE;
+        coins.trophyCaseValue = COINS_TROPHY_VALUE;
         
         Item canary = new Item("golden canary", Location.NULL_LOCATION);
         canary.altNames.add("golden clockwork canary");
@@ -1122,66 +1185,94 @@ public class GameSetup {
         canary.altNames.add("clockwork canary");
         canary.altNames.add("clockwork");
         canary.altNames.add("canary");
+        canary.acquireValue = CANARY_VALUE;
+        canary.trophyCaseValue = CANARY_TROPHY_VALUE;
         
         Item diamond = new Item("huge diamond", Location.NULL_LOCATION);
         diamond.altNames.add("diamond");
         diamond.presenceString = ObjectStrings.DIAMOND;
+        diamond.acquireValue = DIAMOND_VALUE;
+        diamond.trophyCaseValue = DIAMOND_TROPHY_VALUE;
 
         Item egg = new Item("jewel-encrusted egg", Location.INSIDE_BIRDS_NEST);
         egg.altNames.add("egg");
         egg.initialPresenceString = ObjectStrings.INIT_EGG;
+        egg.acquireValue = EGG_VALUE;
+        egg.trophyCaseValue = EGG_TROPHY_VALUE;
 
         Item emerald = new Item("large emerald", Location.INSIDE_BUOY);
         emerald.altNames.add("emerald");
+        emerald.acquireValue = EMERALD_VALUE;
+        emerald.trophyCaseValue = EMERALD_TROPHY_VALUE;
         
         Item jade = new Item("jade figurine", Location.BAT_ROOM);
         jade.altNames.add("jade");
         jade.altNames.add("figurine");
         jade.presenceString = ObjectStrings.JADE;
+        jade.acquireValue = JADE_VALUE;
+        jade.trophyCaseValue = JADE_TROPHY_VALUE;
 
         Item painting = new Item("painting", Location.GALLERY);
         painting.initialPresenceString = ObjectStrings.INIT_PAINTING;
         painting.presenceString = ObjectStrings.PAINTING;
+        painting.acquireValue = PAINTING_VALUE;
+        painting.trophyCaseValue = PAINTING_TROPHY_VALUE;
         
         Item pot = new Item("pot of gold", Location.NULL_LOCATION);
         pot.altNames.add("pot");
         pot.altNames.add("gold");
         pot.initialPresenceString = ObjectStrings.INIT_POT_OF_GOLD;
+        pot.acquireValue = POT_OF_GOLD_VALUE;
+        pot.trophyCaseValue = POT_OF_GOLD_TROPHY_VALUE;
         
         Item sapphire = new Item("sapphire-encrusted bracelet", Location.GAS_ROOM);
         sapphire.altNames.add("sapphire");
         sapphire.altNames.add("bracelet");
         sapphire.altNames.add("sapphire bracelet");
+        sapphire.acquireValue = SAPPHIRE_VALUE;
+        sapphire.trophyCaseValue = SAPPHIRE_TROPHY_VALUE;
         
         Item scarab = new Item("beautiful jeweled scarab", Location.NULL_LOCATION);
         scarab.altNames.add("jeweled scarab");
         scarab.altNames.add("scarab");
+        scarab.acquireValue = SCARAB_VALUE;
+        scarab.trophyCaseValue = SCARAB_TROPHY_VALUE;
         
         Item sceptre = new Item("sceptre", Location.INSIDE_COFFIN);
         sceptre.altNames.add("scepter");
         sceptre.initialPresenceString = ObjectStrings.INIT_SCEPTRE;
         sceptre.presenceString = ObjectStrings.SCEPTRE;
         sceptre.waveString = ObjectStrings.SCEPTRE_WAVE;
+        sceptre.acquireValue = SCEPTRE_VALUE;
+        sceptre.trophyCaseValue = SCEPTRE_TROPHY_VALUE;
         
         Item skull = new Item("crystal skull", Location.LAND_OF_THE_DEAD);
         skull.altNames.add("skull");
         skull.altNames.add("crystal");
         skull.initialPresenceString = ObjectStrings.INIT_SKULL;
+        skull.acquireValue = CRYSTAL_SKULL_VALUE;
+        skull.trophyCaseValue = CRYSTAL_SKULL_TROPHY_VALUE;
         
         Item torch = new Item("torch", Location.TORCH_ROOM);
         torch.altNames.add("ivory");
         torch.altNames.add("ivory torch");
         torch.initialPresenceString = ObjectStrings.INIT_TORCH;
         torch.activated = true;
+        torch.acquireValue = TORCH_VALUE;
+        torch.trophyCaseValue = TORCH_TROPHY_VALUE;
         
         Item trident = new Item("crystal trident", Location.ATLANTIS_ROOM);
         trident.altNames.add("trident");
         trident.altNames.add("crystal");
         trident.initialPresenceString = ObjectStrings.INIT_TRIDENT;
+        trident.acquireValue = TRIDENT_VALUE;
+        trident.trophyCaseValue = TRIDENT_TROPHY_VALUE;
         
         Item trunk = new Item("trunk of jewels", Location.NULL_LOCATION);
         trunk.altNames.add("trunk");
         trunk.altNames.add("jewels");
+        trunk.acquireValue = TRUNK_OF_JEWELS_VALUE;
+        trunk.trophyCaseValue = TRUNK_OF_JEWELS_TROPHY_VALUE;
 
         
 
@@ -1214,6 +1305,7 @@ public class GameSetup {
         brokenCanary.altNames.add("broken clockwork");
         brokenCanary.altNames.add("clockwork");
         brokenCanary.initialPresenceString = ObjectStrings.INIT_BROKEN_CANARY;
+        brokenCanary.trophyCaseValue = BROKEN_CANARY_TROPHY_VALUE;
 
         Item brokenEgg = new Item("broken jewel-encrusted egg", Location.NULL_LOCATION);
         brokenEgg.presenceString = "There is a somewhat ruined egg here.";
@@ -1221,6 +1313,7 @@ public class GameSetup {
         brokenEgg.altNames.add("jewel-encrusted egg");
         brokenEgg.altNames.add("egg");
         brokenEgg.inventoryID = Location.INSIDE_BROKEN_EGG;
+        brokenEgg.trophyCaseValue = BROKEN_EGG_TROPHY_VALUE;
 
         Item buoy = new Item("red buoy", Location.FRIGID_RIVER_4);
         buoy.altNames.add("buoy");

@@ -99,7 +99,7 @@ class GameStrings {
         + "religious tenets of that time. Unfortunately, a later age seems to have considered them blasphemous and just as skillfully excised them.";
     public static final String ENTER_DARKNESS = "You have moved into a dark place.";
     public static final String GAS_EXPLOSION = "Oh dear. It appears that the smell coming from this room was coal gas. I would have "
-        + "thought twice about carrying flaming objects in here.";
+        + "thought twice about carrying flaming objects in here.\n\n      ** BOOOOOOOOOOOOM **";
     public static final String GRUE_DEATH_1 = "Oh no! You have walked into the slavering fangs of a lurking grue!";
     public static final String GRUE_DEATH_2 = "Oh no! A lurking grue slithered into the room and devoured you!";
     public static final String HOLLOW_VOICE = "A hollow voice says \"Fool.\"";

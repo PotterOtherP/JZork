@@ -15,6 +15,7 @@ class GameState {
     // game events
     public boolean houseWindowOpened;
     public boolean carpetMoved;
+    public boolean gameWon;
     public boolean leafPileMoved;
     public boolean loudRoomSolved;
     public int matchCount;
@@ -22,6 +23,8 @@ class GameState {
     public boolean potOfGoldAppeared;
     public boolean rainbowSolid;
     public boolean ropeRailTied;
+    public boolean shaftBasketUsed;
+    public boolean winMessageDisplayed;
 
     // player attributes
     public int playerCarryWeight;
@@ -62,6 +65,8 @@ class GameState {
     public static final int MAX_HIT_POINTS = 10;
     public static final int MATCH_LIFESPAN = 5;
     public static final int MATCHES_IN_BOOK = 20;
+    public static final int SHAFT_BASKET_POINTS = 13;
+    public static final int WINNING_SCORE = 350;
 
     public GameState()
     {
@@ -88,6 +93,7 @@ class GameState {
 
         houseWindowOpened = false;
         carpetMoved = false;
+        gameWon = false;
         leafPileMoved = false;
         loudRoomSolved = false;
         matchCount = MATCHES_IN_BOOK;
@@ -95,6 +101,8 @@ class GameState {
         potOfGoldAppeared = false;
         ropeRailTied = false;
         rainbowSolid = false;
+        shaftBasketUsed = false;
+        winMessageDisplayed = false;
 
         
         resetInput();
@@ -112,7 +120,31 @@ class GameState {
 
     public void calculateScore()
     {
-        
+        playerScore = 0;
+
+        for (GameObject g : objectList.values())
+        {
+            if (g.isItem())
+            {
+                Item it = (Item)(g);
+
+                if (it.location == Location.INSIDE_TROPHY_CASE)
+                    playerScore += it.trophyCaseValue;
+
+                if (it.acquired)
+                    playerScore += it.acquireValue;
+            }
+        }
+
+        for (Room r : worldMap.values())
+        {
+            if (r.firstVisit == false)
+                playerScore += r.discoverValue;
+        }
+
+        if (shaftBasketUsed)
+            playerScore += SHAFT_BASKET_POINTS;
+
     }
 
 
@@ -577,6 +609,9 @@ class GameState {
 
             case SCORE:
             {
+                calculateScore();
+                Game.output("Your score is " + playerScore + ".");
+                Game.output("This gives you the rank of :");
 
             } break;
 
@@ -618,11 +653,22 @@ class GameState {
         // The actors get to take their turns
         updateActors();
 
-        ++turns;
-
         if (playerHitPoints <= 0)
             playerDies();
 
+        ++turns;
+
+        calculateScore();
+
+        if (playerScore >= WINNING_SCORE)
+        {
+            gameWon = true;
+            if (!winMessageDisplayed)
+            {
+                Game.output("You win!");
+                winMessageDisplayed = true;
+            }
+        }
     }
 
 
@@ -854,6 +900,7 @@ class GameState {
         }
 
         updateActors();
+        ++turns;
 
     }
 
@@ -1042,6 +1089,8 @@ class GameState {
                 Game.output(GameStrings.DEAD_ACTION_FAIL);
             }
         }
+
+        ++turns;
 
     }
 

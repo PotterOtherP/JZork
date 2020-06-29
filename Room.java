@@ -5,6 +5,7 @@ class Room {
     public final String name;
     public final Location roomID;
     public String description;
+    public int discoverValue;
     public String jumpString;
     public boolean darkness;
     public boolean firstVisit;
@@ -18,6 +19,7 @@ class Room {
         name = nm;
         roomID = loc;
         description = desc;
+        discoverValue = 0;
         jumpString = "";
         darkness = false;
         firstVisit = true;

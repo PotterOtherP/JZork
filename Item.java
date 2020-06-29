@@ -4,7 +4,8 @@ public class Item extends GameObject{
 
     // Items can be picked up and moved to other locations, including the player's inventory.
 
-    public int acquirePointValue;
+    public boolean acquired;
+    public int acquireValue;
     public boolean activated;
     public int capacity;
     public int lifespan;
@@ -18,7 +19,8 @@ public class Item extends GameObject{
         super(name, loc);
         type = ObjectType.ITEM;
 
-        acquirePointValue = 0;
+        acquired = false;
+        acquireValue = 0;
         activated = false;
         capacity = 0;
         lifespan = 0;
@@ -448,6 +450,11 @@ public class Item extends GameObject{
             return;
         }
 
+        if (name.equals("small pile of coal"))
+        {
+            
+        }
+
         if ((state.playerCarryWeight + weight) >= GameState.CARRY_WEIGHT_LIMIT)
         {
             Game.output(GameStrings.OVERBURDENED);
@@ -456,9 +463,9 @@ public class Item extends GameObject{
 
         state.playerCarryWeight += weight;
         location = Location.PLAYER_INVENTORY;
-        Game.output("Taken.");
-
+        acquired = true;
         movedFromStart = true;
+        Game.output("Taken.");
 
     }
 
