@@ -59,6 +59,7 @@ class GameState {
 
     // Constants
     public static final int CARRY_WEIGHT_LIMIT = 20;
+    public static final int DEATH_POINTS = 10;
     public static final int LANTERN_LIFESPAN = 100;
     public static final int MAX_PLAYER_DEATHS = 3;
     public static final int MAX_DARKNESS_TURNS = 2;
@@ -144,6 +145,8 @@ class GameState {
 
         if (shaftBasketUsed)
             playerScore += SHAFT_BASKET_POINTS;
+
+        playerScore -= playerDeaths * DEATH_POINTS;
 
     }
 
@@ -261,9 +264,10 @@ class GameState {
                    g.location = Location.LIVING_ROOM;
            }
 
-        if (playerDeaths % MAX_PLAYER_DEATHS == 0)
+        Room altar = worldMap.get(Location.ALTAR);
+
+        if (playerDeaths % MAX_PLAYER_DEATHS == 0 && !altar.firstVisit)
         {
-            playerDeaths = 0;
             playerDiesForReal();
         }
 
