@@ -20,6 +20,7 @@ class Passage {
         weightFail = GameStrings.PASSAGE_OVERBURDENED;
         message = "";
         open = true;
+        weightLimit = GameState.CARRY_WEIGHT_LIMIT;
 
     }
 

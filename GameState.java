@@ -34,6 +34,7 @@ class GameState {
     public Location playerLocation;
     public Location playerPreviousLocation;
     public int playerScore;
+    public String playerScoreRank;
     public boolean playerStaggered;
 
     // player action
@@ -87,6 +88,7 @@ class GameState {
         playerLocation = Location.NULL_LOCATION;
         playerPreviousLocation = Location.NULL_LOCATION;
         playerScore = 0;
+        playerScoreRank = "";
         playerStaggered = false;
 
         completePlayerInput = "";
@@ -147,6 +149,15 @@ class GameState {
             playerScore += SHAFT_BASKET_POINTS;
 
         playerScore -= playerDeaths * DEATH_POINTS;
+
+        if (playerScore >= 350) playerScoreRank = "Master Adventurer";
+        else if (playerScore >= 330) playerScoreRank = "Wizard";
+        else if (playerScore >= 300) playerScoreRank = "Master";
+        else if (playerScore >= 200) playerScoreRank = "Adventurer";
+        else if (playerScore >= 100) playerScoreRank = "Junior Adventurer";
+        else if (playerScore >= 50)  playerScoreRank = "Novice Adventurer";
+        else if (playerScore >= 25) playerScoreRank = "Amateur Adventurer";
+        else playerScoreRank = "Beginner";
 
     }
 
@@ -324,6 +335,31 @@ class GameState {
                 }
             }
         }
+
+        playerCarryWeight = 0;
+
+        for (GameObject g : objectList.values())
+        {
+            if (g.isItem() && g.location == Location.PLAYER_INVENTORY)
+            {
+                Item it = (Item)(g);
+                playerCarryWeight += it.weight;
+            }
+        }
+
+        Item coffin = (Item)(objectList.get("gold coffin"));
+        Room altar = worldMap.get(Location.ALTAR);
+        Passage p = altar.exits.get(Action.DOWN);
+        if (coffin.location == Location.PLAYER_INVENTORY)
+        {
+            p.weightFail = "You haven't a prayer of getting the coffin down there.";
+        }
+        else
+        {
+            p.weightFail = "You can't get down there with what you're carrying.";
+        }
+
+
 
     }
 
@@ -615,7 +651,7 @@ class GameState {
             {
                 calculateScore();
                 Game.output("Your score is " + playerScore + ".");
-                Game.output("This gives you the rank of :");
+                Game.output("This gives you the rank of " + playerScoreRank + ".");
 
             } break;
 

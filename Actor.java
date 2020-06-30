@@ -193,25 +193,31 @@ public class Actor extends GameObject {
 
     public void gustOfWindTurn(GameState state)
     {
+        Random rand = new Random();
+        int chance = rand.nextInt(2);
+
+        if (chance == 0) return;
+
         if (state.playerLocation == Location.CAVE_SOUTH)
         {
             Item candles = (Item)(state.objectList.get("pair of candles"));
             Item match = (Item)(state.objectList.get("matchbook"));
 
-            if (candles.activated && match.activated)
+            if (candles.activated && candles.location == Location.PLAYER_INVENTORY
+                && match.activated && match.location == Location.PLAYER_INVENTORY)
             {
                 Game.output("A gust of wind blows out your candles AND your match!");
                 candles.activated = false;
                 match.activated = false;
             }
 
-            else if (candles.activated)
+            else if (candles.activated && candles.location == Location.PLAYER_INVENTORY)
             {
                 Game.output("A gust of wind blows out your candles!");
                 candles.activated = false;
             }
 
-            else if (match.activated)
+            else if (match.activated && match.location == Location.PLAYER_INVENTORY)
             {
                 Game.output("A gust of wind blows out your match!");
                 match.activated = false;

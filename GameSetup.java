@@ -201,6 +201,61 @@ public class GameSetup {
     public static final int EAST_WEST_VALUE = 5;
     public static final int TREASURE_VALUE = 25;
 
+    public static final int BAR_WEIGHT = 3;
+    public static final int BAUBLE_WEIGHT = 2;
+    public static final int CHALICE_WEIGHT = 4;
+    public static final int COFFIN_WEIGHT = 15;
+    public static final int COINS_WEIGHT = 4;
+    public static final int CANARY_WEIGHT = 1;
+    public static final int DIAMOND_WEIGHT = 2;
+    public static final int EGG_WEIGHT = 2;
+    public static final int EMERALD_WEIGHT = 2;
+    public static final int JADE_WEIGHT = 3;
+    public static final int PAINTING_WEIGHT = 9;
+    public static final int POT_OF_GOLD_WEIGHT = 11;
+    public static final int SAPPHIRE_WEIGHT = 2;
+    public static final int SCARAB_WEIGHT = 2;
+    public static final int SCEPTRE_WEIGHT = 4;
+    public static final int SKULL_WEIGHT = 4;
+    public static final int TORCH_WEIGHT = 3;
+    public static final int TRIDENT_WEIGHT = 7;
+    public static final int TRUNK_WEIGHT = 10;
+
+    public static final int AXE_WEIGHT = 0;
+    public static final int BELL_WEIGHT = 0;
+    public static final int BLACK_BOOK_WEIGHT = 0;
+    public static final int BOAT_LABEL_WEIGHT = 0;
+    public static final int BOTTLE_WEIGHT = 0;
+    public static final int BROKEN_CANARY_WEIGHT = 0;
+    public static final int BROKEN_EGG_WEIGHT = 0;
+    public static final int BUOY_WEIGHT = 0;
+    public static final int CANDLES_WEIGHT = 0;
+    public static final int COAL_WEIGHT = 0;
+    public static final int BOAT_WEIGHT = 0;
+    public static final int GARLIC_WEIGHT = 0;
+    public static final int GUIDEBOOK_WEIGHT = 0;
+    public static final int GUNK_WEIGHT = 0;
+    public static final int KNIFE_WEIGHT = 0;
+    public static final int LANTERN_WEIGHT = 0;
+    public static final int NEST_WEIGHT = 0;
+    public static final int LEAVES_WEIGHT = 0;
+    public static final int LEAFLET_WEIGHT = 0;
+    public static final int LUNCH_WEIGHT = 0;
+    public static final int MATCHBOOK_WEIGHT = 0;
+    public static final int PUMP_WEIGHT = 0;
+    public static final int ROPE_WEIGHT = 0;
+    public static final int SACK_WEIGHT = 0;
+    public static final int SCREWDRIVER_WEIGHT = 0;
+    public static final int SHOVEL_WEIGHT = 0;
+    public static final int SKELETON_KEY_WEIGHT = 0;
+    public static final int STILETTO_WEIGHT = 0;
+    public static final int ZORK_MANUAL_WEIGHT = 0;
+    public static final int SWORD_WEIGHT = 0;
+    public static final int TIMBER_WEIGHT = 0;
+    public static final int TUBE_WEIGHT = 0;
+    public static final int WATER_WEIGHT = 0;
+    public static final int WRENCH_WEIGHT = 0;
+
 
     public GameSetup(GameState state, boolean godmode, boolean debug)
     {
@@ -1014,9 +1069,13 @@ public class GameSetup {
         studio_kitchen.closedFail = "Going up empty-handed is a bad idea.";
 
         // Narrow passages
-        studio_kitchen.weightLimit = 5;
-        altar_cave.weightLimit = 5;
+        studio_kitchen.weightLimit = 12;
+        studio_kitchen.weightFail = "You can't get up there with what you're carrying.";
+        altar_cave.weightLimit = 7;
+        altar_cave.weightFail = "You can't get down there with what you're carrying.";
         timber_drafty.weightLimit = 0;
+        timber_drafty.weightFail = "You cannot fit through this passage with that load.";
+
 
 
 
@@ -1152,18 +1211,21 @@ public class GameSetup {
         bar.presenceString = ObjectStrings.PLATINUM_BAR;
         bar.acquireValue = PLATINUM_VALUE;
         bar.trophyCaseValue = PLATINUM_TROPHY_VALUE;
+        bar.weight = BAR_WEIGHT;
 
         Item bauble = new Item("brass bauble", Location.NULL_LOCATION);
         bauble.altNames.add("brass");
         bauble.altNames.add("bauble");
-        bar.acquireValue = BAUBLE_VALUE;
-        bar.trophyCaseValue = BAUBLE_TROPHY_VALUE;
+        bauble.acquireValue = BAUBLE_VALUE;
+        bauble.trophyCaseValue = BAUBLE_TROPHY_VALUE;
+        bauble.weight = BAUBLE_WEIGHT;
         
         Item chalice = new Item("silver chalice", Location.TREASURE_ROOM);
         chalice.altNames.add("silver");
         chalice.altNames.add("chalice");
         chalice.acquireValue = CHALICE_VALUE;
         chalice.trophyCaseValue = CHALICE_TROPHY_VALUE;
+        chalice.weight = CHALICE_WEIGHT;
         
         Item coffin = new Item("gold coffin", Location.EGYPTIAN_ROOM);
         coffin.altNames.add("coffin");
@@ -1171,6 +1233,7 @@ public class GameSetup {
         coffin.inventoryID = Location.INSIDE_COFFIN;
         coffin.acquireValue = COFFIN_VALUE;
         coffin.trophyCaseValue = COFFIN_TROPHY_VALUE;
+        coffin.weight = COFFIN_WEIGHT;
         
         Item coins = new Item("bag of coins", Location.MAZE_5);
         coins.altNames.add("bag");
@@ -1178,6 +1241,7 @@ public class GameSetup {
         coins.presenceString = ObjectStrings.INIT_COINS;
         coins.acquireValue = COINS_VALUE;
         coins.trophyCaseValue = COINS_TROPHY_VALUE;
+        coins.weight = COINS_WEIGHT;
         
         Item canary = new Item("golden canary", Location.NULL_LOCATION);
         canary.altNames.add("golden clockwork canary");
@@ -1187,36 +1251,42 @@ public class GameSetup {
         canary.altNames.add("canary");
         canary.acquireValue = CANARY_VALUE;
         canary.trophyCaseValue = CANARY_TROPHY_VALUE;
+        canary.weight = CANARY_WEIGHT;
         
         Item diamond = new Item("huge diamond", Location.NULL_LOCATION);
         diamond.altNames.add("diamond");
         diamond.presenceString = ObjectStrings.DIAMOND;
         diamond.acquireValue = DIAMOND_VALUE;
         diamond.trophyCaseValue = DIAMOND_TROPHY_VALUE;
+        diamond.weight = DIAMOND_WEIGHT;
 
         Item egg = new Item("jewel-encrusted egg", Location.INSIDE_BIRDS_NEST);
         egg.altNames.add("egg");
         egg.initialPresenceString = ObjectStrings.INIT_EGG;
         egg.acquireValue = EGG_VALUE;
         egg.trophyCaseValue = EGG_TROPHY_VALUE;
+        egg.weight = EGG_WEIGHT;
 
         Item emerald = new Item("large emerald", Location.INSIDE_BUOY);
         emerald.altNames.add("emerald");
         emerald.acquireValue = EMERALD_VALUE;
         emerald.trophyCaseValue = EMERALD_TROPHY_VALUE;
-        
+        emerald.weight = EMERALD_WEIGHT;
+
         Item jade = new Item("jade figurine", Location.BAT_ROOM);
         jade.altNames.add("jade");
         jade.altNames.add("figurine");
         jade.presenceString = ObjectStrings.JADE;
         jade.acquireValue = JADE_VALUE;
         jade.trophyCaseValue = JADE_TROPHY_VALUE;
+        jade.weight = JADE_WEIGHT;
 
         Item painting = new Item("painting", Location.GALLERY);
         painting.initialPresenceString = ObjectStrings.INIT_PAINTING;
         painting.presenceString = ObjectStrings.PAINTING;
         painting.acquireValue = PAINTING_VALUE;
         painting.trophyCaseValue = PAINTING_TROPHY_VALUE;
+        painting.weight = PAINTING_WEIGHT;
         
         Item pot = new Item("pot of gold", Location.NULL_LOCATION);
         pot.altNames.add("pot");
@@ -1224,6 +1294,7 @@ public class GameSetup {
         pot.initialPresenceString = ObjectStrings.INIT_POT_OF_GOLD;
         pot.acquireValue = POT_OF_GOLD_VALUE;
         pot.trophyCaseValue = POT_OF_GOLD_TROPHY_VALUE;
+        pot.weight = POT_OF_GOLD_WEIGHT;
         
         Item sapphire = new Item("sapphire-encrusted bracelet", Location.GAS_ROOM);
         sapphire.altNames.add("sapphire");
@@ -1231,12 +1302,14 @@ public class GameSetup {
         sapphire.altNames.add("sapphire bracelet");
         sapphire.acquireValue = SAPPHIRE_VALUE;
         sapphire.trophyCaseValue = SAPPHIRE_TROPHY_VALUE;
+        sapphire.weight = SAPPHIRE_WEIGHT;
         
         Item scarab = new Item("beautiful jeweled scarab", Location.NULL_LOCATION);
         scarab.altNames.add("jeweled scarab");
         scarab.altNames.add("scarab");
         scarab.acquireValue = SCARAB_VALUE;
         scarab.trophyCaseValue = SCARAB_TROPHY_VALUE;
+        scarab.weight = SCARAB_WEIGHT;
         
         Item sceptre = new Item("sceptre", Location.INSIDE_COFFIN);
         sceptre.altNames.add("scepter");
@@ -1245,6 +1318,7 @@ public class GameSetup {
         sceptre.waveString = ObjectStrings.SCEPTRE_WAVE;
         sceptre.acquireValue = SCEPTRE_VALUE;
         sceptre.trophyCaseValue = SCEPTRE_TROPHY_VALUE;
+        sceptre.weight = SCEPTRE_WEIGHT;
         
         Item skull = new Item("crystal skull", Location.LAND_OF_THE_DEAD);
         skull.altNames.add("skull");
@@ -1252,6 +1326,7 @@ public class GameSetup {
         skull.initialPresenceString = ObjectStrings.INIT_SKULL;
         skull.acquireValue = CRYSTAL_SKULL_VALUE;
         skull.trophyCaseValue = CRYSTAL_SKULL_TROPHY_VALUE;
+        skull.weight = SKULL_WEIGHT;
         
         Item torch = new Item("torch", Location.TORCH_ROOM);
         torch.altNames.add("ivory");
@@ -1260,6 +1335,7 @@ public class GameSetup {
         torch.activated = true;
         torch.acquireValue = TORCH_VALUE;
         torch.trophyCaseValue = TORCH_TROPHY_VALUE;
+        torch.weight = TORCH_WEIGHT;
         
         Item trident = new Item("crystal trident", Location.ATLANTIS_ROOM);
         trident.altNames.add("trident");
@@ -1267,12 +1343,14 @@ public class GameSetup {
         trident.initialPresenceString = ObjectStrings.INIT_TRIDENT;
         trident.acquireValue = TRIDENT_VALUE;
         trident.trophyCaseValue = TRIDENT_TROPHY_VALUE;
+        trident.weight = TRIDENT_WEIGHT;
         
         Item trunk = new Item("trunk of jewels", Location.NULL_LOCATION);
         trunk.altNames.add("trunk");
         trunk.altNames.add("jewels");
         trunk.acquireValue = TRUNK_OF_JEWELS_VALUE;
         trunk.trophyCaseValue = TRUNK_OF_JEWELS_TROPHY_VALUE;
+        trunk.weight = TRUNK_WEIGHT;
 
         
 
@@ -1281,23 +1359,28 @@ public class GameSetup {
         Item axe = new Item("bloody axe", Location.TROLL_INVENTORY);
         axe.altNames.add("axe");
         axe.altNames.add("ax");
+        axe.weight = AXE_WEIGHT;
         
         Item bell = new Item("brass bell", Location.TEMPLE);
         bell.altNames.add("bell");
+        bell.weight = BELL_WEIGHT;
 
         Item blackBook = new Item("black book", Location.ALTAR);
         blackBook.altNames.add("book");
         blackBook.initialPresenceString = ObjectStrings.INIT_BLACK_BOOK;
+        blackBook.weight = BLACK_BOOK_WEIGHT;
 
         Item boatLabel = new Item("tan label", Location.NULL_LOCATION);
         boatLabel.altNames.add("label");
         boatLabel.readString = GameStrings.BOAT_LABEL_TEXT;
+        boatLabel.weight = BOAT_LABEL_WEIGHT;
         
         Item bottle = new Item("glass bottle", Location.ON_KITCHEN_TABLE);
         bottle.altNames.add("bottle");
         bottle.altNames.add("glass");
         bottle.initialPresenceString = ObjectStrings.INIT_BOTTLE;
         bottle.inventoryID = Location.INSIDE_BOTTLE;
+        bottle.weight = BOTTLE_WEIGHT;
 
         Item brokenCanary = new Item("broken clockwork canary", Location.NULL_LOCATION);
         brokenCanary.altNames.add("broken canary");
@@ -1306,6 +1389,7 @@ public class GameSetup {
         brokenCanary.altNames.add("clockwork");
         brokenCanary.initialPresenceString = ObjectStrings.INIT_BROKEN_CANARY;
         brokenCanary.trophyCaseValue = BROKEN_CANARY_TROPHY_VALUE;
+        brokenCanary.weight = CANARY_WEIGHT;
 
         Item brokenEgg = new Item("broken jewel-encrusted egg", Location.NULL_LOCATION);
         brokenEgg.presenceString = "There is a somewhat ruined egg here.";
@@ -1314,16 +1398,19 @@ public class GameSetup {
         brokenEgg.altNames.add("egg");
         brokenEgg.inventoryID = Location.INSIDE_BROKEN_EGG;
         brokenEgg.trophyCaseValue = BROKEN_EGG_TROPHY_VALUE;
+        brokenEgg.weight = EGG_WEIGHT;
 
         Item buoy = new Item("red buoy", Location.FRIGID_RIVER_4);
         buoy.altNames.add("buoy");
         buoy.inventoryID = Location.INSIDE_BUOY;
+        buoy.weight = BUOY_WEIGHT;
 
         Item candles = new Item("pair of candles", Location.ALTAR);
         candles.altNames.add("candles");
         candles.altNames.add("candle");
         candles.altNames.add("pair");
         candles.initialPresenceString = ObjectStrings.INIT_CANDLES;
+        candles.weight = CANDLES_WEIGHT;
         candles.activated = true;
 
         Item coal = new Item("small pile of coal", Location.DEAD_END_COAL_MINE);
@@ -1332,6 +1419,7 @@ public class GameSetup {
         coal.altNames.add("coal pile");
         coal.altNames.add("pile of coal");
         coal.altNames.add("small pile");
+        coal.weight = COAL_WEIGHT;
 
         Item deflatedBoat = new Item("pile of plastic", Location.DAM_BASE);
         deflatedBoat.altNames.add("boat");
@@ -1339,27 +1427,33 @@ public class GameSetup {
         deflatedBoat.altNames.add("pile");
         deflatedBoat.altNames.add("plastic");
         deflatedBoat.presenceString = ObjectStrings.INIT_BOAT;
-        
+        deflatedBoat.weight = BOAT_WEIGHT;
+
         Item garlic = new Item("clove of garlic", Location.INSIDE_SACK);
         garlic.altNames.add("clove");
         garlic.altNames.add("garlic");
+        garlic.weight = GARLIC_WEIGHT;
 
         Item guideBook = new Item("guidebook", Location.DAM_LOBBY);
         guideBook.altNames.add("book");
         guideBook.initialPresenceString = ObjectStrings.INIT_GUIDEBOOK;
+        guideBook.weight = GUIDEBOOK_WEIGHT;
 
         Item gunk = new Item("viscous material", Location.NULL_LOCATION);
         gunk.altNames.add("gunk");
         gunk.altNames.add("material");
+        gunk.weight = GUNK_WEIGHT;
         
         Item inflatedBoat = new Item("magic boat", Location.NULL_LOCATION);
         inflatedBoat.altNames.add("boat");
         inflatedBoat.altNames.add("raft");
         inflatedBoat.inventoryID = Location.INSIDE_BOAT;
-        
+        inflatedBoat.weight = BOAT_WEIGHT;
+     
         Item knife = new Item("nasty knife", Location.ATTIC);
         knife.altNames.add("knife");
         knife.initialPresenceString = ObjectStrings.INIT_NASTY_KNIFE;
+        knife.weight = KNIFE_WEIGHT;
         
         Item lantern = new Item("brass lantern", Location.LIVING_ROOM);
         lantern.initialPresenceString = ObjectStrings.INIT_LANTERN;
@@ -1367,47 +1461,57 @@ public class GameSetup {
         lantern.altNames.add("lantern");
         lantern.altNames.add("brass lamp");
         lantern.lifespan = GameState.LANTERN_LIFESPAN;
+        lantern.weight = LANTERN_WEIGHT;
 
         Item nest = new Item("bird's nest", Location.UP_TREE);
         nest.altNames.add("nest");
         nest.initialPresenceString = ObjectStrings.INIT_NEST;
         nest.inventoryID = Location.INSIDE_BIRDS_NEST;
+        nest.weight = NEST_WEIGHT;
         nest.open = true;
-        
+
         Item leafPile = new Item("pile of leaves", Location.CLEARING_NORTH);
         leafPile.altNames.add("pile");
         leafPile.altNames.add("leaves");
         leafPile.countString = "There are 69,105 leaves here.";
         leafPile.initialPresenceString =  ObjectStrings.LEAF_PILE;
         leafPile.presenceString =  ObjectStrings.LEAF_PILE;
+        leafPile.weight = LEAVES_WEIGHT;
 
         Item leaflet = new Item("leaflet", Location.INSIDE_MAILBOX);
         leaflet.readString = GameStrings.LEAFLET_TEXT;
+        leaflet.weight = LEAFLET_WEIGHT;
 
         Item lunch = new Item("lunch", Location.INSIDE_SACK);
         lunch.altNames.add("peppers");
         lunch.altNames.add("hot peppers");
         lunch.altNames.add("hot lunch");
+        lunch.weight = LUNCH_WEIGHT;
 
         Item matchbook = new Item("matchbook", Location.DAM_LOBBY);
         matchbook.altNames.add("matches");
         matchbook.altNames.add("match");
         matchbook.presenceString = ObjectStrings.INIT_MATCHBOOK;
         matchbook.lifespan = GameState.MATCH_LIFESPAN;
+        matchbook.weight = MATCHBOOK_WEIGHT;
 
         Item pump = new Item("hand-held air pump", Location.RESERVOIR_NORTH);
         pump.altNames.add("air pump");
         pump.altNames.add("pump");
+        pump.weight = PUMP_WEIGHT;
 
         Item puncturedBoat = new Item("punctured boat", Location.NULL_LOCATION);
         puncturedBoat.altNames.add("boat");
         puncturedBoat.altNames.add("ruined boat");
+        puncturedBoat.weight = BOAT_WEIGHT;
 
         Item rope = new Item("rope", Location.ATTIC);
         rope.initialPresenceString = ObjectStrings.INIT_ROPE;
+        rope.weight = ROPE_WEIGHT;
         
         Item rustyKnife = new Item("rusty knife", Location.MAZE_5);
         rustyKnife.initialPresenceString = ObjectStrings.INIT_RUSTY_KNIFE;
+        rustyKnife.weight = KNIFE_WEIGHT;
 
         Item sack = new Item("brown sack", Location.ON_KITCHEN_TABLE);
         sack.altNames.add("sack");
@@ -1415,45 +1519,56 @@ public class GameSetup {
         sack.altNames.add("brown bag");
         sack.initialPresenceString = ObjectStrings.INIT_SACK;
         sack.inventoryID = Location.INSIDE_SACK;
-        
+        sack.weight = SACK_WEIGHT;
+
         Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM);
         screwdriver.altNames.add("driver");
+        screwdriver.weight = SCREWDRIVER_WEIGHT;
 
         Item shovel = new Item("shovel", Location.SANDY_BEACH);
+        shovel.weight = SHOVEL_WEIGHT;
 
         Item skeletonKey = new Item("skeleton key", Location.MAZE_5);
         skeletonKey.altNames.add("key");
+        skeletonKey.weight = SKELETON_KEY_WEIGHT;
 
         Item stiletto = new Item("stiletto", Location.THIEF_INVENTORY);
+        stiletto.weight = STILETTO_WEIGHT;
 
         Item studioPaper = new Item("ZORK owner's manual", Location.STUDIO);
         studioPaper.altNames.add("paper");
         studioPaper.altNames.add("manual");
         studioPaper.readString = GameStrings.NATE_MANUAL_TEXT;
         studioPaper.initialPresenceString = ObjectStrings.INIT_ZORK_MANUAL;
+        studioPaper.weight = ZORK_MANUAL_WEIGHT;
         
         Item sword = new Item("elvish sword", Location.LIVING_ROOM);
         sword.initialPresenceString = ObjectStrings.INIT_SWORD;
         sword.altNames.add("sword");
+        sword.weight = SWORD_WEIGHT;
         
         Item timber = new Item("broken timber", Location.TIMBER_ROOM);
         timber.altNames.add("timber");
+        timber.weight = TIMBER_WEIGHT;
    
         Item tube = new Item("tube", Location.MAINTENANCE_ROOM);
         tube.presenceString = ObjectStrings.TUBE;
         tube.examineString = ObjectStrings.DESC_TUBE;
         tube.inventoryID = Location.INSIDE_TUBE;
+        tube.weight = TUBE_WEIGHT;
         
         Item uselessLantern = new Item("useless lantern", Location.MAZE_5);
         uselessLantern.altNames.add("lantern");
         uselessLantern.initialPresenceString = ObjectStrings.INIT_USELESS;
+        uselessLantern.weight = LANTERN_WEIGHT;
 
         Item water = new Item("quantity of water", Location.INSIDE_BOTTLE);
         water.altNames.add("water");
         water.takeString = "The water slips through your fingers.";
+        water.weight = WATER_WEIGHT;
 
         Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM);
-
+        wrench.weight = WRENCH_WEIGHT;
 
 
         // Features, containers and surfaces
@@ -1904,6 +2019,7 @@ public class GameSetup {
         state.actions.put("l",     Action.LOOK);
         state.actions.put("quit",  Action.QUIT);
         state.actions.put("q",     Action.QUIT);
+        state.actions.put("score", Action.SCORE);
         state.actions.put("shout", Action.SHOUT);
         state.actions.put("yell",  Action.SHOUT);
         state.actions.put("scream",  Action.SHOUT);
@@ -2009,6 +2125,7 @@ public class GameSetup {
         state.actionTypes.put(Action.LOOK, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.PRAY, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.QUIT, ActionType.REFLEXIVE);
+        state.actionTypes.put(Action.SCORE, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.SHOUT, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.SUPERBRIEF, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.SWIM, ActionType.REFLEXIVE);
