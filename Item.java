@@ -377,10 +377,24 @@ public class Item extends GameObject{
 
         if (open)
         {
-            Item it = (Item)(state.indirectObject);
-            inventory.add(it);
-            it.location = inventoryID;
-            Game.output("Done.");
+            int currentWeight = 0;
+            for (Item it : inventory)
+            {
+                currentWeight += it.weight;
+            }
+
+            Item obj = (Item)(state.indirectObject);
+
+            if (currentWeight + obj.weight <= capacity)
+            {
+                inventory.add(obj);
+                obj.location = inventoryID;
+                Game.output("Done.");
+            }
+
+            else
+                Game.output("There's no more room.");
+        
         }
         else
         {

@@ -237,7 +237,6 @@ public class InputParser {
 
         // Remove articles and prepositions
         input = " " + input + " ";
-        input = input.replaceAll(" at ", " ");
         input = input.replaceAll(" back ", " ");
         input = input.replaceAll(" from ", " ");
         input = input.replaceAll(" of ", " ");
@@ -263,6 +262,7 @@ public class InputParser {
         if (!parseInputAction())
             return false;
 
+        input = input.replaceAll(" at ", " ");
         input = input.replaceAll(" in ", " ");
         input = input.replaceAll(" out ", " ");
 
@@ -469,6 +469,18 @@ public class InputParser {
             }
             String room = state.worldMap.get(thief.location).name.toLowerCase();
             Game.output("The thief is in the " + thief.location + ".");
+            return true;
+        }
+
+        if (input.equals("instant win"))
+        {
+            Game.output("You now have the ancient map.");
+            Item map = (Item)state.objectList.get("ancient map");
+            map.location = Location.PLAYER_INVENTORY;
+
+            Room rm = state.worldMap.get(Location.WEST_OF_HOUSE);
+            Passage p = rm.exits.get(Action.SOUTHWEST);
+            p.open();
             return true;
         }
 

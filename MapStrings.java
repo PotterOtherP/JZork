@@ -80,9 +80,16 @@ class MapStrings {
         + "the Falls. The beach is narrow due to the presence of the White Cliffs. The river canyon opens here and sunlight "
         + "shines in from above. A rainbow crosses over the falls to the east and a narrow path continues to the southwest.";
 
-    public static final String DESC_STONE_BARROW = "The stone barrow!";
+    public static final String DESC_STONE_BARROW = "You are standing in front of a massive barrow of stone. In the east face is "
+        + "a huge stone door which is open. You cannot see into the dark of the tomb.";
 
-    public static final String DESC_INSIDE_STONE_BARROW = "Inside the stone barrow!";
+    public static final String DESC_INSIDE_STONE_BARROW = "As you enter the barrow, the door closes inexorably behind you. Around you "
+        + "it is dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide stream. Spanning the stream is "
+        + "a small wooden footbridge, and beyond a path leads into a dark tunnel. Above the bridge, floating in the air, is a large "
+        + "sign. It reads: All ye who stand before this bridge have completed a great and perilous adventure which has tested your "
+        + "wit and courage. You have mastered the first part of the ZORK trilogy. Those who pass over this bridge must be prepared "
+        + "to undertake an even greater adventure that will severely test your skill and bravery!\n"
+        + "The ZORK trilogy continues with \"ZORK II: The Wizard of Frobozz\" and is completed in \"ZORK III: The Dungeon Master.\"";
 
     public static final String DESC_CELLAR = "You are in a dark and damp cellar with a narrow passageway leading north, and a "
         + "crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.";

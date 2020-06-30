@@ -533,6 +533,7 @@ class GameState {
 
             case WAIT:
             {
+                if (playerHitPoints < MAX_HIT_POINTS) ++playerHitPoints;
                 Game.output("Time passes...");
             } break;
 
@@ -705,8 +706,15 @@ class GameState {
             gameWon = true;
             if (!winMessageDisplayed)
             {
-                Game.output("You win!");
+                Game.output(GameStrings.ALL_TREASURES_IN_CASE);
                 winMessageDisplayed = true;
+
+                Item map = (Item)objectList.get("ancient map");
+                map.location = Location.INSIDE_TROPHY_CASE;
+
+                Room rm = worldMap.get(Location.WEST_OF_HOUSE);
+                Passage p = rm.exits.get(Action.SOUTHWEST);
+                p.open();
             }
         }
     }

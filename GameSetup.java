@@ -590,7 +590,7 @@ public class GameSetup {
         stoneBarrow.addExit(Action.NORTHEAST, house_west_barrow);
         stoneBarrow.addExit(Action.WEST, barrowInside);
 
-        Room insideStoneBarrow = new Room("Inside Stone Barrow", MapStrings.DESC_INSIDE_STONE_BARROW, Location.INSIDE_STONE_BARROW);
+        Room insideStoneBarrow = new Room("Inside the Barrow", MapStrings.DESC_INSIDE_STONE_BARROW, Location.INSIDE_STONE_BARROW);
         insideStoneBarrow.addExit(Action.EAST, barrowInside);
 
         Room cellar = new Room("Cellar", MapStrings.DESC_CELLAR, Location.CELLAR);
@@ -1234,6 +1234,7 @@ public class GameSetup {
         coffin.acquireValue = COFFIN_VALUE;
         coffin.trophyCaseValue = COFFIN_TROPHY_VALUE;
         coffin.weight = COFFIN_WEIGHT;
+        coffin.capacity = 5;
         
         Item coins = new Item("bag of coins", Location.MAZE_5);
         coins.altNames.add("bag");
@@ -1266,6 +1267,7 @@ public class GameSetup {
         egg.acquireValue = EGG_VALUE;
         egg.trophyCaseValue = EGG_TROPHY_VALUE;
         egg.weight = EGG_WEIGHT;
+        egg.capacity = 3;
 
         Item emerald = new Item("large emerald", Location.INSIDE_BUOY);
         emerald.altNames.add("emerald");
@@ -1354,7 +1356,14 @@ public class GameSetup {
 
         
 
-        // And another 40 items that can be taken.
+        // And another 40 (or so) items that can be taken.
+
+        Item ancientMap = new Item("ancient map", Location.NULL_LOCATION);
+        ancientMap.altNames.add("map");
+        ancientMap.weight = 0;
+        ancientMap.initialPresenceString = ObjectStrings.INIT_ANCIENT_MAP;
+        ancientMap.readString = ObjectStrings.ANCIENT_MAP;
+        ancientMap.examineString = ObjectStrings.ANCIENT_MAP;
 
         Item axe = new Item("bloody axe", Location.TROLL_INVENTORY);
         axe.altNames.add("axe");
@@ -1381,6 +1390,7 @@ public class GameSetup {
         bottle.initialPresenceString = ObjectStrings.INIT_BOTTLE;
         bottle.inventoryID = Location.INSIDE_BOTTLE;
         bottle.weight = BOTTLE_WEIGHT;
+        bottle.capacity = 2;
 
         Item brokenCanary = new Item("broken clockwork canary", Location.NULL_LOCATION);
         brokenCanary.altNames.add("broken canary");
@@ -1399,11 +1409,13 @@ public class GameSetup {
         brokenEgg.inventoryID = Location.INSIDE_BROKEN_EGG;
         brokenEgg.trophyCaseValue = BROKEN_EGG_TROPHY_VALUE;
         brokenEgg.weight = EGG_WEIGHT;
+        brokenEgg.capacity = 2;
 
         Item buoy = new Item("red buoy", Location.FRIGID_RIVER_4);
         buoy.altNames.add("buoy");
         buoy.inventoryID = Location.INSIDE_BUOY;
         buoy.weight = BUOY_WEIGHT;
+        buoy.capacity = 4;
 
         Item candles = new Item("pair of candles", Location.ALTAR);
         candles.altNames.add("candles");
@@ -1449,6 +1461,7 @@ public class GameSetup {
         inflatedBoat.altNames.add("raft");
         inflatedBoat.inventoryID = Location.INSIDE_BOAT;
         inflatedBoat.weight = BOAT_WEIGHT;
+        inflatedBoat.capacity = 15;
      
         Item knife = new Item("nasty knife", Location.ATTIC);
         knife.altNames.add("knife");
@@ -1469,6 +1482,7 @@ public class GameSetup {
         nest.inventoryID = Location.INSIDE_BIRDS_NEST;
         nest.weight = NEST_WEIGHT;
         nest.open = true;
+        nest.capacity = 3;
 
         Item leafPile = new Item("pile of leaves", Location.CLEARING_NORTH);
         leafPile.altNames.add("pile");
@@ -1520,6 +1534,7 @@ public class GameSetup {
         sack.initialPresenceString = ObjectStrings.INIT_SACK;
         sack.inventoryID = Location.INSIDE_SACK;
         sack.weight = SACK_WEIGHT;
+        sack.capacity = 11;
 
         Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM);
         screwdriver.altNames.add("driver");
@@ -1556,6 +1571,7 @@ public class GameSetup {
         tube.examineString = ObjectStrings.DESC_TUBE;
         tube.inventoryID = Location.INSIDE_TUBE;
         tube.weight = TUBE_WEIGHT;
+        tube.capacity = 1;
         
         Item uselessLantern = new Item("useless lantern", Location.MAZE_5);
         uselessLantern.altNames.add("lantern");
@@ -1581,6 +1597,7 @@ public class GameSetup {
         basket.altNames.add("cage");
         basket.takeString = "The cage is securely fastened to the iron chain.";
         basket.inventoryID = Location.INSIDE_BASKET;
+        basket.capacity = 20;
 
         Feature brokenMirror = new Feature("broken mirror", Location.NULL_LOCATION);
         brokenMirror.altNames.add("mirror");
@@ -1613,8 +1630,9 @@ public class GameSetup {
         chain.lowerString = "Perhaps you should do that to the basket.";
         chain.raiseString = "Perhaps you should do that to the basket.";
         
-        Feature coalMachine = new Feature("machine", Location.MACHINE_ROOM);
+        Container coalMachine = new Container("machine", Location.MACHINE_ROOM);
         coalMachine.inventoryID = Location.INSIDE_COAL_MACHINE;
+        coalMachine.capacity = 10;
         
         Feature damBolt = new Feature("bolt", Location.DAM);
         
@@ -1684,6 +1702,7 @@ public class GameSetup {
         mailbox.moveString = "You can't move the small mailbox.";
         mailbox.inventory.add(leaflet);
         mailbox.inventoryID = Location.INSIDE_MAILBOX;
+        mailbox.capacity = 5;
         
         Feature mirror = new Feature("mirror", Location.MIRROR_ROOM_SOUTH);
         mirror.altLocations.add(Location.MIRROR_ROOM_NORTH);
@@ -1699,6 +1718,7 @@ public class GameSetup {
         
         Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM);
         pedestal.inventoryID = Location.ON_PEDESTAL;
+        pedestal.capacity = 2;
 
         Feature railing = new Feature("wooden railing", Location.DOME_ROOM);
         railing.altNames.add("railing");
@@ -1728,6 +1748,7 @@ public class GameSetup {
         Container trophyCase = new Container("trophy case", Location.LIVING_ROOM);
         trophyCase.altNames.add("case");
         trophyCase.inventoryID = Location.INSIDE_TROPHY_CASE;
+        trophyCase.capacity = 1000;
 
         Feature woodenDoor = new Feature("wooden door", Location.LIVING_ROOM);
         woodenDoor.altNames.add("door");
@@ -1816,6 +1837,7 @@ public class GameSetup {
         state.objectList.put(trident.name, trident);
         state.objectList.put(trunk.name, trunk);
 
+        state.objectList.put(ancientMap.name, ancientMap);
         state.objectList.put(axe.name, axe);
         state.objectList.put(bell.name, bell);
         state.objectList.put(blackBook.name, blackBook);

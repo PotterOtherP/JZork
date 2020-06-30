@@ -44,7 +44,10 @@ class GameStrings {
     public static final String GAME_BEGIN = "ZORK I: The Great Underground Empire"
         + "\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. All rights reserved."
         + "\n ZORK is a registered trademark of Infocom, Inc."
-        + "\n Revision 88 / Serial number 840726";    
+        + "\n Revision 88 / Serial number 840726";
+
+    public static final String ALL_TREASURES_IN_CASE = "An almost inaudible voice whispers in your ear, \"Look to your treasures for the "
+        + "final secret.";
 
     public static final String AUTHOR_INFO = "This sad attempt to recreate Zork was written by Nate Tryon "
         + "in the year of are Lord 2020.\n\nhttps://github.com/PotterOtherP/JZork";
