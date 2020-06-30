@@ -1041,6 +1041,11 @@ public class Actor extends GameObject {
                 {
                     Game.lineOutput(ObjectStrings.TROLL_RECOVERS_STAGGER);
                     unconscious = false;
+                    if (axe.location == Location.TROLL_ROOM)
+                    {
+                        axe.location = Location.TROLL_INVENTORY;
+                        disarmed = false;
+                    }
                     presenceString = ObjectStrings.TROLL_PRESENCE;
                 }
 

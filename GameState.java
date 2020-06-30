@@ -529,6 +529,19 @@ class GameState {
                 currentRoom.lookAround(this);
             } break;
 
+            case PRAY:
+            {
+                if (playerLocation == Location.ALTAR)
+                {
+                    relocatePlayer(Location.FOREST_WEST);
+                }
+
+                else
+                {
+                    Game.output("If you pray enough, your prayers may be answered.");
+                }
+            } break;
+
             case SHOUT: { Game.output("Yaaaaarrrrggghhh!"); } break;
 
             case WAIT:

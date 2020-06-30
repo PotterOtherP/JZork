@@ -52,11 +52,11 @@ class GameStrings {
     public static final String AUTHOR_INFO = "This sad attempt to recreate Zork was written by Nate Tryon "
         + "in the year of are Lord 2020.\n\nhttps://github.com/PotterOtherP/JZork";
     public static final String BLACK_BOOK_TEXT = "Commandment #12592\n\n"
-        + "Oh ye who go about saying unto each:  \"Hello sailor\":\n"
+        + "Oh ye who go about saying unto each: \"Hello sailor\":\n"
         + "Dost thou know the magnitude of thy sin before the gods?\n"
         + "Yea, verily, thou shalt be ground between two stones.\n"
         + "Shall the angry gods cast thy body into the whirlpool?\n"
-        + "Surely, thy eye shall be put out with a sharp stick!"
+        + "Surely, thy eye shall be put out with a sharp stick!\n"
         + "Even unto the ends of the earth shalt thou wander and\n"
         + "Unto the land of the dead shalt thou be sent at last.\n"
         + "Surely thou shalt repent of thy cunning.";

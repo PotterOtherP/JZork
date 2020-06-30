@@ -202,18 +202,17 @@ public class Item extends GameObject{
     {
         switch (name)
         {
-            case "lantern":
+            case "brass lantern":
             {
                 if (activated)
                 {
                     activated = false;
                     Game.output("The brass lantern is now off.");
 
-                    Room rm = state.worldMap.get(state.playerLocation);
-                    if (rm.isDark())
-                    {
+                    state.darknessCheck();
+                    if (state.darkness)
                         Game.output("It is now pitch black.");
-                    }
+                    
                 }
 
                 else
@@ -401,6 +400,23 @@ public class Item extends GameObject{
             Game.output("The " + name + " isn't open.");
         }
 
+    }
+
+    @Override
+    public void read(GameState state)
+    {
+        switch (name)
+        {
+            case "black book":
+            {
+                Game.output(GameStrings.BLACK_BOOK_TEXT);
+            } break;
+
+            default:
+            {
+                super.read(state);
+            } break;
+        }
     }
 
 
