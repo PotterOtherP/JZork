@@ -33,6 +33,7 @@ public class Actor extends GameObject {
         thiefFirstTurn = false;
         thiefItemsHidden = false;
         unconscious = false;
+        presenceString = "";
 
     }
 

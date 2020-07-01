@@ -186,7 +186,7 @@ class Room {
         {
             if (g.location != roomID) continue;
             
-            if (g.isActor())
+            if (g.isActor() && !g.presenceString.isEmpty())
             {
                 Game.output(g.presenceString);
             }

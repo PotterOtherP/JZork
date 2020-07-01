@@ -1766,14 +1766,17 @@ public class GameSetup {
         cyclops.helloString = "The cyclops bows his head to you in greeting.";
         
         Actor flood = new Actor("flood", Location.MAINTENANCE_ROOM);
+        flood.intangible = true;
         
         Actor gustOfWind = new Actor("gust of wind", Location.CAVE_SOUTH);
+        gustOfWind.intangible = true;
 
         Actor riverCurrent = new Actor("current", Location.FRIGID_RIVER_1);
         riverCurrent.altLocations.add(Location.FRIGID_RIVER_2);
         riverCurrent.altLocations.add(Location.FRIGID_RIVER_3);
         riverCurrent.altLocations.add(Location.FRIGID_RIVER_4);
         riverCurrent.altLocations.add(Location.FRIGID_RIVER_5);
+        riverCurrent.intangible = true;
 
         
         Actor songbird = new Actor("song bird", forest.location);

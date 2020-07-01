@@ -10,6 +10,7 @@ abstract class GameObject {
     public String capArticleName;
     public ObjectType type;
     public boolean isWeapon;
+    public boolean intangible;
 
     public Location location;
     public Location inventoryID;
@@ -99,6 +100,7 @@ abstract class GameObject {
 
         isWeapon = false;
         movedFromStart = false;
+        intangible = false;
 
         setStrings();
 

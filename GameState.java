@@ -239,13 +239,13 @@ class GameState {
                 }
             }
 
+            if (g.intangible)
+                currentObjects.remove(g.name);
+        }
+
             // Individual cases
             if (ropeRailTied && (playerLocation == Location.DOME_ROOM || playerLocation == Location.TORCH_ROOM) )
                 currentObjects.put("rope", objectList.get("rope"));
-
-            
-        }
-
     }
 
 
