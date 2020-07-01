@@ -187,7 +187,51 @@ public class Actor extends GameObject {
 
     public void floodTurn(GameState state)
     {
-        if (!alive) return;
+        if (!state.blueButtonPushed) return;
+
+        int maxFloodStage = 15;
+
+        if (state.floodStage < maxFloodStage)
+        {
+            Random rand = new Random();
+            int step = rand.nextInt(2) + 1;
+            state.floodStage += step;
+        }
+
+        if (state.floodStage >= maxFloodStage)
+        {
+            Room rm = state.worldMap.get(Location.DAM_LOBBY);
+            Passage psg = rm.exits.get(Action.NORTH);
+            psg.close();
+            psg.closedFail = "The room is full of water and cannot be entered.";
+
+        }
+
+        if (state.playerLocation != Location.MAINTENANCE_ROOM) return;
+
+        int check = state.floodStage / 2;
+        String floodString = "The water level here is now up to your ";
+
+        // ankles, shin, knees, hips, waist, chest, neck
+        switch(check)
+        {
+            case 1: { Game.output(floodString += "ankles."); } break;
+            case 2: { Game.output(floodString += "shin."); } break;
+            case 3: { Game.output(floodString += "knees."); } break;
+            case 4: { Game.output(floodString += "hips."); } break;
+            case 5: { Game.output(floodString += "waist."); } break;
+            case 6: { Game.output(floodString += "chest."); } break;
+            case 7: { Game.output(floodString += "neck."); } break;
+
+            default: {} break;
+        }
+
+        if (state.floodStage >= maxFloodStage)
+        {
+            Game.output("I'm afraid you have done drowned yourself.");
+            state.playerDies();
+        }
+
     }
 
 

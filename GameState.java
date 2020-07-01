@@ -25,6 +25,11 @@ class GameState {
     public boolean shaftBasketUsed;
     public boolean winMessageDisplayed;
 
+    public boolean blueButtonPushed;
+    public boolean redButtonPushed;
+    public boolean yellowButtonPushed;
+    public int floodStage;
+
     // player attributes
     public int playerCarryWeight;
     public boolean playerDead;
@@ -105,6 +110,10 @@ class GameState {
         shaftBasketUsed = false;
         winMessageDisplayed = false;
 
+        blueButtonPushed = false;
+        redButtonPushed = false;
+        yellowButtonPushed = false;
+        floodStage = 0;
         
         resetInput();
 

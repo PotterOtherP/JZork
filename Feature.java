@@ -209,6 +209,67 @@ class Feature extends GameObject {
 
 
     @Override
+    public void push(GameState state)
+    {
+        switch (name)
+        {
+            case "blue button":
+            {
+                if (!state.blueButtonPushed)
+                {
+                    Game.output(ObjectStrings.BLUE_BUTTON);
+                    state.blueButtonPushed = true;
+                }
+
+            } break;
+
+            case "brown button":
+            {
+                Game.output("Click.");
+
+            } break;
+
+            case "red button":
+            {
+                Room rm = state.worldMap.get(Location.MAINTENANCE_ROOM);
+
+                if (!state.redButtonPushed)
+                {
+                    Game.output("The lights within the room come on.");
+                    rm.setLight();
+                    state.darknessCheck();
+                    state.redButtonPushed = true;
+                }
+
+                else
+                {
+                    Game.output("The lights within the room shut off.");
+                    rm.setDark();
+                    state.darknessCheck();
+                    state.redButtonPushed = false;
+
+                }
+
+            } break;
+
+            case "yellow button":
+            {
+                Game.output("Click.");
+                state.yellowButtonPushed = true;
+
+            } break;
+
+
+            default:
+            {
+                super.push(state);
+            } break;
+        }
+
+    }
+
+
+    @Override
     public void tie(GameState state)
     {
         switch (name)
