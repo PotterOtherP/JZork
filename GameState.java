@@ -56,7 +56,9 @@ class GameState {
     // lists of game objects
     public HashMap<String, Action> actions;
     public HashMap<Action, ActionType> actionTypes;
+    public String[] actionNames;
     public HashMap<String, GameObject> currentObjects;
+    public String[] currentObjectNames;
     public ArrayList<String> dictionary;
     public ArrayList<String> gameNouns;    // used in direct object validation
     public HashMap<String, GameObject> objectList;
@@ -119,7 +121,9 @@ class GameState {
 
         actions = new HashMap<String, Action>();
         actionTypes = new HashMap<Action, ActionType>();
+        actionNames = null;
         currentObjects = new HashMap<String, GameObject>();
+        currentObjectNames = null;
         dictionary = new ArrayList<String>();
         gameNouns = new ArrayList<String>();
         objectList = new HashMap<String, GameObject>();
@@ -246,6 +250,29 @@ class GameState {
             // Individual cases
             if (ropeRailTied && (playerLocation == Location.DOME_ROOM || playerLocation == Location.TORCH_ROOM) )
                 currentObjects.put("rope", objectList.get("rope"));
+
+        // Create the list of current object names, which can be sorted
+        Object[] keys = currentObjects.keySet().toArray();
+        currentObjectNames = new String[keys.length];
+
+        for (int i = 0; i < currentObjectNames.length; ++i)
+        {
+            currentObjectNames[i] = (String)(keys[i]);
+        }
+
+        // Bubble sort
+        for (int x = 0; x < currentObjectNames.length - 1; ++x)
+        {
+            for (int y = x + 1; y < currentObjectNames.length; ++y)
+            {
+                if (currentObjectNames[x].length() < currentObjectNames[y].length())
+                {
+                    String temp = currentObjectNames[x];
+                    currentObjectNames[x] = currentObjectNames[y];
+                    currentObjectNames[y] = temp;
+                }
+            }
+        }
     }
 
 

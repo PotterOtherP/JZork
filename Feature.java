@@ -221,6 +221,9 @@ class Feature extends GameObject {
                     state.blueButtonPushed = true;
                 }
 
+                else
+                    Game.output(ObjectStrings.BLUE_BUTTON_JAMMED);
+
             } break;
 
             case "brown button":

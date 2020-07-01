@@ -45,8 +45,10 @@ public final class Game {
             {
                 output("Current object list:\n");
 
-                for (String str : gameState.currentObjects.keySet())
-                    output(str);
+                for (int i = 0; i < gameState.currentObjectNames.length; ++i)
+                {
+                    output(gameState.currentObjectNames[i]);
+                }
 
                 output("---------------");
             }

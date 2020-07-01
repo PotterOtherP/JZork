@@ -2232,7 +2232,31 @@ public class GameSetup {
         state.actionTypes.put(Action.PUT, ActionType.INDIRECT_INVERSE);
         state.actionTypes.put(Action.THROW, ActionType.INDIRECT_INVERSE);
         state.actionTypes.put(Action.TIE, ActionType.INDIRECT_INVERSE);
+
+
+        // Create the list of action names, which can be sorted.
+
+        Object[] keys = state.actions.keySet().toArray();
+        state.actionNames = new String[keys.length];
+
+        for (int i = 0; i < state.actionNames.length; ++i)
+        {
+            state.actionNames[i] = (String)(keys[i]);
+        }
         
+        // Bubble sort
+        for (int x = 0; x < state.actionNames.length - 1; ++x)
+        {
+            for (int y = x + 1; y < state.actionNames.length; ++y)
+            {
+                if (state.actionNames[x].length() < state.actionNames[y].length())
+                {
+                    String temp = state.actionNames[x];
+                    state.actionNames[x] = state.actionNames[y];
+                    state.actionNames[y] = temp;
+                }
+            }
+        }
     }
 
 

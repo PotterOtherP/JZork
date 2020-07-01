@@ -50,14 +50,14 @@ public class InputParser {
     {
         boolean check = false;
 
-        for (String token : state.currentObjects.keySet())
+        for (int i = 0; i < state.currentObjectNames.length; ++i)
         {
+            String token = state.currentObjectNames[i];
 
             if (startsWith(token, input))
             {
                 check = true;
                 state.directObject = state.currentObjects.get(token);
-                state.secondInputPhrase = token;
                 input = input.substring(token.length()).trim();
                 break;
             }
@@ -88,8 +88,10 @@ public class InputParser {
     {
         boolean check = false;
 
-        for (String token : state.currentObjects.keySet())
+        for (int i = 0; i < state.currentObjectNames.length; ++i)
         {
+            String token = state.currentObjectNames[i];
+
             if (startsWith(token, input))
             {
                 check = true;
@@ -117,13 +119,14 @@ public class InputParser {
 
         // Compare the beginning of the input to the set of action phrases.
         boolean check = false;
-        for (String token : state.actions.keySet())
+
+        for (int i = 0; i < state.actionNames.length; ++i)
         {
-            
+            String token = state.actionNames[i];
+
             if (startsWith(token, input))
             {
                 check = true;
-                state.firstInputPhrase = token;
                 state.playerAction = state.actions.get(token);
                 state.playerActionType = state.actionTypes.get(state.playerAction);
                 input = input.substring(token.length()).trim();

@@ -67,6 +67,7 @@ class ObjectStrings {
     public static final String BAT_CEILING = "You can't reach him; he's on the ceiling.";
     public static final String BLUE_BUTTON = "There is a rumbling sound and a stream of water appears to burst from the east wall "
         + "of the room (apparently, a leak has occurred in a pipe).";
+    public static final String BLUE_BUTTON_JAMMED = "The blue button appears to be jammed.";
     public static final String GARLIC_EAT = "What the heck! You won't make friends this way, but nobody around here is too "
         + "friendly anyhow. Gulp!";
 
