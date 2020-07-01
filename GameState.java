@@ -9,7 +9,6 @@ class GameState {
     public int darknessTurns;
     public boolean darkness;
     public boolean lightActivated;
-    public int suicideCount;
     public Verbosity verbosity;
 
     // game events
@@ -78,7 +77,6 @@ class GameState {
         darknessTurns = 0;
         darkness = false;
         lightActivated = false;
-        suicideCount = 0;
         verbosity = Verbosity.BRIEF;
 
         playerCarryWeight = 0;

@@ -480,9 +480,12 @@ public class Item extends GameObject{
             return;
         }
 
-        if (name.equals("small pile of coal"))
+        if (name.equals("rusty knife"))
         {
-            
+            Item sword = (Item)state.objectList.get("elvish sword");
+
+            if (sword.location == Location.PLAYER_INVENTORY)
+                Game.output(ObjectStrings.RUSTY_KNIFE_TAKE);
         }
 
         if ((state.playerCarryWeight + weight) >= GameState.CARRY_WEIGHT_LIMIT)
