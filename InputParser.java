@@ -129,6 +129,7 @@ public class InputParser {
                 check = true;
                 state.playerAction = state.actions.get(token);
                 state.playerActionType = state.actionTypes.get(state.playerAction);
+                state.firstInputPhrase = token;
                 input = input.substring(token.length()).trim();
                 break;
             }

@@ -2079,6 +2079,7 @@ public class GameSetup {
         state.actions.put("look at", Action.EXAMINE);
         state.actions.put("l at", Action.EXAMINE);
         state.actions.put("extinguish", Action. EXTINGUISH);
+        state.actions.put("turn off", Action. EXTINGUISH);
         state.actions.put("follow", Action.FOLLOW);
         state.actions.put("greet", Action.GREET);
         state.actions.put("hello", Action.GREET);
