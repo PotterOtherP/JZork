@@ -186,6 +186,34 @@ public class Actor extends GameObject {
     }
 
 
+    public void damFlowTurn(GameState state)
+    {
+        if (state.damGatesOpen && state.damWaterHigh && state.damWaterStage > 0)
+        {
+            --state.damWaterStage;
+            // Game.output("Dam water stage is " + state.damWaterStage);
+        }
+
+        if (!state.damGatesOpen && state.damWaterLow && state.damWaterStage < GameState.RESERVOIR_DRAIN_TURNS)
+        {
+            ++state.damWaterStage;
+            // Game.output("Dam water stage is " + state.damWaterStage);
+        }
+
+        if (state.damWaterStage == 0)
+        {
+            state.damWaterHigh = false;
+            state.damWaterLow = true;
+        }
+
+        if (state.damWaterStage == GameState.RESERVOIR_DRAIN_TURNS)
+        {
+            state.damWaterLow = false;
+            state.damWaterHigh = true;
+        }
+    }
+
+
     public void floodTurn(GameState state)
     {
         if (!state.blueButtonPushed) return;

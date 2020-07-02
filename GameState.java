@@ -77,6 +77,7 @@ class GameState {
     public static final int MAX_HIT_POINTS = 10;
     public static final int MATCH_LIFESPAN = 5;
     public static final int MATCHES_IN_BOOK = 20;
+    public static final int RESERVOIR_DRAIN_TURNS = 5;
     public static final int SHAFT_BASKET_POINTS = 13;
     public static final int WINNING_SCORE = 350;
 
@@ -108,7 +109,7 @@ class GameState {
         damGatesOpen = false;
         damWaterHigh = true;
         damWaterLow = false;
-        damWaterStage = 0;
+        damWaterStage = RESERVOIR_DRAIN_TURNS;
         gameWon = false;
         leafPileMoved = false;
         loudRoomSolved = false;
@@ -779,6 +780,7 @@ class GameState {
     {
         Actor cyclops = (Actor)(objectList.get("cyclops"));
         Actor flood = (Actor)(objectList.get("flood"));
+        Actor flow = (Actor)(objectList.get("flow"));
         Actor gustOfWind = (Actor)(objectList.get("gust of wind"));
         Actor riverCurrent = (Actor)(objectList.get("current"));
         Actor songbird = (Actor)(objectList.get("song bird"));
@@ -788,6 +790,7 @@ class GameState {
         Actor vampireBat = (Actor)(objectList.get("vampire bat"));
         cyclops.cyclopsTurn(this);
         flood.floodTurn(this);
+        flow.damFlowTurn(this);
         gustOfWind.gustOfWindTurn(this);
         riverCurrent.riverCurrentTurn(this);
         songbird.songbirdTurn(this);

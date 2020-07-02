@@ -34,8 +34,8 @@ enum Location {
     DAM_BASE, DAM, DAM_LOBBY, MAINTENANCE_ROOM,
 
     NORTH_SOUTH_PASSAGE, CHASM, DEEP_CANYON, RESERVOIR_SOUTH, STREAM_VIEW,
-    STREAM, RESERVOIR, RESERVOIR_NORTH, ATLANTIS_ROOM, CAVE_NORTH,
-    TWISTING_PASSAGE, MIRROR_ROOM_NORTH, COLD_PASSAGE, SLIDE_ROOM,
+    STREAM, STREAM_EMPTY, RESERVOIR, RESERVOIR_EMPTY, RESERVOIR_NORTH, ATLANTIS_ROOM,
+    CAVE_NORTH, TWISTING_PASSAGE, MIRROR_ROOM_NORTH, COLD_PASSAGE, SLIDE_ROOM,
     MINE_ENTRANCE, SQUEAKY_ROOM, BAT_ROOM,
 
     SHAFT_ROOM, SMELLY_ROOM, GAS_ROOM, COAL_MINE_1, COAL_MINE_2,
@@ -1764,6 +1764,9 @@ public class GameSetup {
         
         Actor cyclops = new Actor("cyclops", Location.CYCLOPS_ROOM);
         cyclops.helloString = "The cyclops bows his head to you in greeting.";
+
+        Actor damFlow = new Actor("flow", Location.DAM);
+        damFlow.intangible = true;
         
         Actor flood = new Actor("flood", Location.MAINTENANCE_ROOM);
         flood.intangible = true;
@@ -1913,6 +1916,7 @@ public class GameSetup {
         state.objectList.put(woodenDoor.name, woodenDoor);
 
         state.objectList.put(cyclops.name, cyclops);
+        state.objectList.put(damFlow.name, damFlow);
         state.objectList.put(flood.name, flood);
         state.objectList.put(gustOfWind.name, gustOfWind);
         state.objectList.put(riverCurrent.name, riverCurrent);
@@ -2094,6 +2098,7 @@ public class GameSetup {
         state.actions.put("open", Action.OPEN);
         state.actions.put("pour", Action.POUR);
         state.actions.put("pull", Action.PULL);
+        state.actions.put("press", Action.PUSH);
         state.actions.put("push", Action.PUSH);
         state.actions.put("raise", Action.RAISE);
         state.actions.put("read", Action.READ);
@@ -2210,7 +2215,6 @@ public class GameSetup {
         state.actionTypes.put(Action.TAKE, ActionType.DIRECT);
         state.actionTypes.put(Action.TALK_TO, ActionType.DIRECT);
         state.actionTypes.put(Action.TOUCH, ActionType.DIRECT);
-        state.actionTypes.put(Action.TURN, ActionType.DIRECT);
         state.actionTypes.put(Action.UNTIE, ActionType.DIRECT);
         state.actionTypes.put(Action.WAKE, ActionType.DIRECT);
         state.actionTypes.put(Action.WAVE, ActionType.DIRECT);
@@ -2227,6 +2231,7 @@ public class GameSetup {
         state.actionTypes.put(Action.UNLOCK, ActionType.INDIRECT);
         state.actionTypes.put(Action.LOCK, ActionType.INDIRECT);
         state.actionTypes.put(Action.STRIKE, ActionType.INDIRECT);
+        state.actionTypes.put(Action.TURN, ActionType.INDIRECT);
     
         state.actionTypes.put(Action.GIVE, ActionType.INDIRECT_INVERSE);
         state.actionTypes.put(Action.PUT, ActionType.INDIRECT_INVERSE);
