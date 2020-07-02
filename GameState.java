@@ -14,6 +14,10 @@ class GameState {
     // game events
     public boolean houseWindowOpened;
     public boolean carpetMoved;
+    public boolean damGatesOpen;
+    public boolean damWaterHigh;
+    public boolean damWaterLow;
+    public int damWaterStage;
     public boolean gameWon;
     public boolean leafPileMoved;
     public boolean loudRoomSolved;
@@ -101,6 +105,10 @@ class GameState {
 
         houseWindowOpened = false;
         carpetMoved = false;
+        damGatesOpen = false;
+        damWaterHigh = true;
+        damWaterLow = false;
+        damWaterStage = 0;
         gameWon = false;
         leafPileMoved = false;
         loudRoomSolved = false;

@@ -184,12 +184,26 @@ class MapStrings {
         + "stretching from north to south along the shores of the river as it winds its way downstream.";
     
     public static final String DESC_DAM = "You are standing on the top of the Flood Control Dam #3, which was quite a tourist "
-        + "attraction in times far distant. There are paths to the north, south, and west, and a scramble down.\n"
-        + "The sluice gates on the dam are closed. Behind the dam, there can be seen a wide reservoir. Water is pouring over "
-        + "the top of the now abandoned dam.\n"
-        + "There is a control panel here, on which a large metal bolt is mounted. Directly above the bolt is a small green "
-        + "plastic bubble.";
-    
+        + "attraction in times far distant. There are paths to the north, south, and west, and a scramble down.";
+
+    public static final String DAM_GATES_CLOSED_HIGH = "\nThe sluice gates on the dam are closed. Behind the dam, there can be seen  "
+        + "a wide reservoir. Water is pouring over the top of the now abandoned dam.";
+
+    public static final String DAM_GATES_CLOSED_LOW = "\nThe sluice gates are closed. The water level in the reservoir is quite low, "
+        + "but the level is rising quickly.";
+
+    public static final String DAM_GATES_OPEN_HIGH = "\nThe sluice gates are open, and water rushed through the dam. The water level "
+        + "behind the dam is still high.";
+
+    public static final String DAM_GATES_OPEN_LOW = "\nThe water level behind the dam is low: The sluice gates have been opened. "
+        + "Water rushes through the dam and downstream.";
+
+    public static final String DAM_BUBBLE_OFF = "\nThere is a control panel here, on which a large metal bolt is mounted. "
+        + "Directly above the bolt is a small green plastic bubble.";
+
+    public static final String DAM_BUBBLE_ON = "\nThere is a control panel here, on which a large metal bolt is mounted. "
+        + "Directly above the bolt is a small green plastic bubble which is glowing serenely..";
+
     public static final String DESC_DAM_LOBBY = "This room appears to have been the waiting room for groups touring the dam."
         + "There are open doorways here to the north and east marked \"Private\", and there is a path leading south over "
         + "the top of the dam.";

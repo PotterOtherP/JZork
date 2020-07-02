@@ -143,6 +143,28 @@ class Room {
                     result = MapStrings.DESC_BEHIND_HOUSE_WINDOW_OPEN;
             } break;
 
+            case DAM:
+            {
+                if (state.damGatesOpen && state.damWaterHigh)
+                    result += MapStrings.DAM_GATES_OPEN_HIGH;
+
+                if (state.damGatesOpen && !state.damWaterHigh)
+                    result += MapStrings.DAM_GATES_OPEN_LOW;
+
+                if (!state.damGatesOpen && state.damWaterHigh)
+                    result += MapStrings.DAM_GATES_CLOSED_HIGH;
+
+                if (!state.damGatesOpen && !state.damWaterHigh)
+                    result += MapStrings.DAM_GATES_CLOSED_LOW;
+
+                if (state.yellowButtonPushed)
+                    result += MapStrings.DAM_BUBBLE_ON;
+
+                else
+                    result += MapStrings.DAM_BUBBLE_OFF;
+                
+            } break;
+
             case KITCHEN:
             {
                 if (exits.get(Action.EAST).isOpen())

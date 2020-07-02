@@ -593,6 +593,8 @@ public class InputParser {
         {
             Game.output("Find the 19 lost treasures of Zork and return them to the trophy case.");
             Game.outputLine();
+            Game.output("Try moving north, south, east, west, up, or down. Try to take objects and do things with them.");
+            Game.outputLine();
             Game.output("Possible actions:");
             Game.outputLine();
             Game.output("activate  again  answer  attack  blow  board  break  brief  burn");

@@ -351,6 +351,50 @@ class Feature extends GameObject {
         }
 
     }
+
+    @Override
+    public void turn(GameState state)
+    {
+        switch (name)
+        {
+            case "bolt":
+            {
+                if (state.indirectObject.name.equals("wrench"))
+                {
+                    if (!state.yellowButtonPushed)
+                    {
+                        Game.output("The bolt won't turn with your best effort.");
+                    }
+
+                    else
+                    {
+                        if (state.damGatesOpen)
+                        {
+                            state.damGatesOpen = false;
+                            Game.output("The sluice gates close and water starts to collect behind the dam.");
+                        }
+
+                        else
+                        {
+                            state.damGatesOpen = true;
+                            Game.output("The sluice gates open and water pours through the dam.");
+                        }
+                    }
+                }
+
+                else
+                {
+                    Game.output("The bolt won't turn using the " + state.indirectObject.name);
+                }
+            } break;
+
+            default:
+            {
+                super.turn(state);
+            } break;
+        }
+
+    }
     
 
     public String toString() { return name; }
