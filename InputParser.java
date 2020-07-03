@@ -309,6 +309,7 @@ public class InputParser {
             } break;
 
             case INDIRECT:
+            case SWITCH:
             {
 
                 // If empty, prompt for direct object.
@@ -326,6 +327,9 @@ public class InputParser {
                 // Might need to individualize this.
                 if (input.isEmpty())
                 {
+                    if (state.playerActionType == ActionType.SWITCH)
+                        return true;
+                    
                     Game.output("Enter an indirect object: ");
                     input = Game.getPlayerText();
                 }

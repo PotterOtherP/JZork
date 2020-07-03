@@ -264,6 +264,7 @@ public class Item extends GameObject{
 
             } break;
 
+
             case "matchbook":
             {
                 if (!activated && state.matchCount > 0)
@@ -284,6 +285,33 @@ public class Item extends GameObject{
                     Game.output("You already have a lit match.");
                 }
 
+            } break;
+
+            case "pair of candles":
+            {
+                if (state.indirectObject.name.equals("dummy_feature"))
+                {
+                    Game.output("You should say what to light them with.");
+                    return;
+                }
+
+                if (state.indirectObject.name.equals("matchbook"))
+                {
+                    Item match = (Item)(state.indirectObject);
+                    if (match.activated)
+                    {
+                        if (!activated)
+                        {
+                            Game.output("The candles are lit.");
+                            activated = true;
+                        }
+                        else
+                            Game.output("The candles are already lit.");
+                    }
+
+                    else
+                        Game.output("With an unlit match??!?");
+                }
             } break;
 
             default:
@@ -409,7 +437,22 @@ public class Item extends GameObject{
         {
             case "black book":
             {
-                Game.output(GameStrings.BLACK_BOOK_TEXT);
+                if (state.playerLocation == Location.ENTRANCE_TO_HADES &&
+                    !state.spiritsBanished &&
+                    state.spiritsBellRung &&
+                    state.spiritsCandlesLit)
+                {
+                    Game.output(ObjectStrings.BLACK_BOOK_READ_SPIRITS);
+                    state.spiritsBanished = true;
+                    Room hades = state.worldMap.get(Location.ENTRANCE_TO_HADES);
+                    Passage psg = hades.exits.get(Action.SOUTH);
+                    psg.open();
+                    GameObject spirits = state.objectList.get("spirits");
+                    spirits.location = Location.NULL_LOCATION;
+                }
+
+                else
+                    Game.output(GameStrings.BLACK_BOOK_TEXT);
             } break;
 
             default:
@@ -450,6 +493,42 @@ public class Item extends GameObject{
             Game.output("The " + name + " is closed.");
         }
         
+    }
+
+
+    @Override
+    public void ring(GameState state)
+    {
+        switch (name)
+        {
+            case "brass bell":
+            {
+                if (state.playerLocation == Location.ENTRANCE_TO_HADES &&
+                    !state.spiritsBanished)
+                {
+                    Game.output(ObjectStrings.BELL_RING_SPIRITS);
+                    state.spiritsBellRung = true;
+                    this.location = Location.NULL_LOCATION;
+
+                    Feature hotbell = (Feature)(state.objectList.get("red hot brass bell"));
+                    hotbell.location = Location.ENTRANCE_TO_HADES;
+                    state.spiritCeremonyCount = GameState.SPIRIT_CEREMONY_LENGTH;
+
+                    Item candles = (Item)(state.objectList.get("pair of candles"));
+                    candles.activated = false;
+                    candles.location = Location.ENTRANCE_TO_HADES;
+                    Game.output(ObjectStrings.CANDLES_FALL_SPIRITS);
+                }
+
+                else
+                    Game.output(ringString);
+            } break;
+
+            default:
+            {
+                super.ring(state); 
+            } break;
+        }
     }
 
 

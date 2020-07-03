@@ -29,6 +29,10 @@ class GameState {
     public boolean rainbowSolid;
     public boolean ropeRailTied;
     public boolean shaftBasketUsed;
+    public int spiritCeremonyCount;
+    public boolean spiritsBellRung;
+    public boolean spiritsCandlesLit;
+    public boolean spiritsBanished;
     public boolean winMessageDisplayed;
 
     public boolean blueButtonPushed;
@@ -73,14 +77,15 @@ class GameState {
     // Constants
     public static final int CARRY_WEIGHT_LIMIT = 20;
     public static final int DEATH_POINTS = 10;
-    public static final int LANTERN_LIFESPAN = 100;
+    public static final int LANTERN_LIFESPAN = 500;
     public static final int MAX_PLAYER_DEATHS = 3;
     public static final int MAX_DARKNESS_TURNS = 2;
     public static final int MAX_HIT_POINTS = 10;
-    public static final int MATCH_LIFESPAN = 5;
+    public static final int MATCH_LIFESPAN = 2;
     public static final int MATCHES_IN_BOOK = 20;
     public static final int RESERVOIR_DRAIN_TURNS = 8;
     public static final int SHAFT_BASKET_POINTS = 13;
+    public static final int SPIRIT_CEREMONY_LENGTH = 5;
     public static final int WINNING_SCORE = 350;
 
     public GameState()
@@ -106,13 +111,13 @@ class GameState {
         completePlayerInput = "";
         playerPreviousInput = "";
 
-        houseWindowOpened = false;
         carpetMoved = false;
         damGatesOpen = false;
         damWaterHigh = true;
         damWaterLow = false;
         damWaterStage = RESERVOIR_DRAIN_TURNS;
         gameWon = false;
+        houseWindowOpened = false;
         leafPileMoved = false;
         loudRoomSolved = false;
         matchCount = MATCHES_IN_BOOK;
@@ -121,6 +126,10 @@ class GameState {
         ropeRailTied = false;
         rainbowSolid = false;
         shaftBasketUsed = false;
+        spiritCeremonyCount = 0;
+        spiritsBellRung = false;
+        spiritsCandlesLit = false;
+        spiritsBanished = false;
         winMessageDisplayed = false;
 
         blueButtonPushed = false;
@@ -499,6 +508,7 @@ class GameState {
             case RAISE: { directObject.raise(this); } break;
             case READ: { directObject.read(this); } break;
             case REMOVE: { directObject.remove(this); } break;
+            case RING: { directObject.ring(this); } break;
             case SEARCH: { directObject.search(this); } break;
             case SHAKE: { directObject.shake(this); } break;
             case SMELL: { directObject.smell(this); } break;
@@ -636,6 +646,7 @@ class GameState {
                         if (choice == 2) relocatePlayer(Location.DEEP_CANYON);
 
                         updateActors();
+                        ++turns;
                         return;                       
                     }
 

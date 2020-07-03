@@ -67,6 +67,7 @@ abstract class GameObject {
     public String raiseString;
     public String readString;
     public String removeString;
+    public String ringString;
     public String searchString;
     public String shakeString;
     public String smellString;    
@@ -146,6 +147,7 @@ abstract class GameObject {
         pullString = "";    // game treats this as "move"
         readString = "You can't read that!";
         removeString = "You can't read that!";
+        ringString = "How, exactly, can you ring that?";
         searchString = "You find nothing unusual.";
         shakeString = "Shaken.";
         smellString = "It smells like " + articleName + ".";    
@@ -276,6 +278,7 @@ abstract class GameObject {
     public void raise(GameState state) { Game.output(raiseString + randPhrase()); }
     public void read(GameState state) { Game.output(readString); }
     public void remove(GameState state) { Game.output(removeString); }
+    public void ring(GameState state) { Game.output(ringString); }
     public void search(GameState state) { Game.output(searchString); }
     public void shake(GameState state) { Game.output(shakeString); }
     public void smell(GameState state) { Game.output(smellString); }   
@@ -296,7 +299,7 @@ abstract class GameObject {
     public void wave(GameState state) { Game.output(waveString + randPhrase()); }
     public void wear(GameState state) { Game.output(wearString); }
     public void wind(GameState state) { Game.output(windString); }
-    public void unlock(GameState state) { Game.output("You can't unlock that."); }
+    public void unlock(GameState state) { Game.output(unlockString); }
 
 
     public void getDescription(GameState state)

@@ -127,7 +127,8 @@ enum ActionType {
     DIRECT,
     INDIRECT,
     INDIRECT_INVERSE,
-    EXIT
+    EXIT,
+    SWITCH
     }
 
 enum ObjectType {
@@ -1384,6 +1385,7 @@ public class GameSetup {
         
         Item bell = new Item("brass bell", Location.TEMPLE);
         bell.altNames.add("bell");
+        bell.ringString = "Ding, dong.";
         bell.weight = BELL_WEIGHT;
 
         Item blackBook = new Item("black book", Location.ALTAR);
@@ -1647,6 +1649,20 @@ public class GameSetup {
         coalMachine.capacity = 10;
         
         Feature damBolt = new Feature("bolt", Location.DAM);
+
+        Feature deadGate = new Feature("gate", Location.ENTRANCE_TO_HADES);
+        deadGate.altLocations.add(Location.LAND_OF_THE_DEAD);
+        deadGate.takeString = ObjectStrings.DEAD_GATE;
+        deadGate.touchString = ObjectStrings.DEAD_GATE;
+        deadGate.openString = ObjectStrings.DEAD_GATE;
+        deadGate.closeString = ObjectStrings.DEAD_GATE;
+
+        Feature engravings = new Feature("engravings", Location.ENGRAVINGS_CAVE);
+        engravings.altNames.add("markings");
+        engravings.altNames.add("walls");
+        engravings.altNames.add("wall");
+        engravings.readString = GameStrings.ENGRAVINGS_TEXT;
+        engravings.examineString = GameStrings.ENGRAVINGS_TEXT;
         
         Feature forest = new Feature("forest", Location.FOREST_PATH);
         forest.altNames.add("woods");
@@ -1666,6 +1682,15 @@ public class GameSetup {
         
         Feature grating = new Feature("grating", Location.GRATING_ROOM);
         grating.altNames.add("grate");
+
+        Feature hotBell = new Feature("red hot brass bell", Location.NULL_LOCATION);
+        hotBell.altNames.add("red hot bell");
+        hotBell.altNames.add("hot brass bell");
+        hotBell.altNames.add("hot bell");
+        hotBell.altNames.add("brass bell");
+        hotBell.altNames.add("bell");
+        hotBell.takeString = "The bell is very hot and cannot be taken.";
+        hotBell.ringString = "The bell is too hot to reach.";
 
         Feature house = new Feature("white house", Location.WEST_OF_HOUSE);
         house.altNames.add("house");
@@ -1804,6 +1829,10 @@ public class GameSetup {
         songbird.examineString = ObjectStrings.SONGBIRD_NEARBY;
         
         Actor spirits = new Actor("spirits", Location.ENTRANCE_TO_HADES);
+        spirits.presenceString = ObjectStrings.SPIRITS;
+        spirits.talkString = "The spirits jeer loudly and ignore you.";
+        spirits.attackString = "How can you attack a spirit with material objects?";
+        spirits.takeString = "You seem unable to interact with these spirits.";
         
         Actor thief = new Actor("thief", Location.TREASURE_ROOM);
         thief.inventoryID = Location.THIEF_INVENTORY;
@@ -1869,6 +1898,7 @@ public class GameSetup {
         state.objectList.put(garlic.name, garlic);
         state.objectList.put(guideBook.name, guideBook);
         state.objectList.put(gunk.name, gunk);
+        state.objectList.put(hotBell.name, hotBell);
         state.objectList.put(inflatedBoat.name, inflatedBoat);
         state.objectList.put(lantern.name, lantern);
         state.objectList.put(leaflet.name, leaflet);
@@ -1905,6 +1935,8 @@ public class GameSetup {
         state.objectList.put(chain.name, chain);
         state.objectList.put(coalMachine.name, coalMachine);
         state.objectList.put(damBolt.name, damBolt);
+        state.objectList.put(deadGate.name, deadGate);
+        state.objectList.put(engravings.name, engravings);
         state.objectList.put(forest.name, forest);
         state.objectList.put(gas.name, gas);
         state.objectList.put(grating.name, grating);
@@ -2116,6 +2148,7 @@ public class GameSetup {
         state.actions.put("raise", Action.RAISE);
         state.actions.put("read", Action.READ);
         state.actions.put("remove", Action.REMOVE);
+        state.actions.put("ring", Action.RING);
         state.actions.put("say", Action.TALK_TO);
         state.actions.put("search", Action.SEARCH);
         state.actions.put("shake", Action.SHAKE);
@@ -2207,7 +2240,7 @@ public class GameSetup {
         state.actionTypes.put(Action.GREET, ActionType.DIRECT);
         state.actionTypes.put(Action.KICK, ActionType.DIRECT);
         state.actionTypes.put(Action.KNOCK, ActionType.DIRECT);
-        state.actionTypes.put(Action.LIGHT, ActionType.DIRECT);
+        state.actionTypes.put(Action.LIGHT, ActionType.SWITCH);
         state.actionTypes.put(Action.LISTEN, ActionType.DIRECT);
         state.actionTypes.put(Action.LOOK_IN, ActionType.DIRECT);
         state.actionTypes.put(Action.LOOK_OUT, ActionType.DIRECT);
@@ -2221,6 +2254,7 @@ public class GameSetup {
         state.actionTypes.put(Action.RAISE, ActionType.DIRECT);
         state.actionTypes.put(Action.READ, ActionType.DIRECT);
         state.actionTypes.put(Action.REMOVE, ActionType.DIRECT);
+        state.actionTypes.put(Action.RING, ActionType.DIRECT);
         state.actionTypes.put(Action.SEARCH, ActionType.DIRECT);
         state.actionTypes.put(Action.SHAKE, ActionType.DIRECT);
         state.actionTypes.put(Action.SMELL, ActionType.DIRECT);

@@ -97,7 +97,7 @@ class GameStrings {
     public static final String DEAD_TAKE_OBJECT = "Your hand passes through its object.";
     public static final String DEAD_TOUCH = "Even such an action is beyond your capabilities.";
     public static final String DEAD_WAIT = "Might as well. You've got an eternity.";
-    public static final String ENGRAVINGS_TEXT = "The engravings were incised in the living rock of the cave all by an unknown hand. They depict, "
+    public static final String ENGRAVINGS_TEXT = "The engravings were incised in the living rock of the cave wall by an unknown hand. They depict, "
         + "in symbolic form, the beliefs of the ancient Zorkers. Skillfully interwoven with the bas reliefs are excerpts illustrating the major "
         + "religious tenets of that time. Unfortunately, a later age seems to have considered them blasphemous and just as skillfully excised them.";
     public static final String ENTER_DARKNESS = "You have moved into a dark place.";

@@ -90,6 +90,24 @@ class Feature extends GameObject {
 
 
     @Override
+    public void kick(GameState state)
+    {
+        switch (name)
+        {
+            case "gate":
+            {
+                Game.output(ObjectStrings.DEAD_GATE);
+            } break;
+
+            default:
+            {
+                super.kick(state);
+            } break;
+        }
+    }
+
+
+    @Override
     public void lookIn(GameState state)
     {
         switch (name)
@@ -126,7 +144,25 @@ class Feature extends GameObject {
 
     }
 
-    
+
+    @Override
+    public void lower(GameState state)
+    {
+        switch (name)
+        {
+            case "gate":
+            {
+                Game.output(ObjectStrings.DEAD_GATE);
+            } break;
+
+            default:
+            {
+                super.lower(state);
+            } break;
+        }
+    }
+
+
     @Override
     public void move(GameState state)
     {
@@ -275,6 +311,24 @@ class Feature extends GameObject {
 
 
     @Override
+    public void raise(GameState state)
+    {
+        switch (name)
+        {
+            case "gate":
+            {
+                Game.output(ObjectStrings.DEAD_GATE);
+            } break;
+
+            default:
+            {
+                super.raise(state);
+            } break;
+        }
+    }
+
+
+    @Override
     public void tie(GameState state)
     {
         switch (name)
@@ -325,6 +379,11 @@ class Feature extends GameObject {
     {
         switch (name)
         {
+            case "gate":
+            {
+                Game.output(ObjectStrings.DEAD_GATE);
+            } break;
+
             case "mirror":
             {
                 Game.output(touchString);

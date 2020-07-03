@@ -59,18 +59,28 @@ class ObjectStrings {
     public static final String PAINTING = "A painting by a neglected genius is here.";
     public static final String PLATINUM_BAR = "On the ground is a large platinum bar.";
     public static final String SCEPTRE = "An ornamented sceptre, tapering to a sharp point, is here.";
+    public static final String SPIRITS = "The way through the gate is barred by evil spirits, who jeer at your attempts to pass.";
     public static final String TUBE = "There is an object which looks like a tube of toothpaste here.";
 
 
     public static final String ANCIENT_MAP = "The map shows a forest with three clearings. The largest clearing contains a house."
         + "Three paths leave the large clearing. One of these paths, leading southwest, is marked \"To Stone Barrow.\"";
     public static final String BAT_CEILING = "You can't reach him; he's on the ceiling.";
+    public static final String BELL_RING_SPIRITS = "The bell suddenly becomes red hot and falls to the ground. The wraiths, "
+        + "as if paralyzed, stop their jeering and slowly turn to face you. On their ashen faces, the expression of a "
+        + "long-forgotten terror takes shape.";
     public static final String BLUE_BUTTON = "There is a rumbling sound and a stream of water appears to burst from the east wall "
         + "of the room (apparently, a leak has occurred in a pipe).";
     public static final String BLUE_BUTTON_JAMMED = "The blue button appears to be jammed.";
+    public static final String BLACK_BOOK_READ_SPIRITS = "Each word of the prayer reverberates through the hall in a deafening "
+        + "confusion. As the last word fades, a voice, loud and commanding, speaks: \"Begone, fiends!\" A heart-stopping scream "
+        + "fills the cavern, and the spirits, sensing a greater power, flee through the walls.";
+    public static final String CANDLES_FALL_SPIRITS = "In your confusion, the candles drop to the ground (and they are out).";
+    public static final String CANDLES_LIT_SPIRITS = "The flames flicker wildly and appear to dance. The earth beneath your feet "
+        + "trembles, and your legs nearly buckly beneath you. The spirits cower at your unearthly power.";
+    public static final String DEAD_GATE = "The gate is protected by an invisible force. It makes your teeth ache to touch it.";
     public static final String GARLIC_EAT = "What the heck! You won't make friends this way, but nobody around here is too "
         + "friendly anyhow. Gulp!";
-
 
 
     public static final String LANTERN_DIM = "The lantern appears a bit dimmer.";
@@ -105,11 +115,12 @@ class ObjectStrings {
 
     public static final String SCEPTRE_WAVE = "A dazzling display of color briefly emanates from the sceptre.";
     public static final String SCEPTRE_RAINBOW = "Suddenly, the rainbow appears to become solid and, I venture, walkable "
-            + "(I think the giveaway was the stairs and bannister.)";
+        + "(I think the giveaway was the stairs and bannister.)";
     public static final String SCEPTRE_RAINBOW_1 = "The rainbow seems to have become somewhat run-of-the-mill.";
     public static final String SCEPTRE_RAINBOW_2 = "The structural integrity of the rainbow is severely compromised, leaving you "
-            + "hanging in mid-air, supported only by water vapor. Bye.";
-
+        + "hanging in mid-air, supported only by water vapor. Bye.";
+    public static final String SPIRITS_REVERT = "The tension of this ceremony is broken, and the wraiths, amused but shaken at "
+        + "your clumsy attempt, resume their hideous jeering.";
     
 
     public static final String CYCLOPS = "A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. "

@@ -15,7 +15,7 @@ public class Actor extends GameObject {
     public boolean unconscious;
 
     public static final int MAX_ENEMY_HIT_POINTS = 10;
-    public static final int THIEF_ENCOUNTER_PERCENT = 2;
+    public static final int THIEF_ENCOUNTER_PERCENT = 0;
     public static final int SONGBIRD_CHIRP_PERCENT = 15;
 
 
@@ -211,7 +211,7 @@ public class Actor extends GameObject {
             resNorth.description = MapStrings.DESC_RESERVOIR_NORTH_FALLING;
             resSouth.description = MapStrings.DESC_RESERVOIR_SOUTH_FALLING;
 
-            Game.output("Dam water stage is " + state.damWaterStage);
+            // Game.output("Dam water stage is " + state.damWaterStage);
 
             // Water finishes falling
             if (state.damWaterStage == 0)
@@ -236,7 +236,7 @@ public class Actor extends GameObject {
             state.waterFalling = false;
             resNorth.description = MapStrings.DESC_RESERVOIR_NORTH_RISING;
             resSouth.description = MapStrings.DESC_RESERVOIR_SOUTH_RISING;
-            Game.output("Dam water stage is " + state.damWaterStage);
+            // Game.output("Dam water stage is " + state.damWaterStage);
 
             // Water finishes rising and goes over the dam
             if (state.damWaterStage == GameState.RESERVOIR_DRAIN_TURNS)
@@ -415,7 +415,34 @@ public class Actor extends GameObject {
 
     public void spiritsTurn(GameState state)
     {
-        if (!alive) return;
+        if (state.spiritsBanished) return;
+
+        if (state.playerLocation != Location.ENTRANCE_TO_HADES)
+        {
+            state.spiritCeremonyCount = 0;
+            return;
+        }
+
+        if (state.spiritCeremonyCount > 0)
+        {
+            --state.spiritCeremonyCount;
+            if (state.spiritCeremonyCount == 0)
+            {
+                Game.output(ObjectStrings.SPIRITS_REVERT);
+                state.spiritsBellRung = false;
+                state.spiritsCandlesLit = false;
+            }
+        }
+
+        Item candles = (Item)(state.objectList.get("pair of candles"));
+        if (candles.location == Location.PLAYER_INVENTORY &&
+            candles.activated &&
+            state.spiritsBellRung &&
+            !state.spiritsCandlesLit)
+        {
+            state.spiritsCandlesLit = true;
+            Game.output(ObjectStrings.CANDLES_LIT_SPIRITS);
+        }
     }
 
 
