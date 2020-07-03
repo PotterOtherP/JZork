@@ -259,6 +259,8 @@ class Feature extends GameObject {
             {
                 Game.output("Click.");
                 state.yellowButtonPushed = true;
+                Room dam = state.worldMap.get(Location.DAM);
+                dam.firstVisit = true;
 
             } break;
 

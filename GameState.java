@@ -79,7 +79,7 @@ class GameState {
     public static final int MAX_HIT_POINTS = 10;
     public static final int MATCH_LIFESPAN = 5;
     public static final int MATCHES_IN_BOOK = 20;
-    public static final int RESERVOIR_DRAIN_TURNS = 10;
+    public static final int RESERVOIR_DRAIN_TURNS = 8;
     public static final int SHAFT_BASKET_POINTS = 13;
     public static final int WINNING_SCORE = 350;
 
@@ -416,6 +416,7 @@ class GameState {
         Room rm = worldMap.get(loc);
         darknessCheck();
         rm.lookAround(this);
+        rm.firstVisit = false;
 
     }
 
@@ -618,7 +619,24 @@ class GameState {
                     if (nextRoom.isDark() && !lightActivated)
                     {
                         Game.lineOutput(GameStrings.ENTER_DARKNESS);
-                        // return;
+                    }
+
+                    if (nextRoom.roomID == Location.LOUD_ROOM && waterFalling)
+                    {
+                        Random rand = new Random();
+                        int choice = rand.nextInt(3);
+
+                        Game.outputLine();
+                        nextRoom.getRoomObjects(this);
+                        Game.output(MapStrings.DESC_LOUD_ROOM_WATER);
+                        Game.outputLine();
+
+                        if (choice == 0) relocatePlayer(Location.DAMP_CAVE);
+                        if (choice == 1) relocatePlayer(Location.ROUND_ROOM);
+                        if (choice == 2) relocatePlayer(Location.DEEP_CANYON);
+
+                        updateActors();
+                        return;                       
                     }
 
                     switch(verbosity)
@@ -676,6 +694,7 @@ class GameState {
                             playerDies();
                         }
                     }
+
 
                 }
 

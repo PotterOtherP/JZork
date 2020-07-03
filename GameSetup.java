@@ -698,6 +698,7 @@ public class GameSetup {
         Room dampCave = new Room("Damp Cave", MapStrings.DESC_DAMP_CAVE, Location.DAMP_CAVE);
         dampCave.addExit(Action.WEST, loud_damp);
         dampCave.addExit(Action.EAST, damp_white_north);
+        dampCave.addFailMessage(Action.SOUTH, "It is too narrow for most insects.");
 
         Room whiteCliffsBeachNorth = new Room("White Cliffs Beach North", MapStrings.DESC_WHITE_CLIFFS_BEACH_NORTH, Location.WHITE_CLIFFS_BEACH_NORTH);
         whiteCliffsBeachNorth.addExit(Action.WEST, damp_white_north);
@@ -768,7 +769,7 @@ public class GameSetup {
         northSouthPassage.addExit(Action.NORTHEAST, northsouth_deep_canyon);
         northSouthPassage.addExit(Action.SOUTH, round_northsouth);
         
-        Room deepCanyon = new Room("Deep Canyon", MapStrings.DESC_DEEP_CANYON, Location.DEEP_CANYON);
+        Room deepCanyon = new Room("Deep Canyon", MapStrings.DESC_DEEP_CANYON_WATER, Location.DEEP_CANYON);
         deepCanyon.addExit(Action.EAST, dam_deep_canyon);
         deepCanyon.addExit(Action.NORTHWEST, res_south_deep);
         deepCanyon.addExit(Action.SOUTHWEST, northsouth_deep_canyon);

@@ -167,7 +167,17 @@ class MapStrings {
         + "There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an "
         + "undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.";
 
+    public static final String DESC_LOUD_ROOM_WATER = "It is unbearably loud here, with an ear-splitting roar seeming to come "
+        + "from all around you. There is a pounding in your head which won't stop. With a tremendous effort, you scramble out "
+        + "of the room.";
+
+    public static final String DESC_LOUD_ROOM_QUIET = "This is a large room with a ceiling which cannot be detected from the ground. "
+        + "There is a narrow passage from east to west and a stone stairway leading upward. The room is eerie in its quietness.";
+
     public static final String LOUD_ROOM_CHANGE = "The acoustics of the room change subtlely.";
+
+    public static final String LOUD_ROOM_RUSH = "All of a sudden, an alarmingly loud roaring sound fills the room. Filled with "
+        + "fear, you scramble away.";
     
     public static final String DESC_DAMP_CAVE = "This cave has exits to the west and east, and narrows to a crack toward the "
         + "south. The earth is particularly damp here.";
@@ -247,8 +257,15 @@ class MapStrings {
     public static final String DESC_CHASM = "A chasm runs southwest to northeast and the path follows it. You are on the "
         +"south side of the chasm, where a crack opens into a passage.";
 
-    public static final String DESC_DEEP_CANYON = "You are on the south edge of a deep canyon. Passages lead off to the east, "
+    public static final String DESC_DEEP_CANYON_QUIET = "You are on the south edge of a deep canyone. Passages lead off to "
+        + "the east, northwest and southwest. A stairway leads down.";
+
+    public static final String DESC_DEEP_CANYON_WATER = "You are on the south edge of a deep canyon. Passages lead off to the east, "
         + "northwest and southwest. A stairway leads down. You can hear the sound of flowing water from below.";
+
+    public static final String DESC_DEEP_CANYON_RUSH = "You are on the south edge of a deep canyon. Passages lead off to "
+        + "the east, northwest and southwest. A stairway leads down. You can hear a loud roaring sound, like that of rushing "
+        + "water, from below.";
 
     public static final String DESC_RESERVOIR_SOUTH = "You are in a long room on the south shore of a large lake, far too deep "
         + "and wide for crossing.\nThere is a path along the stream to the east or west, a steep pathway climbing southwest "
@@ -270,6 +287,10 @@ class MapStrings {
         + "quickly and that before long it will be impossible to cross here.\n"
         + "There is a path along the stream to the east or west, a steep pathway climbing southwest "
         + "along the edge of a chasm, and a path leading into a canyon to the southeast.";
+
+    public static final String RESERVOIR_FILLS = "You notice that the water level has risen to the point that it is impossible to cross.";
+    
+    public static final String RESERVOIR_EMPTIES = "The water level is now quite low here and you could easily cross over to the other side.";
 
     public static final String DESC_STREAM_VIEW = "You are standing on a path beside a gently flowing stream. The path follows "
         + "the stream, which flows from east to west.";

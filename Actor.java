@@ -211,16 +211,21 @@ public class Actor extends GameObject {
             resNorth.description = MapStrings.DESC_RESERVOIR_NORTH_FALLING;
             resSouth.description = MapStrings.DESC_RESERVOIR_SOUTH_FALLING;
 
-            // Game.output("Dam water stage is " + state.damWaterStage);
+            Game.output("Dam water stage is " + state.damWaterStage);
 
+            // Water finishes falling
             if (state.damWaterStage == 0)
             {
                 if (state.playerLocation == Location.RESERVOIR_SOUTH ||
                     state.playerLocation == Location.RESERVOIR_NORTH)
                 {
-                    Game.lineOutput("The water level is now quite low here and you could easily cross over to the other side.");
+                    Game.lineOutput(MapStrings.RESERVOIR_EMPTIES);
                 }
+
+                if (state.playerLocation == Location.DEEP_CANYON)
+                    Game.lineOutput("The roar of rushing water is quieter now.");
             }
+
         }
 
         // Water is rising
@@ -231,15 +236,32 @@ public class Actor extends GameObject {
             state.waterFalling = false;
             resNorth.description = MapStrings.DESC_RESERVOIR_NORTH_RISING;
             resSouth.description = MapStrings.DESC_RESERVOIR_SOUTH_RISING;
-            // Game.output("Dam water stage is " + state.damWaterStage);
+            Game.output("Dam water stage is " + state.damWaterStage);
 
+            // Water finishes rising and goes over the dam
             if (state.damWaterStage == GameState.RESERVOIR_DRAIN_TURNS)
             {
                 if (state.playerLocation == Location.RESERVOIR_SOUTH ||
                     state.playerLocation == Location.RESERVOIR_NORTH)
                 {
-                    Game.lineOutput("You notice that the water level has risen to the point that it is impossible to cross.");
+                    Game.lineOutput(MapStrings.RESERVOIR_FILLS);
                 }
+
+                if (state.playerLocation == Location.LOUD_ROOM)
+                {
+                    Random rand = new Random();
+                    int choice = rand.nextInt(3);
+
+                    Game.lineOutput(MapStrings.LOUD_ROOM_RUSH);
+                    Game.outputLine();
+
+                    if (choice == 0) state.relocatePlayer(Location.DAMP_CAVE);
+                    if (choice == 1) state.relocatePlayer(Location.ROUND_ROOM);
+                    if (choice == 2) state.relocatePlayer(Location.DEEP_CANYON);
+                }
+
+                if (state.playerLocation == Location.DEEP_CANYON)
+                    Game.lineOutput("A sound, like that of flowing water, starts to come from below.");
             }
         }
 

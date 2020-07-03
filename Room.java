@@ -139,7 +139,7 @@ class Room {
 
             case BEHIND_HOUSE:
             {
-                if (exits.get(Action.WEST).isOpen())
+                if (state.houseWindowOpened)
                     result = MapStrings.DESC_BEHIND_HOUSE_WINDOW_OPEN;
             } break;
 
@@ -165,14 +165,40 @@ class Room {
                 
             } break;
 
+            case DEEP_CANYON:
+            {
+                if (state.waterFalling)
+                    result = MapStrings.DESC_DEEP_CANYON_RUSH;
+
+                else if (state.loudRoomSolved || state.damWaterLow)
+                    result = MapStrings.DESC_DEEP_CANYON_QUIET;
+
+                else
+                    result = MapStrings.DESC_DEEP_CANYON_WATER;
+
+            } break;
+
             case KITCHEN:
             {
-                if (exits.get(Action.EAST).isOpen())
+                if (state.houseWindowOpened)
                     result = MapStrings.DESC_KITCHEN_WINDOW_OPEN;
             } break;
 
             case LIVING_ROOM:
             {
+
+            } break;
+
+            case LOUD_ROOM:
+            {
+                if (state.waterFalling)
+                    result = MapStrings.DESC_LOUD_ROOM_WATER;
+
+                else if (state.loudRoomSolved || state.damWaterLow)
+                    result = MapStrings.DESC_LOUD_ROOM_QUIET;
+
+                else
+                    result = MapStrings.DESC_LOUD_ROOM;
 
             } break;
 

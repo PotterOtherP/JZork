@@ -135,10 +135,6 @@ public class InputParser {
             }
         }
 
-        // If no action was found
-        if (!check)
-            Game.output("Sentence did not start with an action!");
-
         return check;
 
     }
@@ -155,7 +151,7 @@ public class InputParser {
             return false;
 
         // The loud room needs to be dealt with here
-        if (state.playerLocation == Location.LOUD_ROOM && !state.loudRoomSolved)
+        if (state.playerLocation == Location.LOUD_ROOM && !state.loudRoomSolved && !state.damWaterLow)
         {
             if (input.equals("echo"))
             {
@@ -264,7 +260,10 @@ public class InputParser {
 
         // Get player action
         if (!parseInputAction())
+        {
+            Game.output("Sentence did not start with an action!");  
             return false;
+        }
 
         input = input.replaceAll(" at ", " ");
         input = input.replaceAll(" in ", " ");
