@@ -15,7 +15,7 @@ public class Actor extends GameObject {
     public boolean unconscious;
 
     public static final int MAX_ENEMY_HIT_POINTS = 10;
-    public static final int THIEF_ENCOUNTER_PERCENT = 5;
+    public static final int THIEF_ENCOUNTER_PERCENT = 2;
     public static final int SONGBIRD_CHIRP_PERCENT = 15;
 
 
@@ -188,28 +188,99 @@ public class Actor extends GameObject {
 
     public void damFlowTurn(GameState state)
     {
+        Room resNorth = state.worldMap.get(Location.RESERVOIR_NORTH);
+        Room resSouth = state.worldMap.get(Location.RESERVOIR_SOUTH);
+        Room stream = state.worldMap.get(Location.STREAM);
+
+        Room res = state.worldMap.get(Location.RESERVOIR);
+        Passage res_N = res.exits.get(Action.NORTH);
+        Passage res_S = res.exits.get(Action.SOUTH);
+        Passage res_STR = res.exits.get(Action.WEST);
+
+        Room resEmpty = state.worldMap.get(Location.RESERVOIR_EMPTY);
+        Passage res_empty_N = resEmpty.exits.get(Action.NORTH);
+        Passage res_empty_S = resEmpty.exits.get(Action.SOUTH);
+        Passage res_empty_STR = resEmpty.exits.get(Action.WEST);
+
+        // Water is falling
         if (state.damGatesOpen && state.damWaterHigh && state.damWaterStage > 0)
         {
             --state.damWaterStage;
+            state.waterFalling = true;
+            state.waterRising = false;
+            resNorth.description = MapStrings.DESC_RESERVOIR_NORTH_FALLING;
+            resSouth.description = MapStrings.DESC_RESERVOIR_SOUTH_FALLING;
+
             // Game.output("Dam water stage is " + state.damWaterStage);
+
+            if (state.damWaterStage == 0)
+            {
+                if (state.playerLocation == Location.RESERVOIR_SOUTH ||
+                    state.playerLocation == Location.RESERVOIR_NORTH)
+                {
+                    Game.lineOutput("The water level is now quite low here and you could easily cross over to the other side.");
+                }
+            }
         }
 
+        // Water is rising
         if (!state.damGatesOpen && state.damWaterLow && state.damWaterStage < GameState.RESERVOIR_DRAIN_TURNS)
         {
             ++state.damWaterStage;
+            state.waterRising = true;
+            state.waterFalling = false;
+            resNorth.description = MapStrings.DESC_RESERVOIR_NORTH_RISING;
+            resSouth.description = MapStrings.DESC_RESERVOIR_SOUTH_RISING;
             // Game.output("Dam water stage is " + state.damWaterStage);
+
+            if (state.damWaterStage == GameState.RESERVOIR_DRAIN_TURNS)
+            {
+                if (state.playerLocation == Location.RESERVOIR_SOUTH ||
+                    state.playerLocation == Location.RESERVOIR_NORTH)
+                {
+                    Game.lineOutput("You notice that the water level has risen to the point that it is impossible to cross.");
+                }
+            }
         }
 
+        // Reservoir is empty
         if (state.damWaterStage == 0)
         {
             state.damWaterHigh = false;
             state.damWaterLow = true;
+            state.waterFalling = false;
+            state.waterRising = false;
+            resNorth.description = MapStrings.DESC_RESERVOIR_NORTH_EMPTY;
+            resSouth.description = MapStrings.DESC_RESERVOIR_SOUTH_EMPTY;
+
+            stream.exits.remove(Action.EAST);
+            stream.addExit(Action.EAST, res_empty_STR);
+
+            resNorth.exits.remove(Action.SOUTH);
+            resNorth.addExit(Action.SOUTH, res_empty_N);
+
+            resSouth.exits.remove(Action.NORTH);
+            resSouth.addExit(Action.NORTH, res_empty_S);
         }
 
+        // Reservoir is full
         if (state.damWaterStage == GameState.RESERVOIR_DRAIN_TURNS)
         {
             state.damWaterLow = false;
             state.damWaterHigh = true;
+            state.waterFalling = false;
+            state.waterRising = false;
+            resNorth.description = MapStrings.DESC_RESERVOIR_NORTH;
+            resSouth.description = MapStrings.DESC_RESERVOIR_SOUTH;
+
+            stream.exits.remove(Action.EAST);
+            stream.addExit(Action.EAST, res_STR);
+
+            resNorth.exits.remove(Action.SOUTH);
+            resNorth.addExit(Action.SOUTH, res_N);
+
+            resSouth.exits.remove(Action.NORTH);
+            resSouth.addExit(Action.NORTH, res_S);
         }
     }
 

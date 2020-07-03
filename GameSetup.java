@@ -34,7 +34,7 @@ enum Location {
     DAM_BASE, DAM, DAM_LOBBY, MAINTENANCE_ROOM,
 
     NORTH_SOUTH_PASSAGE, CHASM, DEEP_CANYON, RESERVOIR_SOUTH, STREAM_VIEW,
-    STREAM, STREAM_EMPTY, RESERVOIR, RESERVOIR_EMPTY, RESERVOIR_NORTH, ATLANTIS_ROOM,
+    STREAM, RESERVOIR, RESERVOIR_EMPTY, RESERVOIR_NORTH, ATLANTIS_ROOM,
     CAVE_NORTH, TWISTING_PASSAGE, MIRROR_ROOM_NORTH, COLD_PASSAGE, SLIDE_ROOM,
     MINE_ENTRANCE, SQUEAKY_ROOM, BAT_ROOM,
 
@@ -365,6 +365,10 @@ public class GameSetup {
         Passage res_south_res = new Passage(Location.RESERVOIR_SOUTH, Location.RESERVOIR);
         Passage res_south_deep = new Passage(Location.RESERVOIR_SOUTH, Location.DEEP_CANYON);
         Passage stream_view_stream = new Passage(Location.STREAM_VIEW, Location.STREAM);
+
+        Passage res_south_res_empty = new Passage(Location.RESERVOIR_SOUTH, Location.RESERVOIR_EMPTY);
+        Passage res_north_res_empty = new Passage(Location.RESERVOIR_NORTH, Location.RESERVOIR_EMPTY);
+        Passage stream_res_empty = new Passage(Location.STREAM, Location.RESERVOIR_EMPTY);
 
         // GUE northern passages
         Passage reservoir_stream = new Passage(Location.RESERVOIR, Location.STREAM);
@@ -795,6 +799,12 @@ public class GameSetup {
         reservoir.addExit(Action.NORTH, res_north_res);
         reservoir.addExit(Action.SOUTH, res_south_res);
         reservoir.addExit(Action.WEST, reservoir_stream);
+
+        Room reservoirEmpty = new Room("Reservoir", MapStrings.DESC_RESERVOIR_EMPTY, Location.RESERVOIR_EMPTY);
+        reservoirEmpty.addExit(Action.NORTH, res_north_res_empty);
+        reservoirEmpty.addExit(Action.SOUTH, res_south_res_empty);
+        reservoirEmpty.addExit(Action.WEST, stream_res_empty);
+
         
         Room reservoirNorth = new Room("Reservoir North", MapStrings.DESC_RESERVOIR_NORTH, Location.RESERVOIR_NORTH);
         reservoirNorth.addExit(Action.NORTH, res_north_atlantis);
@@ -1144,6 +1154,7 @@ public class GameSetup {
         state.worldMap.put(deepCanyon.roomID, deepCanyon);
         state.worldMap.put(reservoirSouth.roomID, reservoirSouth);
         state.worldMap.put(reservoir.roomID, reservoir);
+        state.worldMap.put(reservoirEmpty.roomID, reservoirEmpty);
         state.worldMap.put(reservoirNorth.roomID, reservoirNorth);
         state.worldMap.put(streamView.roomID, streamView);
         state.worldMap.put(stream.roomID, stream);
@@ -1347,7 +1358,7 @@ public class GameSetup {
         trident.trophyCaseValue = TRIDENT_TROPHY_VALUE;
         trident.weight = TRIDENT_WEIGHT;
         
-        Item trunk = new Item("trunk of jewels", Location.NULL_LOCATION);
+        Item trunk = new Item("trunk of jewels", Location.RESERVOIR_EMPTY);
         trunk.altNames.add("trunk");
         trunk.altNames.add("jewels");
         trunk.acquireValue = TRUNK_OF_JEWELS_VALUE;

@@ -17,6 +17,8 @@ class GameState {
     public boolean damGatesOpen;
     public boolean damWaterHigh;
     public boolean damWaterLow;
+    public boolean waterFalling;
+    public boolean waterRising;
     public int damWaterStage;
     public boolean gameWon;
     public boolean leafPileMoved;
@@ -77,7 +79,7 @@ class GameState {
     public static final int MAX_HIT_POINTS = 10;
     public static final int MATCH_LIFESPAN = 5;
     public static final int MATCHES_IN_BOOK = 20;
-    public static final int RESERVOIR_DRAIN_TURNS = 5;
+    public static final int RESERVOIR_DRAIN_TURNS = 10;
     public static final int SHAFT_BASKET_POINTS = 13;
     public static final int WINNING_SCORE = 350;
 

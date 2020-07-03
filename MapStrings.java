@@ -186,7 +186,7 @@ class MapStrings {
     public static final String DESC_DAM = "You are standing on the top of the Flood Control Dam #3, which was quite a tourist "
         + "attraction in times far distant. There are paths to the north, south, and west, and a scramble down.";
 
-    public static final String DAM_GATES_CLOSED_HIGH = "\nThe sluice gates on the dam are closed. Behind the dam, there can be seen  "
+    public static final String DAM_GATES_CLOSED_HIGH = "\nThe sluice gates on the dam are closed. Behind the dam, there can be seen "
         + "a wide reservoir. Water is pouring over the top of the now abandoned dam.";
 
     public static final String DAM_GATES_CLOSED_LOW = "\nThe sluice gates are closed. The water level in the reservoir is quite low, "
@@ -247,15 +247,27 @@ class MapStrings {
     public static final String DESC_CHASM = "A chasm runs southwest to northeast and the path follows it. You are on the "
         +"south side of the chasm, where a crack opens into a passage.";
 
-    public static final String DESC_DEEP_CANYON = "You are on the south edge of a deep canyon. Passages lead off to the east,"
+    public static final String DESC_DEEP_CANYON = "You are on the south edge of a deep canyon. Passages lead off to the east, "
         + "northwest and southwest. A stairway leads down. You can hear the sound of flowing water from below.";
 
     public static final String DESC_RESERVOIR_SOUTH = "You are in a long room on the south shore of a large lake, far too deep "
         + "and wide for crossing.\nThere is a path along the stream to the east or west, a steep pathway climbing southwest "
-        + "along the edge of a chasm, and a path leading into a canyon to the southest.";
+        + "along the edge of a chasm, and a path leading into a canyon to the southeast.";
 
     public static final String DESC_RESERVOIR_SOUTH_EMPTY = "You are in a long room, to the north of which was formerly a lake. "
         + "However, with the water level lowered, there is merely a wide stream running through the center of the room.\n"
+        + "There is a path along the stream to the east or west, a steep pathway climbing southwest "
+        + "along the edge of a chasm, and a path leading into a canyon to the southeast.";
+
+    public static final String DESC_RESERVOIR_SOUTH_FALLING = "You are in a long room. To the north is a large lake, too deep "
+        + "to cross. You notice, however, that the water level appears to be dropping at a rapid rate. Before long, it might "
+        + "be possible to cross to the other side from here.\n"
+        + "There is a path along the stream to the east or west, a steep pathway climbing southwest "
+        + "along the edge of a chasm, and a path leading into a canyon to the southeast.";
+
+    public static final String DESC_RESERVOIR_SOUTH_RISING = "You are in a long room, to the north of which is a wide area which "
+        + "was formerly a reservoir, but now is merely a stream. You notice, however, that the level of the stream is rising "
+        + "quickly and that before long it will be impossible to cross here.\n"
         + "There is a path along the stream to the east or west, a steep pathway climbing southwest "
         + "along the edge of a chasm, and a path leading into a canyon to the southeast.";
 
@@ -266,10 +278,26 @@ class MapStrings {
         + "and the downstream route is invisible due to twisting walls. There is a narrow beach to land on.";
 
     public static final String DESC_RESERVOIR = "You are on the lake. Beaches can be seen north and south. Upstream a small "
-     + "stream enters the lake through a narrow cleft in the rocks. The dam can be seen downstream.";
+        + "stream enters the lake through a narrow cleft in the rocks. The dam can be seen downstream.";
+
+    public static final String DESC_RESERVOIR_EMPTY = "You are on what used to be a large lake, but which is now a large "
+        + "mud pile. There are \"shores\" to the north and south.";
 
     public static final String DESC_RESERVOIR_NORTH = "You are in a large cavernous room, north of a large lake.\nThere is a "
         + "slimy stairway leaving the room to the north.";
+
+    public static final String DESC_RESERVOIR_NORTH_EMPTY = "You are in a large cavernous room, the south of which was formerly "
+        + "a lake. However, with the water level lowered, there is merely a wide stream running through there."
+        + "\nThere is a slimy stairway leaving the room to the north.";
+
+    public static final String DESC_RESERVOIR_NORTH_FALLING = "You are in a large cavernous area. To the south is a wide lake, "
+        + "whose water level appears to be falling rapidly."
+        + "\nThere is a slimy stairway leaving the room to the north.";
+
+    public static final String DESC_RESERVOIR_NORTH_RISING = "You are in a cavernous area, to the south of which is a very "
+        + "wide stream. The level of the stream is rising rapidly, and it appears that before long it will be impossible "
+        + "to cross to the other side."
+        + "\nThere is a slimy stairway leaving the room to the north.";
 
     public static final String DESC_ATLANTIS_ROOM = "This is an ancient room, long under water. There is an exit to the south "
         + "and a staircase leading up.";
