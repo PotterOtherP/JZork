@@ -154,6 +154,17 @@ class GameState {
     }
 
 
+    public void bottleCheck(GameObject g)
+    {
+        if (g.name.equals("glass bottle") && bottleFilled)
+        {
+            Feature water = (Feature)objectList.get("quantity of water");
+            currentObjects.put("water", water);
+            currentObjects.put("quantity of water", water);
+        }    
+    }
+
+
     public void calculateScore()
     {
         playerScore = 0;
@@ -238,7 +249,9 @@ class GameState {
                 currentObjects.put(g.name, g);
                 
                 for (String str : g.altNames)
-                    currentObjects.put(str, g);              
+                    currentObjects.put(str, g);
+
+                bottleCheck(g);             
             }
 
             // Items in an open container that is present in the room
@@ -251,6 +264,8 @@ class GameState {
 
                     for (String str : it.altNames)
                         currentObjects.put(str, it);
+
+                    bottleCheck(it);
                 }
             }
 
@@ -263,6 +278,8 @@ class GameState {
 
                     for (String str : it.altNames)
                         currentObjects.put(str, it);
+
+                    bottleCheck(it);
                 }
             }
 
@@ -545,7 +562,7 @@ class GameState {
                     }
 
                     if (item.name.equals("glass bottle") && bottleFilled)
-                        Game.output("The glass bottle contains:\n   A quantity of water");
+                        Game.output("The glass bottle contains:\n  A quantity of water");
 
                     if (item.location == Location.PLAYER_INVENTORY && item.isContainer()
                         && item.isOpen())
@@ -567,7 +584,7 @@ class GameState {
                             {
                                 Game.output("The " + item.name + " contains:");
                                 for (Item it : item.inventory)
-                                    Game.output(it.capArticleName);
+                                    Game.output("  " + it.capArticleName);
                             }
                         }
                     }

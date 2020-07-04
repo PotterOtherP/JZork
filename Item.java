@@ -353,13 +353,23 @@ public class Item extends GameObject{
     @Override
     public void open(GameState state)
     {
-        if (!isContainer())
+        if (name.equals("glass bottle"))
+        {
+            if (open) Game.output("The bottle is already open.");
+            else
+            {
+                open = true;
+                Game.output("Opened.");
+            }
+        }
+
+        else if (!isContainer())
         {
             Game.output(openString);
             return;
         }
 
-        if (open)
+        else if (open)
         {
             Game.output("It is already open.");
         }
@@ -395,14 +405,8 @@ public class Item extends GameObject{
     @Override
     public void pour(GameState state)
     {
-        switch (state.indirectObject.name)
+        switch (name)
         {
-            case "water":
-            {
-                Game.output("The water spills onto the ground and dissipates.");
-
-            } break;
-
             default:
             {
                 super.pour(state);
@@ -534,9 +538,13 @@ public class Item extends GameObject{
                     state.spiritCeremonyCount = GameState.SPIRIT_CEREMONY_LENGTH;
 
                     Item candles = (Item)(state.objectList.get("pair of candles"));
-                    candles.activated = false;
-                    candles.location = Location.ENTRANCE_TO_HADES;
-                    Game.output(ObjectStrings.CANDLES_FALL_SPIRITS);
+
+                    if (candles.location == Location.PLAYER_INVENTORY)
+                    {
+                        candles.activated = false;
+                        candles.location = Location.ENTRANCE_TO_HADES;
+                        Game.output(ObjectStrings.CANDLES_FALL_SPIRITS);
+                    }
                 }
 
                 else

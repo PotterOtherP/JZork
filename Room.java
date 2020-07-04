@@ -234,7 +234,7 @@ class Room {
         {
             if (g.location != roomID) continue;
             
-            if (g.isActor() && !g.presenceString.isEmpty())
+            if ( (g.isActor() || g.isFeature()) && !g.presenceString.isEmpty())
             {
                 Game.output(g.presenceString);
             }
@@ -249,7 +249,7 @@ class Room {
             // even though it's closed.
 
             if (g.name.equals("glass bottle") && state.bottleFilled)
-                Game.output("The glass bottle contains:\n   A quantity of water");
+                Game.output("The glass bottle contains:\n  A quantity of water");
 
             if (g.isSurface())
             {
@@ -276,7 +276,11 @@ class Room {
                     {
                         Game.output("Sitting on the " + g.name + " is:");
                         for (Item it : g.inventory)
-                            Game.output(it.capArticleName);
+                        {
+                            Game.output("  " + it.capArticleName);
+                            if (it.name.equals("glass bottle") && state.bottleFilled)
+                                Game.output("The glass bottle contains:\n  A quantity of water");
+                        }
                     }
 
                 }
@@ -306,7 +310,11 @@ class Room {
                     {
                         Game.output("The " + g.name + " contains:");
                         for (Item it : g.inventory)
-                            Game.output(it.capArticleName);
+                        {
+                            Game.output("  " + it.capArticleName);
+                            if (it.name.equals("glass bottle") && state.bottleFilled)
+                                Game.output("The glass bottle contains:\n  A quantity of water");
+                        }
                     }
                 }
             }    

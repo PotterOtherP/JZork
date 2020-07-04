@@ -1603,6 +1603,7 @@ public class GameSetup {
         basket.altNames.add("cage");
         basket.takeString = "The cage is securely fastened to the iron chain.";
         basket.inventoryID = Location.INSIDE_BASKET;
+        basket.open = true;
         basket.capacity = 20;
 
         Feature brokenMirror = new Feature("broken mirror", Location.NULL_LOCATION);
@@ -1683,6 +1684,7 @@ public class GameSetup {
         hotBell.altNames.add("bell");
         hotBell.takeString = "The bell is very hot and cannot be taken.";
         hotBell.ringString = "The bell is too hot to reach.";
+        hotBell.presenceString = "On the ground is a red hot bell.";
 
         Feature house = new Feature("white house", Location.WEST_OF_HOUSE);
         house.altNames.add("house");
@@ -1779,7 +1781,7 @@ public class GameSetup {
         trophyCase.inventoryID = Location.INSIDE_TROPHY_CASE;
         trophyCase.capacity = 1000;
 
-        Feature water = new Feature("quantity of water", Location.NULL_LOCATION)
+        Feature water = new Feature("quantity of water", Location.NULL_LOCATION);
         water.altNames.add("water");
 
         Feature woodenDoor = new Feature("wooden door", Location.LIVING_ROOM);
@@ -1951,6 +1953,7 @@ public class GameSetup {
         state.objectList.put(trapDoor.name, trapDoor);
         state.objectList.put(trophyCase.name, trophyCase);
         state.objectList.put(toolChests.name, toolChests);
+        state.objectList.put(water.name, water);
         state.objectList.put(woodenDoor.name, woodenDoor);
 
         state.objectList.put(cyclops.name, cyclops);
@@ -2268,13 +2271,13 @@ public class GameSetup {
         state.actionTypes.put(Action.DIG, ActionType.INDIRECT);
         state.actionTypes.put(Action.FILL, ActionType.INDIRECT);
         state.actionTypes.put(Action.INFLATE, ActionType.INDIRECT);
+        state.actionTypes.put(Action.POUR, ActionType.INDIRECT);
         state.actionTypes.put(Action.UNLOCK, ActionType.INDIRECT);
         state.actionTypes.put(Action.LOCK, ActionType.INDIRECT);
         state.actionTypes.put(Action.STRIKE, ActionType.INDIRECT);
         state.actionTypes.put(Action.TURN, ActionType.INDIRECT);
     
         state.actionTypes.put(Action.GIVE, ActionType.INDIRECT_INVERSE);
-        state.actionTypes.put(Action.POUR, ActionType.INDIRECT_INVERSE);
         state.actionTypes.put(Action.PUT, ActionType.INDIRECT_INVERSE);
         state.actionTypes.put(Action.THROW, ActionType.INDIRECT_INVERSE);
         state.actionTypes.put(Action.TIE, ActionType.INDIRECT_INVERSE);

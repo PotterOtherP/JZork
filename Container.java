@@ -21,15 +21,22 @@ class Container extends GameObject {
     @Override
     public void close(GameState state)
     { 
-        if (open)
+        switch (name)
         {
-            open = false; 
-            Game.output("Closed.");
+            default:
+            {
+                if (open)
+                {
+                    open = false; 
+                    Game.output("Closed.");
+                }
+                else
+                {
+                    Game.output("It is already closed.");
+                }
+            } break;
         }
-        else
-        {
-            Game.output("It is already closed.");
-        }
+        
 
     }
 

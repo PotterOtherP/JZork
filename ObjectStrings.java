@@ -9,7 +9,7 @@ class ObjectStrings {
     public static final String INIT_ANCIENT_MAP = "In the trophy case is an ancient parchment which appears to be a map.";
     public static final String INIT_BLACK_BOOK = "On the altar is a large black book, open to page 569.";
     public static final String INIT_BOAT = "There is a folded pile of plastic here which has a small valve attached.";
-    public static final String INIT_BOTTLE = "A bottle is sitting on the table.";
+    public static final String INIT_BOTTLE = "A bottle is sitting on the table.\nThe glass bottle contains:\n  A quantity of water";
     public static final String INIT_BROKEN_CANARY = "There is a golden clockwork canary nestled in the egg. "
             + "It seems to have recently had a bad experience. The mountings for its jewel-like eyes "
             + "are empty, and its silver beak is crumpled. Through a cracked crystal window below its "
@@ -121,6 +121,7 @@ class ObjectStrings {
         + "hanging in mid-air, supported only by water vapor. Bye.";
     public static final String SPIRITS_REVERT = "The tension of this ceremony is broken, and the wraiths, amused but shaken at "
         + "your clumsy attempt, resume their hideous jeering.";
+    public static final String WATER_DRINK = "Thank you very much. I was rather thirsty (from all this talking, probably).";
     
 
     public static final String CYCLOPS = "A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. "

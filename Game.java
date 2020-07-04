@@ -35,7 +35,6 @@ public final class Game {
         {    
             gameState.resetInput();
             gameState.completePlayerInput = getPlayerText();
-            outputLine();
 
             parser.reset();
             gameState.refreshInventories();
@@ -106,6 +105,8 @@ public final class Game {
                 prompt();
             }
         }
+
+        outputLine();
 
         return result.trim().toLowerCase();
 

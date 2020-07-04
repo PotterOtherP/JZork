@@ -7,6 +7,7 @@ class Feature extends GameObject {
     {
         super(name, loc);
         type = ObjectType.FEATURE;
+        presenceString = "";
     
     }
 
@@ -90,6 +91,39 @@ class Feature extends GameObject {
 
 
     @Override
+    public void drink(GameState state)
+    {
+        switch (name)
+        {
+            case "quantity of water":
+            {
+                Item bottle = (Item)(state.objectList.get("glass bottle"));
+                if (bottle.location == Location.PLAYER_INVENTORY && bottle.isOpen())
+                {
+                    Game.output(ObjectStrings.WATER_DRINK);
+                    state.bottleFilled = false;
+                }
+
+                else if (bottle.location == Location.PLAYER_INVENTORY && !bottle.isOpen())
+                {
+                    Game.output("The bottle is closed.");
+                }
+
+                else if (bottle.location != Location.PLAYER_INVENTORY)
+                {
+                    Game.output("It's in the bottle. Perhaps you should take that first.");
+                }
+            } break;
+
+            default:
+            {
+                super.drink(state);
+            } break;
+        }
+    }
+
+
+    @Override
     public void kick(GameState state)
     {
         switch (name)
@@ -150,6 +184,19 @@ class Feature extends GameObject {
     {
         switch (name)
         {
+            case "basket":
+            {
+                if (location == Location.SHAFT_ROOM)
+                {
+                    location = Location.DRAFTY_ROOM;
+                    Game.output("The basket is lowered to the bottom of the shaft.");
+                }
+
+                else
+                    Game.output(GameStrings.getHardSarcasm());
+                
+            } break;
+
             case "gate":
             {
                 Game.output(ObjectStrings.DEAD_GATE);
@@ -245,6 +292,54 @@ class Feature extends GameObject {
 
 
     @Override
+    public void pour(GameState state)
+    {
+        switch (name)
+        {
+            case "quantity of water":
+            {
+                Item bottle = (Item)state.objectList.get("glass bottle");
+
+                if (bottle.location != Location.PLAYER_INVENTORY)
+                    Game.output("It's in the bottle. Perhaps you should take that first.");
+
+                else if (!bottle.isOpen())
+                    Game.output("The bottle is closed.");
+
+                else
+                {
+                    switch (state.indirectObject.name)
+                    {
+                        case "red hot brass bell":
+                        {
+                            Game.output("The water cools the bell and is evaporated.");
+                            state.indirectObject.location = Location.NULL_LOCATION;
+                            Item bell = (Item)(state.objectList.get("brass bell"));
+                            bell.location = state.playerLocation;
+                            state.bottleFilled = false;
+
+                        } break;
+
+                        default:
+                        {
+                            Game.output("The water spills onto the " + state.indirectObject.name + " and dissipates.");
+                            state.bottleFilled = false;
+                        } break;
+                    } 
+                }
+                
+
+            } break;
+
+            default:
+            {
+                super.pour(state);
+            } break;
+        }
+    }
+
+
+    @Override
     public void push(GameState state)
     {
         switch (name)
@@ -315,6 +410,18 @@ class Feature extends GameObject {
     {
         switch (name)
         {
+            case "basket":
+            {
+                if (location == Location.DRAFTY_ROOM)
+                {
+                    Game.output("The basket is raised to the top of the shaft.");
+                    location = Location.SHAFT_ROOM;
+                }
+                else
+                    Game.output(GameStrings.getHardSarcasm());
+
+            } break;
+
             case "gate":
             {
                 Game.output(ObjectStrings.DEAD_GATE);

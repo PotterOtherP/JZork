@@ -292,7 +292,6 @@ public class InputParser {
                 {
                     Game.output("What do you want to " + state.firstInputPhrase + "?");
                     input = Game.getPlayerText();
-                    Game.outputLine();
                 }
 
                 
