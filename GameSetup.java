@@ -60,7 +60,6 @@ enum Location {
     INSIDE_SACK,
     INSIDE_BOAT,
     INSIDE_BASKET,
-    INSIDE_BOTTLE,
     INSIDE_TUBE,
     INSIDE_COAL_MACHINE,
 
@@ -1401,9 +1400,8 @@ public class GameSetup {
         bottle.altNames.add("bottle");
         bottle.altNames.add("glass");
         bottle.initialPresenceString = ObjectStrings.INIT_BOTTLE;
-        bottle.inventoryID = Location.INSIDE_BOTTLE;
         bottle.weight = BOTTLE_WEIGHT;
-        bottle.capacity = 2;
+        state.bottleFilled = true;
 
         Item brokenCanary = new Item("broken clockwork canary", Location.NULL_LOCATION);
         brokenCanary.altNames.add("broken canary");
@@ -1780,6 +1778,9 @@ public class GameSetup {
         trophyCase.altNames.add("case");
         trophyCase.inventoryID = Location.INSIDE_TROPHY_CASE;
         trophyCase.capacity = 1000;
+
+        Feature water = new Feature("quantity of water", Location.NULL_LOCATION)
+        water.altNames.add("water");
 
         Feature woodenDoor = new Feature("wooden door", Location.LIVING_ROOM);
         woodenDoor.altNames.add("door");

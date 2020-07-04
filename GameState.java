@@ -12,6 +12,7 @@ class GameState {
     public Verbosity verbosity;
 
     // game events
+    public boolean bottleFilled;
     public boolean houseWindowOpened;
     public boolean carpetMoved;
     public boolean damGatesOpen;
@@ -111,6 +112,7 @@ class GameState {
         completePlayerInput = "";
         playerPreviousInput = "";
 
+        bottleFilled = false;
         carpetMoved = false;
         damGatesOpen = false;
         damWaterHigh = true;
@@ -228,6 +230,7 @@ class GameState {
 
         for (GameObject g : objectList.values())
         {
+            // Object in the player's location or inventory
             if (g.location == playerLocation ||
                 g.altLocations.contains(playerLocation) ||
                 g.playerHasObject())
@@ -282,7 +285,7 @@ class GameState {
             currentObjectNames[i] = (String)(keys[i]);
         }
 
-        // Bubble sort
+        // Bubble sort by length
         for (int x = 0; x < currentObjectNames.length - 1; ++x)
         {
             for (int y = x + 1; y < currentObjectNames.length; ++y)
@@ -541,8 +544,11 @@ class GameState {
                         Game.output(item.capArticleName);
                     }
 
+                    if (item.name.equals("glass bottle") && bottleFilled)
+                        Game.output("The glass bottle contains:\n   A quantity of water");
+
                     if (item.location == Location.PLAYER_INVENTORY && item.isContainer()
-                        && (item.isOpen() || item.name.equals("glass bottle")) )
+                        && item.isOpen())
                     {
                         if (!item.inventory.isEmpty())
                         {
@@ -566,8 +572,10 @@ class GameState {
                         }
                     }
                 }
+
                 if (count == 0)
                     Game.output("You are empty-handed.");
+
             } break;
 
             case JUMP:

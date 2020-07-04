@@ -245,6 +245,12 @@ class Room {
                 Game.output(it.getItemDescription());
             }
 
+            // An annoying exception: the glass bottle, in which the water can be seen
+            // even though it's closed.
+
+            if (g.name.equals("glass bottle") && state.bottleFilled)
+                Game.output("The glass bottle contains:\n   A quantity of water");
+
             if (g.isSurface())
             {
 
@@ -276,9 +282,7 @@ class Room {
                 }
             }
 
-            // An annoying exception: the glass bottle, in which the water can be seen
-            // even though it's closed.
-            if (g.isContainer() && (g.isOpen() || g.name.equals("glass bottle")) )
+            if (g.isContainer() && g.isOpen())
             {
                 if (!g.inventory.isEmpty())
                 {
