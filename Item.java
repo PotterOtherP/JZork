@@ -393,6 +393,25 @@ public class Item extends GameObject{
 
 
     @Override
+    public void pour(GameState state)
+    {
+        switch (state.indirectObject.name)
+        {
+            case "water":
+            {
+                Game.output("The water spills onto the ground and dissipates.");
+
+            } break;
+
+            default:
+            {
+                super.pour(state);
+            } break;
+        }
+    }
+
+
+    @Override
     public void put(GameState state)
     {
 
@@ -544,13 +563,6 @@ public class Item extends GameObject{
         if (name.equals("pile of leaves") && !state.leafPileMoved)
         {
             revealGrating(state);       
-        }
-
-        if (name.equals("quantity of water"))
-        {
-            Game.output("The water slips through your fingers.");
-            location = Location.NULL_LOCATION;
-            return;
         }
 
         if (name.equals("rope") && state.ropeRailTied)

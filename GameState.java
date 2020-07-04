@@ -267,9 +267,11 @@ class GameState {
                 currentObjects.remove(g.name);
         }
 
-            // Individual cases
-            if (ropeRailTied && (playerLocation == Location.DOME_ROOM || playerLocation == Location.TORCH_ROOM) )
-                currentObjects.put("rope", objectList.get("rope"));
+        // Individual cases
+        if (ropeRailTied && (playerLocation == Location.DOME_ROOM || playerLocation == Location.TORCH_ROOM) )
+            currentObjects.put("rope", objectList.get("rope"));
+
+
 
         // Create the list of current object names, which can be sorted
         Object[] keys = currentObjects.keySet().toArray();

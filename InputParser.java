@@ -680,9 +680,11 @@ public class InputParser {
                 {
                     switch (act)
                     {
-                        case TAKE:
-                        case OPEN:
+                        // Here is the list of objects that can be performed on items
+                        // which are present but not in the player's inventory.
                         case MOVE_OBJECT:
+                        case OPEN:
+                        case TAKE:
                         case UNTIE:
                         {
 
@@ -700,7 +702,7 @@ public class InputParser {
             case INDIRECT:
             case INDIRECT_INVERSE:
             {
-                if (indObj.isItem() && !indObj.playerHasObject())
+                if (indObj.isItem() && indObj.location != Location.PLAYER_INVENTORY)
                 {
                     Game.output("You're not carrying the " + indObj.name + ".");
                     return false;

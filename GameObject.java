@@ -143,7 +143,7 @@ abstract class GameObject {
         lookUnderString = "There is nothing but dust there.";
         moveString = "Moving the " + name + " reveals nothing.";
         openString = "You must tell me how to do that to " + articleName + ".";
-        pourString = "";    // game treats this as "drop"
+        pourString = "How were you planning to pour something which is not a liquid?";
         pullString = "";    // game treats this as "move"
         readString = "You can't read that!";
         removeString = "You can't read that!";

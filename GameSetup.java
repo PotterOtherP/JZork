@@ -254,7 +254,6 @@ public class GameSetup {
     public static final int SWORD_WEIGHT = 0;
     public static final int TIMBER_WEIGHT = 0;
     public static final int TUBE_WEIGHT = 0;
-    public static final int WATER_WEIGHT = 0;
     public static final int WRENCH_WEIGHT = 0;
 
 
@@ -1592,11 +1591,6 @@ public class GameSetup {
         uselessLantern.initialPresenceString = ObjectStrings.INIT_USELESS;
         uselessLantern.weight = LANTERN_WEIGHT;
 
-        Item water = new Item("quantity of water", Location.INSIDE_BOTTLE);
-        water.altNames.add("water");
-        water.takeString = "The water slips through your fingers.";
-        water.weight = WATER_WEIGHT;
-
         Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM);
         wrench.weight = WRENCH_WEIGHT;
 
@@ -1921,7 +1915,6 @@ public class GameSetup {
         state.objectList.put(timber.name, timber);
         state.objectList.put(tube.name, tube);
         state.objectList.put(uselessLantern.name, uselessLantern);
-        state.objectList.put(water.name, water);
         state.objectList.put(wrench.name, wrench);
 
         state.objectList.put(atticTable.name, atticTable);
@@ -2248,7 +2241,6 @@ public class GameSetup {
         state.actionTypes.put(Action.LOWER, ActionType.DIRECT);
         state.actionTypes.put(Action.MOVE_OBJECT, ActionType.DIRECT);
         state.actionTypes.put(Action.OPEN, ActionType.DIRECT);
-        state.actionTypes.put(Action.POUR, ActionType.DIRECT);
         state.actionTypes.put(Action.PULL, ActionType.DIRECT);
         state.actionTypes.put(Action.PUSH, ActionType.DIRECT);
         state.actionTypes.put(Action.RAISE, ActionType.DIRECT);
@@ -2281,6 +2273,7 @@ public class GameSetup {
         state.actionTypes.put(Action.TURN, ActionType.INDIRECT);
     
         state.actionTypes.put(Action.GIVE, ActionType.INDIRECT_INVERSE);
+        state.actionTypes.put(Action.POUR, ActionType.INDIRECT_INVERSE);
         state.actionTypes.put(Action.PUT, ActionType.INDIRECT_INVERSE);
         state.actionTypes.put(Action.THROW, ActionType.INDIRECT_INVERSE);
         state.actionTypes.put(Action.TIE, ActionType.INDIRECT_INVERSE);
