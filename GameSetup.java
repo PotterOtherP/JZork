@@ -1628,8 +1628,12 @@ public class GameSetup {
       
         Container coalMachine = new Container("machine", Location.MACHINE_ROOM);
         coalMachine.inventoryID = Location.INSIDE_COAL_MACHINE;
+        coalMachine.altNames.add("lid");
         coalMachine.capacity = 10;
-        
+        coalMachine.takeString = "It is far too large to carry.";
+
+        Feature coalMachineSwitch = new Feature("switch", Location.MACHINE_ROOM);
+
         Feature damBolt = new Feature("bolt", Location.DAM);
 
         Feature deadGate = new Feature("gate", Location.ENTRANCE_TO_HADES);
@@ -1779,6 +1783,12 @@ public class GameSetup {
         trophyCase.inventoryID = Location.INSIDE_TROPHY_CASE;
         trophyCase.capacity = 1000;
 
+        Item vitreousSlag = new Item("small piece of vitreous slag", Location.NULL_LOCATION);
+        vitreousSlag.altNames.add("piece of vitreous slag");
+        vitreousSlag.altNames.add("piece of slag");
+        vitreousSlag.altNames.add("vitreous slag");
+        vitreousSlag.altNames.add("slag");
+
         Feature water = new Feature("quantity of water", Location.NULL_LOCATION);
         water.altNames.add("water");
 
@@ -1789,7 +1799,6 @@ public class GameSetup {
         woodenDoor.openString = "The door cannot be opened.";
         woodenDoor.readString = ObjectStrings.WOODEN_DOOR;
         woodenDoor.examineString = ObjectStrings.WOODEN_DOOR;
-
 
         
         // Actors
@@ -1926,6 +1935,7 @@ public class GameSetup {
         state.objectList.put(buttonRed.name, buttonRed);
         state.objectList.put(carpet.name, carpet);
         state.objectList.put(coalMachine.name, coalMachine);
+        state.objectList.put(coalMachineSwitch.name, coalMachineSwitch);
         state.objectList.put(damBolt.name, damBolt);
         state.objectList.put(deadGate.name, deadGate);
         state.objectList.put(engravings.name, engravings);
@@ -1951,6 +1961,7 @@ public class GameSetup {
         state.objectList.put(trapDoor.name, trapDoor);
         state.objectList.put(trophyCase.name, trophyCase);
         state.objectList.put(toolChests.name, toolChests);
+        state.objectList.put(vitreousSlag.name, vitreousSlag);
         state.objectList.put(water.name, water);
         state.objectList.put(woodenDoor.name, woodenDoor);
 

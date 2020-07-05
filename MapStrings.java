@@ -378,13 +378,7 @@ class MapStrings {
 
     public static final String DESC_MACHINE_ROOM = "This is a large, cold room whose sole exit is to the north. In one corner "
         + "there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled \"START\". "
-        + "The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch). "
-        + "On the front of the machine is a large lid, which is closed.";
-
-    public static final String DESC_MACHINE_ROOM_OPEN = "This is a large, cold room whose sole exit is to the north. In one corner "
-        + "there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled \"START\". "
-        + "The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch). "
-        + "On the front of the machine is a large lid, which is open.";
+        + "The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch).";
 
     public static final String DESC_GRATING_ROOM = "You are in a small room near the maze. There are twisty passages in the "
         + "immediate vicinity.\nAbove you is a grating locked with a skull-and-crossbones lock.";

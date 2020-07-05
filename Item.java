@@ -562,6 +562,7 @@ public class Item extends GameObject{
     @Override
     public void take(GameState state)
     {
+
         if (location == Location.PLAYER_INVENTORY)
         {
             Game.output("You're already carrying the " + name + "!");
@@ -586,6 +587,13 @@ public class Item extends GameObject{
             if (sword.location == Location.PLAYER_INVENTORY)
                 Game.output(ObjectStrings.RUSTY_KNIFE_TAKE);
         }
+
+        if (name.equals("small piece of vitreous slag"))
+        {
+            Game.output(ObjectStrings.SLAG_CRUMBLE);
+            location = Location.NULL_LOCATION;
+            return;
+        } 
 
         if ((state.playerCarryWeight + weight) >= GameState.CARRY_WEIGHT_LIMIT)
         {

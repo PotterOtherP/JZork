@@ -29,6 +29,18 @@ class Container extends GameObject {
 
             } break;
 
+            case "machine":
+            {
+                if (open)
+                {
+                    open = false;
+                    Game.output("The lid closes.");
+                }
+
+                else
+                    Game.output("The lid is already closed.");
+            } break;
+
             default:
             {
                 if (open)
@@ -106,35 +118,60 @@ class Container extends GameObject {
     @Override
     public void open(GameState state)
     {
-        if (open)
+        switch (name)
         {
-            Game.output("It is already open.");
-        }
-        else
-        {
-            open = true;
-            if (inventory.isEmpty())
-                Game.output("Opened.");
-            else
+            case "machine":
             {
-                String str = "Opening the " + name + " reveals";
-
-                for (int i = 0; i < inventory.size(); ++i)
+                if (!open)
                 {
-                    Item it = inventory.get(i);
+                    open = true;
 
-                    String word = it.vowelStart() ? " an " : " a ";
-                    if (inventory.size() > 1 && i == inventory.size() - 1) word = " and" + word;
-                    str += word;
-                    str += it.name;
-                    if (inventory.size() > 2 && i < inventory.size() - 1)
-                        str += ",";
+                    if (!inventory.isEmpty())
+                        Game.output("The lid opens, revealing " + inventory.get(0).articleName + ".");
+                    else
+                        Game.output("The lid opens.");
                 }
-                
-                str += ".";
 
-                Game.output(str);
-            }
+                else
+                    Game.output("The lid is already open.");
+            } break;
+
+            default:
+            {
+                if (open)
+                {
+                    Game.output("It is already open.");
+                }
+
+                else
+                {
+                    open = true;
+                    if (inventory.isEmpty())
+                        Game.output("Opened.");
+                    else
+                    {
+                        String str = "Opening the " + name + " reveals";
+
+                        for (int i = 0; i < inventory.size(); ++i)
+                        {
+                            Item it = inventory.get(i);
+
+                            String word = it.vowelStart() ? " an " : " a ";
+                            if (inventory.size() > 1 && i == inventory.size() - 1) word = " and" + word;
+                            str += word;
+                            str += it.name;
+                            if (inventory.size() > 2 && i < inventory.size() - 1)
+                                str += ",";
+                        }
+                        
+                        str += ".";
+
+                        Game.output(str);
+                    }
+                }
+
+            } break;
+
         }
 
     }
@@ -143,6 +180,12 @@ class Container extends GameObject {
     @Override
     public void put(GameState state)
     {
+        if (name.equals("machine") && !inventory.isEmpty())
+        {
+            Game.output("There's no more room.");
+            return;
+        }
+
         if (open)
         {
             int currentWeight = 0;

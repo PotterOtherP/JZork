@@ -119,6 +119,7 @@ class ObjectStrings {
     public static final String SCEPTRE_RAINBOW_1 = "The rainbow seems to have become somewhat run-of-the-mill.";
     public static final String SCEPTRE_RAINBOW_2 = "The structural integrity of the rainbow is severely compromised, leaving you "
         + "hanging in mid-air, supported only by water vapor. Bye.";
+    public static final String SLAG_CRUMBLE = "The slag was rather insubstantial, and crumbles into dust at your touch.";
     public static final String SPIRITS_REVERT = "The tension of this ceremony is broken, and the wraiths, amused but shaken at "
         + "your clumsy attempt, resume their hideous jeering.";
     public static final String WATER_DRINK = "Thank you very much. I was rather thirsty (from all this talking, probably).";

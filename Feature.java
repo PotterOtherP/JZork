@@ -531,6 +531,52 @@ class Feature extends GameObject {
                 }
             } break;
 
+            case "switch":
+            {
+                switch (state.indirectObject.name)
+                {
+                    case "screwdriver":
+                    {
+                        Container machine = (Container)state.objectList.get("machine");
+                        if (!machine.isOpen() && !machine.inventory.isEmpty())
+                        {
+                            Game.output(ObjectStrings.MACHINE_SUCCESS);
+
+                            Item subject = machine.inventory.get(0);
+                            machine.inventory.clear();
+                            if (subject.name.equals("small pile of coal"))
+                            {
+                                subject.location = Location.NULL_LOCATION;
+                                Item diamond = (Item)state.objectList.get("huge diamond");
+                                diamond.location = Location.INSIDE_COAL_MACHINE;
+                            }
+
+                            else
+                            {
+                                subject.location = Location.NULL_LOCATION;
+                                Item slag = (Item)state.objectList.get("small piece of vitreous slag");
+                                slag.location = Location.INSIDE_COAL_MACHINE;
+                            }
+
+                            state.refreshInventories();
+                        }
+
+                        else
+                            Game.output("The machine doesn't seem to want to do anything.");
+                    } break;
+
+                    case "dummy_object":
+                    {
+                        Game.output("You can't turn it with your bare hands...");
+                    } break;
+
+                    default:
+                    {
+                        Game.output("It seems that " + state.indirectObject.articleName + " won't do.");
+                    } break;
+                }
+            } break;
+
             default:
             {
                 super.turn(state);

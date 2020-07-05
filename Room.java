@@ -202,6 +202,15 @@ class Room {
 
             } break;
 
+            case MACHINE_ROOM:
+            {
+                Container machine = (Container)state.objectList.get("machine");
+                if (machine.isOpen())
+                    result += " On the front of the machine is a large lid, which is open.";
+                else
+                    result += " On the front of the machine is a large lid, which is closed.";
+            } break;
+
             case MIRROR_ROOM_SOUTH:
             case MIRROR_ROOM_NORTH:
             {
