@@ -69,6 +69,21 @@ class Container extends GameObject {
 
 
     @Override
+    public void lower(GameState state)
+    {
+        switch (name)
+        {
+            
+
+            default:
+            {
+                super.lower(state);
+            } break;
+        }
+    }
+
+
+    @Override
     public void open(GameState state)
     {
         if (open)
@@ -134,6 +149,21 @@ class Container extends GameObject {
             Game.output("The " + name + " isn't open.");
         }
 
+    }
+
+
+    @Override
+    public void raise(GameState state)
+    {
+        switch (name)
+        {
+            
+
+            default:
+            {
+                super.raise(state);
+            } break;
+        }
     }
 
 

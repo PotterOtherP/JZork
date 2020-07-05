@@ -221,7 +221,16 @@ class GameState {
         {
             if ((source.location == Location.PLAYER_INVENTORY || source.location == playerLocation) && source.activated)
                 lightActivated = true;
+
+            // If the light source is in an open container in the same room
+            for (GameObject g : objectList.values())
+            {
+                if (g.isContainer() && g.isOpen() && source.location == g.inventoryID)
+                    lightActivated = true;
+            }
+        
         }
+
 
         Room currentRoom = worldMap.get(playerLocation);
 
@@ -561,7 +570,7 @@ class GameState {
                         Game.output(item.capArticleName);
                     }
 
-                    if (item.name.equals("glass bottle") && bottleFilled)
+                    if (item.location == Location.PLAYER_INVENTORY && item.name.equals("glass bottle") && bottleFilled)
                         Game.output("The glass bottle contains:\n  A quantity of water");
 
                     if (item.location == Location.PLAYER_INVENTORY && item.isContainer()

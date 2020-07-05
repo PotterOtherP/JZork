@@ -348,7 +348,7 @@ class MapStrings {
 
     public static final String DESC_SHAFT_ROOM = "This is a large room, in the middle of which is a small shaft descending through "
         + "the floor into darkness below. To the west and the north are exits from this room. Constructed over the top of the shaft "
-        + "is a metal framework to which a heavy iron chain is attached.\nAt the end of the chain is a basket.";
+        + "is a metal framework to which a heavy iron chain is attached.";
 
     public static final String DESC_SMELLY_ROOM = "This is a small non-descript room. However, from the direction of a small "
         + "descending staircase a foul odor can be detected. To the south is a narrow tunnel.";
@@ -374,8 +374,7 @@ class MapStrings {
         + "west comes a strong draft.";
 
     public static final String DESC_DRAFTY_ROOM = "This is a small drafty room in which is the bottom of a long shaft. To the "
-        + "south is a passageway and to the east a very narrow passage. In the shaft can be seen a heavy iron chain.\nAt the "
-        + "end of the chain is a basket.";
+        + "south is a passageway and to the east a very narrow passage. In the shaft can be seen a heavy iron chain.";
 
     public static final String DESC_MACHINE_ROOM = "This is a large, cold room whose sole exit is to the north. In one corner "
         + "there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled \"START\". "

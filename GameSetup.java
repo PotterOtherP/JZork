@@ -1599,13 +1599,6 @@ public class GameSetup {
         atticTable.altNames.add("table");
         atticTable.capacity = 3;
         
-        Container basket = new Container("basket", Location.SHAFT_ROOM);
-        basket.altNames.add("cage");
-        basket.takeString = "The cage is securely fastened to the iron chain.";
-        basket.inventoryID = Location.INSIDE_BASKET;
-        basket.open = true;
-        basket.capacity = 20;
-
         Feature brokenMirror = new Feature("broken mirror", Location.NULL_LOCATION);
         brokenMirror.altNames.add("mirror");
         brokenMirror.examineString = "The mirror is broken into many pieces.";
@@ -1632,11 +1625,7 @@ public class GameSetup {
         carpet.altNames.add("oriental rug");
         carpet.boardString = ObjectStrings.CARPET_SIT_1;
         carpet.lookUnderString = ObjectStrings.CARPET_LOOK_UNDER;
-
-        Feature chain = new Feature("chain", Location.SHAFT_ROOM);
-        chain.lowerString = "Perhaps you should do that to the basket.";
-        chain.raiseString = "Perhaps you should do that to the basket.";
-        
+      
         Container coalMachine = new Container("machine", Location.MACHINE_ROOM);
         coalMachine.inventoryID = Location.INSIDE_COAL_MACHINE;
         coalMachine.capacity = 10;
@@ -1921,14 +1910,12 @@ public class GameSetup {
         state.objectList.put(wrench.name, wrench);
 
         state.objectList.put(atticTable.name, atticTable);
-        state.objectList.put(basket.name, basket);
         state.objectList.put(brokenMirror.name, brokenMirror);
         state.objectList.put(buttonBlue.name, buttonBlue);
         state.objectList.put(buttonYellow.name, buttonYellow);
         state.objectList.put(buttonBrown.name, buttonBrown);
         state.objectList.put(buttonRed.name, buttonRed);
         state.objectList.put(carpet.name, carpet);
-        state.objectList.put(chain.name, chain);
         state.objectList.put(coalMachine.name, coalMachine);
         state.objectList.put(damBolt.name, damBolt);
         state.objectList.put(deadGate.name, deadGate);

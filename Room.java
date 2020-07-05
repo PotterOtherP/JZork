@@ -207,7 +207,12 @@ class Room {
             {
                 if (state.mirrorBroken)
                     result += "\nUnfortunately, the mirror has been destroyed by your recklessness.";
-            }
+            } break;
+
+            case SHAFT_ROOM:
+            {
+                
+            } break;
 
 
             default:

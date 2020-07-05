@@ -184,19 +184,6 @@ class Feature extends GameObject {
     {
         switch (name)
         {
-            case "basket":
-            {
-                if (location == Location.SHAFT_ROOM)
-                {
-                    location = Location.DRAFTY_ROOM;
-                    Game.output("The basket is lowered to the bottom of the shaft.");
-                }
-
-                else
-                    Game.output(GameStrings.getHardSarcasm());
-                
-            } break;
-
             case "gate":
             {
                 Game.output(ObjectStrings.DEAD_GATE);
@@ -410,18 +397,6 @@ class Feature extends GameObject {
     {
         switch (name)
         {
-            case "basket":
-            {
-                if (location == Location.DRAFTY_ROOM)
-                {
-                    Game.output("The basket is raised to the top of the shaft.");
-                    location = Location.SHAFT_ROOM;
-                }
-                else
-                    Game.output(GameStrings.getHardSarcasm());
-
-            } break;
-
             case "gate":
             {
                 Game.output(ObjectStrings.DEAD_GATE);
