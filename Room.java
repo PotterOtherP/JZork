@@ -210,8 +210,12 @@ class Room {
             } break;
 
             case SHAFT_ROOM:
+            case DRAFTY_ROOM:
             {
-                
+                if (state.shaftBasketLowered)
+                    result += "\nFrom the chain is suspended a basket.";
+                else
+                    result += "\nAt the end of the chain is a basket.";
             } break;
 
 
@@ -293,6 +297,16 @@ class Room {
 
             if (g.isContainer() && g.isOpen())
             {
+                // Shaft basket can be in one of two places
+                if (g.name.equals("basket"))
+                {
+                    if (state.playerLocation == Location.SHAFT_ROOM && state.shaftBasketLowered)
+                        return;
+                    if (state.playerLocation == Location.DRAFTY_ROOM && !state.shaftBasketLowered)
+                        return;
+                }
+
+
                 if (!g.inventory.isEmpty())
                 {
                     boolean check = true;

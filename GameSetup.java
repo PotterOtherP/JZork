@@ -1754,6 +1754,15 @@ public class GameSetup {
         self.altNames.add("self");
         self.altNames.add("myself");
 
+        
+        Container shaftBasket = new Container("basket", Location.SHAFT_ROOM);
+        shaftBasket.altLocations.add(Location.DRAFTY_ROOM);
+        shaftBasket.open = true;
+        shaftBasket.capacity = 20;
+        shaftBasket.inventoryID = Location.INSIDE_BASKET;
+
+        Feature shaftChain = new Feature("chain", Location.SHAFT_ROOM);
+
         Feature skeleton = new Feature("skeleton", Location.MAZE_5);
         
         Feature toolChests = new Feature("tool chests", Location.MAINTENANCE_ROOM);
@@ -1936,6 +1945,8 @@ public class GameSetup {
         state.objectList.put(railing.name, railing);
         state.objectList.put(rainbow.name, rainbow);
         state.objectList.put(self.name, self);
+        state.objectList.put(shaftBasket.name, shaftBasket);
+        state.objectList.put(shaftChain.name, shaftChain);
         state.objectList.put(skeleton.name, skeleton);
         state.objectList.put(trapDoor.name, trapDoor);
         state.objectList.put(trophyCase.name, trophyCase);

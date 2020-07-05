@@ -23,6 +23,12 @@ class Container extends GameObject {
     { 
         switch (name)
         {
+            case "basket":
+            {
+                Game.output("There is no way to close the basket.");
+
+            } break;
+
             default:
             {
                 if (open)
@@ -73,7 +79,21 @@ class Container extends GameObject {
     {
         switch (name)
         {
-            
+            case "basket":
+            {
+                if (!state.shaftBasketLowered)
+                {
+                    state.shaftBasketLowered = true;
+                    location = Location.DRAFTY_ROOM;
+                    altLocations.clear();
+                    altLocations.add(Location.SHAFT_ROOM);
+                    Game.output("The basket is lowered to the bottom of the shaft.");
+                }
+
+                else
+                    Game.output(GameStrings.getHardSarcasm());
+
+            } break;
 
             default:
             {
@@ -157,7 +177,21 @@ class Container extends GameObject {
     {
         switch (name)
         {
-            
+            case "basket":
+            {
+                if (state.shaftBasketLowered)
+                {
+                    state.shaftBasketLowered = false;
+                    location = Location.SHAFT_ROOM;
+                    altLocations.clear();
+                    altLocations.add(Location.DRAFTY_ROOM);
+                    Game.output("The basket is raised to the top of the shaft.");
+                }
+
+                else
+                    Game.output(GameStrings.getHardSarcasm());
+
+            } break;
 
             default:
             {

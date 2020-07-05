@@ -29,6 +29,7 @@ class GameState {
     public boolean potOfGoldAppeared;
     public boolean rainbowSolid;
     public boolean ropeRailTied;
+    public boolean shaftBasketLowered;
     public boolean shaftBasketUsed;
     public int spiritCeremonyCount;
     public boolean spiritsBellRung;
@@ -127,6 +128,7 @@ class GameState {
         potOfGoldAppeared = false;
         ropeRailTied = false;
         rainbowSolid = false;
+        shaftBasketLowered = false;
         shaftBasketUsed = false;
         spiritCeremonyCount = 0;
         spiritsBellRung = false;
@@ -202,6 +204,23 @@ class GameState {
         else if (playerScore >= 50)  playerScoreRank = "Novice Adventurer";
         else if (playerScore >= 25) playerScoreRank = "Amateur Adventurer";
         else playerScoreRank = "Beginner";
+
+        if (playerScore >= WINNING_SCORE)
+        {
+            gameWon = true;
+            if (!winMessageDisplayed)
+            {
+                Game.output(GameStrings.ALL_TREASURES_IN_CASE);
+                winMessageDisplayed = true;
+
+                Item map = (Item)objectList.get("ancient map");
+                map.location = Location.INSIDE_TROPHY_CASE;
+
+                Room rm = worldMap.get(Location.WEST_OF_HOUSE);
+                Passage p = rm.exits.get(Action.SOUTHWEST);
+                p.open();
+            }
+        }
 
     }
 
@@ -297,9 +316,38 @@ class GameState {
         }
 
         // Individual cases
+
+        // The rope tied to the railing
         if (ropeRailTied && (playerLocation == Location.DOME_ROOM || playerLocation == Location.TORCH_ROOM) )
             currentObjects.put("rope", objectList.get("rope"));
 
+        // Items in the shaft basket
+        if ( (playerLocation == Location.SHAFT_ROOM && !shaftBasketLowered) ||
+             (playerLocation == Location.DRAFTY_ROOM && shaftBasketLowered) )
+        {
+            Container basket = (Container)objectList.get("basket");
+            for (Item it : basket.inventory)
+            {
+                currentObjects.put(it.name, it);
+
+                for (String str : it.altNames)
+                    currentObjects.put(str, it);
+
+                bottleCheck(it);
+            }
+        }
+
+        else
+        {
+            Container basket = (Container)objectList.get("basket");
+            for (Item it : basket.inventory)
+            {
+                currentObjects.remove(it.name);
+
+                for (String str : it.altNames)
+                    currentObjects.remove(str);
+            }
+        }
 
 
         // Create the list of current object names, which can be sorted
@@ -498,6 +546,25 @@ class GameState {
         {
             updateDarkness();
             return;
+        }
+
+        if (directObject.name.equals("basket"))
+        {
+            if (playerAction == Action.RAISE || playerAction == Action.LOWER) {}
+
+            else if ( (playerLocation == Location.SHAFT_ROOM && shaftBasketLowered) ||
+                 (playerLocation == Location.DRAFTY_ROOM && !shaftBasketLowered) )
+            {
+                Game.output("The basket is at the other end of the chain.");
+                updateActors();
+                updateItems();
+                calculateScore();
+
+                ++turns;
+
+                return;
+            }
+            
         }
 
         switch (playerAction)
@@ -800,47 +867,12 @@ class GameState {
         // The player's action could end the game before anything else happens.
         if (Game.gameover) return;
 
-        for (GameObject g : objectList.values())
-        {   
-            if (g.isItem())
-            {
-                Item it = (Item)(g);
-                if (it.activated && it.lifespan > 0)
-                {
-                    it.tick();
-                    if (it.lifespan <= 0)
-                        it.activated = false;
-                    
-                }
-            }
-        }
-
-        // The actors get to take their turns
         updateActors();
-
-        if (playerHitPoints <= 0)
-            playerDies();
-
-        ++turns;
-
+        updateItems();
         calculateScore();
 
-        if (playerScore >= WINNING_SCORE)
-        {
-            gameWon = true;
-            if (!winMessageDisplayed)
-            {
-                Game.output(GameStrings.ALL_TREASURES_IN_CASE);
-                winMessageDisplayed = true;
-
-                Item map = (Item)objectList.get("ancient map");
-                map.location = Location.INSIDE_TROPHY_CASE;
-
-                Room rm = worldMap.get(Location.WEST_OF_HOUSE);
-                Passage p = rm.exits.get(Action.SOUTHWEST);
-                p.open();
-            }
-        }
+        ++turns;
+       
     }
 
 
@@ -867,6 +899,28 @@ class GameState {
         troll.trollTurn(this);
         vampireBat.vampireBatTurn(this);
 
+        if (playerHitPoints <= 0)
+            playerDies();
+
+    }
+
+
+    public void updateItems()
+    {
+        for (GameObject g : objectList.values())
+        {   
+            if (g.isItem())
+            {
+                Item it = (Item)(g);
+                if (it.activated && it.lifespan > 0)
+                {
+                    it.tick();
+                    if (it.lifespan <= 0)
+                        it.activated = false;
+                    
+                }
+            }
+        }
     }
 
 
