@@ -125,12 +125,30 @@ class ObjectStrings {
     public static final String WATER_DRINK = "Thank you very much. I was rather thirsty (from all this talking, probably).";
     
 
-    public static final String CYCLOPS = "A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. "
+    public static final String CYCLOPS_1 = "A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. "
         + "From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes people.";
+    public static final String CYCLOPS_2 = "The cyclops is standing in the corner, eyeing you closely. I don't think he likes you very "
+        + "much. He looks extremely hungry, even for a cyclops.";
+    public static final String CYCLOPS_3 = "A hungry cyclops is standing at the foot of the stairs.";
+
 
     public static final String CYCLOPS_FLEE = "The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down "
         + "the wall on the east side of the room.";
 
+    public static final String CYCLOPS_LISTEN = "You can hear his stomach rumbling.";
+    public static final String CYCLOPS_TALK = "The cyclops prefers eating to making conversation.";
+    public static final String CYCLOPS_LUNCH_1 = "The cyclops says \"Mmm Mmm. I love hot peppers! But oh, could I use a drink. Perhaps I could "
+        + "drink the blood of that thing.\" From the gleam in his eye, it could be surmised that you are \"that thing\".";
+    public static final String CYCLOPS_LUNCH_2 = "The cyclops, having eaten the hot peppers, appears to be gasping. His enflamed tongue "
+        + "protrudes from his man-sized mouth.";
+    public static final String CYCLOPS_DRINK_1 = "The cyclops is apparently not thirsty and refuses your generous offer.";
+    public static final String CYCLOPS_DRINK_2 = "The cyclops takes the bottle, check that it's open, and drinks the water. A moment later, "
+        + "he lets out a yawn that nearly blows you over, and then falls fast asleep (what did you put in that drink, anyway?)";
+    public static final String CYCLOPS_GIVE_REJECT_1 = "The cyclops may be hungry, but there is a limit.";
+    public static final String CYCLOPS_GIVE_REJECT_2 = "The cyclops is not so stupid as to eat THAT!";
+
+    public static final String CYCLOPS_SLEEP_1 = "The cyclops is sleeping blissfully at the foot of the stairs.";
+    public static final String CYCLOPS_SLEEP_2 = "The cyclops is sleeping like a baby, albeit a very ugly one.";
     public static final String CYCLOPS_WAIT_1 = "The cyclops seems somewhat agitated.";
     public static final String CYCLOPS_WAIT_2 = "The cyclops appears to be getting more agitated.";
     public static final String CYCLOPS_WAIT_3 = "The cyclops is moving about the room, looking for something.";
@@ -139,6 +157,7 @@ class ObjectStrings {
     public static final String CYCLOPS_WAIT_6 = "You have two choices. 1. Leave 2. Become dinner.";
     public static final String CYCLOPS_WAIT_7 = "The cyclops, tired of all your games and trickery, grabs you firmly. As he licks his chops, "
         + "he says \"Mmm. Just like Mom used to make 'em.\" It's nice to be appreciated.";
+    public static final String CYCLOPS_WAKE = "The cyclops yawns and stares at the thing that woke him up.";
 
     public static final String CYCLOPS_FIGHT_MISS_1 = "The cyclops misses, but the backwash almost knocks you over.";
     public static final String CYCLOPS_FIGHT_MISS_2 = "The cyclops rushes you, but runs into the wall.";

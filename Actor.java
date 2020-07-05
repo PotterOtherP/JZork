@@ -5,6 +5,7 @@ import java.util.Random;
 public class Actor extends GameObject {
     
     public boolean alive;
+    public int cyclopsCycle;
     public boolean disarmed;
     public boolean firstCombatTurn;
     public int hitPoints;
@@ -14,6 +15,7 @@ public class Actor extends GameObject {
     public boolean thiefItemsHidden;
     public boolean unconscious;
 
+    public static final int CYCLOPS_CYCLE_MAX = 7;
     public static final int MAX_ENEMY_HIT_POINTS = 10;
     public static final int THIEF_ENCOUNTER_PERCENT = 0;
     public static final int SONGBIRD_CHIRP_PERCENT = 15;
@@ -25,6 +27,7 @@ public class Actor extends GameObject {
         type = ObjectType.ACTOR;
 
         alive = true;
+        cyclopsCycle = 0;
         disarmed = false;
         firstCombatTurn = true;
         hitPoints = MAX_ENEMY_HIT_POINTS;
@@ -176,7 +179,8 @@ public class Actor extends GameObject {
 
     public void cyclopsTurn(GameState state)
     {
-        if (state.playerLocation == Location.CELLAR && state.playerPreviousLocation == Location.LIVING_ROOM)
+        if (state.playerLocation == Location.CELLAR &&
+            state.playerPreviousLocation == Location.LIVING_ROOM)
         {
             Room rm = state.worldMap.get(Location.CELLAR);
             Passage p = rm.exits.get(Action.UP);
@@ -391,6 +395,16 @@ public class Actor extends GameObject {
 
             state.darknessCheck();
 
+        }
+
+        if (state.playerLocation == Location.DRAFTY_ROOM)
+        {
+            Item candles = (Item)(state.objectList.get("pair of candles"));
+            if (candles.activated && candles.location == Location.PLAYER_INVENTORY)
+            {
+                Game.output("A gust of wind blows out your candles!");
+                candles.activated = false;
+            }
         }
     }
 

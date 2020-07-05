@@ -269,10 +269,27 @@ public class Item extends GameObject{
             {
                 if (!activated && state.matchCount > 0)
                 {
-                    Game.output("One of the matches begins to burn.");
-                    activated = true;
-                    --state.matchCount;
-                    lifespan = GameState.MATCH_LIFESPAN;
+                    if (state.playerLocation == Location.DRAFTY_ROOM)
+                    {
+                        Game.output("This room is drafty, and the match goes out instantly.");
+                        --state.matchCount;
+                    }
+
+                    else if (state.playerLocation == Location.GAS_ROOM)
+                    {
+                        Game.output("How sad for an aspiring adventurer to light a match in a room "
+                            + "which reeks of gas. Fortunately, there is justice in the world."
+                            + "\n**BOOOOOOOOOOOM**\n");
+                        state.playerDies();
+                    }
+
+                    else
+                    {
+                        Game.output("One of the matches begins to burn.");
+                        activated = true;
+                        --state.matchCount;
+                        lifespan = GameState.MATCH_LIFESPAN;
+                    }
                 }
 
                 else if (state.matchCount <= 0)
