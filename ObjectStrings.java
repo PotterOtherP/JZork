@@ -160,20 +160,21 @@ class ObjectStrings {
         + "he says \"Mmm. Just like Mom used to make 'em.\" It's nice to be appreciated.";
     public static final String CYCLOPS_WAKE = "The cyclops yawns and stares at the thing that woke him up.";
 
+    public static final String CYCLOPS_SHRUG = "The cyclops shrugs but otherwise ignores your pitiful attempt.";
     public static final String CYCLOPS_FIGHT_MISS_1 = "The cyclops misses, but the backwash almost knocks you over.";
     public static final String CYCLOPS_FIGHT_MISS_2 = "The cyclops rushes you, but runs into the wall.";
-    public static final String CYCLOPS_FIGHT_KNOCKOUT_1 = "The cyclops sends you crashing to the floor, unconscious.";
-    public static final String CYCLOPS_FIGHT_FATAL_1 = "The cyclops breaks your neck with a massive smash.";
     public static final String CYCLOPS_FIGHT_LIGHT_1 = "A quick punch, but it was only a glancing blow.";
     public static final String CYCLOPS_FIGHT_LIGHT_2 = "A glancing blow from the cyclops' fist.";
-    public static final String CYCLOPS_FIGHT_STAGGER_1 = "The cyclops almost knocks the wind out of you with a quick punch.";
-    public static final String CYCLOPS_FIGHT_STAGGER_2 = "The cyclops lands a punch that almost knocks the wind out of you.";
     public static final String CYCLOPS_FIGHT_SEVERE_1 = "The monster smashes his huge fist into your chest, breaking several ribs.";
     public static final String CYCLOPS_FIGHT_SEVERE_2 = "Heedless of your weapons, the cyclops tosses you against the rock wall of the room.";
+    public static final String CYCLOPS_FIGHT_STAGGER_1 = "The cyclops almost knocks the wind out of you with a quick punch.";
+    public static final String CYCLOPS_FIGHT_STAGGER_2 = "The cyclops lands a punch that almost knocks the wind out of you.";
     public static final String CYCLOPS_FIGHT_DISARM_1 = "The cyclops graps your WEAPON, tastes it, and throws it to the ground in disgust.";
     public static final String CYCLOPS_FIGHT_DISARM_2 = "The monster grabs you on the wrist, squeezes, and you drop your WEAPON in pain.";
+    public static final String CYCLOPS_FIGHT_KNOCKOUT = "The cyclops sends you crashing to the floor, unconscious.";
     public static final String CYCLOPS_FIGHT_HESITATE = "The cyclops seems unable to decide whether to broil or stew his dinner.";
     public static final String CYCLOPS_FIGHT_FINISH = "The cyclops, no sportsman, dispatches his unconscious victim.";
+    public static final String CYCLOPS_FIGHT_FATAL = "The cyclops breaks your neck with a massive smash.";
 
     public static final String SONGBIRD = "You hear in the distance the chirping of a song bird.";
     public static final String SONGBIRD_NEARBY = "You don't see the song bird, but it's probably somewhere nearby.";

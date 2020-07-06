@@ -13,6 +13,7 @@ public class Actor extends GameObject {
     public boolean firstCombatTurn;
     public int hitPoints;
     public boolean staggered;
+    public int swordGlowLevel;
     public boolean thiefAggro;
     public boolean thiefFirstTurn;
     public boolean thiefItemsHidden;
@@ -38,6 +39,7 @@ public class Actor extends GameObject {
         firstCombatTurn = true;
         hitPoints = MAX_ENEMY_HIT_POINTS;
         staggered = false;
+        swordGlowLevel = 0;
         thiefAggro = false;
         thiefFirstTurn = true;
         thiefItemsHidden = false;
@@ -228,7 +230,7 @@ public class Actor extends GameObject {
         }
 
         cyclopsAggro = true;
-        Game.output("You can't hurt the cyclops physically.");
+        Game.output(ObjectStrings.CYCLOPS_SHRUG);
 
 
     }
@@ -296,7 +298,70 @@ public class Actor extends GameObject {
 
         else if (cyclopsAggro)
         {
-            Game.output("The cyclops smashes your stupid face.");
+            // Game.output("The cyclops smashes your stupid face.");
+
+            Random rand = new Random();
+            int dieRoll = rand.nextInt(100);
+
+            if (0 <= dieRoll && dieRoll < 10)
+            {
+                int option = rand.nextInt(2);
+                if (option == 0) Game.output(ObjectStrings.CYCLOPS_FIGHT_MISS_1);
+                if (option == 1) Game.output(ObjectStrings.CYCLOPS_FIGHT_MISS_2);
+            }
+
+            else if (10 <= dieRoll && dieRoll < 20)
+            {
+                int option = rand.nextInt(2);
+                if (option == 0) Game.output(ObjectStrings.CYCLOPS_FIGHT_LIGHT_1);
+                if (option == 1) Game.output(ObjectStrings.CYCLOPS_FIGHT_LIGHT_2);
+                state.playerHitPoints -= 3;
+            }
+
+            else if (20 <= dieRoll && dieRoll < 45)
+            {
+                int option = rand.nextInt(2);
+                if (option == 0) Game.output(ObjectStrings.CYCLOPS_FIGHT_SEVERE_1);
+                if (option == 1) Game.output(ObjectStrings.CYCLOPS_FIGHT_SEVERE_2);
+                state.playerHitPoints -= 9;
+                state.playerStaggered = true;
+            }
+
+            else if (45 <= dieRoll && dieRoll < 65)
+            {
+                int option = rand.nextInt(2);
+                if (option == 0) Game.output(ObjectStrings.CYCLOPS_FIGHT_STAGGER_1);
+                if (option == 1) Game.output(ObjectStrings.CYCLOPS_FIGHT_STAGGER_2);
+                state.playerHitPoints -= 7;
+                state.playerStaggered = true;
+            }
+
+            else if (65 <= dieRoll && dieRoll < 75)
+            {
+                int option = rand.nextInt(2);
+                if (option == 0) Game.output(ObjectStrings.CYCLOPS_FIGHT_DISARM_1);
+                if (option == 1)
+                {
+                    Game.output(ObjectStrings.CYCLOPS_FIGHT_DISARM_2);
+                    state.playerHitPoints -= 2;
+                }
+
+                state.indirectObject.location = state.playerLocation;
+            }
+
+            else if (75 <= dieRoll && dieRoll < 85)
+            {
+                Game.output(ObjectStrings.CYCLOPS_FIGHT_KNOCKOUT);
+                Game.output(ObjectStrings.CYCLOPS_FIGHT_HESITATE);
+                Game.output(ObjectStrings.CYCLOPS_FIGHT_FINISH);
+                state.playerDies();
+            }
+
+            else if (85 <= dieRoll && dieRoll < 100)
+            {
+                Game.output(ObjectStrings.CYCLOPS_FIGHT_FATAL);
+                state.playerDies();
+            }
         }
 
         else
@@ -585,6 +650,21 @@ public class Actor extends GameObject {
             state.spiritsCandlesLit = true;
             Game.output(ObjectStrings.CANDLES_LIT_SPIRITS);
         }
+    }
+
+
+    public void swordGlowTurn(GameState state)
+    {
+        Item sword = (Item)(state.objectList.get("elvish sword"));
+
+        if (sword.location != Location.PLAYER_INVENTORY ||
+            sword.location != state.playerLocation)
+            return;
+
+        int newGlowLevel = swordGlowLevel;
+        
+        
+
     }
 
 

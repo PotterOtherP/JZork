@@ -597,6 +597,9 @@ public class InputParser {
 
         if (input.equals("author")) Game.output(GameStrings.AUTHOR_INFO);
 
+        if (input.equals("bug"))
+            Game.output("Bug? Maybe in the original program, but not in a flawless remake like this! (Cough, cough.)");
+
         if (input.equals("help"))
         {
             Game.output("Find the 19 lost treasures of Zork and return them to the trophy case.");

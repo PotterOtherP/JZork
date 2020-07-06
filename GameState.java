@@ -919,6 +919,7 @@ class GameState {
         Actor riverCurrent = (Actor)(objectList.get("current"));
         Actor songbird = (Actor)(objectList.get("song bird"));
         Actor spirits = (Actor)(objectList.get("spirits"));
+        Actor swordGlow = (Actor)(objectList.get("glow"));
         Actor thief = (Actor)(objectList.get("thief"));
         Actor troll = (Actor)(objectList.get("troll"));
         Actor vampireBat = (Actor)(objectList.get("vampire bat"));
@@ -929,6 +930,7 @@ class GameState {
         riverCurrent.riverCurrentTurn(this);
         songbird.songbirdTurn(this);
         spirits.spiritsTurn(this);
+        swordGlow.swordGlowTurn(this);
         thief.thiefTurn(this);
         troll.trollTurn(this);
         vampireBat.vampireBatTurn(this);

@@ -1836,6 +1836,9 @@ public class GameSetup {
         spirits.talkString = "The spirits jeer loudly and ignore you.";
         spirits.attackString = "How can you attack a spirit with material objects?";
         spirits.takeString = "You seem unable to interact with these spirits.";
+
+        Actor swordGlow = new Actor("glow", Location.NULL_LOCATION);
+        swordGlow.intangible = true;
         
         Actor thief = new Actor("thief", Location.TREASURE_ROOM);
         thief.inventoryID = Location.THIEF_INVENTORY;
@@ -1971,6 +1974,7 @@ public class GameSetup {
         state.objectList.put(riverCurrent.name, riverCurrent);
         state.objectList.put(songbird.name, songbird);
         state.objectList.put(spirits.name, spirits);
+        state.objectList.put(swordGlow.name, swordGlow);
         state.objectList.put(thief.name, thief);
         state.objectList.put(troll.name, troll);
         state.objectList.put(vampireBat.name, vampireBat);
