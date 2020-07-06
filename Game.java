@@ -14,6 +14,7 @@ public final class Game {
     public static boolean godmode = false;
     public static boolean debug = false;
     public static GameState gameState;
+    public static InputParser parser;
 
 
     // Constants
@@ -25,7 +26,7 @@ public final class Game {
         setMode(args);      
 
         gameState = new GameState();
-        InputParser parser = new InputParser(gameState);
+        parser = new InputParser(gameState);
     
         initGame(gameState);
 

@@ -873,6 +873,18 @@ class GameState {
                 Game.gameover = true;
             } break;
 
+            case RESTART:
+            {
+                Game.output("Restarting.");
+
+                Game.gameState = new GameState();
+                Game.parser = new InputParser(Game.gameState);
+                Game.initGame(Game.gameState);
+                
+                return;
+
+            }
+
             case SCORE:
             {
                 calculateScore();

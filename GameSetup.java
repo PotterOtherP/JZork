@@ -2101,6 +2101,7 @@ public class GameSetup {
         state.actions.put("l",     Action.LOOK);
         state.actions.put("quit",  Action.QUIT);
         state.actions.put("q",     Action.QUIT);
+        state.actions.put("restart", Action.RESTART);
         state.actions.put("score", Action.SCORE);
         state.actions.put("shout", Action.SHOUT);
         state.actions.put("yell",  Action.SHOUT);
@@ -2210,6 +2211,7 @@ public class GameSetup {
         state.actionTypes.put(Action.LOOK, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.PRAY, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.QUIT, ActionType.REFLEXIVE);
+        state.actionTypes.put(Action.RESTART, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.SCORE, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.SHOUT, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.SUPERBRIEF, ActionType.REFLEXIVE);
