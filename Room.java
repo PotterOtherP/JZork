@@ -182,10 +182,28 @@ class Room {
             {
                 if (state.houseWindowOpened)
                     result = MapStrings.DESC_KITCHEN_WINDOW_OPEN;
+
             } break;
 
             case LIVING_ROOM:
             {
+                if (state.cyclopsGone)
+                    result += ". To the west is a cyclops-shaped opening in an old wooden door, "
+                        + "above which is some strange gothic lettering, ";
+                else
+                    result += ", a wooden door with strange gothic lettering to the west, "
+                        + "which appears to be nailed shut, ";
+
+                result += "a trophy case, and ";
+
+                if (!state.carpetMoved)
+                    result += "a large oriental rug in the center of the room.";
+
+                else if (state.carpetMoved && state.trapDoorOpen)
+                    result += "a rug lying beside an open trap door.";
+
+                else if (state.carpetMoved && !state.trapDoorOpen)
+                    result += "a closed trap door at your feet.";
 
             } break;
 

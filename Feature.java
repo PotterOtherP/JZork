@@ -55,10 +55,11 @@ class Feature extends GameObject {
             {
                 Room r = state.worldMap.get(Location.BEHIND_HOUSE);
                 Passage p = r.exits.get(Action.WEST);
-                if (p.isOpen())
+                if (state.houseWindowOpened)
                 {
                     Game.output(GameStrings.WINDOW_CLOSES);
                     examineString = ObjectStrings.WINDOW_EXAMINE_CLOSED;
+                    state.houseWindowOpened = false;
                     p.close();
                 }
                 else
@@ -69,10 +70,10 @@ class Feature extends GameObject {
             {
                 Room r = state.worldMap.get(Location.LIVING_ROOM);
                 Passage p = r.exits.get(Action.DOWN);
-                if (p.isOpen())
+                if (state.trapDoorOpen)
                 {
+                    state.trapDoorOpen = false;
                     Game.output("Done.");
-                    r.description = MapStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED;
                     p.close();
                 }
                 else
@@ -211,9 +212,9 @@ class Feature extends GameObject {
                     lookUnderString = "There is nothing but dust there.";
                     GameObject trap = state.objectList.get("trap door");
                     trap.location = Location.LIVING_ROOM;
+                    trap.altLocations.add(Location.CELLAR);
                     Game.output(GameStrings.MOVE_RUG);
                     Room rm = state.worldMap.get(Location.LIVING_ROOM);
-                    rm.description = MapStrings.DESC_LIVING_ROOM_TRAPDOOR_CLOSED;
                     Passage p = rm.exits.get(Action.DOWN);
                     p.closedFail = "The trap door is closed.";
                 }
@@ -242,10 +243,11 @@ class Feature extends GameObject {
             {
                 Room r = state.worldMap.get(Location.BEHIND_HOUSE);
                 Passage p = r.exits.get(Action.WEST);
-                if (!p.isOpen())
+                if (!state.houseWindowOpened)
                 {
                     Game.output(GameStrings.WINDOW_OPENS);
                     examineString = ObjectStrings.WINDOW_EXAMINE_OPEN;
+                    state.houseWindowOpened = true;
                     p.open();
                 }
                 else
@@ -254,18 +256,27 @@ class Feature extends GameObject {
 
             case "trap door":
             {
-                Room r = state.worldMap.get(Location.LIVING_ROOM);
-                Passage p = r.exits.get(Action.DOWN);
-                if (!p.isOpen())
+                if (state.playerLocation == Location.CELLAR)
                 {
-                    Game.output(GameStrings.TRAP_DOOR_OPENS);
-                    r.description = MapStrings.DESC_LIVING_ROOM_TRAPDOOR_OPEN;
-                    p.open();
+                    Game.output("The door is locked from above.");
                 }
-                else
+
+                else if (state.playerLocation == Location.LIVING_ROOM)
                 {
-                    Game.output(GameStrings.getHardSarcasm());
+                    Room r = state.worldMap.get(Location.LIVING_ROOM);
+                    Passage p = r.exits.get(Action.DOWN);
+                    if (!state.trapDoorOpen)
+                    {
+                        state.trapDoorOpen = true;
+                        Game.output(GameStrings.TRAP_DOOR_OPENS);
+                        p.open();
+                    }
+                    else
+                    {
+                        Game.output(GameStrings.getHardSarcasm());
+                    }
                 }
+
             } break;
 
 
@@ -347,6 +358,9 @@ class Feature extends GameObject {
             case "brown button":
             {
                 Game.output("Click.");
+                state.yellowButtonPushed = false;
+                Room dam = state.worldMap.get(Location.DAM);
+                dam.firstVisit = true;
 
             } break;
 

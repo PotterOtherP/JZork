@@ -7,6 +7,8 @@ public class Actor extends GameObject {
     public boolean alive;
     public boolean cyclopsAggro;
     public int cyclopsCycle;
+    public boolean cyclopsFirstTurn;
+    public boolean cyclopsThirsty;
     public boolean disarmed;
     public boolean firstCombatTurn;
     public int hitPoints;
@@ -16,7 +18,7 @@ public class Actor extends GameObject {
     public boolean thiefItemsHidden;
     public boolean unconscious;
 
-    public static final int CYCLOPS_CYCLE_MAX = 7;
+    public static final int CYCLOPS_CYCLE_MAX = 8;
     public static final int MAX_ENEMY_HIT_POINTS = 10;
     public static final int THIEF_ENCOUNTER_PERCENT = 0;
     public static final int SONGBIRD_CHIRP_PERCENT = 15;
@@ -30,12 +32,14 @@ public class Actor extends GameObject {
         alive = true;
         cyclopsAggro = false;
         cyclopsCycle = 0;
+        cyclopsFirstTurn = true;
+        cyclopsThirsty = false;
         disarmed = false;
         firstCombatTurn = true;
         hitPoints = MAX_ENEMY_HIT_POINTS;
         staggered = false;
         thiefAggro = false;
-        thiefFirstTurn = false;
+        thiefFirstTurn = true;
         thiefItemsHidden = false;
         unconscious = false;
         presenceString = "";
@@ -125,6 +129,44 @@ public class Actor extends GameObject {
     {
         switch (name)
         {
+            case "cyclops":
+            {
+                switch (state.indirectObject.name)
+                {
+                    case "lunch":
+                    {
+                        Game.output(ObjectStrings.CYCLOPS_LUNCH_1);
+                        state.indirectObject.location = Location.NULL_LOCATION;
+                        cyclopsThirsty = true;
+
+                    } break;
+
+                    case "glass bottle":
+                    {
+                        if (state.bottleFilled && cyclopsThirsty)
+                        {
+                            Game.output(ObjectStrings.CYCLOPS_DRINK_2);
+                            unconscious = true;
+                            cyclopsThirsty = false;
+                            state.bottleFilled = false;
+                            state.indirectObject.location = state.playerLocation;
+                        }
+
+                        else if (!cyclopsThirsty)
+                            Game.output(ObjectStrings.CYCLOPS_DRINK_1);
+
+                        else
+                            Game.output(ObjectStrings.CYCLOPS_GIVE_REJECT_1);
+
+                    } break;
+
+                    default:
+                    {
+                        Game.output(ObjectStrings.CYCLOPS_GIVE_REJECT_2);
+                    } break;
+                }
+            } break;
+
             case "thief":
             {
                 Item it = (Item)(state.indirectObject);
@@ -175,7 +217,20 @@ public class Actor extends GameObject {
     
     public void cyclopsCombat(GameState state)
     {
+        if (unconscious)
+        {
+            Game.output(ObjectStrings.CYCLOPS_WAKE);
+            unconscious = false;
+            Room c = state.worldMap.get(Location.CYCLOPS_ROOM);
+            Passage p = c.exits.get(Action.UP);
+            p.close();
+            return;
+        }
+
         cyclopsAggro = true;
+        Game.output("You can't hurt the cyclops physically.");
+
+
     }
 
 
@@ -186,16 +241,79 @@ public class Actor extends GameObject {
         if (state.playerLocation == Location.CELLAR &&
             state.playerPreviousLocation == Location.LIVING_ROOM)
         {
+            state.trapDoorOpen = false;
             Room rm = state.worldMap.get(Location.CELLAR);
             Passage p = rm.exits.get(Action.UP);
             p.close();
         }
 
         if (state.playerLocation != Location.CYCLOPS_ROOM)
+        {
+            cyclopsFirstTurn = true;
+            presenceString = "";
             return;
+        }
 
-        if (cyclopsAggro)
+        if (cyclopsFirstTurn)
+        {
+            Game.output(ObjectStrings.CYCLOPS_1);
+            presenceString = ObjectStrings.CYCLOPS_2;
+            cyclopsFirstTurn = false;
+            cyclopsCycle = 0;
+        }
+
+        if (cyclopsThirsty)
+        {
+            Game.output(ObjectStrings.CYCLOPS_LUNCH_2);
+            ++cyclopsCycle;
+            if (cyclopsCycle == CYCLOPS_CYCLE_MAX - 1)
+            {
+                Game.output(ObjectStrings.CYCLOPS_WAIT_7);
+                state.playerDies();
+            }
+
+        }
+
+        else if (unconscious)
+        {
+            presenceString = ObjectStrings.CYCLOPS_SLEEP_1;
+
+            Room c = state.worldMap.get(Location.CYCLOPS_ROOM);
+            Passage p = c.exits.get(Action.UP);
+            p.open();
+
+            Random rand = new Random();
+            int option = rand.nextInt(5);
+            if (option == 0 || option == 1) Game.output(ObjectStrings.CYCLOPS_SLEEP_1);
+            if (option == 2 || option == 3) Game.output(ObjectStrings.CYCLOPS_SLEEP_2);
+            if (option == 4)
+            {
+                Game.output(ObjectStrings.CYCLOPS_WAKE);
+                unconscious = false;
+                p.close();
+            }
+        }
+
+        else if (cyclopsAggro)
+        {
             Game.output("The cyclops smashes your stupid face.");
+        }
+
+        else
+        {
+            String[] saltAndPepper = { "", ObjectStrings.CYCLOPS_WAIT_1, ObjectStrings.CYCLOPS_WAIT_2,
+                ObjectStrings.CYCLOPS_WAIT_3, ObjectStrings.CYCLOPS_WAIT_4, ObjectStrings.CYCLOPS_WAIT_5, 
+                ObjectStrings.CYCLOPS_WAIT_6, ObjectStrings.CYCLOPS_WAIT_7 };
+
+            if (cyclopsCycle > 0)
+                Game.lineOutput(saltAndPepper[cyclopsCycle]);
+
+            if (cyclopsCycle == 7)
+                state.playerDies();
+
+            ++cyclopsCycle;
+            cyclopsCycle %= CYCLOPS_CYCLE_MAX;
+        }
 
     }
 

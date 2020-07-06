@@ -1074,7 +1074,7 @@ public class GameSetup {
             + "when it gets to the next room.";
         maze9_maze11.message = "You won't be able to get back up to the tunnel you are going through "
             + "when it gets to the next room.";
-        cellar_livingroom.message = "The trap door crashes shut, and you hear someone barring it.";
+        cellar_livingroom.message = ObjectStrings.CYCLOPS_TRAP_DOOR;
         studio_kitchen.closedFail = "Going up empty-handed is a bad idea.";
 
         // Narrow passages
@@ -1509,7 +1509,6 @@ public class GameSetup {
         Item lunch = new Item("lunch", Location.INSIDE_SACK);
         lunch.altNames.add("peppers");
         lunch.altNames.add("hot peppers");
-        lunch.altNames.add("hot lunch");
         lunch.weight = LUNCH_WEIGHT;
 
         Item matchbook = new Item("matchbook", Location.DAM_LOBBY);
@@ -1803,6 +1802,7 @@ public class GameSetup {
         // Actors
         
         Actor cyclops = new Actor("cyclops", Location.CYCLOPS_ROOM);
+        cyclops.examineString = ObjectStrings.CYCLOPS_EXAMINE;
         cyclops.helloString = "The cyclops bows his head to you in greeting.";
 
         Actor damFlow = new Actor("flow", Location.DAM);

@@ -15,6 +15,7 @@ class GameState {
     public boolean bottleFilled;
     public boolean houseWindowOpened;
     public boolean carpetMoved;
+    public boolean cyclopsGone;
     public boolean damGatesOpen;
     public boolean damWaterHigh;
     public boolean damWaterLow;
@@ -35,6 +36,7 @@ class GameState {
     public boolean spiritsBellRung;
     public boolean spiritsCandlesLit;
     public boolean spiritsBanished;
+    public boolean trapDoorOpen;
     public boolean winMessageDisplayed;
 
     public boolean blueButtonPushed;
@@ -135,6 +137,7 @@ class GameState {
         spiritsBellRung = false;
         spiritsCandlesLit = false;
         spiritsBanished = false;
+        trapDoorOpen = false;
         winMessageDisplayed = false;
 
         blueButtonPushed = false;
@@ -714,15 +717,19 @@ class GameState {
                     {
                         Game.output(ObjectStrings.CYCLOPS_FLEES);
                         clops.alive = false;
+                        cyclopsGone = true;
                         clops.location = Location.NULL_LOCATION;
                         Room strange = worldMap.get(Location.STRANGE_PASSAGE);
                         Room clopsRoom = worldMap.get(Location.CYCLOPS_ROOM);
+                        Room cell = worldMap.get(Location.CELLAR);
                         Passage p1 = strange.exits.get(Action.EAST);
                         Passage p2 = strange.exits.get(Action.WEST);
                         Passage p3 = clopsRoom.exits.get(Action.UP);
+                        Passage p4 = cell.exits.get(Action.UP);
                         p1.open();
                         p2.open();
                         p3.open();
+                        p4.message = "";
                     }
                 }
 

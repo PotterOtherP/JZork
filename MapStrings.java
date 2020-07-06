@@ -27,16 +27,9 @@ class MapStrings {
         + "for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney "
         + "leads down and to the east is a small window which is slightly ajar.";
 
+    public static final String DESC_LIVING_ROOM = "You are in the living room. There is a doorway to the east";
+
     public static final String DESC_ATTIC = "This is the attic. The only exit is a stairway leading down.";
-
-    public static final String DESC_LIVING_ROOM = "You are in the living room. There is a doorway to the east, a wooden door with strange "
-        + "gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.";
-
-    public static final String DESC_LIVING_ROOM_TRAPDOOR_CLOSED = "You are in the living room. There is a doorway to the east, a wooden door with strange "
-        + "gothic lettering to the west, which appears to be nailed shut, a trophy case, and a closed trap door at your feet.";
-
-    public static final String DESC_LIVING_ROOM_TRAPDOOR_OPEN = "You are in the living room. There is a doorway to the east, a wooden door with strange "
-        + "gothic lettering to the west, which appears to be nailed shut, a trophy case, and a rug lying beside an open trap door.";
 
     public static final String DESC_FOREST_PATH = "This is a path winding through a dimly lit forest. The path leads north-south here. "
         + "One particularly large tree with some low branches stands at the edge of the path.";
