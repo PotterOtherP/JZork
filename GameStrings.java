@@ -199,13 +199,13 @@ class GameStrings {
     "lantern", "leaflet", "light", "lock", "look",
     "mailbox", "move",
     "nest", "next", "north", "northeast", "northwest", "note",
-    "off", "on", "open", "out",
+    "odysseus", "off", "on", "open", "out",
     "passage", "piano", "pick", "pile", "place", "put", "play", "please", "pull", "punch",
     "quit",
     "read", "ring", "room", "rope",
     "sack", "say", "scream", "shit", "shout", "slap", "songbird", "south", "southeast", "southwest", "store", "sword",
     "take", "the", "tie", "to", "trap", "trophy", "turn",
-    "unlock", "up",
+    "ulysses", "unlock", "up",
     "wait", "walk", "west", "window", "with", "wizard",
     "yell"
     };

@@ -132,7 +132,7 @@ class ObjectStrings {
     public static final String CYCLOPS_3 = "A hungry cyclops is standing at the foot of the stairs.";
 
 
-    public static final String CYCLOPS_FLEE = "The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down "
+    public static final String CYCLOPS_FLEES = "The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down "
         + "the wall on the east side of the room.";
 
     public static final String CYCLOPS_LISTEN = "You can hear his stomach rumbling.";

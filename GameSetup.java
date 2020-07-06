@@ -127,6 +127,7 @@ enum ActionType {
     INDIRECT,
     INDIRECT_INVERSE,
     EXIT,
+    SPEAK,
     SWITCH
     }
 
@@ -1038,8 +1039,6 @@ public class GameSetup {
 
         // Rooms with a dangerous height
         eastOfChasm.height = true; chasm.height = true; canyonView.height = true;
-
-        house_behind_kitchen.close();
 
         // Closed passages
         grating_clearing.close();
@@ -2155,7 +2154,7 @@ public class GameSetup {
         state.actions.put("read", Action.READ);
         state.actions.put("remove", Action.REMOVE);
         state.actions.put("ring", Action.RING);
-        state.actions.put("say", Action.TALK_TO);
+        state.actions.put("say", Action.SAY);
         state.actions.put("search", Action.SEARCH);
         state.actions.put("shake", Action.SHAKE);
         state.actions.put("smell", Action.SMELL);
@@ -2290,6 +2289,8 @@ public class GameSetup {
         state.actionTypes.put(Action.PUT, ActionType.INDIRECT_INVERSE);
         state.actionTypes.put(Action.THROW, ActionType.INDIRECT_INVERSE);
         state.actionTypes.put(Action.TIE, ActionType.INDIRECT_INVERSE);
+
+        state.actionTypes.put(Action.SAY, ActionType.SPEAK);
 
 
         // Create the list of action names, which can be sorted.

@@ -382,6 +382,11 @@ public class InputParser {
 
             } break;
 
+            case SPEAK:
+            {
+                state.speakPhrase = input;
+            } break;
+
             default: {} break;
 
         }

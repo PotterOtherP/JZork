@@ -5,6 +5,7 @@ import java.util.Random;
 public class Actor extends GameObject {
     
     public boolean alive;
+    public boolean cyclopsAggro;
     public int cyclopsCycle;
     public boolean disarmed;
     public boolean firstCombatTurn;
@@ -27,6 +28,7 @@ public class Actor extends GameObject {
         type = ObjectType.ACTOR;
 
         alive = true;
+        cyclopsAggro = false;
         cyclopsCycle = 0;
         disarmed = false;
         firstCombatTurn = true;
@@ -173,12 +175,14 @@ public class Actor extends GameObject {
     
     public void cyclopsCombat(GameState state)
     {
-        
+        cyclopsAggro = true;
     }
 
 
     public void cyclopsTurn(GameState state)
     {
+        if (!alive) return;
+
         if (state.playerLocation == Location.CELLAR &&
             state.playerPreviousLocation == Location.LIVING_ROOM)
         {
@@ -186,6 +190,12 @@ public class Actor extends GameObject {
             Passage p = rm.exits.get(Action.UP);
             p.close();
         }
+
+        if (state.playerLocation != Location.CYCLOPS_ROOM)
+            return;
+
+        if (cyclopsAggro)
+            Game.output("The cyclops smashes your stupid face.");
 
     }
 

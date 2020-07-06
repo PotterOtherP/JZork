@@ -91,20 +91,32 @@ public final class Game {
     public static String getPlayerText()
     {
         Scanner scn = new Scanner(System.in);
-        String result = "";
+        String input = "";
         prompt();
 
-        while(result.isEmpty())
+        while(input.isEmpty())
         {
-            result = scn.nextLine();
+            input = scn.nextLine();
 
-            if (result.isEmpty())
+            if (input.isEmpty())
             {
                 outputLine();
                 output("I beg your pardon?");
                 prompt();
             }
         }
+
+        String result = "";
+        char[] tokens = input.toCharArray();
+
+        for (int i = 0; i < tokens.length; ++i)
+        {
+            if (tokens[i] == ' ' || Character.isLetterOrDigit(tokens[i]))
+                result += tokens[i];
+        }
+
+        while (result.contains("  "))
+            result = result.replaceAll("  ", " ");
 
         outputLine();
 

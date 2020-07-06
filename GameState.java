@@ -59,6 +59,7 @@ class GameState {
     public String firstInputPhrase;
     public String secondInputPhrase;
     public String thirdInputPhrase;
+    public String speakPhrase;
     public ActionType playerActionType;
     public Action playerAction;
     public GameObject directObject;
@@ -519,6 +520,7 @@ class GameState {
         firstInputPhrase = "";
         secondInputPhrase = "";
         thirdInputPhrase = "";
+        speakPhrase = "";
         completePlayerInput = "";
 
         playerAction = Action.NULL_ACTION;
@@ -699,6 +701,31 @@ class GameState {
                 {
                     Game.output("If you pray enough, your prayers may be answered.");
                 }
+            } break;
+
+            case SAY:
+            {
+                Actor clops = (Actor)objectList.get("cyclops");
+
+                if (playerLocation == Location.CYCLOPS_ROOM &&
+                    clops.location == Location.CYCLOPS_ROOM)
+                {
+                    if (speakPhrase.equals("ulysses") || speakPhrase.equals("odysseus"))
+                    {
+                        Game.output(ObjectStrings.CYCLOPS_FLEES);
+                        clops.alive = false;
+                        clops.location = Location.NULL_LOCATION;
+                        Room strange = worldMap.get(Location.STRANGE_PASSAGE);
+                        Room clopsRoom = worldMap.get(Location.CYCLOPS_ROOM);
+                        Passage p1 = strange.exits.get(Action.EAST);
+                        Passage p2 = strange.exits.get(Action.WEST);
+                        Passage p3 = clopsRoom.exits.get(Action.UP);
+                        p1.open();
+                        p2.open();
+                        p3.open();
+                    }
+                }
+
             } break;
 
             case SHOUT: { Game.output("Yaaaaarrrrggghhh!"); } break;
