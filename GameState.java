@@ -30,6 +30,8 @@ class GameState {
     public boolean potOfGoldAppeared;
     public boolean rainbowSolid;
     public boolean ropeRailTied;
+    public int sandStage;
+    public boolean scarabFound;
     public boolean shaftBasketLowered;
     public boolean shaftBasketUsed;
     public int spiritCeremonyCount;
@@ -131,6 +133,8 @@ class GameState {
         potOfGoldAppeared = false;
         ropeRailTied = false;
         rainbowSolid = false;
+        sandStage = 0;
+        scarabFound = false;
         shaftBasketLowered = false;
         shaftBasketUsed = false;
         spiritCeremonyCount = 0;
@@ -584,6 +588,7 @@ class GameState {
             case COUNT: { directObject.count(this); } break;
             case CROSS: { directObject.cross(this); } break;
             case DEFLATE: { directObject.deflate(this); } break;
+            case DIG: { directObject.dig(this); } break;
             case DRINK: { directObject.drink(this); } break;
             case DROP: {directObject.drop(this); } break;
             case EAT: { directObject.eat(this); } break;

@@ -1751,6 +1751,9 @@ public class GameSetup {
         rainbow.altLocations.add(Location.ARAGAIN_FALLS);
         rainbow.crossString = "Can you walk on water vapor?";
 
+        Feature sand = new Feature("sand", Location.SANDY_CAVE);
+        sand.altNames.add("ground");
+
         Item self = new Item("you", Location.NULL_LOCATION);
         self.altNames.add("me");
         self.altNames.add("self");
@@ -1956,6 +1959,7 @@ public class GameSetup {
         state.objectList.put(pedestal.name, pedestal);
         state.objectList.put(railing.name, railing);
         state.objectList.put(rainbow.name, rainbow);
+        state.objectList.put(sand.name, sand);
         state.objectList.put(self.name, self);
         state.objectList.put(shaftBasket.name, shaftBasket);
         state.objectList.put(shaftChain.name, shaftChain);

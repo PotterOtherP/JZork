@@ -92,6 +92,73 @@ class Feature extends GameObject {
 
 
     @Override
+    public void dig(GameState state)
+    {
+        switch (name)
+        {
+            case "sand":
+            {
+                if (state.indirectObject.name.equals("shovel"))
+                {
+                    ++state.sandStage;
+
+                    if (state.sandStage == 1)
+                    {
+                        Game.output("You seem to be digging a hole here.");
+                    }
+
+                    else if (state.sandStage == 2)
+                    {
+                        Game.output("The hole is getting deeper, but that's about it.");
+                    }
+
+                    else if (state.sandStage == 3)
+                    {
+                        Game.output("You are surrounded by a wall of sand on all sides.");
+                    }
+
+                    else if (state.sandStage == 4)
+                    {
+                        if (!state.scarabFound)
+                        {
+                            Item scarab = (Item)state.objectList.get("beautiful jeweled scarab");
+                            scarab.location = Location.SANDY_CAVE;
+                            Game.output("You can see a scarab here in the sand.");
+                            state.scarabFound = true;
+                        }
+
+                        else
+                            Game.output("There's no reason to be digging here!");
+                    }
+
+                    else if (state.sandStage == 5)
+                    {
+                        Game.output("The hole collapses, smothering you.");
+                        state.playerDies();
+                        state.sandStage = 0;
+                        Item scarab = (Item)state.objectList.get("beautiful jeweled scarab");
+                        if (scarab.location == Location.SANDY_CAVE)
+                        {
+                            scarab.location = Location.NULL_LOCATION;
+                            state.scarabFound = false;
+                        }
+
+                    }
+                }
+
+                else
+                    Game.output("Digging with " + state.indirectObject.articleName + " is silly.");
+            } break;
+
+            default:
+            {
+                super.dig(state);
+            } break;
+        }
+    }
+
+
+    @Override
     public void drink(GameState state)
     {
         switch (name)
