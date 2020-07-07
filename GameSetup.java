@@ -2192,6 +2192,7 @@ public class GameSetup {
         state.actions.put("burn", Action.BURN);
         state.actions.put("cut", Action.CUT);
         state.actions.put("dig", Action.DIG);
+        state.actions.put("dig in", Action.DIG);
         state.actions.put("fill", Action.FILL);
         state.actions.put("inflate", Action.INFLATE);
     

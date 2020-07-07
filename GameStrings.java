@@ -186,7 +186,7 @@ class GameStrings {
     "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
     "u", "v", "w", "x", "y", "z", "ne", "nw", "se", "sw",
     "again", "an", "around", "at", "attach", "attack", "author",
-    "bar", "bell", "bird", "bottle", "box",
+    "bar", "bell", "bird", "bottle", "box", "bug",
     "carpet", "case", "close",
     "door", "down", "drop",
     "east", "egg", "examine", "exit",

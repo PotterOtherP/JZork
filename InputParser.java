@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class InputParser {
 
     private GameState state;
@@ -7,7 +9,12 @@ public class InputParser {
     private String parseDirectString;
     private String parseIndirectString;
 
+    // ATTACK, BREAK, BURN, CUT, DIG, FILL, INFLATE, LOCK,
+    // TURN, UNLOCK,
 
+    // GIVE, PUT, TIE, THROW
+
+    private HashMap<Action, String> prepos;
     
     public InputParser (GameState st)
     {
@@ -18,6 +25,23 @@ public class InputParser {
         parseActionString = "";
         parseDirectString = "";
         parseIndirectString = "";
+
+        prepos = new HashMap<Action, String>();
+
+        prepos.put(Action.ATTACK, "with");
+        prepos.put(Action.BREAK, "with");
+        prepos.put(Action.BURN, "with");
+        prepos.put(Action.CUT, "with");
+        prepos.put(Action.DIG, "with");
+        prepos.put(Action.FILL, "with");
+        prepos.put(Action.GIVE, "to");
+        prepos.put(Action.INFLATE, "with");
+        prepos.put(Action.LOCK, "with");
+        prepos.put(Action.PUT, "in");
+        prepos.put(Action.THROW, "at");
+        prepos.put(Action.TIE, "to");
+        prepos.put(Action.TURN, "with");
+        prepos.put(Action.UNLOCK, "with");
 
     }
 
@@ -76,6 +100,7 @@ public class InputParser {
 
             Game.output("You used the phrase \"" + state.firstInputPhrase
                 + "\" in a way I don't understand.");
+            if (Game.debug) Game.output("Method: parseDirectObject()");
         }
 
 
@@ -104,8 +129,18 @@ public class InputParser {
         // If the user enters a valid action, but an invalid object.
         if (!check)
         {
-            Game.output("You used the phrase \"" + input
+            for (String token : state.gameNouns)
+            {
+                if (startsWith(token, input))
+                {
+                    Game.output("You can't see any " + token + " here!");
+                    return check;
+                }
+            }
+
+            Game.output("You used the phrase \"" + state.firstInputPhrase
                 + "\" in a way I don't understand.");
+            if (Game.debug) Game.output ("Method: parseIndirectObject()");
         }
 
         return check;
@@ -279,6 +314,7 @@ public class InputParser {
                 {
                     Game.output("You used the phrase \"" + state.firstInputPhrase
                         + "\" in a way I don't understand.");
+                    if (Game.debug) Game.output("Method: parsePlayerInput() Reflexive/Exit actions");
                     return false;
                 }
             } break;
@@ -329,7 +365,17 @@ public class InputParser {
                     if (state.playerActionType == ActionType.SWITCH)
                         return true;
                     
-                    Game.output("Enter an indirect object: ");
+                    try
+                    {
+                        String prep = prepos.get(state.playerAction);
+                        Game.output("What do you want to " + state.firstInputPhrase + " the " 
+                            + parseDirectString + " " + prep + "?");
+                    }
+                    catch (NullPointerException e)
+                    {
+                        Game.output("Enter an indirect object: ");
+                    }
+
                     input = Game.getPlayerText();
                 }
 
@@ -365,7 +411,20 @@ public class InputParser {
 
                 if (input.isEmpty())
                 {
-                    Game.output("Enter a direct object.");
+                    if (state.playerActionType == ActionType.SWITCH)
+                        return true;
+                    
+                    try
+                    {
+                        String prep = prepos.get(state.playerAction);
+                        Game.output("What do you want to " + state.firstInputPhrase + " the " 
+                            + parseIndirectString + " " + prep + "?");
+                    }
+                    catch (NullPointerException e)
+                    {
+                        Game.output("Enter an indirect object: ");
+                    }
+
                     input = Game.getPlayerText();
                 }
 
