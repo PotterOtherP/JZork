@@ -880,11 +880,7 @@ class GameState {
 
             case RESTART:
             {
-                Game.output("Restarting.");
-
-                Game.gameState = new GameState();
-                Game.parser = new InputParser(Game.gameState);
-                Game.initGame(Game.gameState);
+                Game.restart();
                 
                 return;
 

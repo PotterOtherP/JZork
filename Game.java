@@ -206,6 +206,14 @@ public final class Game {
     }
 
 
+    public static void restart()
+    {
+        gameState = new GameState();
+        parser = new InputParser(gameState);
+        initGame(gameState);
+    }
+
+
     public static boolean verifyQuit()
     {
         boolean result = false;
