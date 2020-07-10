@@ -492,8 +492,9 @@ public class Item extends GameObject{
                     Room hades = state.worldMap.get(Location.ENTRANCE_TO_HADES);
                     Passage psg = hades.exits.get(Action.SOUTH);
                     psg.open();
-                    GameObject spirits = state.objectList.get("spirits");
+                    Actor spirits = (Actor)state.objectList.get("spirits");
                     spirits.location = Location.NULL_LOCATION;
+                    spirits.alive = false;
                 }
 
                 else

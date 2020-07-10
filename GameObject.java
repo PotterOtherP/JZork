@@ -3,7 +3,7 @@ import java.util.Random;
 
 
 
-abstract class GameObject {
+public abstract class GameObject {
     
     public final String name;
     public String articleName;

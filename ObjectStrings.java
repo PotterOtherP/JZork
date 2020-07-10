@@ -1,4 +1,4 @@
-class ObjectStrings {
+public class ObjectStrings {
 
     private ObjectStrings() {}
 

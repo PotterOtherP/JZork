@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-class GameState {
+public class GameState {
 
     // gameplay information
     public int turns;

@@ -664,13 +664,82 @@ public class Actor extends GameObject {
     {
         Item sword = (Item)(state.objectList.get("elvish sword"));
 
-        if (sword.location != Location.PLAYER_INVENTORY ||
-            sword.location != state.playerLocation)
+        if (sword.location != Location.PLAYER_INVENTORY)
             return;
 
-        int newGlowLevel = swordGlowLevel;
+        int newGlowLevel = 0;
+
+        Actor bat = (Actor)state.objectList.get("vampire bat");
+        Actor cyclops = (Actor)state.objectList.get("cyclops");
+        Actor spirits = (Actor)state.objectList.get("spirits");
+        Actor thief = (Actor)state.objectList.get("thief");
+        Actor troll = (Actor)state.objectList.get("troll");
+
+        Actor[] enemies = { bat, cyclops, spirits, thief, troll };
+
+        for (int i = 0; i < enemies.length; ++i)
+        {
+            if (!enemies[i].alive) continue;
+            if (enemies[i].location == Location.NULL_LOCATION) continue;
+
+            // Game.output("Checking sword glow for (Actor): " + enemies[i].name);
+            // Game.output("Checking sword glow for (Location): " + enemies[i].location);
+
+            if (state.playerLocation == enemies[i].location)
+                newGlowLevel = 2;
+
+            else 
+            {
+                Room enemyRoom = state.worldMap.get(enemies[i].location);
+                for (Passage psg : enemyRoom.exits.values())
+                {
+                    if (psg.open)
+                    {
+                        if (psg.locationA == enemies[i].location && psg.locationB == state.playerLocation)
+                            newGlowLevel = 1;
+                        if (psg.locationB == enemies[i].location && psg.locationA == state.playerLocation)
+                            newGlowLevel = 1;
+
+                    }
+                }
+            }
+
+            if (!enemies[i].alive)
+                newGlowLevel = 0;
+        }
+
+        boolean check = (newGlowLevel != swordGlowLevel);
+
+        switch (newGlowLevel)
+        {
+            case 0:
+            {
+                if (check)
+                    Game.output("Your sword is no longer glowing.");
+                sword.examineString = "There's nothing special about the elvish sword.";
+
+            } break;
+
+            case 1:
+            {
+                if (check)
+                    Game.output("Your sword is glowing with a faint blue glow.");
+                sword.examineString = "Your sword is glowing with a faint blue glow.";
+
+            } break;
+
+            case 2:
+            {
+                if (check)
+                    Game.output("Your sword has begun to glow very brightly.");
+                sword.examineString = "Your sword is glowing very brightly.";
+
+            } break;
+
+            default: {} break;    
+        }
         
-        
+        swordGlowLevel = newGlowLevel;
 
     }
 
@@ -1051,8 +1120,13 @@ public class Actor extends GameObject {
 
                 for (GameObject g : state.objectList.values())
                 {
-                    if (g.location == Location.TREASURE_ROOM)
-                        g.location = Location.TREASURE_ROOM_INVISIBLE;
+                    if (g.isItem())
+                    {
+                        Item it = (Item)(g);
+                        if (it.location == Location.TREASURE_ROOM && it.trophyCaseValue > 0)
+                            it.location = Location.TREASURE_ROOM_INVISIBLE;
+                    }
+
                 }
 
                 thiefItemsHidden = true;
@@ -1060,6 +1134,10 @@ public class Actor extends GameObject {
 
             // Attack without pity!
             thiefAttacks(state);
+
+            // If the player is still here, check sword glow.
+            if (state.playerLocation == Location.TREASURE_ROOM)
+                swordGlowTurn(state);
 
             return;
         }
