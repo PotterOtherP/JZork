@@ -11,6 +11,7 @@ abstract class GameObject {
     public ObjectType type;
     public boolean isWeapon;
     public boolean intangible;
+    private GameState state;
 
     public Location location;
     public Location inventoryID;
@@ -111,6 +112,8 @@ abstract class GameObject {
 
         altLocations.add(location);
         inventoryID = Location.NULL_INVENTORY;
+
+        state = Game.gameState;
     
     }
 
@@ -187,7 +190,7 @@ abstract class GameObject {
         throwString = "";
         tieString = "";
         turnString = "";
-        unlockString = "";
+        unlockString = "It doesn't seem to work.";
 
 
         // Modifications

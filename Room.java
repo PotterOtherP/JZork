@@ -143,6 +143,20 @@ class Room {
                     result = MapStrings.DESC_BEHIND_HOUSE_WINDOW_OPEN;
             } break;
 
+            case CLEARING_NORTH:
+            {
+                if (state.leafPileMoved && !state.gratingOpened)
+                {
+                    result += "\nThere is a grating securely fastened into the ground.";
+                }
+
+                else if (state.leafPileMoved && state.gratingOpened)
+                {
+                    result += "\nThere is an open grating, descending into darkness.";
+                }
+
+            } break;
+
             case DAM:
             {
                 if (state.damGatesOpen && state.damWaterHigh)

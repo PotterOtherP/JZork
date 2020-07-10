@@ -12,6 +12,7 @@ class GameState {
     public Verbosity verbosity;
 
     // game events
+    public boolean baubleFell;
     public boolean bottleFilled;
     public boolean houseWindowOpened;
     public boolean carpetMoved;
@@ -23,6 +24,8 @@ class GameState {
     public boolean waterRising;
     public int damWaterStage;
     public boolean gameWon;
+    public boolean gratingOpened;
+    public boolean gratingUnlocked;
     public boolean leafPileMoved;
     public boolean loudRoomSolved;
     public int matchCount;
@@ -38,6 +41,8 @@ class GameState {
     public boolean spiritsBellRung;
     public boolean spiritsCandlesLit;
     public boolean spiritsBanished;
+    public int thiefEggTurns;
+    public boolean thiefOpenedEgg;
     public boolean trapDoorOpen;
     public boolean winMessageDisplayed;
 
@@ -93,6 +98,7 @@ class GameState {
     public static final int RESERVOIR_DRAIN_TURNS = 8;
     public static final int SHAFT_BASKET_POINTS = 13;
     public static final int SPIRIT_CEREMONY_LENGTH = 5;
+    public static final int THIEF_OPENS_EGG = 5;
     public static final int WINNING_SCORE = 350;
 
     public GameState()

@@ -51,6 +51,25 @@ class Feature extends GameObject {
     {
         switch (name)
         {
+
+            case "grating":
+            {
+                if (!state.gratingOpened)
+                {
+                    Game.output(GameStrings.getHardSarcasm());
+                }
+
+                else
+                {
+                    state.gratingOpened = false;
+                    Room r = state.worldMap.get(Location.GRATING_ROOM);
+                    Passage p = r.exits.get(Action.UP);
+                    p.close();
+                    Game.output("Done.");
+                    examineString = "The grating is closed.";
+                }
+            } break;
+
             case "kitchen window":
             {
                 Room r = state.worldMap.get(Location.BEHIND_HOUSE);
@@ -210,6 +229,41 @@ class Feature extends GameObject {
 
 
     @Override
+    public void lock(GameState state)
+    {
+        switch (name)
+        {
+            case "grating":
+            {
+                if (state.indirectObject.name.equals("skeleton key"))
+                {
+                    if (state.playerLocation == Location.GRATING_ROOM)
+                    {
+                        Game.output("The grate is locked.");
+                        state.gratingUnlocked = false;
+                    }
+
+                    else if (state.playerLocation == Location.CLEARING_NORTH)
+                    {
+                        Game.output("You can't reach the lock from here.");
+                    }
+                }
+
+                else
+                {
+                    Game.output("Can you lock a grating with " + state.indirectObject.articleName + "?");
+                }
+            } break;
+
+            default:
+            {
+                super.lock(state);
+            } break;
+        }
+    }
+
+
+    @Override
     public void lookIn(GameState state)
     {
         switch (name)
@@ -306,6 +360,36 @@ class Feature extends GameObject {
     {
         switch (name)
         {
+            case "grating":
+            {
+                if (state.gratingOpened)
+                {
+                    Game.output(GameStrings.getHardSarcasm());
+                }
+
+                else
+                {
+                    if (state.gratingUnlocked)
+                    {
+                        Room r = state.worldMap.get(Location.GRATING_ROOM);
+                        Passage p = r.exits.get(Action.UP);
+                        p.open();
+                        state.gratingOpened = true;
+                        if (state.playerLocation == Location.GRATING_ROOM)
+                            Game.output("The grating opens to reveal trees above you.");
+                        else if (state.playerLocation == Location.CLEARING_NORTH)
+                            Game.output("The grating opens to reveal darkness below.");
+                        examineString = "The grating is open, but I can't tell what's beyond it.";
+                    }
+
+                    else
+                    {
+                        Game.output("The grating is locked.");
+                    }
+                }
+
+            } break;
+
             case "kitchen window":
             {
                 Room r = state.worldMap.get(Location.BEHIND_HOUSE);
@@ -470,6 +554,34 @@ class Feature extends GameObject {
             } break;
         }
 
+    }
+
+
+    @Override
+    public void put(GameState state)
+    {
+        switch(name)
+        {
+            case "grating":
+            {
+                if (state.playerLocation == Location.CLEARING_NORTH)
+                {
+                    Game.output("The " + state.indirectObject.name + " goes through the grating into the darkness below.");
+                    state.indirectObject.location = Location.GRATING_ROOM;
+                }
+
+                else if (state.playerLocation == Location.GRATING_ROOM)
+                {
+
+                }
+
+            } break;
+
+            default:
+            {
+                super.put(state);
+            } break;
+        }
     }
 
 
@@ -664,6 +776,41 @@ class Feature extends GameObject {
             } break;
         }
 
+    }
+
+
+    @Override
+    public void unlock(GameState state)
+    {
+        switch (name)
+        {
+            case "grating":
+            {
+                if (state.indirectObject.name.equals("skeleton key"))
+                {
+                    if (state.playerLocation == Location.GRATING_ROOM)
+                    {
+                        Game.output("The grate is unlocked.");
+                        state.gratingUnlocked = true;
+                    }
+
+                    else if (state.playerLocation == Location.CLEARING_NORTH)
+                    {
+                        Game.output("You can't reach the lock from here.");
+                    }
+                }
+
+                else
+                {
+                    Game.output("Can you unlock a grating with " + state.indirectObject.articleName + "?");
+                }
+            } break;
+
+            default:
+            {
+                super.unlock(state);
+            } break;
+        }
     }
     
 

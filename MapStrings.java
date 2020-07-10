@@ -47,12 +47,6 @@ class MapStrings {
 
     public static final String DESC_CLEARING_NORTH = "You are in a clearing, with a forest surrounding you on all sides. A path leads south.";
 
-    public static final String DESC_CLEARING_NORTH_GRATING = "You are in a clearing, with a forest surrounding you on all sides. A path leads south."
-        + "\nThere is an open grating, descending into darkness.";
-
-    public static final String DESC_CLEARING_NORTH_GRATING_OPEN = "You are in a clearing, with a forest surrounding you on all sides. A path leads south."
-        + "\nThere is a grating securely fastened into the ground.";
-
     public static final String DESC_CLEARING_EAST = "You are in a small clearing in a well marked forest path that extends to the east and west.";
 
     public static final String DESC_CANYON_VIEW = "You are at the top of the Great Canyon on its west wall. From here there is a "

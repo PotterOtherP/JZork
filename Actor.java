@@ -610,6 +610,13 @@ public class Actor extends GameObject {
 
     public void songbirdTurn(GameState state)
     {
+        // The songbird shouldn't chirp on the same turn it drops the bauble.
+        if (state.baubleFell)
+        {
+            state.baubleFell = false;
+            return;
+        }
+
         if (altLocations.contains(state.playerLocation))
         {
             Random rand = new Random();
@@ -1179,6 +1186,23 @@ public class Actor extends GameObject {
                     }
                 }
 
+            }
+        }
+
+        // Update egg
+        Item egg = (Item)(state.objectList.get("jewel-encrusted egg"));
+        Item goodCanary = (Item)(state.objectList.get("golden clockwork canary"));
+
+        if (egg.location == Location.THIEF_INVENTORY &&
+            !thiefAggro && state.thiefEggTurns < GameState.THIEF_OPENS_EGG)
+        {
+            ++state.thiefEggTurns;
+
+            if (state.thiefEggTurns == GameState.THIEF_OPENS_EGG)
+            {
+                goodCanary.location = Location.INSIDE_EGG;
+                egg.open = true;
+                state.thiefOpenedEgg = true;
             }
         }
         

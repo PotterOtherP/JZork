@@ -380,6 +380,11 @@ public class Item extends GameObject{
             }
         }
 
+        else if (name.equals("jewel-encrusted egg") && !state.thiefOpenedEgg)
+        {
+            Game.output("You have neither the tools nor the expertise.");
+        }
+
         else if (!isContainer())
         {
             Game.output(openString);
@@ -734,6 +739,40 @@ public class Item extends GameObject{
     }
 
 
+    @Override
+    public void wind(GameState state)
+    {
+        switch(name)
+        {
+            case "golden clockwork canary":
+            {
+                Actor bird = (Actor)state.objectList.get("song bird");
+                if (bird.altLocations.contains(state.playerLocation))
+                {
+                    Game.output(ObjectStrings.CANARY_WIND_BAUBLE);
+                    Item bauble = (Item)state.objectList.get("brass bauble");
+                    bauble.location = state.playerLocation;
+                    state.baubleFell = true;
+
+                }
+
+                else
+                    Game.output(ObjectStrings.CANARY_WIND_GOOD);
+            } break;
+
+            case "broken clockwork canary":
+            {
+                Game.output(ObjectStrings.CANARY_WIND_BAD);
+            } break;
+
+            default:
+            {
+                super.wind(state);
+            } break;
+        }
+    }
+
+
     private void breakEgg(GameState state)
     {
         Item goodEgg = (Item)(state.objectList.get("jewel-encrusted egg"));
@@ -773,11 +812,11 @@ public class Item extends GameObject{
         Game.output("In disturbing the pile of leaves, a grating is revealed.");
 
         Room rm = state.worldMap.get(Location.CLEARING_NORTH);
-        rm.description = MapStrings.DESC_CLEARING_NORTH_GRATING;
-        Passage psg = new Passage(Location.GRATING_ROOM, Location.CLEARING_NORTH);
-        psg.close();
-        psg.closedFail = "The grating is closed!";
+        Room rm2 = state.worldMap.get(Location.GRATING_ROOM);
+        Passage psg = rm2.exits.get(Action.UP);
         rm.addExit(Action.DOWN, psg);
+
+        rm2.darkness = false;
 
     }
 

@@ -208,6 +208,7 @@ public final class Game {
 
     public static void restart()
     {
+        output("Restarting.");
         gameState = new GameState();
         parser = new InputParser(gameState);
         initGame(gameState);

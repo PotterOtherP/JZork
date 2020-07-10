@@ -11,16 +11,25 @@ class ObjectStrings {
     public static final String INIT_BOAT = "There is a folded pile of plastic here which has a small valve attached.";
     public static final String INIT_BOTTLE = "A bottle is sitting on the table.\nThe glass bottle contains:\n  A quantity of water";
     public static final String INIT_BROKEN_CANARY = "There is a golden clockwork canary nestled in the egg. "
-            + "It seems to have recently had a bad experience. The mountings for its jewel-like eyes "
-            + "are empty, and its silver beak is crumpled. Through a cracked crystal window below its "
-            + "left wing you can see the remains of intricate machinery. It is not clear what result "
-            + "winding it would have, as the mainspring seems sprung.";
+        + "It seems to have recently had a bad experience. The mountings for its jewel-like eyes "
+        + "are empty, and its silver beak is crumpled. Through a cracked crystal window below its "
+        + "left wing you can see the remains of intricate machinery. It is not clear what result "
+        + "winding it would have, as the mainspring seems sprung.";
+    public static final String EXAMINE_BROKEN_CANARY = "It seems to have recently had a bad experience. "
+        + "The mountings for its jewel-like eyes are empty, and its silver beak is crumpled. "
+        + "Through a cracked crystal window below its left wing you can see the remains of intricate machinery. "
+        + "It is not clear what result winding it would have, as the mainspring seems sprung.";
+    public static final String INIT_GOLDEN_CANARY = "There is a golden clockwork canary nestled in the egg. It has ruby eyes and a "
+        + "silver beak. Through a crystal window below its left wing you can see intricate machinery inside. It appears to have "
+        + "wound down.";
+    public static final String EXAMINE_GOLDEN_CANARY = "It has ruby eyes and a silver beak. Through a crystal window below its "
+        + "left wing you can see intricate machinery inside. It appears to have wound down.";
     public static final String INIT_CANDLES = "On the two ends of the altar are burning candles.";
     public static final String INIT_COINS = "An old leather bag, bulging with coins, is here.";
     public static final String INIT_EGG = "In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged "
-            + "by a childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and "
-            + "mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp. "
-            + "The egg appears extremely fragile.";
+        + "by a childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and "
+        + "mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp. "
+        + "The egg appears extremely fragile.";
     public static final String INIT_GUIDEBOOK = "Some guidebooks entitled \"Flood Control Dam #3\" are on the reception desk.";
     public static final String INIT_LANTERN = "A battery-powered brass lantern is on the trophy case.";
     public static final String INIT_LEAF_PILE = "On the ground is a pile of leaves.";
@@ -34,9 +43,9 @@ class ObjectStrings {
     public static final String INIT_RUSTY_KNIFE = "Beside the skeleton is a rusty knife.";
     public static final String INIT_SACK = "On the table is an elongated brown sack, smelling of hot peppers.";
     public static final String INIT_SCEPTRE = "A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is "
-            + "ornamented with colored enamel, and tapers to a sharp point.";
+        + "ornamented with colored enamel, and tapers to a sharp point.";
     public static final String INIT_SKULL = "Lying in one corner of the room is a beautifully carved crystal skull. It appears "
-            + "to be grinning at you rather nastily.";
+        + "to be grinning at you rather nastily.";
     public static final String INIT_SWORD = "Above the trophy case hangs an elvish sword of great antiquity.";
     public static final String INIT_TOOL_CHESTS = "There is a group of tool chests here.";
     public static final String INIT_TORCH = "Sitting on the pedestal is a flaming torch, made of ivory.";
@@ -52,6 +61,12 @@ class ObjectStrings {
         + "The bat grabs you by the scruff of your neck and lifts you away....\n\n";
     public static final String BAT_GARLIC = "In the corner of the room on the ceiling is a large vampire bat who is obviously "
         + "deranged and holding his nose.";
+    public static final String CANARY_WIND_BAD = "There is an unpleasant grinding noise from inside the canary.";
+    public static final String CANARY_WIND_GOOD = "The canary chirps blithely, if somewhat tinnily, for a short time.";
+    public static final String CANARY_WIND_BAUBLE = "The canary chirps, slightly off-key, an aria from a forgotten opera. From out "
+        + "of the greenery flies a lovely songbird. It perches on a limb just over your head and opens its beak to sing. As it does "
+        + "so a beautiful brass bauble drops from its mouth, bounces off the top of your head, and lands glimmering in the grass. "
+        + "As the canary winds down, the songbird flies away.";
     public static final String COFFIN = "The solid-gold coffin used for the burial of Ramses II is here.";
     public static final String DIAMOND = "There is an enormous diamond (perfectly cut) here.";
     public static final String JADE = "There is an exquisite jade figurine here.";
@@ -93,16 +108,16 @@ class ObjectStrings {
 
     public static final String MACHINE_FAIL = "The machine doesn't seem to want to do anything.";
     public static final String MACHINE_SUCCESS = "The machine comes to life (figuratively) with a dazzling display of "
-            + "colored lights and bizarre noises. After a few moments, the excitement abates.";
+        + "colored lights and bizarre noises. After a few moments, the excitement abates.";
 
     public static final String CARPET_SIT_1 = "As you sit, you notice an irregularity underneath it. Rather than be "
-            + "uncomfortable, you stand up again.";
+        + "uncomfortable, you stand up again.";
     public static final String CARPET_SIT_2 = "I suppose you think it's a magic carpet?";
     public static final String CARPET_LOOK_UNDER = "Underneath the rug is a closed trap door. As you drop the corner "
-            + "of the rug, the trap door is once again concealed from view.";
+        + "of the rug, the trap door is once again concealed from view.";
 
     public static final String HOUSE_EXAMINE = "The house is a beautiful colonial house which is painted white. It is clear "
-            + "that the owners must have been extremely wealthy.";
+        + "that the owners must have been extremely wealthy.";
 
     public static final String ROPE_ON_RAIL = "Hanging down from the railing is a rope which ends about ten feet from the "
         + " floor below.";

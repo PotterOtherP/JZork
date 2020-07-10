@@ -55,6 +55,7 @@ enum Location {
     INSIDE_BROKEN_EGG,
     INSIDE_BUOY,
     INSIDE_COFFIN,
+    INSIDE_EGG,
     INSIDE_MAILBOX,
     INSIDE_TROPHY_CASE,
     INSIDE_SACK,
@@ -1254,12 +1255,14 @@ public class GameSetup {
         coins.trophyCaseValue = COINS_TROPHY_VALUE;
         coins.weight = COINS_WEIGHT;
         
-        Item canary = new Item("golden canary", Location.NULL_LOCATION);
-        canary.altNames.add("golden clockwork canary");
+        Item canary = new Item("golden clockwork canary", Location.NULL_LOCATION);
+        canary.altNames.add("golden canary");
         canary.altNames.add("golden clockwork");
         canary.altNames.add("clockwork canary");
         canary.altNames.add("clockwork");
         canary.altNames.add("canary");
+        canary.initialPresenceString = ObjectStrings.INIT_GOLDEN_CANARY;
+        canary.examineString = ObjectStrings.EXAMINE_GOLDEN_CANARY;
         canary.acquireValue = CANARY_VALUE;
         canary.trophyCaseValue = CANARY_TROPHY_VALUE;
         canary.weight = CANARY_WEIGHT;
@@ -1277,7 +1280,8 @@ public class GameSetup {
         egg.acquireValue = EGG_VALUE;
         egg.trophyCaseValue = EGG_TROPHY_VALUE;
         egg.weight = EGG_WEIGHT;
-        egg.capacity = 3;
+        egg.inventoryID = Location.INSIDE_EGG;
+        egg.capacity = 1;
 
         Item emerald = new Item("large emerald", Location.INSIDE_BUOY);
         emerald.altNames.add("emerald");
@@ -1408,6 +1412,7 @@ public class GameSetup {
         brokenCanary.altNames.add("broken clockwork");
         brokenCanary.altNames.add("clockwork");
         brokenCanary.initialPresenceString = ObjectStrings.INIT_BROKEN_CANARY;
+        brokenCanary.examineString = ObjectStrings.EXAMINE_BROKEN_CANARY;
         brokenCanary.trophyCaseValue = BROKEN_CANARY_TROPHY_VALUE;
         brokenCanary.weight = CANARY_WEIGHT;
 
@@ -1666,6 +1671,7 @@ public class GameSetup {
         
         Feature grating = new Feature("grating", Location.GRATING_ROOM);
         grating.altNames.add("grate");
+        grating.examineString = "The grating is closed.";
 
         Feature hotBell = new Feature("red hot brass bell", Location.NULL_LOCATION);
         hotBell.altNames.add("red hot bell");
@@ -1691,6 +1697,7 @@ public class GameSetup {
         houseBoards.altNames.add("boards");
         houseBoards.altNames.add("board");
         houseBoards.altNames.add("wood");
+        houseBoards.articleName = "some wooden boards";
         houseBoards.altLocations.add(Location.SOUTH_OF_HOUSE);
         houseBoards.altLocations.add(Location.NORTH_OF_HOUSE);
         houseBoards.takeString = "The boards are securely fastened.";
@@ -2393,6 +2400,10 @@ public class GameSetup {
 
     public static Location[] forest = { Location.FOREST_WEST, Location.FOREST_EAST,
         Location.FOREST_NORTHEAST, Location.FOREST_SOUTH };
+
+    public static Location[] songbirdLocations = { Location.FOREST_WEST, Location.FOREST_EAST,
+        Location.FOREST_NORTHEAST, Location.FOREST_SOUTH, Location.FOREST_PATH, Location.CLEARING_EAST,
+        Location.CLEARING_NORTH, Location.UP_TREE };
 
     // This is used for possible thief locations, so it doesn't include everything on the map.
     public static Location[] thiefLocations = {
