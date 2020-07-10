@@ -100,11 +100,11 @@ enum Action {
     QUIT, RESTART, RESTORE, SAVE, SAY, SCORE, SHOUT,
     STAY, SUPERBRIEF, VERBOSE, WAIT,
   
-    ACTIVATE, ANSWER, BLOW, BOARD, CLIMB, CLOSE, COUNT,
+    ACTIVATE, ANSWER, BLOW, BOARD, BRUSH, CLIMB, CLOSE, COUNT,
     DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXTINGUISH, FOLLOW, GREET,
     KICK, KNOCK, LAUNCH, LIGHT, LISTEN, LOOK_IN, LOOK_OUT, LOOK_UNDER,
     LOWER, MOVE_OBJECT, OPEN, PLAY, POUR, PULL, PUSH, RAISE,
-    READ, REMOVE, RING, SEARCH, SHAKE, SMELL, STRIKE, TAKE, TALK_TO,
+    READ, REMOVE, REPAIR, RING, SEARCH, SHAKE, SMELL, STRIKE, TAKE, TALK_TO,
     TOUCH, UNTIE, WAKE, WAVE, WEAR, WIND,
 
     ATTACK, BREAK, BURN, CUT, DIG, FILL, INFLATE, LOCK,
@@ -2088,6 +2088,7 @@ public class GameSetup {
         state.actions.put("walk d",       Action.DOWN);
         state.actions.put("exit d",     Action.DOWN);
     
+        state.actions.put("launch", Action.LAUNCH);
         state.actions.put("in", Action.IN);
         state.actions.put("inside", Action.IN);
         state.actions.put("go in", Action.IN);
@@ -2099,6 +2100,7 @@ public class GameSetup {
         state.actions.put("exit", Action.OUT);
         state.actions.put("slide", Action.SLIDE);
         state.actions.put("swim", Action.SWIM);
+
     
         // Reflexive actions: no interaction with game objects
         state.actions.put("brief", Action.BRIEF);
@@ -2131,6 +2133,7 @@ public class GameSetup {
         state.actions.put("get on", Action.BOARD);
         state.actions.put("get in", Action.BOARD);
         state.actions.put("sit on", Action.BOARD);
+        state.actions.put("brush", Action.BRUSH);
         state.actions.put("climb", Action.CLIMB);
         state.actions.put("close", Action.CLOSE);
         state.actions.put("count", Action.COUNT);
@@ -2169,6 +2172,8 @@ public class GameSetup {
         state.actions.put("raise", Action.RAISE);
         state.actions.put("read", Action.READ);
         state.actions.put("remove", Action.REMOVE);
+        state.actions.put("repair", Action.REPAIR);
+        state.actions.put("fix", Action.REPAIR);
         state.actions.put("ring", Action.RING);
         state.actions.put("say", Action.SAY);
         state.actions.put("search", Action.SEARCH);
@@ -2244,10 +2249,12 @@ public class GameSetup {
         state.actionTypes.put(Action.IN, ActionType.EXIT);
         state.actionTypes.put(Action.OUT, ActionType.EXIT);
         state.actionTypes.put(Action.EXIT, ActionType.EXIT);
+        state.actionTypes.put(Action.LAUNCH, ActionType.EXIT);
     
         state.actionTypes.put(Action.ANSWER, ActionType.DIRECT);
         state.actionTypes.put(Action.BLOW, ActionType.DIRECT);
         state.actionTypes.put(Action.BOARD, ActionType.DIRECT);
+        state.actionTypes.put(Action.BRUSH, ActionType.DIRECT);
         state.actionTypes.put(Action.CLIMB, ActionType.DIRECT);
         state.actionTypes.put(Action.CLOSE, ActionType.DIRECT);
         state.actionTypes.put(Action.COUNT, ActionType.DIRECT);
@@ -2275,6 +2282,7 @@ public class GameSetup {
         state.actionTypes.put(Action.PUSH, ActionType.DIRECT);
         state.actionTypes.put(Action.RAISE, ActionType.DIRECT);
         state.actionTypes.put(Action.READ, ActionType.DIRECT);
+        state.actionTypes.put(Action.REPAIR, ActionType.DIRECT);
         state.actionTypes.put(Action.REMOVE, ActionType.DIRECT);
         state.actionTypes.put(Action.RING, ActionType.DIRECT);
         state.actionTypes.put(Action.SEARCH, ActionType.DIRECT);

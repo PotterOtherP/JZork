@@ -589,6 +589,7 @@ public class GameState {
             case ATTACK: { directObject.attack(this); } break;
             case BLOW: { directObject.blow(this); } break;
             case BREAK: { directObject.breakObject(this); } break;
+            case BRUSH: { directObject.brush(this); } break;
             case CLIMB: {directObject.climb(this); } break;
             case CLOSE: {directObject.close(this); } break;
             case COUNT: { directObject.count(this); } break;
@@ -622,6 +623,7 @@ public class GameState {
             case RAISE: { directObject.raise(this); } break;
             case READ: { directObject.read(this); } break;
             case REMOVE: { directObject.remove(this); } break;
+            case REPAIR: { directObject.repair(this); } break;
             case RING: { directObject.ring(this); } break;
             case SEARCH: { directObject.search(this); } break;
             case SHAKE: { directObject.shake(this); } break;

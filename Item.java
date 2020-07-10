@@ -231,6 +231,34 @@ public class Item extends GameObject{
 
 
     @Override
+    public void inflate(GameState state)
+    {
+        switch (name)
+        {
+            case "pile of plastic":
+            {
+                
+            } break;
+
+            case "magic boat":
+            {
+
+            } break;
+
+            case "punctured boat":
+            {
+
+            } break;
+
+            default:
+            {
+                super.inflate(state);
+            } break;
+        }
+    }
+
+
+    @Override
     public void light(GameState state)
     {
         switch (name)

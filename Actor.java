@@ -12,6 +12,7 @@ public class Actor extends GameObject {
     public boolean disarmed;
     public boolean firstCombatTurn;
     public int hitPoints;
+    public int riverTurns;
     public boolean staggered;
     public int swordGlowLevel;
     public boolean thiefAggro;
@@ -604,7 +605,10 @@ public class Actor extends GameObject {
 
     public void riverCurrentTurn(GameState state)
     {
-
+        if (riverTurns == 0)
+        {
+            ++riverTurns;
+        }
     }
 
 

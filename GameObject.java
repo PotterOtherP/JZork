@@ -28,6 +28,7 @@ public abstract class GameObject {
     public String blowString;
     public String boardString;
     public String breakString;
+    public String brushString;
     public String burnString;
     public String climbString;
     public String closeString;
@@ -68,6 +69,7 @@ public abstract class GameObject {
     public String raiseString;
     public String readString;
     public String removeString;
+    public String repairString;
     public String ringString;
     public String searchString;
     public String shakeString;
@@ -126,6 +128,7 @@ public abstract class GameObject {
         answerString = "It is hardly likely that the " + name + " is interested.";
         blowString = "You can't blow that out.";
         boardString = "You have a theory on how to board " + articleName + ", perhaps?";
+        brushString = "If you wish, but heaven only knows why.";
         climbString = "You can't do that!";
         closeString = "You must tell me how to do that to " + articleName + ".";
         countString = "You have lost your mind.";
@@ -150,6 +153,7 @@ public abstract class GameObject {
         pullString = "";    // game treats this as "move"
         readString = "You can't read that!";
         removeString = "You can't read that!";
+        repairString = "This has no effect.";
         ringString = "How, exactly, can you ring that?";
         searchString = "You find nothing unusual.";
         shakeString = "Shaken.";
@@ -217,6 +221,7 @@ public abstract class GameObject {
     public void attack(GameState state) { Game.output(attackString); }
     public void blow(GameState state) { Game.output(blowString); }
     public void board(GameState state) { Game.output(boardString); }
+    public void brush(GameState state) { Game.output(brushString); }
     public void burn(GameState state) { Game.output(burnString); }
     public void breakObject(GameState state)
     {
@@ -258,7 +263,7 @@ public abstract class GameObject {
     public void give(GameState state)
     {
         Game.output("You can't give " + state.indirectObject.articleName + " to "
-            + state.directObject.articleName + ".");
+            + state.directObject.articleName + "!");
     }
     public void greet(GameState state) { Game.output(helloString); }  
     public void inflate(GameState state) { Game.output(inflateString); }
@@ -281,6 +286,7 @@ public abstract class GameObject {
     public void raise(GameState state) { Game.output(raiseString + randPhrase()); }
     public void read(GameState state) { Game.output(readString); }
     public void remove(GameState state) { Game.output(removeString); }
+    public void repair(GameState state) { Game.output(repairString); }
     public void ring(GameState state) { Game.output(ringString); }
     public void search(GameState state) { Game.output(searchString); }
     public void shake(GameState state) { Game.output(shakeString); }
