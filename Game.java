@@ -107,6 +107,7 @@ public final class Game {
             }
         }
 
+        /*
         String result = "";
         char[] tokens = input.toCharArray();
 
@@ -115,6 +116,9 @@ public final class Game {
             if (tokens[i] == ' ' || Character.isLetterOrDigit(tokens[i]))
                 result += tokens[i];
         }
+        */
+
+        String result = input.replaceAll("\"", "");
 
         while (result.contains("  "))
             result = result.replaceAll("  ", " ");

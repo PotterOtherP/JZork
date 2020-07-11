@@ -106,6 +106,8 @@ class GameStrings {
     public static final String GRUE_DEATH_1 = "Oh no! You have walked into the slavering fangs of a lurking grue!";
     public static final String GRUE_DEATH_2 = "Oh no! A lurking grue slithered into the room and devoured you!";
     public static final String HOLLOW_VOICE = "A hollow voice says \"Fool.\"";
+    public static final String LAUNCH_FAIL = "You need to be near a body of water to launch the boat. Maybe you are hallucinating a body "
+        + "of water here. It may be a good idea to see a neurologist.";
     public static final String LEAFLET_TEXT = "WELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore "
         + "some of the most amazing territory ever seen by mortals. No computer should be without one!";
     public static final String MOVE_RUG = "With a great effort, the rug is moved to one side of the room, revealing the dusty cover "

@@ -94,15 +94,15 @@ enum Action {
 
 
     NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
-    UP, DOWN, IN, OUT, WALK, GO, SLIDE, SWIM, EXIT, CROSS,
+    UP, DOWN, IN, OUT, WALK, GO, SLIDE, SWIM, EXIT, CROSS, LAUNCH, LAND,
    
     BRIEF, DEFEND, DIAGNOSE, INVENTORY, JUMP, LOOK, PRAY,
     QUIT, RESTART, RESTORE, SAVE, SAY, SCORE, SHOUT,
     STAY, SUPERBRIEF, VERBOSE, WAIT,
   
-    ACTIVATE, ANSWER, BLOW, BOARD, BRUSH, CLIMB, CLOSE, COUNT,
-    DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXTINGUISH, FOLLOW, GREET,
-    KICK, KNOCK, LAUNCH, LIGHT, LISTEN, LOOK_IN, LOOK_OUT, LOOK_UNDER,
+    ACTIVATE, ANSWER, BLOW, BOARD, BRUSH, CLIMB, CLOSE, COUNT, DEBOARD,
+    DEFLATE, DRINK, DROP, EAT, ENTER, EXAMINE, EXTINGUISH, FOLLOW, GREET, 
+    KICK, KNOCK, LIGHT, LISTEN, LOOK_IN, LOOK_OUT, LOOK_UNDER,
     LOWER, MOVE_OBJECT, OPEN, PLAY, POUR, PULL, PUSH, RAISE,
     READ, REMOVE, REPAIR, RING, SEARCH, SHAKE, SMELL, STRIKE, TAKE, TALK_TO,
     TOUCH, UNTIE, WAKE, WAVE, WEAR, WIND,
@@ -704,25 +704,30 @@ public class GameSetup {
         Room whiteCliffsBeachNorth = new Room("White Cliffs Beach North", MapStrings.DESC_WHITE_CLIFFS_BEACH_NORTH, Location.WHITE_CLIFFS_BEACH_NORTH);
         whiteCliffsBeachNorth.addExit(Action.WEST, damp_white_north);
         whiteCliffsBeachNorth.addExit(Action.SOUTH, white_cliffs_north_south);
-        whiteCliffsBeachNorth.addExit(Action.EAST, white_north_river);
+        whiteCliffsBeachNorth.addExit(Action.LAUNCH, white_north_river);
 
         Room whiteCliffsBeachSouth = new Room("White Cliffs Beach South", MapStrings.DESC_WHITE_CLIFFS_BEACH_SOUTH, Location.WHITE_CLIFFS_BEACH_SOUTH);
         whiteCliffsBeachSouth.addExit(Action.NORTH, white_cliffs_north_south);
-        whiteCliffsBeachSouth.addExit(Action.EAST, white_south_river);
+        whiteCliffsBeachSouth.addExit(Action.LAUNCH, white_south_river);
 
         Room frigidRiver1 = new Room("Frigid River", MapStrings.DESC_FRIGID_RIVER_1, Location.FRIGID_RIVER_1);
         frigidRiver1.addExit(Action.WEST, dam_base_river);
+        frigidRiver1.addExit(Action.LAND, dam_base_river);
 
         Room frigidRiver2 = new Room("Frigid River", MapStrings.DESC_FRIGID_RIVER_2, Location.FRIGID_RIVER_2);
+
         Room frigidRiver3 = new Room("Frigid River", MapStrings.DESC_FRIGID_RIVER_3, Location.FRIGID_RIVER_3);
         frigidRiver3.addExit(Action.WEST, white_north_river);
+        frigidRiver3.addExit(Action.LAND, white_north_river);
 
         Room frigidRiver4 = new Room("Frigid River", MapStrings.DESC_FRIGID_RIVER_4, Location.FRIGID_RIVER_4);
         frigidRiver4.addExit(Action.WEST, white_south_river);
         frigidRiver4.addExit(Action.EAST, river_sandy_beach);
+        frigidRiver4.addExit(Action.LAND, river_sandy_beach);
 
         Room frigidRiver5 = new Room("Frigid River", MapStrings.DESC_FRIGID_RIVER_5, Location.FRIGID_RIVER_5);
         frigidRiver5.addExit(Action.EAST, river_shore);
+        frigidRiver5.addExit(Action.LAND, river_shore);
 
         Room sandyCave = new Room("Sandy Cave", MapStrings.DESC_SANDY_CAVE, Location.SANDY_CAVE);
         sandyCave.addExit(Action.SOUTHWEST, sandy_beach_cave);
@@ -730,11 +735,11 @@ public class GameSetup {
         Room sandyBeach = new Room("Sandy Beach", MapStrings.DESC_SANDY_BEACH, Location.SANDY_BEACH);
         sandyBeach.addExit(Action.NORTHEAST, sandy_beach_cave);
         sandyBeach.addExit(Action.SOUTH, sandy_beach_shore);
-        sandyBeach.addExit(Action.WEST, river_sandy_beach);
+        sandyBeach.addExit(Action.LAUNCH, river_sandy_beach);
 
         Room shore = new Room("Shore", MapStrings.DESC_SHORE, Location.SHORE);
         shore.addExit(Action.NORTH, sandy_beach_shore);
-        shore.addExit(Action.WEST, river_shore);
+        shore.addExit(Action.LAUNCH, river_shore);
         shore.addExit(Action.SOUTH, shore_falls);
 
         Room aragainFalls = new Room("Aragain Falls", MapStrings.DESC_ARAGAIN_FALLS, Location.ARAGAIN_FALLS);
@@ -754,7 +759,7 @@ public class GameSetup {
 
         Room damBase = new Room("Dam Base", MapStrings.DESC_DAM_BASE, Location.DAM_BASE);
         damBase.addExit(Action.NORTH, dam_dam_base);
-        damBase.addExit(Action.EAST, dam_base_river);
+        damBase.addExit(Action.LAUNCH, dam_base_river);
         
         Room damLobby = new Room("Dam Lobby", MapStrings.DESC_DAM_LOBBY, Location.DAM_LOBBY);
         damLobby.addExit(Action.NORTH, dam_lobby_maintenance);
@@ -784,14 +789,15 @@ public class GameSetup {
         
         Room streamView = new Room("Stream View", MapStrings.DESC_STREAM_VIEW, Location.STREAM_VIEW);
         streamView.addExit(Action.EAST, res_south_stream_view);
-        streamView.addExit(Action.NORTH, stream_view_stream);
+        streamView.addExit(Action.LAUNCH, stream_view_stream);
         
         Room stream = new Room("Stream", MapStrings.DESC_STREAM, Location.STREAM);
         stream.addExit(Action.SOUTH, stream_view_stream);
+        stream.addExit(Action.LAND, stream_view_stream);
         stream.addExit(Action.EAST, reservoir_stream);
         
         Room reservoirSouth = new Room("Reservoir South", MapStrings.DESC_RESERVOIR_SOUTH, Location.RESERVOIR_SOUTH);
-        reservoirSouth.addExit(Action.NORTH, res_south_res);
+        reservoirSouth.addExit(Action.LAUNCH, res_south_res);
         reservoirSouth.addExit(Action.WEST, res_south_stream_view);
         reservoirSouth.addExit(Action.SOUTHEAST, res_south_deep);
         reservoirSouth.addExit(Action.SOUTHWEST, res_south_chasm);
@@ -800,6 +806,7 @@ public class GameSetup {
         Room reservoir = new Room("Reservoir", MapStrings.DESC_RESERVOIR, Location.RESERVOIR);
         reservoir.addExit(Action.NORTH, res_north_res);
         reservoir.addExit(Action.SOUTH, res_south_res);
+        reservoir.addExit(Action.LAND, res_south_res);
         reservoir.addExit(Action.WEST, reservoir_stream);
 
         Room reservoirEmpty = new Room("Reservoir", MapStrings.DESC_RESERVOIR_EMPTY, Location.RESERVOIR_EMPTY);
@@ -807,10 +814,9 @@ public class GameSetup {
         reservoirEmpty.addExit(Action.SOUTH, res_south_res_empty);
         reservoirEmpty.addExit(Action.WEST, stream_res_empty);
 
-        
         Room reservoirNorth = new Room("Reservoir North", MapStrings.DESC_RESERVOIR_NORTH, Location.RESERVOIR_NORTH);
         reservoirNorth.addExit(Action.NORTH, res_north_atlantis);
-        reservoirNorth.addExit(Action.SOUTH, res_north_res);
+        reservoirNorth.addExit(Action.LAUNCH, res_north_res);
 
         Room atlantisRoom = new Room("Atlantis Room", MapStrings.DESC_ATLANTIS_ROOM, Location.ATLANTIS_ROOM);
         atlantisRoom.addExit(Action.UP, atlantis_cave);
@@ -1041,6 +1047,11 @@ public class GameSetup {
         // Rooms with a dangerous height
         eastOfChasm.height = true; chasm.height = true; canyonView.height = true;
 
+        // Rooms that are a body of water
+        reservoir.bodyOfWater = true; stream.bodyOfWater = true; frigidRiver1.bodyOfWater = true;
+        frigidRiver2.bodyOfWater = true; frigidRiver3.bodyOfWater = true; frigidRiver4.bodyOfWater = true;
+        frigidRiver5.bodyOfWater = true;
+
         // Closed passages
         grating_clearing.close();
         house_behind_kitchen.close();
@@ -1051,14 +1062,6 @@ public class GameSetup {
         falls_rainbow.close();
         dome_torch.close();
         hades_land_dead.close();
-        dam_base_river.close();
-        white_north_river.close();
-        white_south_river.close();
-        river_sandy_beach.close();
-        river_shore.close();
-        res_south_res.close();
-        res_north_res.close();
-        stream_view_stream.close();
         cyclops_strange.close();
         cyclops_treasure.close();
 
@@ -2089,6 +2092,7 @@ public class GameSetup {
         state.actions.put("exit d",     Action.DOWN);
     
         state.actions.put("launch", Action.LAUNCH);
+        state.actions.put("land", Action.LAND);
         state.actions.put("in", Action.IN);
         state.actions.put("inside", Action.IN);
         state.actions.put("go in", Action.IN);
@@ -2104,6 +2108,11 @@ public class GameSetup {
     
         // Reflexive actions: no interaction with game objects
         state.actions.put("brief", Action.BRIEF);
+        state.actions.put("deboard", Action.DEBOARD);
+        state.actions.put("disembark", Action.DEBOARD);
+        state.actions.put("exit boat", Action.DEBOARD);
+        state.actions.put("get out of boat", Action.DEBOARD);
+        state.actions.put("leave boat", Action.DEBOARD);
         state.actions.put("diagnose", Action.DIAGNOSE);
         state.actions.put("inventory", Action.INVENTORY);
         state.actions.put("i",         Action.INVENTORY);
@@ -2222,6 +2231,7 @@ public class GameSetup {
         // Assigning action types
     
         state.actionTypes.put(Action.BRIEF, ActionType.REFLEXIVE);
+        state.actionTypes.put(Action.DEBOARD, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.DIAGNOSE, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.INVENTORY, ActionType.REFLEXIVE);
         state.actionTypes.put(Action.JUMP, ActionType.REFLEXIVE);
@@ -2249,7 +2259,8 @@ public class GameSetup {
         state.actionTypes.put(Action.IN, ActionType.EXIT);
         state.actionTypes.put(Action.OUT, ActionType.EXIT);
         state.actionTypes.put(Action.EXIT, ActionType.EXIT);
-        state.actionTypes.put(Action.LAUNCH, ActionType.EXIT);
+        state.actionTypes.put(Action.LAUNCH, ActionType.DIRECT);
+        state.actionTypes.put(Action.LAND, ActionType.EXIT);
     
         state.actionTypes.put(Action.ANSWER, ActionType.DIRECT);
         state.actionTypes.put(Action.BLOW, ActionType.DIRECT);

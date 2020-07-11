@@ -284,12 +284,16 @@ public class InputParser {
         input = input.trim();
         
         // All words must be known by the game
-        for (int i = 0; i < inputWords.length; ++i)
+
+        if (!startsWith("say", input) && !startsWith("speak", input))
         {
-            if (!isGameWord(inputWords[i]))
+            for (int i = 0; i < inputWords.length; ++i)
             {
-                Game.output("I don't know what \"" + inputWords[i] + "\" means.");
-                return false;
+                if (!isGameWord(inputWords[i]))
+                {
+                    Game.output("I don't know what \"" + inputWords[i] + "\" means.");
+                    return false;
+                }
             }
         }
 
@@ -323,6 +327,18 @@ public class InputParser {
             {
                 // If the player entered a direct action without an object,
                 // they will be prompted to provide the object.
+
+                /* The player can launch the boat with just the word "launch".
+                 * Otherwise, the game treat it as a direct object action.
+                 */
+                if (state.playerAction == Action.LAUNCH)
+                {
+                    if (input.isEmpty() && state.playerInBoat)
+                    {
+                        state.directObject = state.objectList.get("magic boat");
+                        return true;
+                    }
+                }
 
                 if (input.isEmpty())
                 {
@@ -738,6 +754,9 @@ public class InputParser {
         GameObject indObj = state.indirectObject;
         Action act = state.playerAction;
 
+        if (act == Action.ENTER && dirObj.name.equals("magic boat") && dirObj.location == state.playerLocation)
+            return true;
+
         switch(state.playerActionType)
         {
             case DIRECT:
@@ -748,6 +767,10 @@ public class InputParser {
                     {
                         // Here is the list of objects that can be performed on items
                         // which are present but not in the player's inventory.
+                        case BOARD:
+                        case DEFLATE:
+                        case INFLATE:
+                        case LAUNCH:
                         case MOVE_OBJECT:
                         case OPEN:
                         case TAKE:

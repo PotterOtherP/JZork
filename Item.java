@@ -32,6 +32,33 @@ public class Item extends GameObject{
 
 
     @Override
+    public void board(GameState state)
+    {
+        switch (name)
+        {
+            case "magic boat":
+            {
+                if (!state.playerInBoat && location == state.playerLocation)
+                {
+                    Game.output("You are now inside the boat.");
+                    state.playerInBoat = true;
+                }
+
+                else if (!state.playerInBoat && location == Location.PLAYER_INVENTORY)
+                    Game.output("You should put the boat down first.");
+                else if (state.playerInBoat)
+                    Game.output("You are already in the boat.");
+            } break;
+
+            default:
+            {
+                super.board(state);
+            } break;
+        }
+    }
+
+
+    @Override
     public void close(GameState state)
     {
         if (!isContainer())
@@ -51,6 +78,7 @@ public class Item extends GameObject{
         }
 
     }
+
 
     @Override
     public void drink(GameState state)
@@ -253,6 +281,40 @@ public class Item extends GameObject{
             default:
             {
                 super.inflate(state);
+            } break;
+        }
+    }
+
+
+    @Override
+    public void launch(GameState state)
+    {
+        switch (name)
+        {
+            case "magic boat":
+            {
+                if (state.playerInBoat)
+                {
+                    Room room = state.worldMap.get(state.playerLocation);
+
+                    if (room.exit(state, Action.LAUNCH))
+                    {
+                        Room newRoom = state.worldMap.get(state.playerLocation);
+                        newRoom.lookAround(state); 
+                    }
+
+                    else
+                    {
+                    }
+                }
+
+                else
+                    Game.output("You have to be inside the boat before you can launch it.");
+            } break;
+
+            default:
+            {
+                super.launch(state);
             } break;
         }
     }

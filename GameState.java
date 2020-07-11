@@ -30,6 +30,7 @@ public class GameState {
     public boolean loudRoomSolved;
     public int matchCount;
     public boolean mirrorBroken;
+    public boolean playerInBoat;
     public boolean potOfGoldAppeared;
     public boolean rainbowSolid;
     public boolean ropeRailTied;
@@ -73,7 +74,7 @@ public class GameState {
     public Action playerAction;
     public GameObject directObject;
     public GameObject indirectObject;
-    public Feature dummyObject;
+    public GameObject dummyObject;
 
     // lists of game objects
     public HashMap<String, Action> actions;
@@ -103,7 +104,7 @@ public class GameState {
 
     public GameState()
     {
-        dummyObject = new Feature("dummy_feature", Location.NULL_LOCATION);
+        dummyObject = new Feature("dummy_object", Location.NULL_LOCATION);
 
         turns = 0;
         darknessTurns = 0;
@@ -167,6 +168,40 @@ public class GameState {
         objectList = new HashMap<String, GameObject>();
         worldMap = new HashMap<Location, Room>();
 
+        objectList.put(dummyObject.name, dummyObject);
+
+    }
+
+
+    public boolean boatCheck()
+    {
+        boolean result = true;
+
+        if (playerActionType == ActionType.EXIT && playerAction != Action.LAUNCH)
+            result = false;
+
+        switch (playerAction)
+        {
+            case ATTACK:
+            case CLIMB:
+            case TIE:
+            case KICK:
+            case DIG:
+            {
+                result = false;
+            } break;
+
+            default: {} break;
+        }
+
+        if ( (playerActionType == ActionType.DIRECT || playerActionType == ActionType.INDIRECT) 
+             && directObject.location == playerLocation)
+            result = true;
+
+        if (worldMap.get(playerLocation).bodyOfWater)
+            result = true;
+
+        return result;
     }
 
 
@@ -321,13 +356,28 @@ public class GameState {
                     for (String str : it.altNames)
                         currentObjects.put(str, it);
 
+                    if (it.isContainer() && it.isOpen())
+                    {
+                        for (Item nIt : it.inventory)
+                        {
+                            currentObjects.put(nIt.name, nIt);
+
+                            for (String nStr : nIt.altNames)
+                                currentObjects.put(nStr, nIt);
+                        }
+                    }
+
                     bottleCheck(it);
                 }
             }
 
             if (g.intangible)
                 currentObjects.remove(g.name);
+        
         }
+
+
+
 
         // Individual cases
 
@@ -388,6 +438,40 @@ public class GameState {
         }
     }
 
+    public void getNextRoomDescription(Location nextLoc)
+    {
+
+        Room nextRoom = worldMap.get(nextLoc);
+        switch(verbosity)
+        {
+            case SUPERBRIEF:
+            {
+                nextRoom.getRoomObjects(this);
+
+            } break;
+
+            case BRIEF:
+            {
+                if (nextRoom.firstVisit)
+                {
+                    Game.outputLine();
+                    nextRoom.getDescription(this);
+                }
+                
+                nextRoom.getRoomObjects(this);
+
+            } break;
+
+            case VERBOSE:
+            {
+                Game.outputLine();
+                nextRoom.getDescription(this);
+                nextRoom.getRoomObjects(this);
+            } break;
+
+            default: {} break;
+        }
+    }
 
     public void playerDies()
     {
@@ -506,8 +590,6 @@ public class GameState {
             p.weightFail = "You can't get down there with what you're carrying.";
         }
 
-
-
     }
 
 
@@ -563,6 +645,12 @@ public class GameState {
             return;
         }
 
+        if (playerInBoat && !boatCheck())
+        {
+            Game.output("You need to get out of the boat first.");
+            return;
+        }
+
         if (directObject.name.equals("basket"))
         {
             if (playerAction == Action.RAISE || playerAction == Action.LOWER) {}
@@ -588,6 +676,7 @@ public class GameState {
             case ANSWER: { directObject.answer(this); } break;
             case ATTACK: { directObject.attack(this); } break;
             case BLOW: { directObject.blow(this); } break;
+            case BOARD: { directObject.board(this); } break;
             case BREAK: { directObject.breakObject(this); } break;
             case BRUSH: { directObject.brush(this); } break;
             case CLIMB: {directObject.climb(this); } break;
@@ -607,6 +696,7 @@ public class GameState {
             case GREET: { directObject.greet(this); } break;
             case KICK: { directObject.kick(this); } break;
             case KNOCK: { directObject.knock(this); } break;
+            case LAUNCH: { directObject.launch(this); } break;
             case LIGHT: { directObject.light(this); } break;
             case LISTEN: { directObject.listen(this); } break;
             case LOCK: {directObject.lock(this); } break;
@@ -641,6 +731,26 @@ public class GameState {
             case WIND: { directObject.wind(this); } break;
 
             /* REFLEXIVE GAME ACTIONS */
+            case DEBOARD:
+            {
+                GameObject boat = objectList.get("magic boat");
+
+                if (playerInBoat)
+                {
+                    Game.output("You are on your own feet again.");
+                    playerInBoat = false;
+                }
+
+                else if (boat.location == Location.PLAYER_INVENTORY || boat.location == playerLocation)
+                {
+                    Game.output("You're already not in the boat.");
+                }
+
+                else
+                    Game.output("There is nothing to get out of.");
+
+            } break;
+
             case INVENTORY:
             {
                 int count = 0;
@@ -723,10 +833,10 @@ public class GameState {
             {
                 Actor clops = (Actor)objectList.get("cyclops");
 
-                if (playerLocation == Location.CYCLOPS_ROOM &&
-                    clops.location == Location.CYCLOPS_ROOM)
+                if (speakPhrase.equals("ulysses") || speakPhrase.equals("odysseus"))
                 {
-                    if (speakPhrase.equals("ulysses") || speakPhrase.equals("odysseus"))
+                    if (playerLocation == Location.CYCLOPS_ROOM &&
+                        clops.location == Location.CYCLOPS_ROOM)
                     {
                         Game.output(ObjectStrings.CYCLOPS_FLEES);
                         clops.alive = false;
@@ -744,7 +854,13 @@ public class GameState {
                         p3.open();
                         p4.message = "";
                     }
+
+                    else
+                        Game.output("Wasn't he a sailor?");
                 }
+
+                else
+                    Game.output("\"" + speakPhrase + "\" yourself.");
 
             } break;
 
@@ -767,6 +883,7 @@ public class GameState {
             case SOUTHWEST:
             case UP:
             case DOWN:
+            case LAND:
             {
                 
                 if (currentRoom.exit(this, playerAction))
@@ -800,35 +917,8 @@ public class GameState {
                         return;                       
                     }
 
-                    switch(verbosity)
-                    {
-                        case SUPERBRIEF:
-                        {
-                            nextRoom.getRoomObjects(this);
-            
-                        } break;
-
-                        case BRIEF:
-                        {
-                            if (nextRoom.firstVisit)
-                            {
-                                Game.outputLine();
-                                nextRoom.getDescription(this);
-                            }
-                            
-                            nextRoom.getRoomObjects(this);
-
-                        } break;
-
-                        case VERBOSE:
-                        {
-                            Game.outputLine();
-                            nextRoom.getDescription(this);
-                            nextRoom.getRoomObjects(this);
-                        } break;
-
-                        default: {} break;
-                    }
+                    getNextRoomDescription(playerLocation);
+                    
 
                     if (nextRoom.firstVisit)
                         nextRoom.firstVisit = false;
@@ -861,13 +951,6 @@ public class GameState {
 
             } break; 
             
-            /*
-            case IN:
-            case OUT:
-            {
-
-            } break;
-            */
 
             /* UI/UTILITY ACTIONS */
             case BRIEF:
@@ -888,10 +971,8 @@ public class GameState {
 
             case RESTART:
             {
-                Game.restart();
-                
+                Game.restart();            
                 return;
-
             }
 
             case SCORE:
@@ -1103,35 +1184,7 @@ public class GameState {
                         // return;
                     }
 
-                    switch(verbosity)
-                    {
-                        case SUPERBRIEF:
-                        {
-                            nextRoom.getRoomObjects(this);
-            
-                        } break;
-
-                        case BRIEF:
-                        {
-                            if (nextRoom.firstVisit)
-                            {
-                                Game.outputLine();
-                                nextRoom.getDescription(this);
-                            }
-                            
-                            nextRoom.getRoomObjects(this);
-
-                        } break;
-
-                        case VERBOSE:
-                        {
-                            Game.outputLine();
-                            nextRoom.getDescription(this);
-                            nextRoom.getRoomObjects(this);
-                        } break;
-
-                        default: {} break;
-                    }
+                    getNextRoomDescription(playerLocation);
 
                     if (nextRoom.firstVisit)
                         nextRoom.firstVisit = false;
@@ -1330,35 +1383,7 @@ public class GameState {
                         return;
                     }
 
-                    switch(verbosity)
-                    {
-                        case SUPERBRIEF:
-                        {
-                            nextRoom.getRoomObjects(this);
-            
-                        } break;
-
-                        case BRIEF:
-                        {
-                            if (nextRoom.firstVisit)
-                            {
-                                Game.outputLine();
-                                nextRoom.getDescription(this);
-                            }
-                            
-                            nextRoom.getRoomObjects(this);
-
-                        } break;
-
-                        case VERBOSE:
-                        {
-                            Game.outputLine();
-                            nextRoom.getDescription(this);
-                            nextRoom.getRoomObjects(this);
-                        } break;
-
-                        default: {} break;
-                    }
+                    getNextRoomDescription(playerLocation);
 
                     if (nextRoom.firstVisit)
                         nextRoom.firstVisit = false;

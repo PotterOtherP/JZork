@@ -476,10 +476,10 @@ public class Actor extends GameObject {
             stream.exits.remove(Action.EAST);
             stream.addExit(Action.EAST, res_empty_STR);
 
-            resNorth.exits.remove(Action.SOUTH);
+            resNorth.exits.remove(Action.LAUNCH);
             resNorth.addExit(Action.SOUTH, res_empty_N);
 
-            resSouth.exits.remove(Action.NORTH);
+            resSouth.exits.remove(Action.LAUNCH);
             resSouth.addExit(Action.NORTH, res_empty_S);
         }
 
@@ -497,10 +497,10 @@ public class Actor extends GameObject {
             stream.addExit(Action.EAST, res_STR);
 
             resNorth.exits.remove(Action.SOUTH);
-            resNorth.addExit(Action.SOUTH, res_N);
+            resNorth.addExit(Action.LAUNCH, res_N);
 
             resSouth.exits.remove(Action.NORTH);
-            resSouth.addExit(Action.NORTH, res_S);
+            resSouth.addExit(Action.LAUNCH, res_S);
         }
     }
 
@@ -1181,9 +1181,9 @@ public class Actor extends GameObject {
             if (thiefFirstTurn)
             {
                 // I am here.
-                int option = rand.nextInt(2);
-                if (option == 0) Game.output(ObjectStrings.THIEF_PRESENT_1);
-                if (option == 1) Game.output(ObjectStrings.THIEF_PRESENT_2);
+                // int option = rand.nextInt(2);
+                // if (option == 0) Game.output(ObjectStrings.THIEF_PRESENT_1);
+                // if (option == 1) Game.output(ObjectStrings.THIEF_PRESENT_2);
                 thiefFirstTurn = false;
                 return;
             }

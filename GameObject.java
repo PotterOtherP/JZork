@@ -52,6 +52,7 @@ public abstract class GameObject {
     public String inflateString;
     public String kickString;
     public String knockString;
+    public String launchString;
     public String lightString;
     public String listenString;
     public String lockString;
@@ -141,7 +142,9 @@ public abstract class GameObject {
         extinguishString = "You can't turn that off.";
         followString = "You're nuts!";
         helloString = "It's a well known fact that only schizophrenics say \"Hello\" to " + articleName + ".";
+        inflateString = "How can you inflate that?";
         knockString = "Why knock on " + articleName + "?";
+        launchString = "How exactly do you imagine trying a launch " + articleName + "?";
         lightString = "You can't turn that on.";
         listenString = "The " + name + " makes no sound.";
         lookInString = "You can't look inside " + articleName + ".";
@@ -251,10 +254,15 @@ public abstract class GameObject {
     public void eat(GameState state) { Game.output(eatString); }
     public void enter(GameState state)
     {
-        if (isItem())
-            Game.output(enterItemString);
-        else 
-            Game.output(enterString);
+        if (state.directObject.name.equals("magic boat"))
+            board(state);
+        else
+        {
+            if (isItem())
+                Game.output(enterItemString);
+            else 
+                Game.output(enterString);
+        }
     }
     public void examine(GameState state) { Game.output(examineString); }
     public void extinguish(GameState state) { Game.output(extinguishString); }   
@@ -269,6 +277,7 @@ public abstract class GameObject {
     public void inflate(GameState state) { Game.output(inflateString); }
     public void kick(GameState state) { Game.output(kickString + randPhrase()); }
     public void knock(GameState state) { Game.output(knockString); }
+    public void launch(GameState state) { Game.output(launchString); }
     public void light(GameState state) { Game.output(lightString); }
     public void listen(GameState state) { Game.output(listenString); }
     public void lock(GameState state) { Game.output("You can't lock that."); }

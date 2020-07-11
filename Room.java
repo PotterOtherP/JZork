@@ -10,6 +10,7 @@ class Room {
     public boolean darkness;
     public boolean firstVisit;
     public boolean height;
+    public boolean bodyOfWater;
 
     public HashMap<Action, Passage> exits;
     public HashMap<Action, String> failMessages;
@@ -27,6 +28,8 @@ class Room {
 
         exits = new HashMap<Action, Passage>();
         failMessages = new HashMap<Action, String>();
+        failMessages.put(Action.LAND, "You have sea lions on the land?");
+        failMessages.put(Action.LAUNCH, GameStrings.LAUNCH_FAIL);
     }
 
 

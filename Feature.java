@@ -604,6 +604,34 @@ class Feature extends GameObject {
 
 
     @Override
+    public void take(GameState state)
+    {
+        switch (name)
+        {
+            case "quantity of water":
+            {
+                Item bottle = (Item)state.objectList.get("glass bottle");
+
+                if (bottle.location != Location.PLAYER_INVENTORY)
+                    Game.output("It's in the bottle. Perhaps you should take that first.");
+
+                else if (!bottle.isOpen())
+                    Game.output("The bottle is closed.");
+
+                else
+                    Game.output("The water slips through your fingers.");
+                
+            } break;
+
+            default:
+            {
+                super.take(state);
+            } break;
+        }
+    }
+
+
+    @Override
     public void tie(GameState state)
     {
         switch (name)
