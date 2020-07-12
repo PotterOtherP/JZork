@@ -276,8 +276,24 @@ class MapStrings {
         + "along the edge of a chasm, and a path leading into a canyon to the southeast.";
 
     public static final String RESERVOIR_FILLS = "You notice that the water level has risen to the point that it is impossible to cross.";
-    
+
+    public static final String RESERVOIR_FILLS_BOAT = "The rising water carries the boat over the dam, down the river, and over the "
+        + "falls. Tsk, tsk.";
+
+    public static final String RESERVOIR_FILLS_SWIM = "You are lifted up by the rising river! You try to swim, but the currents are "
+        + "too strong. You come closer, closer to the awesome structure of Flood Control Dam #3. The dam beckons to you. The roar "
+        + "of the water nearly deafens you, but you remain conscious as you tumble over the dam toward your certain doom among the "
+        + "rocks at its base.";
+
     public static final String RESERVOIR_EMPTIES = "The water level is now quite low here and you could easily cross over to the other side.";
+
+    public static final String RESERVOIR_EMPTIES_BOAT = "The water level has dropped to the point at which the boat can no longer stay "
+        + "afloat. It sinks into the mud.";
+
+    public static final String RESERVOIR_RISING = "You notice that the water level here is rising rapidly. The currents are also "
+        + "becoming stronger. Staying here seems quite perilous!";
+
+    public static final String RESERVOIR_RISING_BOAT = "The boat lifts gently out of the mud and is now floating on the reservoir.";
 
     public static final String DESC_STREAM_VIEW = "You are standing on a path beside a gently flowing stream. The path follows "
         + "the stream, which flows from east to west.";

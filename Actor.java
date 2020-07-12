@@ -421,6 +421,13 @@ public class Actor extends GameObject {
                     Game.lineOutput(MapStrings.RESERVOIR_EMPTIES);
                 }
 
+                if (state.playerLocation == Location.RESERVOIR)
+                {
+                    Game.lineOutput(MapStrings.RESERVOIR_EMPTIES_BOAT);
+                    Game.outputLine();
+                    state.relocatePlayer(Location.RESERVOIR_EMPTY);
+                }
+
                 if (state.playerLocation == Location.DEEP_CANYON)
                     Game.lineOutput("The roar of rushing water is quieter now.");
             }
@@ -435,7 +442,18 @@ public class Actor extends GameObject {
             state.waterFalling = false;
             resNorth.description = MapStrings.DESC_RESERVOIR_NORTH_RISING;
             resSouth.description = MapStrings.DESC_RESERVOIR_SOUTH_RISING;
+            resEmpty.description = MapStrings.RESERVOIR_RISING;
+            GameObject boat = state.objectList.get("magic boat");
             // Game.output("Dam water stage is " + state.damWaterStage);
+
+            if (state.playerLocation == Location.RESERVOIR_EMPTY)
+            {
+                if (state.damWaterStage == 3 || state.damWaterStage == 6)
+                    Game.lineOutput(MapStrings.RESERVOIR_RISING);
+
+                if (state.damWaterStage == 4 && state.playerInBoat)
+                    Game.lineOutput(MapStrings.RESERVOIR_RISING_BOAT);
+            }
 
             // Water finishes rising and goes over the dam
             if (state.damWaterStage == GameState.RESERVOIR_DRAIN_TURNS)
@@ -444,6 +462,21 @@ public class Actor extends GameObject {
                     state.playerLocation == Location.RESERVOIR_NORTH)
                 {
                     Game.lineOutput(MapStrings.RESERVOIR_FILLS);
+                }
+
+                if (state.playerLocation == Location.RESERVOIR_EMPTY)
+                {
+                    if (state.playerInBoat)
+                    {
+                        Game.lineOutput(MapStrings.RESERVOIR_FILLS_BOAT);
+                        state.playerInBoat = false;
+                        boat.location = Location.RESERVOIR_SOUTH;
+                    }
+                    else
+                        Game.lineOutput(MapStrings.RESERVOIR_FILLS_SWIM);
+
+                    state.playerDies();
+
                 }
 
                 if (state.playerLocation == Location.LOUD_ROOM)
@@ -461,6 +494,9 @@ public class Actor extends GameObject {
 
                 if (state.playerLocation == Location.DEEP_CANYON)
                     Game.lineOutput("A sound, like that of flowing water, starts to come from below.");
+
+                if (boat.location == Location.RESERVOIR_EMPTY && !state.playerInBoat)
+                    boat.location = Location.DAM;
             }
         }
 
@@ -473,6 +509,7 @@ public class Actor extends GameObject {
             state.waterRising = false;
             resNorth.description = MapStrings.DESC_RESERVOIR_NORTH_EMPTY;
             resSouth.description = MapStrings.DESC_RESERVOIR_SOUTH_EMPTY;
+            resEmpty.description = MapStrings.DESC_RESERVOIR_EMPTY;
 
             stream.exits.remove(Action.EAST);
             stream.addExit(Action.EAST, res_empty_STR);
@@ -493,6 +530,7 @@ public class Actor extends GameObject {
             state.waterRising = false;
             resNorth.description = MapStrings.DESC_RESERVOIR_NORTH;
             resSouth.description = MapStrings.DESC_RESERVOIR_SOUTH;
+            res.description = MapStrings.DESC_RESERVOIR;
 
             stream.exits.remove(Action.EAST);
             stream.addExit(Action.EAST, res_STR);
@@ -661,12 +699,6 @@ public class Actor extends GameObject {
                     Item boat = (Item)state.objectList.get("magic boat");
                     boat.location = Location.SHORE;
                 } break;
-
-                case RESERVOIR:
-                {
-
-                } break;
-
 
                 default: {} break;
             }

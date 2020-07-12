@@ -28,6 +28,8 @@ public class Item extends GameObject{
         open = false;
         trophyCaseValue = 0;
         weight = 0;
+
+        altLocations.clear();
     }
 
 
@@ -107,6 +109,48 @@ public class Item extends GameObject{
             Game.output("It is already closed.");
         }
 
+    }
+
+
+    @Override
+    public void deflate(GameState state)
+    {
+        switch (name)
+        {
+            case "magic boat":
+            {
+                if (state.playerInBoat)
+                {
+                    Game.output("You can't deflate the boat while you're inside it!");
+                }
+
+                else
+                {
+                    GameObject downBoat = state.objectList.get("pile of plastic");
+                    downBoat.location = location;
+                    location = Location.NULL_LOCATION;
+                    Game.output("The boat deflates.");
+
+                }
+
+            } break;
+
+            case "pile of plastic":
+            {
+                Game.output(GameStrings.getHardSarcasm());
+            } break;
+
+            case "punctured boat":
+            {
+                Game.output("Too late. Some moron punctured it.");
+
+            } break;
+
+            default:
+            {
+                super.deflate(state);
+            }
+        }
     }
 
 
@@ -667,6 +711,37 @@ public class Item extends GameObject{
             Game.output("The " + name + " is closed.");
         }
         
+    }
+
+
+    @Override
+    public void repair(GameState state)
+    {
+        switch (name)
+        {
+            case "punctured boat":
+            {
+                if (state.indirectObject.name.equals("viscous material"))
+                {
+                    GameObject goodBoat = state.objectList.get("magic boat");
+                    GameObject gunk = state.indirectObject;
+                    goodBoat.location = location;
+                    location = Location.NULL_LOCATION;
+                    gunk.location = Location.NULL_LOCATION;
+                    Game.output("Well done. The boat is repaired.");
+                }
+
+                else
+                {
+                    Game.output("That isn't going to work.");
+                }
+            } break;
+
+            default:
+            {
+                super.repair(state);
+            } break;
+        }
     }
 
 

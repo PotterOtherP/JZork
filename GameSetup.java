@@ -808,11 +808,13 @@ public class GameSetup {
         reservoir.addExit(Action.SOUTH, res_south_res);
         reservoir.addExit(Action.LAND, res_south_res);
         reservoir.addExit(Action.WEST, reservoir_stream);
+        reservoir.addFailMessage(Action.EAST, "The dam blocks your way.");
 
         Room reservoirEmpty = new Room("Reservoir", MapStrings.DESC_RESERVOIR_EMPTY, Location.RESERVOIR_EMPTY);
         reservoirEmpty.addExit(Action.NORTH, res_north_res_empty);
         reservoirEmpty.addExit(Action.SOUTH, res_south_res_empty);
         reservoirEmpty.addExit(Action.WEST, stream_res_empty);
+        reservoirEmpty.addExit(Action.LAUNCH, stream_res_empty);
 
         Room reservoirNorth = new Room("Reservoir North", MapStrings.DESC_RESERVOIR_NORTH, Location.RESERVOIR_NORTH);
         reservoirNorth.addExit(Action.NORTH, res_north_atlantis);
@@ -1048,9 +1050,17 @@ public class GameSetup {
         eastOfChasm.height = true; chasm.height = true; canyonView.height = true;
 
         // Rooms that are a body of water
-        reservoir.bodyOfWater = true; stream.bodyOfWater = true; frigidRiver1.bodyOfWater = true;
-        frigidRiver2.bodyOfWater = true; frigidRiver3.bodyOfWater = true; frigidRiver4.bodyOfWater = true;
-        frigidRiver5.bodyOfWater = true;
+
+        Room[] waterRooms = { reservoir, stream, frigidRiver1, frigidRiver2, frigidRiver3, frigidRiver4, frigidRiver5 };
+
+        for (int i = 0; i < waterRooms.length; ++i)
+        {
+            waterRooms[i].bodyOfWater = true;
+            waterRooms[i].removeFailMessage(Action.LAUNCH);
+            waterRooms[i].addFailMessage(Action.LAUNCH, "You are already on the water!");
+        }
+
+
 
         // Closed passages
         grating_clearing.close();
@@ -1471,7 +1481,7 @@ public class GameSetup {
         guideBook.initialPresenceString = ObjectStrings.INIT_GUIDEBOOK;
         guideBook.weight = GUIDEBOOK_WEIGHT;
 
-        Item gunk = new Item("viscous material", Location.NULL_LOCATION);
+        Item gunk = new Item("viscous material", Location.INSIDE_TUBE);
         gunk.altNames.add("gunk");
         gunk.altNames.add("material");
         gunk.weight = GUNK_WEIGHT;
@@ -2152,6 +2162,7 @@ public class GameSetup {
         state.actions.put("count", Action.COUNT);
         state.actions.put("cross", Action.CROSS);
         state.actions.put("deflate", Action.DEFLATE);
+        state.actions.put("uninflate", Action.DEFLATE);
         state.actions.put("drink", Action.DRINK);
         state.actions.put("drop", Action.DROP);
         state.actions.put("eat", Action.EAT);
@@ -2185,6 +2196,7 @@ public class GameSetup {
         state.actions.put("raise", Action.RAISE);
         state.actions.put("read", Action.READ);
         state.actions.put("remove", Action.REMOVE);
+        state.actions.put("mend", Action.REPAIR);
         state.actions.put("repair", Action.REPAIR);
         state.actions.put("fix", Action.REPAIR);
         state.actions.put("ring", Action.RING);

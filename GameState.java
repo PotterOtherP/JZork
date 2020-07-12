@@ -182,11 +182,21 @@ public class GameState {
         {
             case ATTACK:
             case CLIMB:
+            case DEFLATE:
             case TIE:
             case KICK:
             case DIG:
             {
                 result = false;
+            } break;
+
+            case TAKE:
+            {
+                if (directObject.name.equals("magic boat"))
+                {
+                    Game.output("You can't take the boat while you're inside it!");
+                    result = false;
+                }
             } break;
 
             default: {} break;
@@ -316,13 +326,14 @@ public class GameState {
 
         for (GameObject g : objectList.values())
         {
+
             // Object in the player's location or inventory
             if (g.location == playerLocation ||
                 g.altLocations.contains(playerLocation) ||
                 g.playerHasObject())
             {
                 currentObjects.put(g.name, g);
-                
+
                 for (String str : g.altNames)
                     currentObjects.put(str, g);
 
@@ -373,8 +384,6 @@ public class GameState {
                 currentObjects.remove(g.name);
         
         }
-
-
 
 
         // Individual cases
@@ -434,6 +443,7 @@ public class GameState {
                 }
             }
         }
+
     }
 
     public void getNextRoomDescription(Location nextLoc)
