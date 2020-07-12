@@ -24,6 +24,7 @@ public class ObjectStrings {
         + "wound down.";
     public static final String EXAMINE_GOLDEN_CANARY = "It has ruby eyes and a silver beak. Through a crystal window below its "
         + "left wing you can see intricate machinery inside. It appears to have wound down.";
+    public static final String INIT_BUOY = "There is a red buoy here (probably a warning).";
     public static final String INIT_CANDLES = "On the two ends of the altar are burning candles.";
     public static final String INIT_COINS = "An old leather bag, bulging with coins, is here.";
     public static final String INIT_EGG = "In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged "

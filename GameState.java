@@ -764,8 +764,14 @@ public class GameState {
 
                 if (playerInBoat)
                 {
-                    Game.output("You are on your own feet again.");
-                    playerInBoat = false;
+                    if (currentRoom.bodyOfWater)
+                        Game.output("You realize that getting out here would be fatal.");
+                    else
+                    {
+                        Game.output("You are on your own feet again.");
+                        playerInBoat = false;
+                            
+                    }
                 }
 
                 else if (boat.location == Location.PLAYER_INVENTORY || boat.location == playerLocation)
@@ -916,7 +922,11 @@ public class GameState {
                 if (currentRoom.exit(this, playerAction))
                 {
                     Room nextRoom = worldMap.get(playerLocation);
-                    Game.output(nextRoom.name);
+
+                    if (playerInBoat)
+                        Game.output(nextRoom.name + ", in the magic boat");
+                    else
+                        Game.output(nextRoom.name);
 
                     darknessCheck();
 

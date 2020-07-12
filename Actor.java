@@ -605,9 +605,63 @@ public class Actor extends GameObject {
 
     public void riverCurrentTurn(GameState state)
     {
-        if (riverTurns == 0)
+        riverTurns %= 2;
+
+        Room room = state.worldMap.get(state.playerLocation);
+
+        if (riverTurns == 0 && room.bodyOfWater)
         {
             ++riverTurns;
+            return;
+        }
+
+        switch (state.playerLocation)
+        {
+            case FRIGID_RIVER_1:
+            {
+                Game.output("The flow of the river carries you downstream.");
+                Game.outputLine();
+                state.relocatePlayer(Location.FRIGID_RIVER_2);
+            } break;
+
+            case FRIGID_RIVER_2:
+            {
+                Game.output("The flow of the river carries you downstream.");
+                Game.outputLine();
+                state.relocatePlayer(Location.FRIGID_RIVER_3);
+            } break;
+
+            case FRIGID_RIVER_3:
+            {
+                Game.output("The flow of the river carries you downstream.");
+                Game.outputLine();
+                state.relocatePlayer(Location.FRIGID_RIVER_4);
+            } break;
+
+            case FRIGID_RIVER_4:
+            {
+                Game.output("The flow of the river carries you downstream.");
+                Game.outputLine();
+                state.relocatePlayer(Location.FRIGID_RIVER_5);
+            } break;
+
+            case FRIGID_RIVER_5:
+            {
+                Game.output(GameStrings.WATERFALL_DEATH_BOAT);
+                Game.outputLine();
+                state.playerInBoat = false;
+                state.playerDies();
+                Item boat = (Item)state.objectList.get("magic boat");
+                boat.location = Location.SHORE;
+            } break;
+
+            case RESERVOIR:
+            {
+
+            } break;
+
+
+            default: {} break;
         }
     }
 

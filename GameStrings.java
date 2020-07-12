@@ -138,6 +138,10 @@ class GameStrings {
     public static final String SAILOR = "Nothing happens here.";
     public static final String TOO_DARK = "It's too dark to see!";
     public static final String TRAP_DOOR_OPENS = "The door reluctantly opens to reveal a rickety staircase descending into darkness.";
+    public static final String WATERFALL_DEATH_BOAT = "Unfortunately, the magic boat doesn't provide protection from the rocks and "
+        + "boulders one meets at the bottom of waterfalls. Including this one.";
+    public static final String WATERFALL_DEATH_SWIM = "In other words, fighting the fierce currents of the Frigid River. You manage "
+        + "to hold your own for a bit, but then you are carried over a waterfall and into some nasty rocks. Ouch!";
     public static final String WINDOW_CLOSES = "The window closes (more easily than it opened).";
     public static final String WINDOW_OPENS = "With great effort, you open the window far enough to allow entry.";
     public static final String ZORK_MANUAL_TEXT = "Congratulations!\n\nYou are the privileged owner of ZORK I: The Great Underground Empire, a "

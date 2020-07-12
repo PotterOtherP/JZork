@@ -403,7 +403,10 @@ class Room {
 
     public void lookAround(GameState state)
     {
-        Game.output(name);
+        if (state.playerInBoat)
+            Game.output(name + ", in the magic boat");
+        else
+            Game.output(name);
         Game.outputLine();
 
         getDescription(state);
