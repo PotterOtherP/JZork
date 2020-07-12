@@ -22,7 +22,7 @@ public class Actor extends GameObject {
 
     public static final int CYCLOPS_CYCLE_MAX = 8;
     public static final int MAX_ENEMY_HIT_POINTS = 10;
-    public static final int THIEF_ENCOUNTER_PERCENT = 0;
+    public static final int THIEF_ENCOUNTER_PERCENT = 2;
     public static final int SONGBIRD_CHIRP_PERCENT = 15;
 
 
@@ -39,6 +39,7 @@ public class Actor extends GameObject {
         disarmed = false;
         firstCombatTurn = true;
         hitPoints = MAX_ENEMY_HIT_POINTS;
+        riverTurns = 0;
         staggered = false;
         swordGlowLevel = 0;
         thiefAggro = false;
@@ -388,9 +389,9 @@ public class Actor extends GameObject {
     {
         Room resNorth = state.worldMap.get(Location.RESERVOIR_NORTH);
         Room resSouth = state.worldMap.get(Location.RESERVOIR_SOUTH);
+        Room res = state.worldMap.get(Location.RESERVOIR);
         Room stream = state.worldMap.get(Location.STREAM);
 
-        Room res = state.worldMap.get(Location.RESERVOIR);
         Passage res_N = res.exits.get(Action.NORTH);
         Passage res_S = res.exits.get(Action.SOUTH);
         Passage res_STR = res.exits.get(Action.WEST);
@@ -605,64 +606,72 @@ public class Actor extends GameObject {
 
     public void riverCurrentTurn(GameState state)
     {
-        riverTurns %= 2;
-
         Room room = state.worldMap.get(state.playerLocation);
 
-        if (riverTurns == 0 && room.bodyOfWater)
+        if (room.bodyOfWater)
         {
             ++riverTurns;
+
+        }
+
+        if (riverTurns == 1)
+        {
+            riverTurns = 0;
             return;
         }
 
-        switch (state.playerLocation)
+        else
         {
-            case FRIGID_RIVER_1:
+            switch (state.playerLocation)
             {
-                Game.output("The flow of the river carries you downstream.");
-                Game.outputLine();
-                state.relocatePlayer(Location.FRIGID_RIVER_2);
-            } break;
+                case FRIGID_RIVER_1:
+                {
+                    Game.lineOutput("The flow of the river carries you downstream.");
+                    Game.outputLine();
+                    state.relocatePlayer(Location.FRIGID_RIVER_2);
+                } break;
 
-            case FRIGID_RIVER_2:
-            {
-                Game.output("The flow of the river carries you downstream.");
-                Game.outputLine();
-                state.relocatePlayer(Location.FRIGID_RIVER_3);
-            } break;
+                case FRIGID_RIVER_2:
+                {
+                    Game.lineOutput("The flow of the river carries you downstream.");
+                    Game.outputLine();
+                    state.relocatePlayer(Location.FRIGID_RIVER_3);
+                } break;
 
-            case FRIGID_RIVER_3:
-            {
-                Game.output("The flow of the river carries you downstream.");
-                Game.outputLine();
-                state.relocatePlayer(Location.FRIGID_RIVER_4);
-            } break;
+                case FRIGID_RIVER_3:
+                {
+                    Game.lineOutput("The flow of the river carries you downstream.");
+                    Game.outputLine();
+                    state.relocatePlayer(Location.FRIGID_RIVER_4);
+                } break;
 
-            case FRIGID_RIVER_4:
-            {
-                Game.output("The flow of the river carries you downstream.");
-                Game.outputLine();
-                state.relocatePlayer(Location.FRIGID_RIVER_5);
-            } break;
+                case FRIGID_RIVER_4:
+                {
+                    Game.lineOutput("The flow of the river carries you downstream.");
+                    Game.outputLine();
+                    state.relocatePlayer(Location.FRIGID_RIVER_5);
+                } break;
 
-            case FRIGID_RIVER_5:
-            {
-                Game.output(GameStrings.WATERFALL_DEATH_BOAT);
-                Game.outputLine();
-                state.playerInBoat = false;
-                state.playerDies();
-                Item boat = (Item)state.objectList.get("magic boat");
-                boat.location = Location.SHORE;
-            } break;
+                case FRIGID_RIVER_5:
+                {
+                    Game.lineOutput(GameStrings.WATERFALL_DEATH_BOAT);
+                    Game.outputLine();
+                    state.playerInBoat = false;
+                    state.playerDies();
+                    Item boat = (Item)state.objectList.get("magic boat");
+                    boat.location = Location.SHORE;
+                } break;
 
-            case RESERVOIR:
-            {
+                case RESERVOIR:
+                {
 
-            } break;
+                } break;
 
 
-            default: {} break;
+                default: {} break;
+            }
         }
+
     }
 
 

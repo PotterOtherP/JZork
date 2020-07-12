@@ -1434,6 +1434,8 @@ public class GameSetup {
         buoy.inventoryID = Location.INSIDE_BUOY;
         buoy.weight = BUOY_WEIGHT;
         buoy.capacity = 4;
+        buoy.initialPresenceString = ObjectStrings.INIT_BUOY;
+        buoy.examineString = "You notice something funny about the feel of the buoy.";
 
         Item candles = new Item("pair of candles", Location.ALTAR);
         candles.altNames.add("candles");
@@ -2218,6 +2220,8 @@ public class GameSetup {
         state.actions.put("dig in", Action.DIG);
         state.actions.put("fill", Action.FILL);
         state.actions.put("inflate", Action.INFLATE);
+        state.actions.put("pump up", Action.INFLATE);
+        state.actions.put("pump", Action.INFLATE);
     
         state.actions.put("unlock", Action.UNLOCK);
         state.actions.put("lock", Action.LOCK);

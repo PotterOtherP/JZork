@@ -651,33 +651,6 @@ public class GameState {
             return;
         }
 
-        if (playerInBoat)
-        {
-            boat.location = playerLocation;
-            boat.presenceString = "";
-            worldMap.get(Location.DAM_BASE).addFailMessage(Action.EAST, "Refer to the boat label for instructions.");
-            worldMap.get(Location.WHITE_CLIFFS_BEACH_NORTH).addFailMessage(Action.EAST, "Refer to the boat label for instructions.");
-            worldMap.get(Location.WHITE_CLIFFS_BEACH_SOUTH).addFailMessage(Action.EAST, "Refer to the boat label for instructions.");
-            worldMap.get(Location.SANDY_BEACH).addFailMessage(Action.WEST, "Refer to the boat label for instructions.");
-            worldMap.get(Location.SHORE).addFailMessage(Action.WEST, "Refer to the boat label for instructions.");
-            worldMap.get(Location.RESERVOIR_SOUTH).addFailMessage(Action.NORTH, "Refer to the boat label for instructions.");
-            worldMap.get(Location.RESERVOIR_NORTH).addFailMessage(Action.SOUTH, "Refer to the boat label for instructions.");
-            worldMap.get(Location.STREAM_VIEW).addFailMessage(Action.NORTH, "Refer to the boat label for instructions.");
-        }
-
-        if (!playerInBoat)
-        {
-            boat.presenceString = "There is a magic boat here.";
-            worldMap.get(Location.DAM_BASE).removeFailMessage(Action.EAST);
-            worldMap.get(Location.WHITE_CLIFFS_BEACH_NORTH).removeFailMessage(Action.EAST);
-            worldMap.get(Location.WHITE_CLIFFS_BEACH_SOUTH).removeFailMessage(Action.EAST);
-            worldMap.get(Location.SANDY_BEACH).removeFailMessage(Action.WEST);
-            worldMap.get(Location.SHORE).removeFailMessage(Action.WEST);
-            worldMap.get(Location.RESERVOIR_SOUTH).removeFailMessage(Action.NORTH);
-            worldMap.get(Location.RESERVOIR_NORTH).removeFailMessage(Action.SOUTH);
-            worldMap.get(Location.STREAM_VIEW).removeFailMessage(Action.NORTH);
-        }
-
         if (directObject.name.equals("basket"))
         {
             if (playerAction == Action.RAISE || playerAction == Action.LOWER) {}
@@ -1095,6 +1068,36 @@ public class GameState {
                     
                 }
             }
+        }
+
+
+        GameObject boat = objectList.get("magic boat");
+
+        if (playerInBoat)
+        {
+            boat.location = playerLocation;
+            boat.presenceString = "";
+            worldMap.get(Location.DAM_BASE).addFailMessage(Action.EAST, "Refer to the boat label for instructions.");
+            worldMap.get(Location.WHITE_CLIFFS_BEACH_NORTH).addFailMessage(Action.EAST, "Refer to the boat label for instructions.");
+            worldMap.get(Location.WHITE_CLIFFS_BEACH_SOUTH).addFailMessage(Action.EAST, "Refer to the boat label for instructions.");
+            worldMap.get(Location.SANDY_BEACH).addFailMessage(Action.WEST, "Refer to the boat label for instructions.");
+            worldMap.get(Location.SHORE).addFailMessage(Action.WEST, "Refer to the boat label for instructions.");
+            worldMap.get(Location.RESERVOIR_SOUTH).addFailMessage(Action.NORTH, "Refer to the boat label for instructions.");
+            worldMap.get(Location.RESERVOIR_NORTH).addFailMessage(Action.SOUTH, "Refer to the boat label for instructions.");
+            worldMap.get(Location.STREAM_VIEW).addFailMessage(Action.NORTH, "Refer to the boat label for instructions.");
+        }
+
+        if (!playerInBoat)
+        {
+            boat.presenceString = "There is a magic boat here.";
+            worldMap.get(Location.DAM_BASE).removeFailMessage(Action.EAST);
+            worldMap.get(Location.WHITE_CLIFFS_BEACH_NORTH).removeFailMessage(Action.EAST);
+            worldMap.get(Location.WHITE_CLIFFS_BEACH_SOUTH).removeFailMessage(Action.EAST);
+            worldMap.get(Location.SANDY_BEACH).removeFailMessage(Action.WEST);
+            worldMap.get(Location.SHORE).removeFailMessage(Action.WEST);
+            worldMap.get(Location.RESERVOIR_SOUTH).removeFailMessage(Action.NORTH);
+            worldMap.get(Location.RESERVOIR_NORTH).removeFailMessage(Action.SOUTH);
+            worldMap.get(Location.STREAM_VIEW).removeFailMessage(Action.NORTH);
         }
     }
 
