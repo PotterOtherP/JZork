@@ -1672,6 +1672,7 @@ public class GameSetup {
         Feature forest = new Feature("forest", Location.FOREST_PATH);
         forest.altNames.add("woods");
         forest.altNames.add("trees");
+        forest.altNames.add("tree");
         forest.altLocations.add(Location.FOREST_WEST);
         forest.altLocations.add(Location.FOREST_EAST);
         forest.altLocations.add(Location.FOREST_NORTHEAST);

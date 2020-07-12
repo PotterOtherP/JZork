@@ -47,6 +47,38 @@ class Feature extends GameObject {
 
 
     @Override
+    public void climb(GameState state)
+    {
+        switch (name)
+        {
+            case "forest":
+            {
+                if (state.playerLocation == Location.FOREST_PATH)
+                {
+                    state.relocatePlayer(Location.UP_TREE);
+                }
+
+                else if (state.playerLocation == Location.UP_TREE)
+                {
+                    Game.output("You cannot climb any higher.");
+                }
+
+                else
+                {
+                    Game.output("There is no tree here suitable for climbing.");
+                }
+            } break;
+
+            default:
+            {
+                super.climb(state);
+            } break;
+        }
+
+    }
+
+
+    @Override
     public void close(GameState state)
     {
         switch (name)

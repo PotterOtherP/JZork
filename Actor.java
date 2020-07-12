@@ -649,16 +649,9 @@ public class Actor extends GameObject {
         if (room.bodyOfWater)
         {
             ++riverTurns;
-
         }
 
-        if (riverTurns == 1)
-        {
-            riverTurns = 0;
-            return;
-        }
-
-        else
+        if (riverTurns == 2)
         {
             switch (state.playerLocation)
             {
@@ -702,6 +695,8 @@ public class Actor extends GameObject {
 
                 default: {} break;
             }
+
+            riverTurns = 0;
         }
 
     }

@@ -795,6 +795,13 @@ public class Item extends GameObject{
             return;
         }
 
+        if (location == Location.INSIDE_BASKET &&
+            state.playerLocation == Location.DRAFTY_ROOM &&
+            !state.shaftBasketUsed)
+        {
+            state.shaftBasketUsed = true;
+        }
+
         if (name.equals("pile of leaves") && !state.leafPileMoved)
         {
             revealGrating(state);       
