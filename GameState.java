@@ -882,6 +882,11 @@ public class GameState {
 
             case SHOUT: { Game.output("Yaaaaarrrrggghhh!"); } break;
 
+            case SWIM:
+            {
+                Game.output("You need to wait an hour after eating first.");
+            } break;
+
             case WAIT:
             {
                 if (playerHitPoints < MAX_HIT_POINTS) ++playerHitPoints;
