@@ -1035,6 +1035,11 @@ public class Actor extends GameObject {
         Random rand = new Random();
         int dieRoll = rand.nextInt(100);
 
+        // Score modification
+        int mod = (int)( (100 * state.playerScore) / GameState.WINNING_SCORE);
+        dieRoll += mod;
+        if (dieRoll > 99) dieRoll = 99;
+
         if (0 <= dieRoll && dieRoll < missCutoff)
         {
             int phrase = rand.nextInt(misses.length);
@@ -1422,6 +1427,11 @@ public class Actor extends GameObject {
 
         Random rand = new Random();
         int dieRoll = rand.nextInt(100);
+
+        // Score modification
+        int mod = (int)( (100 * state.playerScore) / GameState.WINNING_SCORE);
+        dieRoll += mod;
+        if (dieRoll > 99) dieRoll = 99;
 
         if (0 <= dieRoll && dieRoll < missCutoff)
         {
