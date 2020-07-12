@@ -768,6 +768,7 @@ public class InputParser {
                         // Here is the list of objects that can be performed on items
                         // which are present but not in the player's inventory.
                         case BOARD:
+                        case CLOSE:
                         case DEFLATE:
                         case INFLATE:
                         case LAUNCH:

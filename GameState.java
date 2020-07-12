@@ -175,10 +175,8 @@ public class GameState {
 
     public boolean boatCheck()
     {
+        
         boolean result = true;
-
-        if (playerActionType == ActionType.EXIT && playerAction != Action.LAUNCH)
-            result = false;
 
         switch (playerAction)
         {
@@ -645,10 +643,39 @@ public class GameState {
             return;
         }
 
+        Item boat = (Item)objectList.get("magic boat");
+
         if (playerInBoat && !boatCheck())
         {
             Game.output("You need to get out of the boat first.");
             return;
+        }
+
+        if (playerInBoat)
+        {
+            boat.location = playerLocation;
+            boat.presenceString = "";
+            worldMap.get(Location.DAM_BASE).addFailMessage(Action.EAST, "Refer to the boat label for instructions.");
+            worldMap.get(Location.WHITE_CLIFFS_BEACH_NORTH).addFailMessage(Action.EAST, "Refer to the boat label for instructions.");
+            worldMap.get(Location.WHITE_CLIFFS_BEACH_SOUTH).addFailMessage(Action.EAST, "Refer to the boat label for instructions.");
+            worldMap.get(Location.SANDY_BEACH).addFailMessage(Action.WEST, "Refer to the boat label for instructions.");
+            worldMap.get(Location.SHORE).addFailMessage(Action.WEST, "Refer to the boat label for instructions.");
+            worldMap.get(Location.RESERVOIR_SOUTH).addFailMessage(Action.NORTH, "Refer to the boat label for instructions.");
+            worldMap.get(Location.RESERVOIR_NORTH).addFailMessage(Action.SOUTH, "Refer to the boat label for instructions.");
+            worldMap.get(Location.STREAM_VIEW).addFailMessage(Action.NORTH, "Refer to the boat label for instructions.");
+        }
+
+        if (!playerInBoat)
+        {
+            boat.presenceString = "There is a magic boat here.";
+            worldMap.get(Location.DAM_BASE).removeFailMessage(Action.EAST);
+            worldMap.get(Location.WHITE_CLIFFS_BEACH_NORTH).removeFailMessage(Action.EAST);
+            worldMap.get(Location.WHITE_CLIFFS_BEACH_SOUTH).removeFailMessage(Action.EAST);
+            worldMap.get(Location.SANDY_BEACH).removeFailMessage(Action.WEST);
+            worldMap.get(Location.SHORE).removeFailMessage(Action.WEST);
+            worldMap.get(Location.RESERVOIR_SOUTH).removeFailMessage(Action.NORTH);
+            worldMap.get(Location.RESERVOIR_NORTH).removeFailMessage(Action.SOUTH);
+            worldMap.get(Location.STREAM_VIEW).removeFailMessage(Action.NORTH);
         }
 
         if (directObject.name.equals("basket"))
@@ -694,6 +721,7 @@ public class GameState {
             case FOLLOW: { directObject.follow(this); } break;
             case GIVE: { directObject.give(this); } break;
             case GREET: { directObject.greet(this); } break;
+            case INFLATE: { directObject.inflate(this); } break;
             case KICK: { directObject.kick(this); } break;
             case KNOCK: { directObject.knock(this); } break;
             case LAUNCH: { directObject.launch(this); } break;
@@ -733,7 +761,6 @@ public class GameState {
             /* REFLEXIVE GAME ACTIONS */
             case DEBOARD:
             {
-                GameObject boat = objectList.get("magic boat");
 
                 if (playerInBoat)
                 {

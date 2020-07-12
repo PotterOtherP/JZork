@@ -1480,6 +1480,7 @@ public class GameSetup {
         inflatedBoat.inventoryID = Location.INSIDE_BOAT;
         inflatedBoat.weight = BOAT_WEIGHT;
         inflatedBoat.capacity = 15;
+        inflatedBoat.open = true;
      
         Item knife = new Item("nasty knife", Location.ATTIC);
         knife.altNames.add("knife");
@@ -1907,6 +1908,7 @@ public class GameSetup {
         state.objectList.put(axe.name, axe);
         state.objectList.put(bell.name, bell);
         state.objectList.put(blackBook.name, blackBook);
+        state.objectList.put(boatLabel.name, boatLabel);
         state.objectList.put(bottle.name, bottle);
         state.objectList.put(brokenCanary.name, brokenCanary);
         state.objectList.put(brokenEgg.name, brokenEgg);

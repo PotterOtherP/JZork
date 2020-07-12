@@ -61,6 +61,8 @@ public class ObjectStrings {
         + "The bat grabs you by the scruff of your neck and lifts you away....\n\n";
     public static final String BAT_GARLIC = "In the corner of the room on the ceiling is a large vampire bat who is obviously "
         + "deranged and holding his nose.";
+    public static final String BOAT_PUNCTURE = "Oops! Something sharp seems to have slipped and punctured the boat. The boat "
+        + "deflates to the sounds of hissing, sputtering, and cursing.";
     public static final String CANARY_WIND_BAD = "There is an unpleasant grinding noise from inside the canary.";
     public static final String CANARY_WIND_GOOD = "The canary chirps blithely, if somewhat tinnily, for a short time.";
     public static final String CANARY_WIND_BAUBLE = "The canary chirps, slightly off-key, an aria from a forgotten opera. From out "

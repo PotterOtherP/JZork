@@ -71,10 +71,25 @@ class Room {
             return false;
         }
 
-
         // Figure out which side of the Passage the player is on.
         if (psg.locationA == roomID) { dest = psg.locationB; }
         else { dest = psg.locationA; }
+
+        // Boat checks
+        if (state.playerInBoat && !bodyOfWater)
+        {
+            if (state.worldMap.get(dest).bodyOfWater && act != Action.LAUNCH)
+            {
+                Game.output("Refer to the boat label for instructions.");
+                return false;
+            }
+
+            else if (!state.worldMap.get(dest).bodyOfWater)
+            {
+                Game.output("You can't go there in a magic boat.");
+                return false;
+            }
+        }
 
         // Darkness check. If the room is in darkness, and the destination
         // is not the previous room, player dies by grue.

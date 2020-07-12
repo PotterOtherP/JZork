@@ -38,6 +38,30 @@ public class Item extends GameObject{
         {
             case "magic boat":
             {
+                Item weapon1 = (Item)state.objectList.get("elvish sword");
+                Item weapon2 = (Item)state.objectList.get("nasty knife");
+                Item weapon3 = (Item)state.objectList.get("rusty knife");
+                Item weapon4 = (Item)state.objectList.get("stiletto");
+                Item weapon5 = (Item)state.objectList.get("sceptre");
+                Item weapon6 = (Item)state.objectList.get("bloody axe");
+
+                Item[] sharpies = { weapon1, weapon2, weapon3, weapon4, weapon5, weapon6 };
+
+                for (int i = 0; i < sharpies.length; ++i)
+                {
+                    if (sharpies[i].location == Location.PLAYER_INVENTORY)
+                    {
+                        Game.output(ObjectStrings.BOAT_PUNCTURE);
+                        location = Location.NULL_LOCATION;
+                        Item badBoat = (Item)state.objectList.get("punctured boat");
+                        Item label = (Item)state.objectList.get("tan label");
+                        label.location = Location.NULL_LOCATION;
+                        badBoat.location = state.playerLocation;
+                        return;
+                    }
+                }
+
+
                 if (!state.playerInBoat && location == state.playerLocation)
                 {
                     Game.output("You are now inside the boat.");
@@ -61,6 +85,12 @@ public class Item extends GameObject{
     @Override
     public void close(GameState state)
     {
+        if (name.equals("magic boat"))
+        {
+            Game.output("You cannot close the boat.");
+            return;
+        }
+
         if (!isContainer())
         {
             Game.output(closeString);
@@ -265,17 +295,28 @@ public class Item extends GameObject{
         {
             case "pile of plastic":
             {
-                
+                if (state.indirectObject.name.equals("hand-held air pump"))
+                {
+                    Game.output("The boat inflates and appears seaworthy. [A tan label is lying inside the boat.]");
+                    location = Location.NULL_LOCATION;
+                    Item goodBoat = (Item)state.objectList.get("magic boat");
+                    goodBoat.location = state.playerLocation;
+                    Item label = (Item)state.objectList.get("tan label");
+                    label.location = Location.INSIDE_BOAT;
+                }
+
+                else
+                    Game.output("With " + state.indirectObject.articleName + "? Surely you jest!");
             } break;
 
             case "magic boat":
             {
-
+                Game.output("Inflating it further would probably burst it.");
             } break;
 
             case "punctured boat":
             {
-
+                Game.output("Too late. Some moron punctured it.");
             } break;
 
             default:
@@ -303,9 +344,6 @@ public class Item extends GameObject{
                         newRoom.lookAround(state); 
                     }
 
-                    else
-                    {
-                    }
                 }
 
                 else
@@ -789,8 +827,7 @@ public class Item extends GameObject{
                         p1.open();
                         p2.open();
 
-                        if (state.playerLocation == Location.END_OF_RAINBOW &&
-                            !state.potOfGoldAppeared)
+                        if (!state.potOfGoldAppeared)
                         {
                             state.potOfGoldAppeared = true;
                             Game.output("A shimmering pot of gold appears at the end of the rainbow.");
