@@ -35,7 +35,6 @@ public abstract class GameObject {
     public String countString;
     public String crossString;
     public String cutString;
-    public String cutStringInd;
     public String deflateString;
     public String digString;
     public String digStringInd;
@@ -186,7 +185,6 @@ public abstract class GameObject {
         breakString = "";
         burnString = "";
         cutString = "Strange concept, cutting the " + name + "...";
-        cutStringInd = "The \"cutting edge\" of " + articleName + " is hardly adequate.";
         digString = "";
         digStringInd = "Digging with " + articleName + " is silly.";
         fillString = "You may know how to do that, but I don't.";
@@ -243,7 +241,88 @@ public abstract class GameObject {
     public void close() { Game.output("You can't close that."); }
     public void count() { Game.output(countString); }
     public void cross() { Game.output(crossString); }    
-    public void cut() { Game.output(cutString); }
+    public void cut()
+    {
+        String word = "";
+        String weapon = state.indirectObject.name;
+        if (weapon.equals("elvish sword")) word = "swordsmanship";
+        else if (weapon.equals("bloody axe")) word = "axesmanship";
+        else if (weapon.equals("stiletto")) word = "stilettosmanship";
+        else word = "knifesmanship";
+
+        switch(state.indirectObject.name)
+        {
+            case "elvish sword":
+            case "nasty knife":
+            case "rusty knife":
+            case "stiletto":
+            case "bloody axe":
+            {
+
+                switch (name)
+                {
+                    case "ancient map":
+                    case "guidebook":
+                    case "leaflet":
+                    case "matchbook":
+                    case "rope":
+                    case "tan label":
+                    case "ZORK owner's manual":
+                    {
+                        Game.output("Your skillful " + word + " slices the " + name
+                            + " into innumerable slivers which blow away.");
+
+                        location = Location.NULL_LOCATION;
+                    } break;
+
+                    case "black book":
+                    {
+                        Game.output(ObjectStrings.BLACK_BOOK_CUT);
+                        state.playerDies();
+                    } break;
+
+                    case "brown sack":
+                    {
+                        if (!inventory.isEmpty())
+                        {
+                            Game.output("The sack is cut open and its contents spill onto the floor.");
+                            for (GameObject g : inventory)
+                                g.location = state.playerLocation;
+                        }
+
+                        else
+                        {
+                            Game.output("The sack has been cut open and now rendered useless.");
+                        }
+
+                        location = Location.NULL_LOCATION;
+
+                    } break;
+
+                    case "magic boat":
+                    {
+
+                    } break;
+
+                    case "painting":
+                    {
+
+                    } break;
+
+                    default:
+                    {
+                        Game.output("Strange concept, cutting the " + name + "...");
+                    }
+                }
+
+            } break;
+
+            default:
+            {
+                Game.output("The \"cutting edge\" of " + state.indirectObject.articleName + " is hardly adequate.");
+            } break;
+        }
+    }
     public void deflate() { Game.output(deflateString); }
     public void dig()
     {

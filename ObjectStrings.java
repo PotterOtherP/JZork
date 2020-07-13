@@ -90,6 +90,10 @@ public class ObjectStrings {
     public static final String BLUE_BUTTON = "There is a rumbling sound and a stream of water appears to burst from the east wall "
         + "of the room (apparently, a leak has occurred in a pipe).";
     public static final String BLUE_BUTTON_JAMMED = "The blue button appears to be jammed.";
+    public static final String BLACK_BOOK_BURN = "A booming voice says \"Wrong, cretin!\" and you notice that you have turned into a "
+        + "pile of dust. How, I can't imagine.";
+    public static final String BLACK_BOOK_CUT = "The voice of the guardian of the dungeon booms out from the darkness, \"Your disrespect "
+        + "costs you your life!\" and places your head on a sharp pole.";
     public static final String BLACK_BOOK_READ_SPIRITS = "Each word of the prayer reverberates through the hall in a deafening "
         + "confusion. As the last word fades, a voice, loud and commanding, speaks: \"Begone, fiends!\" A heart-stopping scream "
         + "fills the cavern, and the spirits, sensing a greater power, flee through the walls.";

@@ -770,6 +770,7 @@ public class InputParser {
                         case ATTACK:
                         case BOARD:
                         case CLOSE:
+                        case CUT:
                         case DEFLATE:
                         case INFLATE:
                         case KICK:

@@ -693,6 +693,7 @@ public class GameState {
             case CLOSE: {directObject.close(); } break;
             case COUNT: { directObject.count(); } break;
             case CROSS: { directObject.cross(); } break;
+            case CUT: { directObject.cut(); } break;
             case DEFLATE: { directObject.deflate(); } break;
             case DIG: { directObject.dig(); } break;
             case DRINK: { directObject.drink(); } break;
