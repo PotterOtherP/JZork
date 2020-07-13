@@ -11,12 +11,12 @@ class Surface extends GameObject {
         type = ObjectType.SURFACE;
     
         capacity = 0;
-        state = Game.gameState;
+        state = super.state;
     }
 
 
     @Override
-    public void put(GameState state)
+    public void put()
     {
         Item it = (Item)(state.indirectObject);
         if (inventory.size() < capacity)
@@ -34,7 +34,7 @@ class Surface extends GameObject {
 
 
     @Override
-    public void remove(GameState state)
+    public void remove()
     {
         Item it = (Item)(state.indirectObject);
         if (inventory.contains(it))

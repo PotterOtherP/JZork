@@ -19,6 +19,7 @@ public class Actor extends GameObject {
     public boolean thiefFirstTurn;
     public boolean thiefItemsHidden;
     public boolean unconscious;
+    private GameState state;
 
     public static final int CYCLOPS_CYCLE_MAX = 8;
     public static final int MAX_ENEMY_HIT_POINTS = 10;
@@ -47,12 +48,13 @@ public class Actor extends GameObject {
         thiefItemsHidden = false;
         unconscious = false;
         presenceString = "";
+        state = super.state;
 
     }
 
 
     @Override
-    public void attack(GameState state)
+    public void attack()
     {
         GameObject weapon = state.indirectObject;
 
@@ -103,9 +105,9 @@ public class Actor extends GameObject {
 
                 else
                 {
-                    if (name.equals("troll")) trollCombat(state);
-                    if (name.equals("thief")) thiefCombat(state);
-                    if (name.equals("cyclops")) cyclopsCombat(state);
+                    if (name.equals("troll")) trollCombat();
+                    if (name.equals("thief")) thiefCombat();
+                    if (name.equals("cyclops")) cyclopsCombat();
                 }
 
 
@@ -113,7 +115,7 @@ public class Actor extends GameObject {
 
             default:
             {
-                super.attack(state);
+                super.attack();
             } break;
         }
 
@@ -121,15 +123,15 @@ public class Actor extends GameObject {
 
         if (!alive)
         {
-            if (name.equals("thief")) thiefDies(state);
-            if (name.equals("troll")) trollDies(state);
+            if (name.equals("thief")) thiefDies();
+            if (name.equals("troll")) trollDies();
         }
 
     }
 
 
     @Override
-    public void give(GameState state)
+    public void give()
     {
         switch (name)
         {
@@ -188,12 +190,12 @@ public class Actor extends GameObject {
             } break;
             case "troll":
             {
-                trollGive(state);
+                trollGive();
             } break;
 
             default:
             {
-                super.give(state);
+                super.give();
             } break;
         }
 
@@ -201,7 +203,7 @@ public class Actor extends GameObject {
 
 
     @Override
-    public void kick(GameState state)
+    public void kick()
     {
         switch (name)
         {
@@ -212,14 +214,14 @@ public class Actor extends GameObject {
 
             default:
             {
-                super.kick(state);
+                super.kick();
             } break;
         }
 
     }
 
     
-    public void cyclopsCombat(GameState state)
+    public void cyclopsCombat()
     {
         if (unconscious)
         {
@@ -238,7 +240,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void cyclopsTurn(GameState state)
+    public void cyclopsTurn()
     {
         if (!alive) return;
 
@@ -385,7 +387,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void damFlowTurn(GameState state)
+    public void damFlowTurn()
     {
         Room resNorth = state.worldMap.get(Location.RESERVOIR_NORTH);
         Room resSouth = state.worldMap.get(Location.RESERVOIR_SOUTH);
@@ -544,7 +546,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void floodTurn(GameState state)
+    public void floodTurn()
     {
         if (!state.blueButtonPushed) return;
 
@@ -594,7 +596,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void gustOfWindTurn(GameState state)
+    public void gustOfWindTurn()
     {
         Random rand = new Random();
         int chance = rand.nextInt(2);
@@ -642,7 +644,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void riverCurrentTurn(GameState state)
+    public void riverCurrentTurn()
     {
         Room room = state.worldMap.get(state.playerLocation);
 
@@ -702,7 +704,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void songbirdTurn(GameState state)
+    public void songbirdTurn()
     {
         // The songbird shouldn't chirp on the same turn it drops the bauble.
         if (state.baubleFell)
@@ -721,7 +723,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void spiritsTurn(GameState state)
+    public void spiritsTurn()
     {
         if (state.spiritsBanished) return;
 
@@ -754,7 +756,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void swordGlowTurn(GameState state)
+    public void swordGlowTurn()
     {
         Item sword = (Item)(state.objectList.get("elvish sword"));
 
@@ -838,7 +840,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void thiefAttacks(GameState state)
+    public void thiefAttacks()
     {
         // Game.output("The thief attacks you, sucka!");
         Random rand = new Random();
@@ -979,7 +981,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void thiefCombat(GameState state)
+    public void thiefCombat()
     {
         firstCombatTurn = false;
         thiefAggro = true;
@@ -1114,7 +1116,7 @@ public class Actor extends GameObject {
     }
 
  
-    public void thiefDies(GameState state)
+    public void thiefDies()
     {
         for (Item it : inventory)
         {
@@ -1139,7 +1141,7 @@ public class Actor extends GameObject {
     }
     
     
-    public void thiefLootsRoom(GameState state)
+    public void thiefLootsRoom()
     {
         for (GameObject g : state.objectList.values())
         {
@@ -1154,7 +1156,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void thiefMoves(GameState state)
+    public void thiefMoves()
     {
         Random rand = new Random();
         int thiefPossibleLocations = GameSetup.thiefLocations.length;
@@ -1165,7 +1167,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void thiefRobsPlayer(GameState state)
+    public void thiefRobsPlayer()
     {
         for (GameObject g : state.objectList.values())
         {
@@ -1180,7 +1182,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void thiefTurn(GameState state)
+    public void thiefTurn()
     {
         if (!alive) return;
 
@@ -1232,11 +1234,11 @@ public class Actor extends GameObject {
             }
 
             // Attack without pity!
-            thiefAttacks(state);
+            thiefAttacks();
 
             // If the player is still here, check sword glow.
             if (state.playerLocation == Location.TREASURE_ROOM)
-                swordGlowTurn(state);
+                swordGlowTurn();
 
             return;
         }
@@ -1253,20 +1255,20 @@ public class Actor extends GameObject {
                     Game.output(ObjectStrings.THIEF_FIGHT_RETREAT_2);
                     for (Item it : inventory)
                         it.location = this.location;
-                    thiefMoves(state);
+                    thiefMoves();
                 }
 
                 // Retreat, holding my bag
                 else if (2 <= hitPoints && hitPoints <= 4)
                 {
                     Game.output(ObjectStrings.THIEF_FIGHT_RETREAT_1);
-                    thiefMoves(state);
+                    thiefMoves();
                 }
 
                 // Attack the player...
                 else
                 {
-                    thiefAttacks(state);
+                    thiefAttacks();
                 }
 
                 return;
@@ -1294,16 +1296,16 @@ public class Actor extends GameObject {
                 else if (option > 2 && playerHasTreasure)
                 {
                     Game.output(ObjectStrings.THIEF_LEAVES_ROBS);
-                    thiefRobsPlayer(state);
-                    thiefMoves(state);
+                    thiefRobsPlayer();
+                    thiefMoves();
                 }
 
                 // Loot the room and leave...
                 else if (option <= 2 && roomHasTreasure)
                 {
                     Game.output(ObjectStrings.THIEF_LEAVES_LOOTS);
-                    thiefLootsRoom(state);
-                    thiefMoves(state);
+                    thiefLootsRoom();
+                    thiefMoves();
                 }
 
                 // Leave without taking anything.
@@ -1311,7 +1313,7 @@ public class Actor extends GameObject {
                 {
                     if (option > 2) Game.output(ObjectStrings.THIEF_LEAVES_1);
                     if (option <= 2) Game.output(ObjectStrings.THIEF_LEAVES_2);
-                    thiefMoves(state);
+                    thiefMoves();
                 }
 
                 return;
@@ -1321,7 +1323,7 @@ public class Actor extends GameObject {
         // I'm not in the same room as the player. Let's move!
         if (location != state.playerLocation)
         {
-            thiefMoves(state);
+            thiefMoves();
 
             // Check if the player is in a possible thief location
             boolean playerInThiefArea = false;
@@ -1348,9 +1350,9 @@ public class Actor extends GameObject {
                     Game.output(ObjectStrings.THIEF_COMES_AND_ROBS);
                     while (location == state.playerLocation)
                     {
-                        thiefRobsPlayer(state);
-                        thiefLootsRoom(state);
-                        thiefMoves(state);
+                        thiefRobsPlayer();
+                        thiefLootsRoom();
+                        thiefMoves();
                     }
                 }
 
@@ -1359,7 +1361,7 @@ public class Actor extends GameObject {
                     Game.output(ObjectStrings.THIEF_COMES_AND_GOES);
                     while (location == state.playerLocation)
                     {
-                        thiefMoves(state);
+                        thiefMoves();
                     }
                 }
 
@@ -1386,7 +1388,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void trollCombat(GameState state)
+    public void trollCombat()
     {
         String[] misses = { GameStrings.COMBAT_MISS_1, GameStrings.COMBAT_MISS_2, GameStrings.COMBAT_MISS_3,
             GameStrings.COMBAT_PARRY_1, GameStrings.COMBAT_PARRY_2, GameStrings.COMBAT_PARRY_3 };
@@ -1509,7 +1511,7 @@ public class Actor extends GameObject {
     }
 
     
-    public void trollDies(GameState state)
+    public void trollDies()
     {
         alive = false;
 
@@ -1531,7 +1533,7 @@ public class Actor extends GameObject {
     }
 
     
-    public void trollGive(GameState state)
+    public void trollGive()
     {
         String item = state.indirectObject.name;
         switch (item)
@@ -1553,7 +1555,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void trollTurn(GameState state)
+    public void trollTurn()
     {
         if (!alive) return;
 
@@ -1771,7 +1773,7 @@ public class Actor extends GameObject {
     }
 
 
-    public void vampireBatTurn(GameState state)
+    public void vampireBatTurn()
     {
 
         Item garlic = (Item)(state.objectList.get("clove of garlic"));

@@ -5,6 +5,7 @@ class Container extends GameObject {
     public int capacity;
     public boolean open;
     public boolean locked;
+    private GameState state;
 
 
     public Container(String name, Location loc)
@@ -14,12 +15,13 @@ class Container extends GameObject {
 
         capacity = 0;
         open = false;
+        state = super.state;
         
     }
 
 
     @Override
-    public void close(GameState state)
+    public void close()
     { 
         switch (name)
         {
@@ -60,7 +62,7 @@ class Container extends GameObject {
 
 
     @Override
-    public void examine(GameState state)
+    public void examine()
     {
         if (open)
         {
@@ -87,7 +89,7 @@ class Container extends GameObject {
 
 
     @Override
-    public void lower(GameState state)
+    public void lower()
     {
         switch (name)
         {
@@ -109,14 +111,14 @@ class Container extends GameObject {
 
             default:
             {
-                super.lower(state);
+                super.lower();
             } break;
         }
     }
 
 
     @Override
-    public void open(GameState state)
+    public void open()
     {
         switch (name)
         {
@@ -178,7 +180,7 @@ class Container extends GameObject {
 
 
     @Override
-    public void put(GameState state)
+    public void put()
     {
         if (name.equals("machine") && !inventory.isEmpty())
         {
@@ -216,7 +218,7 @@ class Container extends GameObject {
 
 
     @Override
-    public void raise(GameState state)
+    public void raise()
     {
         switch (name)
         {
@@ -238,14 +240,14 @@ class Container extends GameObject {
 
             default:
             {
-                super.raise(state);
+                super.raise();
             } break;
         }
     }
 
 
     @Override
-    public void remove(GameState state)
+    public void remove()
     {
         Item it = (Item)(state.indirectObject);
         if (open)

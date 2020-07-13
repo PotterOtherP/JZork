@@ -11,6 +11,7 @@ class Room {
     public boolean firstVisit;
     public boolean height;
     public boolean bodyOfWater;
+    private GameState state;
 
     public HashMap<Action, Passage> exits;
     public HashMap<Action, String> failMessages;
@@ -25,6 +26,7 @@ class Room {
         darkness = false;
         firstVisit = true;
         height = false;
+        state = Game.gameState;
 
         exits = new HashMap<Action, Passage>();
         failMessages = new HashMap<Action, String>();
@@ -33,7 +35,7 @@ class Room {
     }
 
 
-    public boolean exit(GameState state, Action act)
+    public boolean exit(Action act)
     {
         Passage psg = null;
         boolean result = false;
@@ -126,7 +128,7 @@ class Room {
     }
 
 
-    public void getDescription(GameState state)
+    public void getDescription()
     {
         if (state.playerDead)
         {
@@ -289,7 +291,7 @@ class Room {
     }
 
 
-    public void getRoomObjects(GameState state)
+    public void getRoomObjects()
     {
         state.refreshInventories();
 
@@ -401,7 +403,7 @@ class Room {
     }
 
 
-    public void lookAround(GameState state)
+    public void lookAround()
     {
         if (state.playerInBoat)
             Game.output(name + ", in the magic boat");
@@ -409,8 +411,8 @@ class Room {
             Game.output(name);
         Game.outputLine();
 
-        getDescription(state);
-        getRoomObjects(state);
+        getDescription();
+        getRoomObjects();
 
     }
 

@@ -84,7 +84,7 @@ public final class Game {
         state.playerLocation = STARTING_LOCATION;
         start.firstVisit = false;
         outputLine();
-        start.lookAround(state);
+        start.lookAround();
 
     }
 

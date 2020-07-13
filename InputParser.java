@@ -611,7 +611,7 @@ public class InputParser {
         {
             Game.output("The troll is now dead.");
             Actor troll = (Actor)state.objectList.get("troll");
-            troll.trollDies(state);
+            troll.trollDies();
             return true;
         }
 
@@ -619,7 +619,7 @@ public class InputParser {
         {
             Game.output("The thief is now dead.");
             Actor thief = (Actor)state.objectList.get("thief");
-            thief.thiefDies(state);
+            thief.thiefDies();
             return true;
         }
 

@@ -11,7 +11,7 @@ public abstract class GameObject {
     public ObjectType type;
     public boolean isWeapon;
     public boolean intangible;
-    private GameState state;
+    protected GameState state;
 
     public Location location;
     public Location inventoryID;
@@ -220,13 +220,13 @@ public abstract class GameObject {
 
 
     // Common methods to all objects, which will be overridden in the child classes. 
-    public void answer(GameState state) { Game.output(answerString); }
-    public void attack(GameState state) { Game.output(attackString); }
-    public void blow(GameState state) { Game.output(blowString); }
-    public void board(GameState state) { Game.output(boardString); }
-    public void brush(GameState state) { Game.output(brushString); }
-    public void burn(GameState state) { Game.output(burnString); }
-    public void breakObject(GameState state)
+    public void answer() { Game.output(answerString); }
+    public void attack() { Game.output(attackString); }
+    public void blow() { Game.output(blowString); }
+    public void board() { Game.output(boardString); }
+    public void brush() { Game.output(brushString); }
+    public void burn() { Game.output(burnString); }
+    public void breakObject()
     {
         if (state.indirectObject.isWeapon)
         {
@@ -239,23 +239,23 @@ public abstract class GameObject {
             + state.indirectObject.articleName + " is futile.");
         }
     }
-    public void climb(GameState state) { Game.output(climbString); }
-    public void close(GameState state) { Game.output("You can't close that."); }
-    public void count(GameState state) { Game.output(countString); }
-    public void cross(GameState state) { Game.output(crossString); }    
-    public void cut(GameState state) { Game.output(cutString); }
-    public void deflate(GameState state) { Game.output(deflateString); }
-    public void dig(GameState state)
+    public void climb() { Game.output(climbString); }
+    public void close() { Game.output("You can't close that."); }
+    public void count() { Game.output(countString); }
+    public void cross() { Game.output(crossString); }    
+    public void cut() { Game.output(cutString); }
+    public void deflate() { Game.output(deflateString); }
+    public void dig()
     {
         Game.output("Digging with " + state.indirectObject.articleName + " is silly.");
     }
-    public void drink(GameState state) { Game.output(drinkString); }
-    public void drop(GameState state) { Game.output("You can't drop that."); }
-    public void eat(GameState state) { Game.output(eatString); }
-    public void enter(GameState state)
+    public void drink() { Game.output(drinkString); }
+    public void drop() { Game.output("You can't drop that."); }
+    public void eat() { Game.output(eatString); }
+    public void enter()
     {
         if (state.directObject.name.equals("magic boat"))
-            board(state);
+            board();
         else
         {
             if (isItem())
@@ -264,63 +264,63 @@ public abstract class GameObject {
                 Game.output(enterString);
         }
     }
-    public void examine(GameState state) { Game.output(examineString); }
-    public void extinguish(GameState state) { Game.output(extinguishString); }   
-    public void fill(GameState state) { Game.output(fillString); }
-    public void follow(GameState state) { Game.output(followString); }  
-    public void give(GameState state)
+    public void examine() { Game.output(examineString); }
+    public void extinguish() { Game.output(extinguishString); }   
+    public void fill() { Game.output(fillString); }
+    public void follow() { Game.output(followString); }  
+    public void give()
     {
         Game.output("You can't give " + state.indirectObject.articleName + " to "
             + state.directObject.articleName + "!");
     }
-    public void greet(GameState state) { Game.output(helloString); }  
-    public void inflate(GameState state) { Game.output(inflateString); }
-    public void kick(GameState state) { Game.output(kickString + randPhrase()); }
-    public void knock(GameState state) { Game.output(knockString); }
-    public void launch(GameState state) { Game.output(launchString); }
-    public void light(GameState state) { Game.output(lightString); }
-    public void listen(GameState state) { Game.output(listenString); }
-    public void lock(GameState state) { Game.output("You can't lock that."); }
-    public void lookIn(GameState state) { Game.output(lookInString); }
-    public void lookOut(GameState state) { Game.output(lookOutString); }
-    public void lookUnder(GameState state) { Game.output(lookUnderString); }
-    public void lower(GameState state) { Game.output(lowerString + randPhrase()); }
-    public void move(GameState state) { Game.output(moveString); }
-    public void moveItem(GameState state) { Game.output(moveItemString); }
-    public void open(GameState state) { Game.output("You can't open that."); }
-    public void pour(GameState state) { Game.output(pourString); }
-    public void pull(GameState state) { Game.output(pullString); }
-    public void push(GameState state) { Game.output(pushString + randPhrase()); }    
-    public void put(GameState state) { Game.output(putString); }
-    public void raise(GameState state) { Game.output(raiseString + randPhrase()); }
-    public void read(GameState state) { Game.output(readString); }
-    public void remove(GameState state) { Game.output(removeString); }
-    public void repair(GameState state) { Game.output(repairString); }
-    public void ring(GameState state) { Game.output(ringString); }
-    public void search(GameState state) { Game.output(searchString); }
-    public void shake(GameState state) { Game.output(shakeString); }
-    public void smell(GameState state) { Game.output(smellString); }   
-    public void take(GameState state)
+    public void greet() { Game.output(helloString); }  
+    public void inflate() { Game.output(inflateString); }
+    public void kick() { Game.output(kickString + randPhrase()); }
+    public void knock() { Game.output(knockString); }
+    public void launch() { Game.output(launchString); }
+    public void light() { Game.output(lightString); }
+    public void listen() { Game.output(listenString); }
+    public void lock() { Game.output("You can't lock that."); }
+    public void lookIn() { Game.output(lookInString); }
+    public void lookOut() { Game.output(lookOutString); }
+    public void lookUnder() { Game.output(lookUnderString); }
+    public void lower() { Game.output(lowerString + randPhrase()); }
+    public void move() { Game.output(moveString); }
+    public void moveItem() { Game.output(moveItemString); }
+    public void open() { Game.output("You can't open that."); }
+    public void pour() { Game.output(pourString); }
+    public void pull() { Game.output(pullString); }
+    public void push() { Game.output(pushString + randPhrase()); }    
+    public void put() { Game.output(putString); }
+    public void raise() { Game.output(raiseString + randPhrase()); }
+    public void read() { Game.output(readString); }
+    public void remove() { Game.output(removeString); }
+    public void repair() { Game.output(repairString); }
+    public void ring() { Game.output(ringString); }
+    public void search() { Game.output(searchString); }
+    public void shake() { Game.output(shakeString); }
+    public void smell() { Game.output(smellString); }   
+    public void take()
     {
         if (takeString.isEmpty())
             Game.output(GameStrings.getSarcasticResponse());
         else
             Game.output(takeString);
     }
-    public void talk(GameState state) { Game.output(talkString); }   
-    public void throwObject(GameState state) { Game.output(throwString); }
-    public void tie(GameState state) { Game.output("You can't tie the " + state.indirectObject.name + " to that."); }
-    public void touch(GameState state) { Game.output(touchString + randPhrase()); }
-    public void turn(GameState state) { Game.output(turnString); }
-    public void untie(GameState state) { Game.output(untieString); }
-    public void wake(GameState state) { Game.output(wakeString); }
-    public void wave(GameState state) { Game.output(waveString + randPhrase()); }
-    public void wear(GameState state) { Game.output(wearString); }
-    public void wind(GameState state) { Game.output(windString); }
-    public void unlock(GameState state) { Game.output(unlockString); }
+    public void talk() { Game.output(talkString); }   
+    public void throwObject() { Game.output(throwString); }
+    public void tie() { Game.output("You can't tie the " + state.indirectObject.name + " to that."); }
+    public void touch() { Game.output(touchString + randPhrase()); }
+    public void turn() { Game.output(turnString); }
+    public void untie() { Game.output(untieString); }
+    public void wake() { Game.output(wakeString); }
+    public void wave() { Game.output(waveString + randPhrase()); }
+    public void wear() { Game.output(wearString); }
+    public void wind() { Game.output(windString); }
+    public void unlock() { Game.output(unlockString); }
 
 
-    public void getDescription(GameState state)
+    public void getDescription()
     {
         if (initialPresenceString.isEmpty() || movedFromStart)
             Game.output(presenceString);

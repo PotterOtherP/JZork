@@ -2,18 +2,21 @@ import java.util.ArrayList;
 
 class Feature extends GameObject {
 
+    private GameState state;
+
 
     public Feature(String name, Location loc)
     {
         super(name, loc);
         type = ObjectType.FEATURE;
         presenceString = "";
+        state = super.state;
     
     }
 
 
     @Override
-    public void breakObject(GameState state)
+    public void breakObject()
     {
         switch (name)
         {
@@ -39,7 +42,7 @@ class Feature extends GameObject {
 
             default:
             {
-                super.breakObject(state);
+                super.breakObject();
             }
         }
 
@@ -47,7 +50,7 @@ class Feature extends GameObject {
 
 
     @Override
-    public void climb(GameState state)
+    public void climb()
     {
         switch (name)
         {
@@ -71,7 +74,7 @@ class Feature extends GameObject {
 
             default:
             {
-                super.climb(state);
+                super.climb();
             } break;
         }
 
@@ -79,7 +82,7 @@ class Feature extends GameObject {
 
 
     @Override
-    public void close(GameState state)
+    public void close()
     {
         switch (name)
         {
@@ -143,7 +146,7 @@ class Feature extends GameObject {
 
 
     @Override
-    public void dig(GameState state)
+    public void dig()
     {
         switch (name)
         {
@@ -203,14 +206,14 @@ class Feature extends GameObject {
 
             default:
             {
-                super.dig(state);
+                super.dig();
             } break;
         }
     }
 
 
     @Override
-    public void drink(GameState state)
+    public void drink()
     {
         switch (name)
         {
@@ -236,14 +239,14 @@ class Feature extends GameObject {
 
             default:
             {
-                super.drink(state);
+                super.drink();
             } break;
         }
     }
 
 
     @Override
-    public void kick(GameState state)
+    public void kick()
     {
         switch (name)
         {
@@ -254,14 +257,14 @@ class Feature extends GameObject {
 
             default:
             {
-                super.kick(state);
+                super.kick();
             } break;
         }
     }
 
 
     @Override
-    public void lock(GameState state)
+    public void lock()
     {
         switch (name)
         {
@@ -289,14 +292,14 @@ class Feature extends GameObject {
 
             default:
             {
-                super.lock(state);
+                super.lock();
             } break;
         }
     }
 
 
     @Override
-    public void lookIn(GameState state)
+    public void lookIn()
     {
         switch (name)
         {
@@ -308,14 +311,14 @@ class Feature extends GameObject {
                     Game.output("You are inside.");
             } break;
 
-            default: { super.lookIn(state); } break;
+            default: { super.lookIn(); } break;
         }
 
     }
 
 
     @Override
-    public void lookOut(GameState state)
+    public void lookOut()
     {
         switch (name)
         {
@@ -327,14 +330,14 @@ class Feature extends GameObject {
                     Game.output("You are outside.");
             } break;
 
-            default: { super.lookOut(state); } break;
+            default: { super.lookOut(); } break;
         }
 
     }
 
 
     @Override
-    public void lower(GameState state)
+    public void lower()
     {
         switch (name)
         {
@@ -345,14 +348,14 @@ class Feature extends GameObject {
 
             default:
             {
-                super.lower(state);
+                super.lower();
             } break;
         }
     }
 
 
     @Override
-    public void move(GameState state)
+    public void move()
     {
         switch (name)
         {
@@ -380,7 +383,7 @@ class Feature extends GameObject {
 
             default:
             {
-                Game.output(moveString);
+                super.move();
             } break;
         }
 
@@ -388,7 +391,7 @@ class Feature extends GameObject {
 
 
     @Override
-    public void open(GameState state)
+    public void open()
     {
         switch (name)
         {
@@ -465,7 +468,7 @@ class Feature extends GameObject {
 
             default:
             {
-                Game.output(openString);
+                super.open();
             } break;
         }
 
@@ -473,7 +476,7 @@ class Feature extends GameObject {
 
 
     @Override
-    public void pour(GameState state)
+    public void pour()
     {
         switch (name)
         {
@@ -514,14 +517,14 @@ class Feature extends GameObject {
 
             default:
             {
-                super.pour(state);
+                super.pour();
             } break;
         }
     }
 
 
     @Override
-    public void push(GameState state)
+    public void push()
     {
         switch (name)
         {
@@ -582,7 +585,7 @@ class Feature extends GameObject {
 
             default:
             {
-                super.push(state);
+                super.push();
             } break;
         }
 
@@ -590,7 +593,7 @@ class Feature extends GameObject {
 
 
     @Override
-    public void put(GameState state)
+    public void put()
     {
         switch(name)
         {
@@ -611,14 +614,14 @@ class Feature extends GameObject {
 
             default:
             {
-                super.put(state);
+                super.put();
             } break;
         }
     }
 
 
     @Override
-    public void raise(GameState state)
+    public void raise()
     {
         switch (name)
         {
@@ -629,14 +632,14 @@ class Feature extends GameObject {
 
             default:
             {
-                super.raise(state);
+                super.raise();
             } break;
         }
     }
 
 
     @Override
-    public void take(GameState state)
+    public void take()
     {
         switch (name)
         {
@@ -657,14 +660,14 @@ class Feature extends GameObject {
 
             default:
             {
-                super.take(state);
+                super.take();
             } break;
         }
     }
 
 
     @Override
-    public void tie(GameState state)
+    public void tie()
     {
         switch (name)
         {
@@ -702,7 +705,7 @@ class Feature extends GameObject {
 
             default:
             {
-                super.tie(state);
+                super.tie();
             } break;
         }
 
@@ -710,7 +713,7 @@ class Feature extends GameObject {
 
 
     @Override
-    public void touch(GameState state)
+    public void touch()
     {
         switch (name)
         {
@@ -742,14 +745,14 @@ class Feature extends GameObject {
 
             default:
             {
-                super.touch(state);
+                super.touch();
             }
         }
 
     }
 
     @Override
-    public void turn(GameState state)
+    public void turn()
     {
         switch (name)
         {
@@ -832,7 +835,7 @@ class Feature extends GameObject {
 
             default:
             {
-                super.turn(state);
+                super.turn();
             } break;
         }
 
@@ -840,7 +843,7 @@ class Feature extends GameObject {
 
 
     @Override
-    public void unlock(GameState state)
+    public void unlock()
     {
         switch (name)
         {
@@ -868,7 +871,7 @@ class Feature extends GameObject {
 
             default:
             {
-                super.unlock(state);
+                super.unlock();
             } break;
         }
     }

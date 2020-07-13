@@ -13,6 +13,7 @@ public class Item extends GameObject{
     public boolean open;
     public int trophyCaseValue;
     public int weight;
+    private GameState state;
 
     public Item(String name, Location loc)
     {
@@ -28,13 +29,14 @@ public class Item extends GameObject{
         open = false;
         trophyCaseValue = 0;
         weight = 0;
+        state = super.state;
 
         altLocations.clear();
     }
 
 
     @Override
-    public void board(GameState state)
+    public void board()
     {
         switch (name)
         {
@@ -78,14 +80,14 @@ public class Item extends GameObject{
 
             default:
             {
-                super.board(state);
+                super.board();
             } break;
         }
     }
 
 
     @Override
-    public void close(GameState state)
+    public void close()
     {
         if (name.equals("magic boat"))
         {
@@ -113,7 +115,7 @@ public class Item extends GameObject{
 
 
     @Override
-    public void deflate(GameState state)
+    public void deflate()
     {
         switch (name)
         {
@@ -148,14 +150,14 @@ public class Item extends GameObject{
 
             default:
             {
-                super.deflate(state);
+                super.deflate();
             }
         }
     }
 
 
     @Override
-    public void drink(GameState state)
+    public void drink()
     {
         if (name.equals("quantity of water"))
         {
@@ -173,12 +175,12 @@ public class Item extends GameObject{
         }
 
         else
-            super.drink(state);
+            super.drink();
 
     }
 
     @Override
-    public void drop(GameState state)
+    public void drop()
     {
         Location loc = state.playerLocation;
 
@@ -189,7 +191,7 @@ public class Item extends GameObject{
             if (name.equals("jewel-encrusted egg"))
             {
                 Game.output("The egg falls to the ground and springs open, seriously damaged.");
-                breakEgg(state);
+                breakEgg();
                 Item badEgg = (Item)(state.objectList.get("broken jewel-encrusted egg"));
                 badEgg.location = Location.FOREST_PATH;
             }
@@ -200,7 +202,7 @@ public class Item extends GameObject{
                 if (goodEgg.location == Location.INSIDE_BIRDS_NEST)
                 {
                     Game.output("The nest falls to the ground, and the egg spills out of it, seriously damaged.");
-                    breakEgg(state);
+                    breakEgg();
                     Item badEgg = (Item)(state.objectList.get("broken jewel-encrusted egg"));
                     badEgg.location = Location.FOREST_PATH;
                 }
@@ -229,7 +231,7 @@ public class Item extends GameObject{
     }
 
     @Override
-    public void eat(GameState state)
+    public void eat()
     {
         switch (name)
         {
@@ -259,7 +261,7 @@ public class Item extends GameObject{
 
             default:
             {
-                super.eat(state);
+                super.eat();
             } break;
         }
 
@@ -267,7 +269,7 @@ public class Item extends GameObject{
 
 
     @Override
-    public void examine(GameState state)
+    public void examine()
     {
         if (!isContainer())
         {
@@ -300,7 +302,7 @@ public class Item extends GameObject{
 
 
     @Override
-    public void extinguish(GameState state)
+    public void extinguish()
     {
         switch (name)
         {
@@ -333,7 +335,7 @@ public class Item extends GameObject{
 
 
     @Override
-    public void inflate(GameState state)
+    public void inflate()
     {
         switch (name)
         {
@@ -365,14 +367,14 @@ public class Item extends GameObject{
 
             default:
             {
-                super.inflate(state);
+                super.inflate();
             } break;
         }
     }
 
 
     @Override
-    public void launch(GameState state)
+    public void launch()
     {
         switch (name)
         {
@@ -382,10 +384,10 @@ public class Item extends GameObject{
                 {
                     Room room = state.worldMap.get(state.playerLocation);
 
-                    if (room.exit(state, Action.LAUNCH))
+                    if (room.exit(Action.LAUNCH))
                     {
                         Room newRoom = state.worldMap.get(state.playerLocation);
-                        newRoom.lookAround(state); 
+                        newRoom.lookAround(); 
                     }
 
                 }
@@ -396,14 +398,14 @@ public class Item extends GameObject{
 
             default:
             {
-                super.launch(state);
+                super.launch();
             } break;
         }
     }
 
 
     @Override
-    public void light(GameState state)
+    public void light()
     {
         switch (name)
         {
@@ -418,7 +420,7 @@ public class Item extends GameObject{
                     if (rm.isDark())
                     {
                         Game.outputLine();
-                        rm.lookAround(state);
+                        rm.lookAround();
                     }
                     
                     examineString = "The lamp is on.";
@@ -513,7 +515,7 @@ public class Item extends GameObject{
 
 
     @Override
-    public void move(GameState state)
+    public void move()
     {
         switch (name)
         {
@@ -522,7 +524,7 @@ public class Item extends GameObject{
                 Game.output("Done.");
                 if (!state.leafPileMoved)
                 {
-                    revealGrating(state);
+                    revealGrating();
                 }
                 else
                 {
@@ -532,7 +534,7 @@ public class Item extends GameObject{
 
             default:
             {
-                super.move(state);
+                super.move();
             } break;
         }
 
@@ -540,7 +542,7 @@ public class Item extends GameObject{
 
 
     @Override
-    public void open(GameState state)
+    public void open()
     {
         if (name.equals("glass bottle"))
         {
@@ -597,20 +599,20 @@ public class Item extends GameObject{
 
 
     @Override
-    public void pour(GameState state)
+    public void pour()
     {
         switch (name)
         {
             default:
             {
-                super.pour(state);
+                super.pour();
             } break;
         }
     }
 
 
     @Override
-    public void put(GameState state)
+    public void put()
     {
 
         if (!isContainer())
@@ -648,7 +650,7 @@ public class Item extends GameObject{
     }
 
     @Override
-    public void read(GameState state)
+    public void read()
     {
         switch (name)
         {
@@ -675,14 +677,14 @@ public class Item extends GameObject{
 
             default:
             {
-                super.read(state);
+                super.read();
             } break;
         }
     }
 
 
     @Override
-    public void remove(GameState state)
+    public void remove()
     {
         Item it = (Item)(state.indirectObject);
         if (!isContainer())
@@ -715,7 +717,7 @@ public class Item extends GameObject{
 
 
     @Override
-    public void repair(GameState state)
+    public void repair()
     {
         switch (name)
         {
@@ -739,14 +741,14 @@ public class Item extends GameObject{
 
             default:
             {
-                super.repair(state);
+                super.repair();
             } break;
         }
     }
 
 
     @Override
-    public void ring(GameState state)
+    public void ring()
     {
         switch (name)
         {
@@ -779,14 +781,14 @@ public class Item extends GameObject{
 
             default:
             {
-                super.ring(state); 
+                super.ring(); 
             } break;
         }
     }
 
 
     @Override
-    public void take(GameState state)
+    public void take()
     {
 
         if (location == Location.PLAYER_INVENTORY)
@@ -804,12 +806,12 @@ public class Item extends GameObject{
 
         if (name.equals("pile of leaves") && !state.leafPileMoved)
         {
-            revealGrating(state);       
+            revealGrating();       
         }
 
         if (name.equals("rope") && state.ropeRailTied)
         {
-            this.untie(state);
+            this.untie();
             return;
         }
 
@@ -844,7 +846,7 @@ public class Item extends GameObject{
 
 
     @Override
-    public void untie(GameState state)
+    public void untie()
     {
         switch (name)
         {
@@ -879,7 +881,7 @@ public class Item extends GameObject{
 
             default:
             {
-                super.untie(state);
+                super.untie();
             }
         }
 
@@ -887,7 +889,7 @@ public class Item extends GameObject{
 
 
     @Override
-    public void wave(GameState state)
+    public void wave()
     {
         if (name.equals("sceptre"))
         {
@@ -944,13 +946,13 @@ public class Item extends GameObject{
         }
 
         else
-            super.wave(state);
+            super.wave();
 
     }
 
 
     @Override
-    public void wind(GameState state)
+    public void wind()
     {
         switch(name)
         {
@@ -977,13 +979,13 @@ public class Item extends GameObject{
 
             default:
             {
-                super.wind(state);
+                super.wind();
             } break;
         }
     }
 
 
-    private void breakEgg(GameState state)
+    private void breakEgg()
     {
         Item goodEgg = (Item)(state.objectList.get("jewel-encrusted egg"));
         Item badEgg = (Item)(state.objectList.get("broken jewel-encrusted egg"));
@@ -1014,7 +1016,7 @@ public class Item extends GameObject{
     }
 
 
-    private void revealGrating(GameState state)
+    private void revealGrating()
     {
         state.leafPileMoved = true;
         Feature grate = (Feature)state.objectList.get("grating");

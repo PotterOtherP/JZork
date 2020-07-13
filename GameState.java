@@ -454,7 +454,7 @@ public class GameState {
         {
             case SUPERBRIEF:
             {
-                nextRoom.getRoomObjects(this);
+                nextRoom.getRoomObjects();
 
             } break;
 
@@ -463,18 +463,18 @@ public class GameState {
                 if (nextRoom.firstVisit)
                 {
                     Game.outputLine();
-                    nextRoom.getDescription(this);
+                    nextRoom.getDescription();
                 }
                 
-                nextRoom.getRoomObjects(this);
+                nextRoom.getRoomObjects();
 
             } break;
 
             case VERBOSE:
             {
                 Game.outputLine();
-                nextRoom.getDescription(this);
-                nextRoom.getRoomObjects(this);
+                nextRoom.getDescription();
+                nextRoom.getRoomObjects();
             } break;
 
             default: {} break;
@@ -531,7 +531,7 @@ public class GameState {
             playerLocation = forest[p];
             playerHitPoints = MAX_HIT_POINTS;
             Room path = worldMap.get(playerLocation);
-            path.lookAround(this);
+            path.lookAround();
         }
 
     }
@@ -607,7 +607,7 @@ public class GameState {
         playerLocation = loc;
         Room rm = worldMap.get(loc);
         darknessCheck();
-        rm.lookAround(this);
+        rm.lookAround();
         rm.firstVisit = false;
 
     }
@@ -683,63 +683,63 @@ public class GameState {
         switch (playerAction)
         {
             /* ACTION ON AN OBJECT */
-            case ANSWER: { directObject.answer(this); } break;
-            case ATTACK: { directObject.attack(this); } break;
-            case BLOW: { directObject.blow(this); } break;
-            case BOARD: { directObject.board(this); } break;
-            case BREAK: { directObject.breakObject(this); } break;
-            case BRUSH: { directObject.brush(this); } break;
-            case CLIMB: {directObject.climb(this); } break;
-            case CLOSE: {directObject.close(this); } break;
-            case COUNT: { directObject.count(this); } break;
-            case CROSS: { directObject.cross(this); } break;
-            case DEFLATE: { directObject.deflate(this); } break;
-            case DIG: { directObject.dig(this); } break;
-            case DRINK: { directObject.drink(this); } break;
-            case DROP: {directObject.drop(this); } break;
-            case EAT: { directObject.eat(this); } break;
-            case ENTER: { directObject.enter(this); } break;
-            case EXAMINE: { directObject.examine(this); } break;
-            case EXTINGUISH: { directObject.extinguish(this); } break;
-            case FOLLOW: { directObject.follow(this); } break;
-            case GIVE: { directObject.give(this); } break;
-            case GREET: { directObject.greet(this); } break;
-            case INFLATE: { directObject.inflate(this); } break;
-            case KICK: { directObject.kick(this); } break;
-            case KNOCK: { directObject.knock(this); } break;
-            case LAUNCH: { directObject.launch(this); } break;
-            case LIGHT: { directObject.light(this); } break;
-            case LISTEN: { directObject.listen(this); } break;
-            case LOCK: {directObject.lock(this); } break;
-            case LOOK_IN: {directObject.lookIn(this); } break;
-            case LOOK_OUT: {directObject.lookOut(this); } break;
-            case LOOK_UNDER: {directObject.lookUnder(this); } break;
-            case MOVE_OBJECT: { directObject.move(this); } break;
-            case LOWER: { directObject.lower(this); } break;
-            case OPEN: {directObject.open(this); } break;
-            case POUR: { directObject.pour(this); } break;
-            case PULL: { directObject.pull(this); } break;
-            case PUT: { directObject.put(this); } break;
-            case PUSH: { directObject.push(this); } break;
-            case RAISE: { directObject.raise(this); } break;
-            case READ: { directObject.read(this); } break;
-            case REMOVE: { directObject.remove(this); } break;
-            case REPAIR: { directObject.repair(this); } break;
-            case RING: { directObject.ring(this); } break;
-            case SEARCH: { directObject.search(this); } break;
-            case SHAKE: { directObject.shake(this); } break;
-            case SMELL: { directObject.smell(this); } break;
-            case TAKE: {directObject.take(this); } break;
-            case TALK_TO: { directObject.talk(this); } break;
-            case TIE: {directObject.tie(this); } break;
-            case TOUCH: { directObject.touch(this); } break;
-            case TURN: { directObject.turn(this); } break;
-            case UNLOCK: {directObject.unlock(this); } break;
-            case UNTIE: {directObject.untie(this); } break;
-            case WAKE: { directObject.wake(this); } break;
-            case WAVE: { directObject.wave(this); } break;
-            case WEAR: { directObject.wear(this); } break;
-            case WIND: { directObject.wind(this); } break;
+            case ANSWER: { directObject.answer(); } break;
+            case ATTACK: { directObject.attack(); } break;
+            case BLOW: { directObject.blow(); } break;
+            case BOARD: { directObject.board(); } break;
+            case BREAK: { directObject.breakObject(); } break;
+            case BRUSH: { directObject.brush(); } break;
+            case CLIMB: {directObject.climb(); } break;
+            case CLOSE: {directObject.close(); } break;
+            case COUNT: { directObject.count(); } break;
+            case CROSS: { directObject.cross(); } break;
+            case DEFLATE: { directObject.deflate(); } break;
+            case DIG: { directObject.dig(); } break;
+            case DRINK: { directObject.drink(); } break;
+            case DROP: {directObject.drop(); } break;
+            case EAT: { directObject.eat(); } break;
+            case ENTER: { directObject.enter(); } break;
+            case EXAMINE: { directObject.examine(); } break;
+            case EXTINGUISH: { directObject.extinguish(); } break;
+            case FOLLOW: { directObject.follow(); } break;
+            case GIVE: { directObject.give(); } break;
+            case GREET: { directObject.greet(); } break;
+            case INFLATE: { directObject.inflate(); } break;
+            case KICK: { directObject.kick(); } break;
+            case KNOCK: { directObject.knock(); } break;
+            case LAUNCH: { directObject.launch(); } break;
+            case LIGHT: { directObject.light(); } break;
+            case LISTEN: { directObject.listen(); } break;
+            case LOCK: {directObject.lock(); } break;
+            case LOOK_IN: {directObject.lookIn(); } break;
+            case LOOK_OUT: {directObject.lookOut(); } break;
+            case LOOK_UNDER: {directObject.lookUnder(); } break;
+            case MOVE_OBJECT: { directObject.move(); } break;
+            case LOWER: { directObject.lower(); } break;
+            case OPEN: {directObject.open(); } break;
+            case POUR: { directObject.pour(); } break;
+            case PULL: { directObject.pull(); } break;
+            case PUT: { directObject.put(); } break;
+            case PUSH: { directObject.push(); } break;
+            case RAISE: { directObject.raise(); } break;
+            case READ: { directObject.read(); } break;
+            case REMOVE: { directObject.remove(); } break;
+            case REPAIR: { directObject.repair(); } break;
+            case RING: { directObject.ring(); } break;
+            case SEARCH: { directObject.search(); } break;
+            case SHAKE: { directObject.shake(); } break;
+            case SMELL: { directObject.smell(); } break;
+            case TAKE: {directObject.take(); } break;
+            case TALK_TO: { directObject.talk(); } break;
+            case TIE: {directObject.tie(); } break;
+            case TOUCH: { directObject.touch(); } break;
+            case TURN: { directObject.turn(); } break;
+            case UNLOCK: {directObject.unlock(); } break;
+            case UNTIE: {directObject.untie(); } break;
+            case WAKE: { directObject.wake(); } break;
+            case WAVE: { directObject.wave(); } break;
+            case WEAR: { directObject.wear(); } break;
+            case WIND: { directObject.wind(); } break;
 
             /* REFLEXIVE GAME ACTIONS */
             case DEBOARD:
@@ -829,7 +829,7 @@ public class GameState {
 
             case LOOK:
             {
-                currentRoom.lookAround(this);
+                currentRoom.lookAround();
             } break;
 
             case PRAY:
@@ -907,7 +907,7 @@ public class GameState {
             case LAND:
             {
                 
-                if (currentRoom.exit(this, playerAction))
+                if (currentRoom.exit(playerAction))
                 {
                     Room nextRoom = worldMap.get(playerLocation);
 
@@ -929,7 +929,7 @@ public class GameState {
                         int choice = rand.nextInt(3);
 
                         Game.outputLine();
-                        nextRoom.getRoomObjects(this);
+                        nextRoom.getRoomObjects();
                         Game.output(MapStrings.DESC_LOUD_ROOM_WATER);
                         Game.outputLine();
 
@@ -1050,17 +1050,17 @@ public class GameState {
         Actor thief = (Actor)(objectList.get("thief"));
         Actor troll = (Actor)(objectList.get("troll"));
         Actor vampireBat = (Actor)(objectList.get("vampire bat"));
-        cyclops.cyclopsTurn(this);
-        flood.floodTurn(this);
-        flow.damFlowTurn(this);
-        gustOfWind.gustOfWindTurn(this);
-        riverCurrent.riverCurrentTurn(this);
-        songbird.songbirdTurn(this);
-        spirits.spiritsTurn(this);
-        swordGlow.swordGlowTurn(this);
-        thief.thiefTurn(this);
-        troll.trollTurn(this);
-        vampireBat.vampireBatTurn(this);
+        cyclops.cyclopsTurn();
+        flood.floodTurn();
+        flow.damFlowTurn();
+        gustOfWind.gustOfWindTurn();
+        riverCurrent.riverCurrentTurn();
+        songbird.songbirdTurn();
+        spirits.spiritsTurn();
+        swordGlow.swordGlowTurn();
+        thief.thiefTurn();
+        troll.trollTurn();
+        vampireBat.vampireBatTurn();
 
         if (playerHitPoints <= 0)
             playerDies();
@@ -1132,7 +1132,7 @@ public class GameState {
         {
             case DROP:
             {
-                directObject.drop(this);
+                directObject.drop();
                 ++darknessTurns;
             } break;
 
@@ -1187,7 +1187,7 @@ public class GameState {
 
             case LIGHT:
             {
-                directObject.light(this);
+                directObject.light();
                 ++darknessTurns;
             } break;
 
@@ -1226,7 +1226,7 @@ public class GameState {
             case UP:
             case DOWN:
             {
-                if (currentRoom.exit(this, playerAction))
+                if (currentRoom.exit(playerAction))
                 {
                     Room nextRoom = worldMap.get(playerLocation);
                     Game.output(nextRoom.name);
@@ -1326,7 +1326,7 @@ public class GameState {
 
             case LOOK:
             {
-                currentRoom.lookAround(this);
+                currentRoom.lookAround();
 
             } break;
 
@@ -1422,7 +1422,7 @@ public class GameState {
                     return;
                 }
                 
-                if (currentRoom.exit(this, playerAction))
+                if (currentRoom.exit(playerAction))
                 {
                     Room nextRoom = worldMap.get(playerLocation);
                     Game.output(nextRoom.name);
@@ -1434,7 +1434,7 @@ public class GameState {
                         playerLocation = Location.TORCH_ROOM;
                         Room rm = worldMap.get(Location.TORCH_ROOM);
                         Game.outputLine();
-                        rm.lookAround(this);
+                        rm.lookAround();
                         return;
                     }
 
