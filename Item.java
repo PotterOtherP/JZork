@@ -95,7 +95,7 @@ public class Item extends GameObject{
             return;
         }
 
-        if (!isContainer())
+        if (!isContainer() && !name.equals("glass bottle"))
         {
             Game.output(closeString);
             return;
@@ -331,6 +331,46 @@ public class Item extends GameObject{
             } break;
         }
 
+    }
+
+
+    @Override
+    public void fill()
+    {
+        switch (name)
+        {
+            case "glass bottle":
+            {
+                if (state.bottleFilled)
+                {
+                    Game.output("It is already full of water.");
+                }
+
+                else if (state.indirectObject.name.equals("river water") ||
+                         state.indirectObject.name.equals("reservoir water") ||
+                         state.indirectObject.name.equals("stream water"))
+                {
+                    if (open)
+                    {
+                        state.bottleFilled = true;
+                        Game.output("The bottle is now filled with water.");
+                    }
+
+                    else
+                        Game.output("The bottle is closed.");
+                }
+
+                else
+                {
+                    Game.output("You can't put that in the glass bottle!");
+                }
+            } break;
+
+            default:
+            {
+                super.fill();
+            } break;
+        }
     }
 
 

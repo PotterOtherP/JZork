@@ -1775,6 +1775,26 @@ public class GameSetup {
         rainbow.altLocations.add(Location.ARAGAIN_FALLS);
         rainbow.crossString = "Can you walk on water vapor?";
 
+        Feature reservoirWater = new Feature("reservoir water", Location.RESERVOIR);
+        reservoirWater.altNames.add("reservoir");
+        reservoirWater.altNames.add("water");
+        reservoirWater.altLocations.add(Location.RESERVOIR_NORTH);
+        reservoirWater.altLocations.add(Location.RESERVOIR_SOUTH);
+
+        Feature riverWater = new Feature("river water", Location.FRIGID_RIVER_1);
+        riverWater.altNames.add("water");
+        riverWater.altNames.add("river");
+        riverWater.altLocations.add(Location.FRIGID_RIVER_2);
+        riverWater.altLocations.add(Location.FRIGID_RIVER_3);
+        riverWater.altLocations.add(Location.FRIGID_RIVER_4);
+        riverWater.altLocations.add(Location.FRIGID_RIVER_5);
+        riverWater.altLocations.add(Location.DAM_BASE);
+        riverWater.altLocations.add(Location.WHITE_CLIFFS_BEACH_NORTH);
+        riverWater.altLocations.add(Location.WHITE_CLIFFS_BEACH_SOUTH);
+        riverWater.altLocations.add(Location.SANDY_BEACH);
+        riverWater.altLocations.add(Location.SHORE);
+
+
         Feature sand = new Feature("sand", Location.SANDY_CAVE);
         sand.altNames.add("ground");
 
@@ -1793,6 +1813,11 @@ public class GameSetup {
         Feature shaftChain = new Feature("chain", Location.SHAFT_ROOM);
 
         Feature skeleton = new Feature("skeleton", Location.MAZE_5);
+
+        Feature streamWater = new Feature("stream water", Location.STREAM);
+        streamWater.altNames.add("stream");
+        streamWater.altNames.add("water");
+        streamWater.altLocations.add(Location.STREAM_VIEW);
         
         Feature toolChests = new Feature("tool chests", Location.MAINTENANCE_ROOM);
         toolChests.initialPresenceString = ObjectStrings.INIT_TOOL_CHESTS;
@@ -1984,11 +2009,14 @@ public class GameSetup {
         state.objectList.put(pedestal.name, pedestal);
         state.objectList.put(railing.name, railing);
         state.objectList.put(rainbow.name, rainbow);
+        state.objectList.put(reservoirWater.name, reservoirWater);
+        state.objectList.put(riverWater.name, riverWater);
         state.objectList.put(sand.name, sand);
         state.objectList.put(self.name, self);
         state.objectList.put(shaftBasket.name, shaftBasket);
         state.objectList.put(shaftChain.name, shaftChain);
         state.objectList.put(skeleton.name, skeleton);
+        state.objectList.put(streamWater.name, streamWater);
         state.objectList.put(trapDoor.name, trapDoor);
         state.objectList.put(trophyCase.name, trophyCase);
         state.objectList.put(toolChests.name, toolChests);

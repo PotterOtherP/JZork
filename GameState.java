@@ -702,6 +702,7 @@ public class GameState {
             case ENTER: { directObject.enter(); } break;
             case EXAMINE: { directObject.examine(); } break;
             case EXTINGUISH: { directObject.extinguish(); } break;
+            case FILL: { directObject.fill(); } break;
             case FOLLOW: { directObject.follow(); } break;
             case GIVE: { directObject.give(); } break;
             case GREET: { directObject.greet(); } break;
