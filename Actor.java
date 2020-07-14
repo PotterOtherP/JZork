@@ -939,9 +939,9 @@ public class Actor extends GameObject {
             int phrase = rand.nextInt(disarmingBlows.length);
             Game.lineOutput(disarmingBlows[phrase]);
             state.indirectObject.location = state.playerLocation;
-            for (GameObject g : state.objectList.values())
+            for (GameObject g : state.currentObjects.values())
             {
-                if (g.isWeapon)
+                if (g.isWeapon && !g.name.equals("sceptre") && g.location == Location.PLAYER_INVENTORY)
                 {
                     Game.lineOutput("Fortunately, you still have " + g.articleName + ".");
                     break;
@@ -1726,9 +1726,9 @@ public class Actor extends GameObject {
                 int phrase = rand.nextInt(disarmingBlows.length);
                 Game.lineOutput(disarmingBlows[phrase]);
                 state.indirectObject.location = state.playerLocation;
-                for (GameObject g : state.objectList.values())
+                for (GameObject g : state.currentObjects.values())
                 {
-                    if (g.isWeapon)
+                    if (g.isWeapon && !g.name.equals("sceptre") && g.location == Location.PLAYER_INVENTORY)
                     {
                         Game.lineOutput("Fortunately, you still have " + g.articleName + ".");
                         break;
