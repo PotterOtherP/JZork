@@ -411,7 +411,23 @@ class Feature extends GameObject {
                         p.open();
                         state.gratingOpened = true;
                         if (state.playerLocation == Location.GRATING_ROOM)
+                        {
+                            if (!state.leafPileMoved)
+                            {
+                                state.leafPileMoved = true;
+                                altLocations.add(Location.CLEARING_NORTH);
+                                Room rm = state.worldMap.get(Location.CLEARING_NORTH);
+                                Room rm2 = state.worldMap.get(Location.GRATING_ROOM);
+                                Passage psg = rm2.exits.get(Action.UP);
+                                rm.addExit(Action.DOWN, psg);
+                                rm2.darkness = false;
+
+                                Game.output("A pile of leaves falls onto your head and to the ground.");
+                                Item leaves = (Item)state.objectList.get("pile of leaves");
+                                leaves.location = Location.GRATING_ROOM;
+                            }
                             Game.output("The grating opens to reveal trees above you.");
+                        }
                         else if (state.playerLocation == Location.CLEARING_NORTH)
                             Game.output("The grating opens to reveal darkness below.");
                         examineString = "The grating is open, but I can't tell what's beyond it.";
@@ -601,13 +617,19 @@ class Feature extends GameObject {
             {
                 if (state.playerLocation == Location.CLEARING_NORTH)
                 {
-                    Game.output("The " + state.indirectObject.name + " goes through the grating into the darkness below.");
-                    state.indirectObject.location = Location.GRATING_ROOM;
+                    Item it = (Item)state.indirectObject;
+                    if (it.weight < 10)
+                    {
+                        Game.output("The " + state.indirectObject.name + " goes through the grating into the darkness below.");
+                        state.indirectObject.location = Location.GRATING_ROOM;
+                    }
+                    else
+                        Game.output("It won't fit through the grating.");
                 }
 
                 else if (state.playerLocation == Location.GRATING_ROOM)
                 {
-
+                    Game.output("You can't get anything through the grating from here.");
                 }
 
             } break;
