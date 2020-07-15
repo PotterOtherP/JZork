@@ -88,7 +88,7 @@ public class GameState {
     public HashMap<Location, Room> worldMap;
 
     // Constants
-    public static final int CARRY_WEIGHT_LIMIT = 20;
+    public static final int CARRY_WEIGHT_LIMIT = 100;
     public static final int DEATH_POINTS = 10;
     public static final int LANTERN_LIFESPAN = 500;
     public static final int MAX_PLAYER_DEATHS = 3;

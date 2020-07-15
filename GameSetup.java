@@ -64,8 +64,9 @@ enum Location {
     INSIDE_TUBE,
     INSIDE_COAL_MACHINE,
 
-    ON_KITCHEN_TABLE,
+    ON_ALTAR,
     ON_ATTIC_TABLE,
+    ON_KITCHEN_TABLE,
     ON_PEDESTAL,
     ON_RAILING,
 
@@ -203,59 +204,63 @@ public class GameSetup {
     public static final int EAST_WEST_VALUE = 5;
     public static final int TREASURE_VALUE = 25;
 
-    public static final int BAR_WEIGHT = 3;
-    public static final int BAUBLE_WEIGHT = 2;
-    public static final int CHALICE_WEIGHT = 4;
-    public static final int COFFIN_WEIGHT = 15;
-    public static final int COINS_WEIGHT = 4;
-    public static final int CANARY_WEIGHT = 1;
-    public static final int DIAMOND_WEIGHT = 2;
-    public static final int EGG_WEIGHT = 2;
-    public static final int EMERALD_WEIGHT = 2;
-    public static final int JADE_WEIGHT = 3;
-    public static final int PAINTING_WEIGHT = 9;
-    public static final int POT_OF_GOLD_WEIGHT = 11;
-    public static final int SAPPHIRE_WEIGHT = 2;
-    public static final int SCARAB_WEIGHT = 2;
-    public static final int SCEPTRE_WEIGHT = 4;
-    public static final int SKULL_WEIGHT = 4;
-    public static final int TORCH_WEIGHT = 3;
-    public static final int TRIDENT_WEIGHT = 7;
-    public static final int TRUNK_WEIGHT = 10;
+    public static final int BAR_WEIGHT = 20;
+    public static final int BAUBLE_WEIGHT = 0;
+    public static final int CHALICE_WEIGHT = 10;
+    public static final int COFFIN_WEIGHT = 55;
+    public static final int COINS_WEIGHT = 15;
+    public static final int CANARY_WEIGHT = 4;
+    public static final int DIAMOND_WEIGHT = 6;
+    public static final int EGG_WEIGHT = 5;
+    public static final int EMERALD_WEIGHT = 6;
+    public static final int JADE_WEIGHT = 10;
+    public static final int PAINTING_WEIGHT = 15;
+    public static final int POT_OF_GOLD_WEIGHT = 15;
+    public static final int SAPPHIRE_WEIGHT = 10;
+    public static final int SCARAB_WEIGHT = 8;
+    public static final int SCEPTRE_WEIGHT = 3;
+    public static final int SKULL_WEIGHT = 15;
+    public static final int TORCH_WEIGHT = 20;
+    public static final int TRIDENT_WEIGHT = 20;
+    public static final int TRUNK_WEIGHT = 35;
 
-    public static final int AXE_WEIGHT = 0;
-    public static final int BELL_WEIGHT = 0;
-    public static final int BLACK_BOOK_WEIGHT = 0;
-    public static final int BOAT_LABEL_WEIGHT = 0;
-    public static final int BOTTLE_WEIGHT = 0;
-    public static final int BROKEN_CANARY_WEIGHT = 0;
-    public static final int BROKEN_EGG_WEIGHT = 0;
-    public static final int BUOY_WEIGHT = 0;
-    public static final int CANDLES_WEIGHT = 0;
-    public static final int COAL_WEIGHT = 0;
-    public static final int BOAT_WEIGHT = 0;
-    public static final int GARLIC_WEIGHT = 0;
-    public static final int GUIDEBOOK_WEIGHT = 0;
-    public static final int GUNK_WEIGHT = 0;
-    public static final int KNIFE_WEIGHT = 0;
-    public static final int LANTERN_WEIGHT = 0;
-    public static final int NEST_WEIGHT = 0;
-    public static final int LEAVES_WEIGHT = 0;
-    public static final int LEAFLET_WEIGHT = 0;
-    public static final int LUNCH_WEIGHT = 0;
-    public static final int MATCHBOOK_WEIGHT = 0;
-    public static final int PUMP_WEIGHT = 0;
-    public static final int ROPE_WEIGHT = 0;
-    public static final int SACK_WEIGHT = 0;
-    public static final int SCREWDRIVER_WEIGHT = 0;
-    public static final int SHOVEL_WEIGHT = 0;
-    public static final int SKELETON_KEY_WEIGHT = 0;
-    public static final int STILETTO_WEIGHT = 0;
-    public static final int ZORK_MANUAL_WEIGHT = 0;
-    public static final int SWORD_WEIGHT = 0;
-    public static final int TIMBER_WEIGHT = 0;
-    public static final int TUBE_WEIGHT = 0;
-    public static final int WRENCH_WEIGHT = 0;
+    public static final int ANCIENT_MAP_WEIGHT = 2;
+    public static final int AXE_WEIGHT = 25;
+    public static final int BELL_WEIGHT = 10;
+    public static final int BLACK_BOOK_WEIGHT = 10;
+    public static final int BOAT_LABEL_WEIGHT = 2;
+    public static final int BOTTLE_WEIGHT = 5;
+    public static final int BROKEN_CANARY_WEIGHT = 4;
+    public static final int BROKEN_EGG_WEIGHT = 5;
+    public static final int BUOY_WEIGHT = 10;
+    public static final int CANDLES_WEIGHT = 10;
+    public static final int COAL_WEIGHT = 20;
+    public static final int BOAT_WEIGHT = 20;
+    public static final int GARLIC_WEIGHT = 4;
+    public static final int GUIDEBOOK_WEIGHT = 2;
+    public static final int GUNK_WEIGHT = 6;
+    public static final int KNIFE_WEIGHT = 10;
+    public static final int LANTERN_WEIGHT = 15;
+    public static final int LEAVES_WEIGHT = 25;
+    public static final int LEAFLET_WEIGHT = 2;
+    public static final int LUNCH_WEIGHT = 5;
+    public static final int MATCHBOOK_WEIGHT = 2;
+    public static final int NEST_WEIGHT = 5;
+    public static final int PUMP_WEIGHT = 8;
+    public static final int ROPE_WEIGHT = 10;
+    public static final int RUSTY_KNIFE_WEIGHT = 20;
+    public static final int SACK_WEIGHT = 9;
+    public static final int SCREWDRIVER_WEIGHT = 2;
+    public static final int SHOVEL_WEIGHT = 15;
+    public static final int SKELETON_KEY_WEIGHT = 10;
+    public static final int STILETTO_WEIGHT = 10;
+    public static final int SWORD_WEIGHT = 30;
+    public static final int TIMBER_WEIGHT = 50;
+    public static final int TUBE_WEIGHT = 5;
+    public static final int USELESS_LANTERN_WEIGHT = 20;
+    public static final int VITREOUS_SLAG_WEIGHT = 10;
+    public static final int WRENCH_WEIGHT = 10;
+    public static final int ZORK_MANUAL_WEIGHT = 2;
 
 
     public GameSetup(GameState state, boolean godmode, boolean debug)
@@ -1092,9 +1097,9 @@ public class GameSetup {
         studio_kitchen.closedFail = "Going up empty-handed is a bad idea.";
 
         // Narrow passages
-        studio_kitchen.weightLimit = 12;
+        studio_kitchen.weightLimit = 35;
         studio_kitchen.weightFail = "You can't get up there with what you're carrying.";
-        altar_cave.weightLimit = 7;
+        altar_cave.weightLimit = 55;
         altar_cave.weightFail = "You can't get down there with what you're carrying.";
         timber_drafty.weightLimit = 0;
         timber_drafty.weightFail = "You cannot fit through this passage with that load.";
@@ -1258,7 +1263,7 @@ public class GameSetup {
         coffin.acquireValue = COFFIN_VALUE;
         coffin.trophyCaseValue = COFFIN_TROPHY_VALUE;
         coffin.weight = COFFIN_WEIGHT;
-        coffin.capacity = 5;
+        coffin.capacity = 35;
         
         Item coins = new Item("bag of coins", Location.MAZE_5);
         coins.altNames.add("bag");
@@ -1294,7 +1299,7 @@ public class GameSetup {
         egg.trophyCaseValue = EGG_TROPHY_VALUE;
         egg.weight = EGG_WEIGHT;
         egg.inventoryID = Location.INSIDE_EGG;
-        egg.capacity = 1;
+        egg.capacity = 6;
 
         Item emerald = new Item("large emerald", Location.INSIDE_BUOY);
         emerald.altNames.add("emerald");
@@ -1387,7 +1392,7 @@ public class GameSetup {
 
         Item ancientMap = new Item("ancient map", Location.NULL_LOCATION);
         ancientMap.altNames.add("map");
-        ancientMap.weight = 0;
+        ancientMap.weight = ANCIENT_MAP_WEIGHT;
         ancientMap.initialPresenceString = ObjectStrings.INIT_ANCIENT_MAP;
         ancientMap.readString = ObjectStrings.ANCIENT_MAP;
         ancientMap.examineString = ObjectStrings.ANCIENT_MAP;
@@ -1402,7 +1407,7 @@ public class GameSetup {
         bell.ringString = "Ding, dong.";
         bell.weight = BELL_WEIGHT;
 
-        Item blackBook = new Item("black book", Location.ALTAR);
+        Item blackBook = new Item("black book", Location.ON_ALTAR);
         blackBook.altNames.add("book");
         blackBook.initialPresenceString = ObjectStrings.INIT_BLACK_BOOK;
         blackBook.weight = BLACK_BOOK_WEIGHT;
@@ -1437,13 +1442,13 @@ public class GameSetup {
         brokenEgg.inventoryID = Location.INSIDE_BROKEN_EGG;
         brokenEgg.trophyCaseValue = BROKEN_EGG_TROPHY_VALUE;
         brokenEgg.weight = EGG_WEIGHT;
-        brokenEgg.capacity = 2;
+        brokenEgg.capacity = 6;
 
         Item buoy = new Item("red buoy", Location.FRIGID_RIVER_4);
         buoy.altNames.add("buoy");
         buoy.inventoryID = Location.INSIDE_BUOY;
         buoy.weight = BUOY_WEIGHT;
-        buoy.capacity = 4;
+        buoy.capacity = 20;
         buoy.initialPresenceString = ObjectStrings.INIT_BUOY;
         buoy.examineString = "You notice something funny about the feel of the buoy.";
 
@@ -1491,7 +1496,7 @@ public class GameSetup {
         inflatedBoat.altNames.add("raft");
         inflatedBoat.inventoryID = Location.INSIDE_BOAT;
         inflatedBoat.weight = BOAT_WEIGHT;
-        inflatedBoat.capacity = 15;
+        inflatedBoat.capacity = 100;
         inflatedBoat.open = true;
      
         Item knife = new Item("nasty knife", Location.ATTIC);
@@ -1513,7 +1518,7 @@ public class GameSetup {
         nest.inventoryID = Location.INSIDE_BIRDS_NEST;
         nest.weight = NEST_WEIGHT;
         nest.open = true;
-        nest.capacity = 3;
+        nest.capacity = 20;
 
         Item leafPile = new Item("pile of leaves", Location.CLEARING_NORTH);
         leafPile.altNames.add("pile");
@@ -1555,7 +1560,7 @@ public class GameSetup {
         
         Item rustyKnife = new Item("rusty knife", Location.MAZE_5);
         rustyKnife.initialPresenceString = ObjectStrings.INIT_RUSTY_KNIFE;
-        rustyKnife.weight = KNIFE_WEIGHT;
+        rustyKnife.weight = RUSTY_KNIFE_WEIGHT;
 
         Item sack = new Item("brown sack", Location.ON_KITCHEN_TABLE);
         sack.altNames.add("sack");
@@ -1564,7 +1569,7 @@ public class GameSetup {
         sack.initialPresenceString = ObjectStrings.INIT_SACK;
         sack.inventoryID = Location.INSIDE_SACK;
         sack.weight = SACK_WEIGHT;
-        sack.capacity = 11;
+        sack.capacity = 9;
 
         Item screwdriver = new Item("screwdriver", Location.MAINTENANCE_ROOM);
         screwdriver.altNames.add("driver");
@@ -1601,22 +1606,27 @@ public class GameSetup {
         tube.examineString = ObjectStrings.DESC_TUBE;
         tube.inventoryID = Location.INSIDE_TUBE;
         tube.weight = TUBE_WEIGHT;
-        tube.capacity = 1;
+        tube.capacity = 7;
         
         Item uselessLantern = new Item("useless lantern", Location.MAZE_5);
         uselessLantern.altNames.add("lantern");
         uselessLantern.initialPresenceString = ObjectStrings.INIT_USELESS;
-        uselessLantern.weight = LANTERN_WEIGHT;
+        uselessLantern.weight = USELESS_LANTERN_WEIGHT;
 
         Item wrench = new Item("wrench", Location.MAINTENANCE_ROOM);
         wrench.weight = WRENCH_WEIGHT;
 
 
         // Features, containers and surfaces
+
+        Surface altar = new Surface("altar", Location.ALTAR);
+        altar.inventoryID = Location.ON_ALTAR;
+        altar.capacity = 50;
+
         Surface atticTable = new Surface("attic table", Location.ATTIC);
         atticTable.inventoryID = Location.ON_ATTIC_TABLE;
         atticTable.altNames.add("table");
-        atticTable.capacity = 3;
+        atticTable.capacity = 40;
         
         Feature brokenMirror = new Feature("broken mirror", Location.NULL_LOCATION);
         brokenMirror.altNames.add("mirror");
@@ -1648,7 +1658,7 @@ public class GameSetup {
         Container coalMachine = new Container("machine", Location.MACHINE_ROOM);
         coalMachine.inventoryID = Location.INSIDE_COAL_MACHINE;
         coalMachine.altNames.add("lid");
-        coalMachine.capacity = 10;
+        coalMachine.capacity = 50;
         coalMachine.takeString = "It is far too large to carry.";
 
         Feature coalMachineSwitch = new Feature("switch", Location.MACHINE_ROOM);
@@ -1738,7 +1748,7 @@ public class GameSetup {
 
         Surface kitchenTable = new Surface("kitchen table", Location.KITCHEN);
         kitchenTable.altNames.add("table");
-        kitchenTable.capacity = 4;
+        kitchenTable.capacity = 50;
         kitchenTable.inventoryID = Location.ON_KITCHEN_TABLE;
         
         Container mailbox = new Container("small mailbox", Location.WEST_OF_HOUSE);
@@ -1748,7 +1758,7 @@ public class GameSetup {
         mailbox.moveString = "You can't move the small mailbox.";
         mailbox.inventory.add(leaflet);
         mailbox.inventoryID = Location.INSIDE_MAILBOX;
-        mailbox.capacity = 5;
+        mailbox.capacity = 10;
         
         Feature mirror = new Feature("mirror", Location.MIRROR_ROOM_SOUTH);
         mirror.altLocations.add(Location.MIRROR_ROOM_NORTH);
@@ -1764,7 +1774,7 @@ public class GameSetup {
         
         Surface pedestal = new Surface("pedestal", Location.TORCH_ROOM);
         pedestal.inventoryID = Location.ON_PEDESTAL;
-        pedestal.capacity = 2;
+        pedestal.capacity = 30;
 
         Feature railing = new Feature("wooden railing", Location.DOME_ROOM);
         railing.altNames.add("railing");
@@ -1807,7 +1817,7 @@ public class GameSetup {
         Container shaftBasket = new Container("basket", Location.SHAFT_ROOM);
         shaftBasket.altLocations.add(Location.DRAFTY_ROOM);
         shaftBasket.open = true;
-        shaftBasket.capacity = 20;
+        shaftBasket.capacity = 50;
         shaftBasket.inventoryID = Location.INSIDE_BASKET;
 
         Feature shaftChain = new Feature("chain", Location.SHAFT_ROOM);
@@ -1831,7 +1841,7 @@ public class GameSetup {
         Container trophyCase = new Container("trophy case", Location.LIVING_ROOM);
         trophyCase.altNames.add("case");
         trophyCase.inventoryID = Location.INSIDE_TROPHY_CASE;
-        trophyCase.capacity = 1000;
+        trophyCase.capacity = 10000;
 
         Item vitreousSlag = new Item("small piece of vitreous slag", Location.NULL_LOCATION);
         vitreousSlag.altNames.add("piece of vitreous slag");

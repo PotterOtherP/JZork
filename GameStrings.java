@@ -136,6 +136,9 @@ class GameStrings {
     public static final String PROFANITY_THREE = "There's no need for that kind of language.";
     public static final String RUG_ALREADY_MOVED = "Having moved the carpet previously, you find it impossible to move it again.";
     public static final String SAILOR = "Nothing happens here.";
+    public static final String TEMPLE_PRAYER = "The prayer is inscribed in an ancient script, rarely used today. It seems to be a "
+        + "philippic against small insects, absent-mindedness, and the picking up and dropping of small objects. The final verse "
+        + "consigns trespassers to the land of the dead. All evidence indicates that the beliefs of the ancient Zorkers were obscure.";
     public static final String TOO_DARK = "It's too dark to see!";
     public static final String TRAP_DOOR_OPENS = "The door reluctantly opens to reveal a rickety staircase descending into darkness.";
     public static final String WATERFALL_DEATH_BOAT = "Unfortunately, the magic boat doesn't provide protection from the rocks and "
