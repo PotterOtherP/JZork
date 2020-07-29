@@ -2218,6 +2218,7 @@ public class GameSetup {
         state.actions.put("kick", Action.KICK);
         state.actions.put("knock", Action.KNOCK);
         state.actions.put("light", Action.LIGHT);
+        state.actions.put("turn on", Action.LIGHT);
         state.actions.put("listen", Action.LISTEN);
         state.actions.put("look in", Action.LOOK_IN);
         state.actions.put("l in", Action.LOOK_IN);

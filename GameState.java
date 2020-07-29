@@ -210,6 +210,7 @@ public class GameState {
             result = true;
 
         return result;
+
     }
 
 
@@ -220,7 +221,8 @@ public class GameState {
             Feature water = (Feature)objectList.get("quantity of water");
             currentObjects.put("water", water);
             currentObjects.put("quantity of water", water);
-        }    
+        }
+
     }
 
 
@@ -479,6 +481,7 @@ public class GameState {
 
             default: {} break;
         }
+
     }
 
     public void playerDies()
@@ -1116,6 +1119,7 @@ public class GameState {
             worldMap.get(Location.RESERVOIR_NORTH).removeFailMessage(Action.SOUTH);
             worldMap.get(Location.STREAM_VIEW).removeFailMessage(Action.NORTH);
         }
+
     }
 
 
@@ -1459,6 +1463,45 @@ public class GameState {
 
         ++turns;
 
+    }
+
+
+    /**
+     * These flags affect the states of other game objects.
+     */
+    private void updateSwitches()
+    {
+        /*
+        public boolean houseWindowOpened;
+        public boolean carpetMoved;
+        public boolean cyclopsGone;
+        public boolean damGatesOpen;
+        public boolean damWaterHigh;
+        public boolean damWaterLow;
+        public boolean waterFalling;
+        public boolean waterRising;
+        public boolean gameWon;
+        public boolean gratingOpened;
+        public boolean gratingUnlocked;
+        public boolean leafPileMoved;
+        public boolean loudRoomSolved;
+        public boolean mirrorBroken;
+        public boolean playerInBoat;
+        public boolean rainbowSolid;
+        public boolean ropeRailTied;
+        public boolean spiritsBanished;
+        public boolean trapDoorOpen;
+        */
+
+        if (houseWindowOpened)
+        {
+
+        }
+
+        else if (!houseWindowOpened)
+        {
+
+        }
     }
 
 

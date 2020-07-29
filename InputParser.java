@@ -275,7 +275,6 @@ public class InputParser {
         input = input.replaceAll(" back ", " ");
         input = input.replaceAll(" from ", " ");
         input = input.replaceAll(" of ", " ");
-        input = input.replaceAll(" on ", " ");
         input = input.replaceAll(" the ", " ");
         input = input.replaceAll(" to ", " ");
         input = input.replaceAll(" with ", " ");
@@ -306,6 +305,7 @@ public class InputParser {
 
         input = input.replaceAll(" at ", " ");
         input = input.replaceAll(" in ", " ");
+        input = input.replaceAll(" on ", " ");
         input = input.replaceAll(" out ", " ");
 
         switch (state.playerActionType)

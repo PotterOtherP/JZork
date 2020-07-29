@@ -312,6 +312,7 @@ public class Item extends GameObject{
                 {
                     activated = false;
                     Game.output("The brass lantern is now off.");
+                    examineString = "The lamp is off.";
 
                     state.darknessCheck();
                     if (state.darkness)
