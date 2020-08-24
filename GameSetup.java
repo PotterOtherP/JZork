@@ -1992,6 +1992,7 @@ public class GameSetup {
         state.objectList.put(uselessLantern.name, uselessLantern);
         state.objectList.put(wrench.name, wrench);
 
+        state.objectList.put(altar.name, altar);
         state.objectList.put(atticTable.name, atticTable);
         state.objectList.put(brokenMirror.name, brokenMirror);
         state.objectList.put(buttonBlue.name, buttonBlue);

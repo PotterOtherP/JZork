@@ -125,6 +125,7 @@ public class GameState {
         completePlayerInput = "";
         playerPreviousInput = "";
 
+        baubleFell = false;
         bottleFilled = false;
         carpetMoved = false;
         damGatesOpen = false;

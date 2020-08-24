@@ -189,7 +189,6 @@ public abstract class GameObject {
         digStringInd = "Digging with " + articleName + " is silly.";
         fillString = "You may know how to do that, but I don't.";
         giveString = "";
-        inflateString = "";
         lockString = "";
         putString = "There's no good surface on the " + name + ".";
         throwString = "";

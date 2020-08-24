@@ -279,7 +279,7 @@ public class InputParser {
         input = input.replaceAll(" to ", " ");
         input = input.replaceAll(" with ", " ");
         while(input.contains("  "))
-            input.replaceAll("  ", " ");
+            input = input.replaceAll("  ", " ");
         input = input.trim();
         
         // All words must be known by the game
@@ -765,7 +765,7 @@ public class InputParser {
                 {
                     switch (act)
                     {
-                        // Here is the list of objects that can be performed on items
+                        // Here is the list of actions that can be performed on items
                         // which are present but not in the player's inventory.
                         case ATTACK:
                         case BOARD:
@@ -787,7 +787,7 @@ public class InputParser {
                         {
                             Game.output("You're not carrying the " + dirObj.name + ".");
                             return false;
-                        }
+                        } break;
                     }
                 }
 

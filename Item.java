@@ -1000,12 +1000,15 @@ public class Item extends GameObject{
             case "golden clockwork canary":
             {
                 Actor bird = (Actor)state.objectList.get("song bird");
-                if (bird.altLocations.contains(state.playerLocation))
+                Item bauble = (Item)state.objectList.get("brass bauble");
+
+                // We want the bauble to drop again if the player lost it somehow.
+                if (bird.altLocations.contains(state.playerLocation) && (bauble.location == Location.NULL_LOCATION))
                 {
                     Game.output(ObjectStrings.CANARY_WIND_BAUBLE);
-                    Item bauble = (Item)state.objectList.get("brass bauble");
                     bauble.location = state.playerLocation;
                     state.baubleFell = true;
+                    Game.output("baubleFell = " + state.baubleFell);
 
                 }
 
